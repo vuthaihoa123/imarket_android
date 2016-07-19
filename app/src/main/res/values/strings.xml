@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">IMarketAndroid</string>
+    <string name="floor_prompt">Choose a floor</string>
+    <string name="locationcurrent">Vị Trí Hiện Tại Của Bạn</string>
+    <string name="number_event">Số Lượng Sự Kiện</string>
+    <string name="market_name_text">Siêu Thị Big C</string>
+    <string name="found_shop">Cửa Hàng Tìm Được</string>
+    <string-array name="floor">
+            <item>Tầng 1</item>
+            <item>Tầng 2</item>
+            <item>Tầng 3</item>
+        </string-array>
 </resources>
