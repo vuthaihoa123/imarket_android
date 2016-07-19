@@ -10,5 +10,5 @@
     <dimen name="text_size_market_name">30sp</dimen>
     <dimen name="layout_marginbottom_namemarket">30dp</dimen>
     <dimen name="layout_margintop">20dp</dimen>
-    <item name="strike_width" type="dimen" format="float">0.5dp</item>
+    <dimen name="strike_width">0.5dp</dimen>
 </resources>
