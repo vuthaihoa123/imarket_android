@@ -6,8 +6,9 @@
     <string name="market_name_text">Siêu Thị Big C</string>
     <string name="found_shop">Cửa Hàng Tìm Được</string>
     <string-array name="floor">
-            <item>Tầng 1</item>
-            <item>Tầng 2</item>
-            <item>Tầng 3</item>
-        </string-array>
+        <item>Tầng 1</item>
+        <item>Tầng 2</item>
+        <item>Tầng 3</item>
+    </string-array>
+    <string name="facebook_app_id">530129487174289</string>
 </resources>
