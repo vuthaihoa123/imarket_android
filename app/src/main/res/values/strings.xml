@@ -11,4 +11,8 @@
         <item>Tầng 3</item>
     </string-array>
     <string name="facebook_app_id">530129487174289</string>
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
+    <string name="error_get_profile">Person information is null</string>
+    <string name="connect_successfully">User is connected!</string>
 </resources>
