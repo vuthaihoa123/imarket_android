@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/right_area"
@@ -20,21 +19,20 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_marginbottom_namemarket"
             android:text="@string/market_name_text"
-            android:textSize="@dimen/text_size_market_name"/>
+            android:textSize="@dimen/text_size_market_name" />
 
         <Spinner
             android:id="@+id/spinner_choosefloor"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_heght_spiner"
             android:layout_marginBottom="@dimen/layout_margin_comment"
-            android:foreground="@drawable/customspiner"
-            />
+            android:foreground="@drawable/customspiner" />
 
         <Spinner
             android:id="@+id/spinner_chooseproduct"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_heght_spiner"
-            android:foreground="@drawable/customspiner"/>
+            android:foreground="@drawable/customspiner" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,15 +45,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/layout_margin_comment"
-                android:background="@drawable/ic_location"/>
+                android:background="@drawable/ic_location" />
 
             <TextView
                 android:id="@+id/text_comment1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/layout_marginLeft"
-                android:gravity="center"
-                />
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -68,14 +65,14 @@
                 android:id="@+id/image_comment2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/ic_down"/>
+                android:background="@drawable/ic_down" />
 
             <TextView
                 android:id="@+id/text_comment2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/layout_marginLeft"
-                android:text="@string/found_shop"/>
+                android:text="@string/found_shop" />
         </LinearLayout>
 
         <LinearLayout
@@ -88,14 +85,14 @@
                 android:id="@+id/image_comment3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/ic_event"/>
+                android:background="@drawable/ic_event" />
 
             <TextView
                 android:id="@+id/text_comment3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/layout_marginLeft"
-                android:text="@string/number_event"/>
+                android:text="@string/number_event" />
         </LinearLayout>
     </LinearLayout>
 
@@ -103,6 +100,6 @@
         android:layout_width="@dimen/strike_width"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@id/right_area"
-        android:background="@color/black"/>
+        android:background="@color/black" />
 
 </RelativeLayout>
