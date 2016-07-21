@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.ui;
+package com.example.framgia.imarketandroid.ui.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.ui.model.Floor;
-import com.example.framgia.imarketandroid.ui.model.Shop;
+import com.example.framgia.imarketandroid.data.Floor;
+import com.example.framgia.imarketandroid.data.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choosefloor);
+        setContentView(R.layout.activity_choose_floor);
         hideStatusBar();
         initViews();
         createDataForFloor();
