@@ -7,8 +7,14 @@
     <dimen name="layout_heght_spiner">40dp</dimen>
     <dimen name="layout_marginLeft">5dp</dimen>
     <dimen name="layout_marginright">5dp</dimen>
+    <dimen name="padding">5dp</dimen>
     <dimen name="text_size_market_name">30sp</dimen>
     <dimen name="layout_marginbottom_namemarket">30dp</dimen>
+    <dimen name="padding_layout">16dp</dimen>
+    <dimen name="layout_margin">20dp</dimen>
+    <dimen name="width_pic">80dp</dimen>
     <dimen name="layout_margintop">20dp</dimen>
+    <dimen name="text_size">20dp</dimen>
+    <dimen name="text_email_size">18dp</dimen>
     <dimen name="strike_width">0.5dp</dimen>
 </resources>
