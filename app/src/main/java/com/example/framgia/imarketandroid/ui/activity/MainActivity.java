@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.ui;
+package com.example.framgia.imarketandroid.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLoginButton = (LoginButton) findViewById(R.id.login_button);
         mProfilePictureView = (ProfilePictureView) findViewById(R.id.profile_picture);
         mLoginButton.setOnClickListener(this);
+        findViewById(R.id.button_change_activity).setOnClickListener(this);
     }
 
     public void registerCallback() {
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mProfilePictureView.setVisibility(View.INVISIBLE);
                 }
                 break;
+            case R.id.button_change_activity:
+                startActivity(new Intent(this, ChooseMarketActivity.class));
         }
     }
 }

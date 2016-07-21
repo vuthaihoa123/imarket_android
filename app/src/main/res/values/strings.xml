@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">IMarketAndroid</string>
     <string name="floor_prompt">Choose a floor</string>
-    <string name="locationcurrent">Vị Trí Hiện Tại Của Bạn</string>
+    <string name="location_current">Vị Trí Hiện Tại Của Bạn</string>
     <string name="number_event">Số Lượng Sự Kiện</string>
     <string name="market_name_text">Siêu Thị Big C</string>
     <string name="found_shop">Cửa Hàng Tìm Được</string>
@@ -15,4 +15,8 @@
     <string name="btn_revoke_access">Revoke Access</string>
     <string name="error_get_profile">Person information is null</string>
     <string name="connect_successfully">User is connected!</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!--Toolbar action-->
+    <string name="action_search">Search</string>
 </resources>
