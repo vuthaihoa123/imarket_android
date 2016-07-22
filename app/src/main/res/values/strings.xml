@@ -19,4 +19,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!--Toolbar action-->
     <string name="action_search">Search</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Enter the key of product that you want to find</string>
 </resources>

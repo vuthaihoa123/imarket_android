@@ -16,6 +16,8 @@
     <dimen name="layout_margintop">20dp</dimen>
     <dimen name="text_size">20dp</dimen>
     <dimen name="text_email_size">18dp</dimen>
+    <dimen name="text_large_size">18sp</dimen>
+    <dimen name="text_medium_size">16sp</dimen>
     <dimen name="strike_width">0.5dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
@@ -54,4 +56,15 @@
     <dimen name="common_text_size_11">20sp</dimen>
     <dimen name="common_text_size_12">21sp</dimen>
     <dimen name="common_text_size_13">22sp</dimen>
+    <dimen name="padding_10dp">10dp</dimen>
+    <dimen name="padding_5dp">5dp</dimen>
+    <dimen name="radius_border">10dp</dimen>
+    <dimen name="width_stroke">2dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="width_product_image">100dp</dimen>
+    <dimen name="height_product_image">200dp</dimen>
+    <dimen name="size_150dp">150dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="size_50dp">50dp</dimen>
+    <dimen name="text_small_size">14sp</dimen>
 </resources>

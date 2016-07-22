@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.Floor;
-import com.example.framgia.imarketandroid.data.Shop;
+import com.example.framgia.imarketandroid.models.Floor;
+import com.example.framgia.imarketandroid.models.Shop;
 
 import java.util.ArrayList;
 import java.util.List;

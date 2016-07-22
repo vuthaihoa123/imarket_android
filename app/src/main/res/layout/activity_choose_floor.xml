@@ -55,7 +55,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/layout_marginLeft"
                 android:gravity="center"
-                android:text="@string/locationcurrent"/>
+                />
         </LinearLayout>
 
         <LinearLayout

@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.data;
+package com.example.framgia.imarketandroid.models;
 
 import java.util.ArrayList;
 import java.util.List;
