@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.data;
+package com.example.framgia.imarketandroid.models;
 
 /**
  * Created by toannguyen201194 on 19/07/2016.

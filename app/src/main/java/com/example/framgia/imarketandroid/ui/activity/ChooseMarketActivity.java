@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.Market;
+import com.example.framgia.imarketandroid.models.Market;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 
