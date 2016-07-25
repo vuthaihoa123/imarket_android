@@ -38,8 +38,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     private void initViews() {
-        mSpinerFloor = (Spinner) findViewById(R.id.spinner_choosefloor);
-        mSpinnerProduct = (Spinner) findViewById(R.id.spinner_chooseproduct);
+        mSpinerFloor = (Spinner) findViewById(R.id.spinner_choose_floor);
+        mSpinnerProduct = (Spinner) findViewById(R.id.spinner_choose_product);
         mAdapterFloor = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mFloorList);
         mAdapterFloor.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         mSpinerFloor.setAdapter(mAdapterFloor);

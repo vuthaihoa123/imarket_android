@@ -5,34 +5,34 @@
 
     <LinearLayout
         android:id="@+id/right_area"
-        android:layout_width="@dimen/layout_width_right_ảea"
+        android:layout_width="@dimen/layout_width_right_area"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="@dimen/layout_marginLeft"
-        android:layout_marginRight="@dimen/layout_marginright"
-        android:layout_marginTop="@dimen/layout_margintop"
+        android:layout_marginLeft="@dimen/layout_margin_left"
+        android:layout_marginRight="@dimen/layout_margin_right"
+        android:layout_marginTop="@dimen/layout_margin_top"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_view_name_market"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/layout_marginbottom_namemarket"
+            android:layout_marginBottom="@dimen/layout_margin_bottom_name_market"
             android:text="@string/market_name_text"
             android:textSize="@dimen/text_size_market_name" />
 
         <Spinner
-            android:id="@+id/spinner_choosefloor"
+            android:id="@+id/spinner_choose_floor"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_heght_spiner"
+            android:layout_height="@dimen/layout_height_spinner"
             android:layout_marginBottom="@dimen/layout_margin_comment"
-            android:foreground="@drawable/customspiner" />
+            android:foreground="@drawable/custom_spinner" />
 
         <Spinner
-            android:id="@+id/spinner_chooseproduct"
+            android:id="@+id/spinner_choose_product"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_heght_spiner"
-            android:foreground="@drawable/customspiner" />
+            android:layout_height="@dimen/layout_height_spinner"
+            android:foreground="@drawable/custom_spinner" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,8 +51,9 @@
                 android:id="@+id/text_comment1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/layout_marginLeft"
-                android:gravity="center" />
+                android:layout_marginLeft="@dimen/layout_margin_left"
+                android:gravity="center"
+                android:text="@string/location_current"/>
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +72,7 @@
                 android:id="@+id/text_comment2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/layout_marginLeft"
+                android:layout_marginLeft="@dimen/layout_margin_left"
                 android:text="@string/found_shop" />
         </LinearLayout>
 
@@ -91,7 +92,7 @@
                 android:id="@+id/text_comment3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/layout_marginLeft"
+                android:layout_marginLeft="@dimen/layout_margin_left"
                 android:text="@string/number_event" />
         </LinearLayout>
     </LinearLayout>

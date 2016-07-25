@@ -7,30 +7,30 @@ import java.util.List;
  * Created by toannguyen201194 on 19/07/2016.
  */
 public class Floor {
-    private int mIdFloor;
-    private String mNameFloor;
+    private int mId;
+    private String mName;
     private List<Shop> mShopList;
 
     public Floor(int idFloor, String nameFloor) {
-        mIdFloor = idFloor;
-        mNameFloor = nameFloor;
+        mId = idFloor;
+        mName = nameFloor;
         mShopList =new ArrayList<Shop>();
     }
 
     public int getIdFloor() {
-        return mIdFloor;
+        return mId;
     }
 
     public void setIdFloor(int idFloor) {
-        mIdFloor = idFloor;
+        mId = idFloor;
     }
 
     public String getNameFloor() {
-        return mNameFloor;
+        return mName;
     }
 
     public void setNameFloor(String nameFloor) {
-        mNameFloor = nameFloor;
+        mName = nameFloor;
     }
 
     public List<Shop> getShopList() {
@@ -44,6 +44,6 @@ public class Floor {
 
     @Override
     public String toString() {
-        return mNameFloor;
+        return mName;
     }
 }
