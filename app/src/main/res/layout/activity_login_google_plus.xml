@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/padding_layout"
-    tools:context=".ui.LoginGooglePlusActivity">
+    tools:context=".ui.activity.LoginGooglePlusActivity">
 
     <LinearLayout
         android:id="@+id/llProfile"

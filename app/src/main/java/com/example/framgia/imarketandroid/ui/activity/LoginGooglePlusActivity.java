@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.ui;
+package com.example.framgia.imarketandroid.ui.activity;
 
 import android.content.Intent;
 import android.content.IntentSender;
