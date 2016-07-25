@@ -4,20 +4,20 @@ package com.example.framgia.imarketandroid.models;
  * Created by toannguyen201194 on 19/07/2016.
  */
 public class Shop {
-    private int mIdShop;
+    private int mId;
     private String mNameShop;
 
     public Shop(int idShop, String nameShop) {
-        mIdShop = idShop;
+        mId = idShop;
         mNameShop = nameShop;
     }
 
     public int getIdShop() {
-        return mIdShop;
+        return mId;
     }
 
     public void setIdShop(int idShop) {
-        mIdShop = idShop;
+        mId = idShop;
     }
 
     public String getNameShop() {
