@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#1d4379</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
@@ -8,4 +8,6 @@
     <color name="grey">#9E9E9E</color>
     <color name="default_button_highlight_color">#3c7c7b7b</color>
     <color name="default_background_color">#dcdada</color>
+    <color name="backgroud_login">#1d4379</color>
+    <color name="login_button_color">#5196f5</color>
 </resources>

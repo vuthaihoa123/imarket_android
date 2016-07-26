@@ -67,4 +67,14 @@
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="size_50dp">50dp</dimen>
     <dimen name="text_small_size">14sp</dimen>
+    <dimen name="framelayout_login">40dp</dimen>
+    <dimen name="linear_login_margin">30dp</dimen>
+    <dimen name="login_height_logo">100dp</dimen>
+    <dimen name="login_radius_cardview">3dp</dimen>
+    <dimen name="login_marginbottom_cardview">20dp</dimen>
+    <dimen name="login_margintop_card">30dp</dimen>
+    <dimen name="login_margin_forgetpassword">5dp</dimen>
+    <dimen name="login_button_textsize">20sp</dimen>
+    <dimen name="signup_margintop_textinput">10dp</dimen>
+    <dimen name="singup_marginbottom">10dp</dimen>
 </resources>
