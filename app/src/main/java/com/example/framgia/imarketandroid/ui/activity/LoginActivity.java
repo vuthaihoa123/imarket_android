@@ -14,6 +14,7 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.ui.fragments.SignInFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SignUpFragment;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.HttpRequest;
 import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
 import com.facebook.appevents.AppEventsLogger;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(getApplicationContext());
         setContentView(R.layout.activity_login);
         initViews();
+        HttpRequest.getInstance().initLogin();
     }
 
     private void initViews() {

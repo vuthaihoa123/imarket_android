@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +24,11 @@ import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.BuildConfig;
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.models.Session;
+import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.HttpRequest;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -67,6 +72,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     private boolean mSignInClicked;
     private int mStartIndex = 0;
     private int mSubLetter = 2;
+    private SharedPreferences mSharedpreferences;
     private ConnectionResult mConnectionResult;
 
     public SignInFragment() {
@@ -90,6 +96,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         AppEventsLogger.activateApp(getContext());
         mCallbackManager = CallbackManager.Factory.create();
         createBuilderGoogleApi();
+        SharedPreferencesUtil.getInstance().init(getActivity());
         return mView;
     }
 
@@ -174,9 +181,33 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     }
 
     public void eventClickButtonLogin() {
-        if (mEditUsername.getText().equals("") || mEditPassword.getText().equals("")) {
+        if (mEditUsername.getText().toString().isEmpty() || mEditPassword.getText().toString()
+            .trim().isEmpty()) {
             Toast.makeText(getContext(), R.string.notification_user_pass, Toast.LENGTH_SHORT)
                 .show();
+        } else {
+            final Session session = new Session(mEditUsername.getText().toString(), mEditPassword
+                .getText().toString());
+            HttpRequest.getInstance().login(session);
+            HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    Session session = (Session) object;
+                    if (session == null) {
+                        Toast.makeText(getContext(), R.string.msg_login_invaild, Toast
+                            .LENGTH_SHORT)
+                            .show();
+                    } else {
+                        SharedPreferencesUtil.getInstance().save(session);
+                        Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onLoadDataFailure(String message) {
+                }
+            });
         }
     }
 
