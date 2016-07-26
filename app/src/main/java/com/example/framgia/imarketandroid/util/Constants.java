@@ -16,4 +16,5 @@ public class Constants {
     public static final String PACKAGE="package";
     public static final String KEYHASH="KeyHash:";
     public static final String SHA="SHA";
+    public static final String PROFILE="Profile";
 }

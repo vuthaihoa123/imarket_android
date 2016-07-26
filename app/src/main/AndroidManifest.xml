@@ -37,7 +37,8 @@
             android:name=".ui.activity.FloorActivity"
             android:screenOrientation="landscape"/>
         <activity android:name=".ui.activity.CategoryStallActivity"/>
-        <activity android:name=".ui.activity.LoginActivity">
+        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.UpdateProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

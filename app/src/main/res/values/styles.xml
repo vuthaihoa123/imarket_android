@@ -26,4 +26,10 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="ProfileUpdate" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColorHint">#bcb1a0a0</item>
+        <item name="colorControlNormal">#c5c5c5</item>
+    </style>
 </resources>

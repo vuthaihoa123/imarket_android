@@ -41,6 +41,9 @@
     <dimen name="common_size_8">8dp</dimen>
     <dimen name="common_size_9">9dp</dimen>
     <dimen name="common_size_10">10dp</dimen>
+    <dimen name="common_size_20">20dp</dimen>
+    <dimen name="common_size_40">40dp</dimen>
+    <dimen name="common_size_150">150dp</dimen>
 
     <!--Common text size-->
     <dimen name="common_text_size_1">10sp</dimen>
@@ -77,4 +80,5 @@
     <dimen name="login_button_textsize">20sp</dimen>
     <dimen name="signup_margintop_textinput">10dp</dimen>
     <dimen name="singup_marginbottom">10dp</dimen>
+    <dimen name="common_size_200">200dp</dimen>
 </resources>
