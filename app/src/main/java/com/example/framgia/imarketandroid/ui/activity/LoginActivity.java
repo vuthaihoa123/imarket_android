@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.framgia.imarketandroid.BuildConfig;
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.ui.fragments.SignInFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SignUpFragment;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
@@ -52,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SignInFragment(), Constants.LOGIN);
         adapter.addFragment(new SignUpFragment(), Constants.SIGNUP);
         viewPager.setAdapter(adapter);
     }

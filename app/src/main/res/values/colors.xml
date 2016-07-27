@@ -23,4 +23,7 @@
     <color name="bg_bg_color">#dacece</color>
     <color name="color_bg_bt1">#00c2fff7</color>
     <color name="color_bg_bt2">#e4b38c</color>
+    <color name="red">#f55451</color>
+    <color name="blue">#518df5</color>
+    <color name="yeallow">#f5e551</color>
 </resources>
