@@ -35,10 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
-        mCallbackManager = CallbackManager.Factory.create();
         findView();
         HttpRequest.getInstance().init();
         HttpRequest.getInstance().setOnLoadDataListener(this);
@@ -46,64 +43,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findView() {
-        mLoginButton = (LoginButton) findViewById(R.id.login_button);
-        mProfilePictureView = (ProfilePictureView) findViewById(R.id.profile_picture);
-        mLoginButton.setOnClickListener(this);
         findViewById(R.id.button_change_activity).setOnClickListener(this);
-    }
-
-    public void registerCallback() {
-        mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        if (response != null) {
-                            mProfilePictureView.setProfileId(Profile.getCurrentProfile().getId());
-                            mProfilePictureView.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-                Bundle params = new Bundle();
-                params.putString(Constants.FIELD, Constants.PARAMS);
-                request.setParameters(params);
-                request.executeAsync();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void checkReadPermission() {
-        mLoginButton.setReadPermissions(Arrays.asList(Constants.PUBLIC_PROFILE, Constants.EMAIL));
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_button:
-                if (AccessToken.getCurrentAccessToken() == null) {
-                    checkReadPermission();
-                    registerCallback();
-                } else {
-                    mProfilePictureView.setVisibility(View.INVISIBLE);
-                }
-                break;
             case R.id.button_change_activity:
                 startActivity(new Intent(this, ChooseMarketActivity.class));
         }

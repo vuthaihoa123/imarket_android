@@ -21,4 +21,31 @@
     <string name="action_search">Search</string>
     <string name="search_title">Search</string>
     <string name="search_hint">Enter the key of product that you want to find</string>
+    <string name="login_hint_username">Username</string>
+    <string name="show_logo_app">show logo app</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_button_text">LOG IN</string>
+    <string name="login_button_log_in_with_facabook">LOG IN WITH FACEBOOK</string>
+    <string name="login_button_login_in_with_gmail">LOG IN  WITH GMAIL  </string>
+    <string name="login_forget_password"><u>Forget Password ?</u></string>
+    <string name="signup_full_name">Full Name</string>
+    <string name="signiup_register">register</string>
+    <string name="signup_required_information">Required information.</string>
+    <string name="signup_email_address">Email Address or Numberphone</string>
+    <string name="signup_confirm_password">Confirm Password</string>
+    <string name="signup_privacy_term">I have clearly read and understood the privacy terms</string>
+    <string name="forgtpassword_textt">Please enter your email address, we will send you a
+        password recovery link.</string>
+    <string name="confirm_forget_password">Confirm Password</string>
+    <string name="forget_cancel">Cancel</string>
+    <string name="forget_send">Send</string>
+    <string name="notification_user_pass">UserName or PassWord!</string>
+    <string name="permission">read_contact</string>
+    <string name="retry">Retry</string>
+    <string name="no_allow_print">if you read_contact, you can access gmail</string>
+    <string name="Settings">Setting</string>
+    <string name="err_msg_name">Enter your full name</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="err_msg_password">Enter the password</string>
+    <string name="err_msg_password_confirm">PassWord Confirm not like</string>
 </resources>
