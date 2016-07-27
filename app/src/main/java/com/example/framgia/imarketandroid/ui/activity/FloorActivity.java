@@ -17,9 +17,11 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
@@ -43,7 +45,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -58,41 +59,40 @@ import io.realm.RealmResults;
  * Created by toannguyen201194 on 19/07/2016.
  */
 public class FloorActivity extends AppCompatActivity implements AdapterView
-    .OnItemSelectedListener, OnMapReadyCallback, View.OnClickListener {
-    public static int statement = 0;
-    ArrayAdapter<Shop> mAdapterShop;
-    ArrayAdapter<Floor> mAdapterFloor;
-    Button control_but, delete_data, draw_path, getPath;
-    PolygonOptions rectOptions = new PolygonOptions();
-    private Spinner mSpinerFloor, mSpinnerProduct;
-    private List<Shop> mShopList = new ArrayList<>();
-    private List<Floor> mFloorList = new ArrayList<>();
-    //    DatabaseRemote remote;
+        .OnItemSelectedListener, OnMapReadyCallback, View.OnClickListener {
+    public static int sStatement = 0;
     private GoogleMap mMap;
-    private RealmResults<Point> mNodes = null;
-    private RealmResults mNodesDisplay = null;
-    private RealmList<Point> mVertexesHoa = new RealmList<>();
-    private RealmList<Edge> mEdgesHoa = new RealmList<>();
-    private List<Edge> mEdges;
+    private Spinner mSpinerFloor, mSpinnerProduct;
+    private Button mBtnControl, mBtnDelete, mBtnDraw, mBtnGetPath;
+    private Button mBtnDoneLocation, mBtnCancelLocation;
     private Dialog mDialog;
     private LinearLayout mLayoutLocation;
-    private Button mBtnDoneLocation, mBtnCancelLocation;
-    private String mMarkLocation;
-    private Polyline mline;
-    private boolean mCheckZoom = false;
+    private Switch mSwitchLocation;
     private List<Marker> mListMarker = new ArrayList<>();
-    private int mMileStones = 0, mStore = 0;
+    private List<Shop> mShopList = new ArrayList<>();
+    private List<Floor> mFloorList = new ArrayList<>();
+    private List<Edge> mEdges;
+    private List<Point> mNodes = null;
+    private RealmList<Point> mNodesDisplay = null;
+    private RealmList<Point> mVertexesHoa = new RealmList<>();
+    private RealmList<Edge> mEdgesHoa = new RealmList<>();
+    private ArrayAdapter<Shop> mAdapterShop;
+    private ArrayAdapter<Floor> mAdapterFloor;
+    private Polyline mline;
     private int mIndex, mIndexStore;
-    private int mCheckCurrent;
+    private boolean mCheckZoom = false;
+    private boolean mCheckSwitch = true;
+    private boolean mCheckCurrentLocation = false;
     private Point mCurrentLocation;
+    private Point mTargetLocation;
+    private int mFlagOne=1;
+    private int mFlagTWO=2;
+    private EditText mEdtDelete;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_floor);
-//        SharedPreferences preferences= getSharedPreferences("id_point", MODE_PRIVATE);
-//        SharedPreferences.Editor editor= preferences.edit();
-//        mIndex=preferences.getInt("idPoint",0);
         initMap();
         hideStatusBar();
         initViews();
@@ -101,32 +101,35 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-            .findFragmentById(R.id.map);
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mNodes = RealmRemote.getAll(Point.class);
-        mNodesDisplay = RealmRemote.getListPointDisplay(Point.class);
+        mNodes = RealmRemote.getAllPoint();
+        //  mNodesDisplay = RealmRemote.getListPointDisplay();
+        mNodesDisplay = RealmRemote.getListPointDisplay();
         mEdges = RealmRemote.getListEdge();
-        control_but = (Button) findViewById(R.id.show_dialog);
-        delete_data = (Button) findViewById(R.id.delete_data);
-        draw_path = (Button) findViewById(R.id.find_path);
-        draw_path.setOnClickListener(new View.OnClickListener() {
+        mBtnControl = (Button) findViewById(R.id.btn_show_dialog);
+        mBtnDelete = (Button) findViewById(R.id.btn_delete_data);
+        mBtnDraw = (Button) findViewById(R.id.btn_find_path);
+        mBtnDraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FloorActivity.statement = 2;
+                FloorActivity.sStatement = 2;
                 Intent intent = new Intent(FloorActivity.this, DialogActivity.class);
                 startActivity(intent);
             }
         });
-        getPath = (Button) findViewById(R.id.demo_find_way);
-        delete_data.setOnClickListener(new View.OnClickListener() {
+        mBtnGetPath = (Button) findViewById(R.id.btn_demo_find_way);
+        mEdtDelete = (EditText) findViewById(R.id.edt_delete);
+        mBtnDraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RealmRemote.deletePoint(mEdtDelete.getText().toString());
             }
         });
-        control_but.setOnClickListener(new View.OnClickListener() {
+        mBtnControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FloorActivity.statement = 1;
+                FloorActivity.sStatement = 1;
                 Intent intent = new Intent(FloorActivity.this, DialogActivity.class);
                 startActivity(intent);
             }
@@ -134,6 +137,19 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     }
 
     private void initViews() {
+        mSwitchLocation = (Switch) findViewById(R.id.switch1);
+        mSwitchLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mSwitchLocation.setText(R.string.find_store);
+                    mCheckSwitch = true;
+                } else {
+                    mSwitchLocation.setText(R.string.check_store);
+                    mCheckSwitch = false;
+                }
+            }
+        });
         mSpinerFloor = (Spinner) findViewById(R.id.spinner_choose_floor);
         mSpinnerProduct = (Spinner) findViewById(R.id.spinner_choose_product);
         mAdapterFloor = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mFloorList);
@@ -162,23 +178,25 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onClick(View v) {
                 if (edtLocation.getText().length() > 0) {
-                    String mLocation = edtLocation.getText().toString();
+                    String mLocation = edtLocation.getText().toString().toUpperCase();
                     mDialog.dismiss();
                     LatLng currentLatLng = null;
                     currentLatLng = RealmRemote.getLocationFromName(mLocation);
+                    mCurrentLocation = RealmRemote.getObjectPointFromName(mLocation);
                     if (currentLatLng != null) {
+                        mCheckCurrentLocation = true;
                         for (int i = 0; i < mListMarker.size(); i++) {
                             mListMarker.get(i).showInfoWindow();
                         }
                         setListMarker();
                         Marker marker = mMap.addMarker(new MarkerOptions().position(currentLatLng)
-                            .icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                                .icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
                         marker.showInfoWindow();
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
                     } else
-                        Toast.makeText(FloorActivity.this, "Khong tim thay cho nay",
-                            Toast.LENGTH_LONG).show();
+                        Toast.makeText(FloorActivity.this, R.string.warning_location,
+                                Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -210,9 +228,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     }
 
     private void createDataForFloor() {
-        Floor floor = new Floor(0, "Choose floor");
-        Floor floor1 = new Floor(1, "Tầng 1");
-        Floor floor2 = new Floor(2, "Tầng 2");
+        Floor floor = new Floor(0, getString(R.string.choose_floor));
+        Floor floor1 = new Floor(1, getString(R.string.first_floor));
+        Floor floor2 = new Floor(2, getString(R.string.second_floor));
         mFloorList.add(floor);
         mFloorList.add(floor1);
         mFloorList.add(floor2);
@@ -221,8 +239,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     private void createDataForShop() {
         if (mSpinerFloor.getSelectedItemPosition() > 0) {
-            Shop shop1 = new Shop(1, "Quần Áo");
-            Shop shop2 = new Shop(2, "Váy");
+            Shop shop1 = new Shop(1, getString(R.string.clother));
+            Shop shop2 = new Shop(2, getString(R.string.dress));
             mShopList.add(shop1);
             mShopList.add(shop2);
             Floor c = mFloorList.get(mSpinerFloor.getSelectedItemPosition());
@@ -234,7 +252,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private void hideStatusBar() {
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -269,25 +287,38 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mMap = googleMap;
         moveCamera();
         setListMarker();
+        //setListEdge();
         if (mEdges.size() > 0)
-            for (int i = 0; i < mEdges.size(); i++) {
-            }
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if (mCheckSwitch == true) {
+                        if (mCheckCurrentLocation == true) {
+                            mTargetLocation = RealmRemote.getObjectPointFromName(marker.getTitle());
+                            setDrawPath();
+                        } else
+                            Toast.makeText(FloorActivity.this, R.string.current_location_title, Toast
+                                    .LENGTH_LONG).show();
+                    }
+                    return false;
+                }
+            });
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 double lat = latLng.latitude;
                 double lng = latLng.longitude;
-                SharedPreferences preferences = getSharedPreferences("id_point", MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                mIndex = preferences.getInt("idPoint", 0);
+                mIndex = preferences.getInt(getString(R.string.idPoint), 0);
                 mIndex++;
-                editor.putInt("idPoint", mIndex);
+                editor.putInt(getString(R.string.idPoint), mIndex);
                 editor.commit();
-                Point mPoint = new Point(mIndex, lat, lng, 2, "M" + mIndex);
-                RealmRemote.saveObject(mPoint);
+                Point mPoint = new Point(mIndex, lat, lng, 2, getString(R.string.M) + mIndex);
+                RealmRemote.savePoint(mPoint);
                 Marker locationMarket = mMap.addMarker(
-                    new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude))
-                        .title(":" + mPoint.getName()));
+                        new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude))
+                                .title(mPoint.getName()));
                 locationMarket.showInfoWindow();
             }
         });
@@ -296,17 +327,17 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             public void onMapLongClick(LatLng latLng) {
                 double lat = latLng.latitude;
                 double lng = latLng.longitude;
-                SharedPreferences preferences = getSharedPreferences("id_store", MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                mIndexStore = preferences.getInt("idStore", 0);
+                mIndexStore = preferences.getInt(getString(R.string.idPoint), 0);
                 mIndexStore++;
-                editor.putInt("idStore", mIndexStore);
+                editor.putInt(getString(R.string.idPoint), mIndexStore);
                 editor.commit();
-                Point mPoint = new Point(mIndexStore, lat, lng, 1, "C" + mIndexStore);
-                RealmRemote.saveObject(mPoint);
+                Point mPoint = new Point(mIndexStore, lat, lng, 1, getString(R.string.C) + mIndexStore);
+                RealmRemote.savePoint(mPoint);
                 Marker locationMarket = mMap.addMarker(
-                    new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude))
-                        .title(":" + mPoint.getName()));
+                        new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude))
+                                .title(mPoint.getName()));
                 locationMarket.showInfoWindow();
             }
         });
@@ -316,16 +347,16 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         BitmapDescriptor BD = BitmapDescriptorFactory.fromResource(R.drawable.picture_aeon);
         LatLng bigC = new LatLng(21.026975, 105.899302);
         LatLngBounds newarkBounds = new LatLngBounds(
-            new LatLng(21.025933, 105.896914),
-            new LatLng(21.028660, 105.901372));
+                new LatLng(21.025933, 105.896914),
+                new LatLng(21.028660, 105.901372));
         GroundOverlayOptions goo =
-            new GroundOverlayOptions().image(BD).positionFromBounds(newarkBounds)
-                .bearing((float) 26.3248);
+                new GroundOverlayOptions().image(BD).positionFromBounds(newarkBounds)
+                        .bearing((float) 26.3248);
         GroundOverlay imageOverlay = mMap.addGroundOverlay(goo);
-        mMap.addMarker(new MarkerOptions().position(bigC).title("Big C"));
+        mMap.addMarker(new MarkerOptions().position(bigC).title(getString(R.string.name_commerce)));
         CameraPosition cameraPosition =
-            new CameraPosition.Builder().target(bigC).zoom((float) 19.5).bearing((float) -36.8)
-                .build();
+                new CameraPosition.Builder().target(bigC).zoom((float) 19.5).bearing((float) -36.8)
+                        .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(bigC));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
@@ -349,75 +380,87 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     private void setListMarker() {
         for (int i = 0; i < mNodesDisplay.size(); i++) {
-            /*MarkerOptions options = new MarkerOptions()
-                    .position(RealmRemote.getLocationFromName(mNodesDisplay.get(i).getName())).title(mNodesDisplay.get(i).getName());
+            MarkerOptions options = new MarkerOptions()
+                    .position(RealmRemote.getLocationFromName(mNodesDisplay.get(i).getName()))
+                    .title(mNodesDisplay.get(i).getName());
             Marker marker = mMap.addMarker(options);
-            mListMarker.add(marker);*/
+            mListMarker.add(marker);
         }
+    }
+
+    private void setListEdge() {
+        RealmResults<Edge> edges = RealmRemote.getListEdgeDisplay();
+        edges.size();
+        for (int i = 0; i < edges.size(); i++) {
+            mMap.addPolyline(new PolylineOptions().add(RealmRemote.getLocationFromName(edges.get(i).getNameStart()), RealmRemote.getLocationFromName(edges.get(i).getNameEnd())).width(2));
+        }
+        Toast.makeText(FloorActivity.this, " " + RealmRemote.getLocationFromName(edges.get(0).getNameEnd()).latitude, Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (DialogActivity.draw == 1) {
-//            LatLng first = remote.getObjectPointFromName(DialogActivity.firstPoint);
-//            LatLng second = remote.getObjectPointFromName(DialogActivity.secondPoint);
-            LatLng first = RealmRemote.getLocationFromName(DialogActivity.firstPoint);
-            LatLng second = RealmRemote.getLocationFromName(DialogActivity.secondPoint);
-            Polyline polyline = mMap.addPolyline(new PolylineOptions().add(first, second).width(2));
+        if (DialogActivity.sDraw == mFlagOne) {
+            LatLng first = RealmRemote.getLocationFromName(DialogActivity.sFirstPoint);
+            LatLng second;
             float results[] = new float[1];
-            Location
-                .distanceBetween(first.latitude, first.longitude, second.latitude, second.longitude,
-                    results);
-//            remote.saveEdge(
-//                    new Edge(DialogActivity.firstPoint, DialogActivity.secondPoint, results[0]));
-//            remote.saveEdge(
-//                    new Edge(DialogActivity.secondPoint, DialogActivity.firstPoint, results[0]));
-            RealmRemote.saveObject(new Edge(DialogActivity.firstPoint, DialogActivity.secondPoint,
-                results[0]));
-            RealmRemote.saveObject(new Edge(DialogActivity.secondPoint, DialogActivity.firstPoint,
-                results[0]));
-            DialogActivity.draw = 0;
+            String[] tempListPoint = DialogActivity.sSecondPoint.split(getString(R.string.comma));
+            for (int i = 0; i < tempListPoint.length; i++) {
+                second = RealmRemote.getLocationFromName(tempListPoint[i]);
+                Location
+                        .distanceBetween(first.latitude, first.longitude, second.latitude, second.longitude,
+                                results);
+                RealmRemote.saveEdge(
+                        new Edge(DialogActivity.sFirstPoint, tempListPoint[i], results[0]));
+                RealmRemote.saveEdge(
+                        new Edge(tempListPoint[i], DialogActivity.sFirstPoint, results[0]));
+                Polyline polyline = mMap.addPolyline(new PolylineOptions().add(first, second).width(2));
+                DialogActivity.sDraw = 0;
+            }
         }
-        if (DialogActivity.draw == 2) {
-            //  printRslt();
-            if (mline != null)
-                mline.remove();
-            mVertexesHoa.clear();
-            for (int i = 0; i < mNodes.size(); i++) {
-                Point p = mNodes.get(i);
-                mVertexesHoa.add(p);
-            }
-            mEdgesHoa.clear();
-            for (int i = 0; i < mEdges.size(); i++) {
-                Edge e = mEdges.get(i);
-                mEdgesHoa.add(e);
-            }
-            Graph graph = new Graph(mVertexesHoa, mEdgesHoa);
-            DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph, this);
-            Point vertexF = RealmRemote.getObjectPointFromName(DialogActivity.firstPoint);
-            dijkstra.execute(vertexF);
-            Point vertex1 = RealmRemote.getObjectPointFromName(DialogActivity.secondPoint);
-            LinkedList<Point> path = dijkstra.getPath(vertex1);
-            if (path != null)
-                for (int i = 0; i < path.size() - 1; i++) {
-                    LatLng src = RealmRemote.getLocationFromName(path.get(i).getName());
-                    LatLng dest = RealmRemote.getLocationFromName(path.get(i + 1).getName());
-                    // mMap is the Map Object
-                    mline = mMap.addPolyline(
+        if (DialogActivity.sDraw == mFlagTWO) {
+            setDrawPath();
+        }
+    }
+
+    public void setDrawPath() {
+        if (mline != null)
+            mline.remove();
+        mVertexesHoa.clear();
+        for (int i = 0; i < mNodes.size(); i++) {
+            Point p = mNodes.get(i);
+            mVertexesHoa.add(p);
+        }
+        mEdgesHoa.clear();
+        for (int i = 0; i < mEdges.size(); i++) {
+            Edge e = mEdges.get(i);
+            mEdgesHoa.add(e);
+        }
+        Graph graph = new Graph(mVertexesHoa, mEdgesHoa);
+        DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph, this);
+        Point vertexF = mCurrentLocation;
+        dijkstra.execute(vertexF);
+        Point vertex1 = mTargetLocation;
+
+        LinkedList<Point> path = dijkstra.getPath(vertex1);
+        if (path != null)
+            for (int i = 0; i < path.size() - 1; i++) {
+                LatLng src = RealmRemote.getLocationFromName(path.get(i).getName());
+                LatLng dest = RealmRemote.getLocationFromName(path.get(i + 1).getName());
+                mline = mMap.addPolyline(
                         new PolylineOptions().add(
-                            src, dest).width(2).color(Color.BLUE).geodesic(true)
-                    );
-                }
-            else
-                Toast.makeText(FloorActivity.this,
-                    "Không thể đến đây từ vị trí của bạn được " + mEdges.size(), Toast.LENGTH_LONG)
+                                src, dest).width(2).color(Color.BLUE).geodesic(true)
+                );
+            }
+        else
+            Toast.makeText(FloorActivity.this, R.string.current_location_warning + mEdges.size
+                    (), Toast.LENGTH_LONG)
                     .show();
-            DialogActivity.draw = 0;
-        }
+        DialogActivity.sDraw = 0;
     }
 
     @Override
     public void onClick(View v) {
+
     }
 }
