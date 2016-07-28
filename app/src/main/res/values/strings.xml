@@ -59,4 +59,5 @@
     <string name="schedule">Đặt lịch</string>
     <string name="book">Đặt hàng</string>
     <string name="favorite">Yêu thích</string>
+    <string name="back">back</string>
 </resources>

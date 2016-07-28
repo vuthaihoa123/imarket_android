@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.models.Market;
+import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
 
 import java.util.List;
 
@@ -68,9 +69,5 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
             textAddress = (TextView) itemView.findViewById(R.id.text_address);
             itemRecyclerMarket = itemView.findViewById(R.id.item_recycler_market);
         }
-    }
-
-    public interface OnRecyclerItemInteractListener {
-        void onItemClick(int position);
     }
 }
