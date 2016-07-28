@@ -48,4 +48,10 @@
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>
     <string name="err_msg_password_confirm">PassWord Confirm not like</string>
+    <string name="profile_editphoto">Edit Photo</string>
+    <string name="date_profile_birthday">Date</string>
+    <string name="hint_numberphone">NumberPhone</string>
+    <string name="hint_adress">Adress</string>
+    <string name="hint_mail">Mail</string>
+    <string name="item_save">Save</string>
 </resources>
