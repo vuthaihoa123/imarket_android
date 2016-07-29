@@ -81,4 +81,7 @@
     <dimen name="signup_margintop_textinput">10dp</dimen>
     <dimen name="singup_marginbottom">10dp</dimen>
     <dimen name="common_size_200">200dp</dimen>
+    <dimen name="text_xlarge_size">20sp</dimen>
+    <dimen name="width_preview">200dp</dimen>
+    <dimen name="width_book_view">100dp</dimen>
 </resources>

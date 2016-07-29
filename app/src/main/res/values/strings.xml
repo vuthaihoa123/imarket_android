@@ -54,4 +54,9 @@
     <string name="hint_adress">Adress</string>
     <string name="hint_mail">Mail</string>
     <string name="item_save">Save</string>
+    <!--book product option-->
+    <string name="call">Gọi điện</string>
+    <string name="schedule">Đặt lịch</string>
+    <string name="book">Đặt hàng</string>
+    <string name="favorite">Yêu thích</string>
 </resources>
