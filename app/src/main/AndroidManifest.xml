@@ -46,9 +46,7 @@
 
         <activity
             android:name=".ui.activity.CategoryStallActivity"
-            android:theme="@style/NoTitle">
-
-        </activity>
+            android:theme="@style/NoTitle"></activity>
 
         <activity
             android:name=".ui.activity.ListProductsActivity"

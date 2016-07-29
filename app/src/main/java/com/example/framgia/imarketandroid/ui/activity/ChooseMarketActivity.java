@@ -26,6 +26,7 @@ import com.example.framgia.imarketandroid.models.Market;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,11 @@ import java.util.List;
  * Created by yue on 20/07/2016.
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-        SearchView.OnQueryTextListener,OnRecyclerItemInteractListener {
-
+    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener {
     private static final String MARKET_SUGGESTION = "marketName";
     private static final String[] SUGGESTIONS = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain", "Viet Nam"
+        "Belgium", "France", "Italy", "Germany", "Spain", "Viet Nam"
     };
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
@@ -56,7 +56,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         setListeners();
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
@@ -70,11 +71,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         final String[] columns = new String[]{MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
-                null,
-                columns,
-                displayViews,
-                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+            android.R.layout.simple_list_item_1,
+            null,
+            columns,
+            displayViews,
+            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mAdapter.setOnRecyclerItemInteractListener(this);
     }
 
@@ -82,7 +83,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_choose_market, menu);
         SearchView searchView = (SearchView)
-                MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+            MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
@@ -104,7 +105,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View view) {
-
     }
 
     @Override
@@ -120,7 +120,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(int position) {
-        startActivity(new Intent(this,CategoryStallActivity.class));
+        startActivity(new Intent(this, CategoryStallActivity.class));
     }
 
     private void findViews() {

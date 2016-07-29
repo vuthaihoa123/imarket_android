@@ -60,4 +60,5 @@
     <string name="book">Đặt hàng</string>
     <string name="favorite">Yêu thích</string>
     <string name="back">back</string>
+    <string name="msg_login_invaild">Username or Password is not right</string>
 </resources>
