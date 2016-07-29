@@ -89,7 +89,6 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         }
         AppEventsLogger.activateApp(getContext());
         mCallbackManager = CallbackManager.Factory.create();
-        initView();
         createBuilderGoogleApi();
         return mView;
     }
@@ -98,6 +97,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findView();
+        initView();
     }
 
     private void findView() {

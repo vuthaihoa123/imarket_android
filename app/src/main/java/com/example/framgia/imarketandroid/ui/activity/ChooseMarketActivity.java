@@ -1,5 +1,6 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
+import android.content.Intent;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -24,6 +25,7 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.models.Market;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
+import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ import java.util.List;
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-        SearchView.OnQueryTextListener, RecyclerMarketAdapter.OnRecyclerItemInteractListener {
+        SearchView.OnQueryTextListener,OnRecyclerItemInteractListener {
 
     private static final String MARKET_SUGGESTION = "marketName";
     private static final String[] SUGGESTIONS = new String[]{
@@ -118,7 +120,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(int position) {
-
+        startActivity(new Intent(this,CategoryStallActivity.class));
     }
 
     private void findViews() {

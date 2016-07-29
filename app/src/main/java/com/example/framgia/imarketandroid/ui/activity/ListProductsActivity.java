@@ -10,8 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.databases.DatabaseTable;
 import com.example.framgia.imarketandroid.models.ItemProduct;
@@ -30,6 +33,7 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ItemProduct> mItemProducts = new ArrayList<>();
     private DatabaseTable mDataBase;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,12 +127,15 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRvListProducts.setHasFixedSize(true);
-
+        mToolbar= (Toolbar) findViewById(R.id.toolbar);
         // use a gridview layout manager
         mLayoutManager = new GridLayoutManager(this, NUMBER_OF_COLS);
         mRvListProducts.setLayoutManager(mLayoutManager);
         mAdapter = new ListProductsAdapter(this, mItemProducts);
         mRvListProducts.setAdapter(mAdapter);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
     private ArrayList<ItemProduct> getListProducts() {
@@ -181,5 +188,15 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         } else
             updateListProducts(newText);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

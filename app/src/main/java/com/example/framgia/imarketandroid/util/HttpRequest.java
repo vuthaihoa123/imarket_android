@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HttpRequest {
 
-    private static final String BASE_URL = "http://172.16.0.184:8000/api/";
+    private static final String BASE_URL = "https://imarket-api.herokuapp.com/api/";
     private static HttpRequest sInstance;
     private Retrofit mRetrofit;
     private IMarketApiEndPoint mApi;
@@ -49,7 +49,7 @@ public class HttpRequest {
             @Override
             public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
                 if (mListener != null) {
-                    mListener.onLoadDataSuccess(response.body());
+                    mListener.onLoadDataSuccess(response.body().getList());
                 }
             }
 
