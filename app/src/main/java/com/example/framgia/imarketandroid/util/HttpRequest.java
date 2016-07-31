@@ -2,7 +2,13 @@ package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.data.CategoryList;
 import com.example.framgia.imarketandroid.models.Session;
+import com.example.framgia.imarketandroid.models.SignupModel;
+import com.google.gson.Gson;
 
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,8 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HttpRequest {
     private static final String BASE_URL = "https://imarket-api.herokuapp.com/api/";
-    private static final String LOGIN_URL = "https://imarket-api.herokuapp.com";
     private static HttpRequest sInstance;
+    private static OkHttpClient mClient;
     private Retrofit mRetrofit;
     private IMarketApiEndPoint mApi;
     private OnLoadDataListener mListener;
@@ -24,6 +30,9 @@ public class HttpRequest {
     }
 
     public static HttpRequest getInstance() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        mClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         if (sInstance == null) {
             synchronized (HttpRequest.class) {
                 if (sInstance == null) {
@@ -40,12 +49,7 @@ public class HttpRequest {
 
     public void init() {
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
-            addConverterFactory(GsonConverterFactory.create()).build();
-    }
-
-    public void initLogin() {
-        mRetrofit = new Retrofit.Builder().baseUrl(LOGIN_URL).
-            addConverterFactory(GsonConverterFactory.create()).build();
+            addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
     }
 
     public void loadCategories() {
@@ -68,9 +72,9 @@ public class HttpRequest {
         });
     }
 
-    public void login(Session user) {
+    public void login(Session session) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<Session> call = mApi.login(user);
+        Call<Session> call = mApi.login(session);
         call.enqueue(new Callback<Session>() {
             @Override
             public void onResponse(Call<Session> call, Response<Session> response) {
@@ -81,6 +85,35 @@ public class HttpRequest {
 
             @Override
             public void onFailure(Call<Session> call, Throwable t) {
+                if (mListener != null) {
+                    mListener.onLoadDataFailure(t.getMessage());
+                }
+            }
+        });
+    }
+
+    public void register(SignupModel user) {
+        mApi = mRetrofit.create(IMarketApiEndPoint.class);
+        Call<SignupModel> callRegister = mApi.register(user);
+        callRegister.enqueue(new Callback<SignupModel>() {
+            @Override
+            public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
+                if (response.isSuccessful() && mListener != null) {
+                    mListener.onLoadDataSuccess(response.body());
+                } else {
+                    SignupModel signupModel = null;
+                    try {
+                        signupModel =
+                            new Gson().fromJson(response.errorBody().string(), SignupModel.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mListener.onLoadDataSuccess(signupModel);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignupModel> call, Throwable t) {
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }

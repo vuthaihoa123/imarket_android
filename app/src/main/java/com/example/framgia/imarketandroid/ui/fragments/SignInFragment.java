@@ -2,6 +2,7 @@ package com.example.framgia.imarketandroid.ui.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -73,6 +74,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     private int mStartIndex = 0;
     private int mSubLetter = 2;
     private SharedPreferences mSharedpreferences;
+    private ProgressDialog mProgressDialog;
     private ConnectionResult mConnectionResult;
 
     public SignInFragment() {
@@ -188,11 +190,16 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         } else {
             final Session session = new Session(mEditUsername.getText().toString(), mEditPassword
                 .getText().toString());
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.progressdialog));
+            mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.show();
             HttpRequest.getInstance().login(session);
             HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
                 @Override
                 public void onLoadDataSuccess(Object object) {
                     Session session = (Session) object;
+                    mProgressDialog.dismiss();
                     if (session == null) {
                         Toast.makeText(getContext(), R.string.msg_login_invaild, Toast
                             .LENGTH_SHORT)
@@ -201,6 +208,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
                         SharedPreferencesUtil.getInstance().save(session);
                         Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
                         startActivity(intent);
+                        getActivity().finish();
                     }
                 }
 

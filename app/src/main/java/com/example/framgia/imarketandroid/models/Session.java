@@ -14,26 +14,30 @@ public class Session {
     private String mPassword;
     @SerializedName("full_name")
     private String mFullname;
-    @SerializedName("errors")
-    private String mError;
+    @SerializedName("password_confirmation")
+    private String mPasswordConfirm;
 
     public Session() {
     }
 
-    public void setUsername(String username) {
+    public Session(String username, String password) {
         mUsername = username;
-    }
-
-    public void setPassword(String password) {
         mPassword = password;
     }
 
-    public void setFullname(String fullname) {
+    public Session(String fullname, String username, String password, String passwordConfirm) {
         mFullname = fullname;
+        mUsername = username;
+        mPassword = password;
+        mPasswordConfirm = passwordConfirm;
     }
 
-    public void setError(String error) {
-        mError = error;
+    public String getPasswordConfirm() {
+        return mPasswordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        mPasswordConfirm = passwordConfirm;
     }
 
     public String getId() {
@@ -44,24 +48,27 @@ public class Session {
         mId = id;
     }
 
-    public Session(String username, String password) {
-        mUsername = username;
-        mPassword = password;
-    }
-
-    public String getError() {
-        return mError;
-    }
-
     public String getFullname() {
         return mFullname;
+    }
+
+    public void setFullname(String fullname) {
+        mFullname = fullname;
     }
 
     public String getUsername() {
         return mUsername;
     }
 
+    public void setUsername(String username) {
+        mUsername = username;
+    }
+
     public String getPassword() {
         return mPassword;
+    }
+
+    public void setPassword(String password) {
+        mPassword = password;
     }
 }

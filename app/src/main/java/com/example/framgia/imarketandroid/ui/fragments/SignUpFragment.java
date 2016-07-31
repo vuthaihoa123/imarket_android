@@ -1,18 +1,26 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.models.Session;
+import com.example.framgia.imarketandroid.models.SignupModel;
+import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
+import com.example.framgia.imarketandroid.util.HttpRequest;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 /**
  * Created by toannguyen201194 on 22/07/2016.
@@ -22,6 +30,7 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
     private TextInputLayout mInputFullName, mInputPassword, mInputConfirmPass, mInputmail;
     private EditText mEditFullName, mEditMail, mEditPassword, mEditPasswordConfirm;
     private Button mButtonRegister;
+    private ProgressDialog mProgressDialog;
 
     public SignUpFragment() {
         super();
@@ -79,8 +88,34 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
         }
         if (!checkPasswordConfirm()) {
             return;
+        } else {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.progressdialog));
+            mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.show();
+            Session user=new Session(mEditFullName.getText().toString(),mEditMail.getText()
+                .toString(),mEditPassword.getText().toString(),mEditPasswordConfirm.getText().toString());
+            final SignupModel signupModel=new SignupModel(user);
+            HttpRequest.getInstance().register(signupModel);
+            HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    SignupModel signupModel1 =(SignupModel) object;
+                    mProgressDialog.dismiss();
+                    if(signupModel1.getErrors().getEmail().get(0).isEmpty()){
+                        Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else{
+                        Toast.makeText(getContext(), signupModel1.getErrors().getEmail().get(0),Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onLoadDataFailure(String message) {
+                }
+            });
         }
-        // TODO: 26/07/2016 request server at here
     }
 
     private boolean validate(EditText editText, TextInputLayout inputLayout, int error) {
