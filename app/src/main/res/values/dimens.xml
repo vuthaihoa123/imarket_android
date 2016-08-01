@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="layout_margin_comment">10dp</dimen>
-    <dimen name="layout_width_right_area">200dp</dimen>
+    <dimen name="layout_width_right_area">180dp</dimen>
     <dimen name="layout_height_spinner">40dp</dimen>
     <dimen name="layout_margin_left">5dp</dimen>
     <dimen name="layout_margin_right">5dp</dimen>
@@ -22,7 +22,7 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
-    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="recycler_item_default_space">5dp</dimen>
     <dimen name="recycler_market_item_space">15dp</dimen>
@@ -41,7 +41,10 @@
     <dimen name="common_size_8">8dp</dimen>
     <dimen name="common_size_9">9dp</dimen>
     <dimen name="common_size_10">10dp</dimen>
+    <dimen name="common_size_15">15dp</dimen>
     <dimen name="common_size_20">20dp</dimen>
+    <dimen name="common_size_30">30dp</dimen>
+    <dimen name="common_size_35">35dp</dimen>
     <dimen name="common_size_40">40dp</dimen>
     <dimen name="common_size_150">150dp</dimen>
 
@@ -59,6 +62,8 @@
     <dimen name="common_text_size_11">20sp</dimen>
     <dimen name="common_text_size_12">21sp</dimen>
     <dimen name="common_text_size_13">22sp</dimen>
+    <dimen name="common_text_size_14">23sp</dimen>
+    <dimen name="common_text_size_15">24sp</dimen>
     <dimen name="padding_10dp">10dp</dimen>
     <dimen name="padding_5dp">5dp</dimen>
     <dimen name="radius_border">10dp</dimen>
