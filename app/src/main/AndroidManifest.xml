@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.framgia.imarketandroid">
+          package="com.example.framgia.imarketandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -25,11 +25,12 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
         <activity android:name=".ui.activity.ChooseMarketActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -40,13 +41,13 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.FloorActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.UpdateProfileActivity" />
+            android:screenOrientation="landscape"/>
 
-        <activity
-            android:name=".ui.activity.CategoryStallActivity"
-            android:theme="@style/NoTitle"></activity>
+        <activity android:name=".ui.activity.CategoryStallActivity"/>
+
+        <activity android:name=".ui.activity.LoginActivity"/>
+
+        <activity android:name=".ui.activity.UpdateProfileActivity"/>
 
         <activity
             android:name=".ui.activity.ListProductsActivity"

@@ -24,7 +24,7 @@
                 android:layout_height="@dimen/common_size_200"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/common_size_20"
-                android:background="@drawable/ic_backgroud_profile">
+                android:background="@drawable/background_profile">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"

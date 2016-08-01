@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/main_menu"
+        android:checkableBehavior="single"
+        android:visible="true">
+
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
@@ -17,5 +21,21 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Tools"/>
+    </group>
+
+    <group
+        android:id="@+id/sub_menu"
+        android:checkableBehavior="single"
+        android:visible="false">
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="Profile"/>
+
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/ic_sign_out"
+            android:title="Sign Out"/>
     </group>
 </menu>

@@ -20,9 +20,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.models.DrawerItem;
 import com.example.framgia.imarketandroid.models.Market;
+import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
@@ -47,12 +51,30 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private RecyclerMarketAdapter mAdapter;
     private List<Market> mMarkets = new ArrayList<>();
     private CursorAdapter mSearchSuggestionAdapter;
+    private TextView mTextEmail;
+    private ImageView mImageAvatar;
+    private List<DrawerItem> mDrawerItems = new ArrayList<>();
+    private RecyclerView mRecyclerDrawer;
+    private RecyclerDrawerAdapter mRecyclerDrawerAdapter;
+    private View mStrokeLine1, mStrokeLine2, mStrokeLine3;
+    private View mLinearMenu;
+    private View mButtonSignIn, mButtonProfile, mButtonSignOut;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_market);
         findViews();
+        mRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
+        for (int i = 0; i < 16; i++) {
+            if (i != 15) {
+                mDrawerItems.add(new DrawerItem("Test " + (i + 1), "test"));
+            } else {
+                mDrawerItems.add(new DrawerItem("Test 16", "test", true));
+            }
+        }
+        mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(mDrawerItems);
+        mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
         setListeners();
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -105,6 +127,30 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_favorite:
+                mStrokeLine1.setVisibility(View.VISIBLE);
+                mStrokeLine2.setVisibility(View.GONE);
+                mStrokeLine3.setVisibility(View.GONE);
+                break;
+            case R.id.button_bought:
+                mStrokeLine1.setVisibility(View.GONE);
+                mStrokeLine2.setVisibility(View.VISIBLE);
+                mStrokeLine3.setVisibility(View.GONE);
+                break;
+            case R.id.button_follow:
+                mStrokeLine1.setVisibility(View.GONE);
+                mStrokeLine2.setVisibility(View.GONE);
+                mStrokeLine3.setVisibility(View.VISIBLE);
+                break;
+            case R.id.button_more:
+                if (mLinearMenu.getVisibility() == View.GONE) {
+                    mLinearMenu.setVisibility(View.VISIBLE);
+                } else {
+                    mLinearMenu.setVisibility(View.GONE);
+                }
+                break;
+        }
     }
 
     @Override
@@ -127,10 +173,21 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mRecyclerMarket = (RecyclerView) findViewById(R.id.recycler_market);
+        mRecyclerDrawer = (RecyclerView) findViewById(R.id.recycler_navigation_drawer);
+        mStrokeLine1 = findViewById(R.id.nav_drawer_stroke_1);
+        mStrokeLine2 = findViewById(R.id.nav_drawer_stroke_2);
+        mStrokeLine3 = findViewById(R.id.nav_drawer_stroke_3);
+        mLinearMenu = findViewById(R.id.linear_menu);
+        mButtonSignIn = findViewById(R.id.button_sign_in);
+        mButtonProfile = findViewById(R.id.button_profile);
+        mButtonSignOut = findViewById(R.id.button_sign_out);
     }
 
     private void setListeners() {
-        ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
+        findViewById(R.id.button_favorite).setOnClickListener(this);
+        findViewById(R.id.button_bought).setOnClickListener(this);
+        findViewById(R.id.button_follow).setOnClickListener(this);
+        findViewById(R.id.button_more).setOnClickListener(this);
     }
 
     private void populateSuggestionAdapter(String query) {
