@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(getApplicationContext());
         setContentView(R.layout.activity_login);
         initViews();
-        HttpRequest.getInstance().initLogin();
+        HttpRequest.getInstance().init();
     }
 
     private void initViews() {
