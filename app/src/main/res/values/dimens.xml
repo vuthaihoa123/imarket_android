@@ -89,4 +89,7 @@
     <dimen name="text_xlarge_size">20sp</dimen>
     <dimen name="width_preview">200dp</dimen>
     <dimen name="width_book_view">100dp</dimen>
+    <dimen name="height_item_cart">150dp</dimen>
+    <dimen name="width_preview_cart">120dp</dimen>
+    <dimen name="delete_button_size">40dp</dimen>
 </resources>

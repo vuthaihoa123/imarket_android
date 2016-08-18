@@ -62,4 +62,6 @@
     <string name="back">back</string>
     <string name="msg_login_invaild">Username or Password is not right</string>
     <string name="progressdialog">Authenticating...</string>
+    <string name="total">Tổng:</string>
+    <string name="unitVietMoney">đ</string>
 </resources>
