@@ -1,17 +1,21 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.services.NotificationEventReceiver;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.Calendar;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,4 +39,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, ChooseMarketActivity.class));
         }
     }
+
 }
