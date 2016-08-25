@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import com.bumptech.glide.Glide;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
+import com.example.framgia.imarketandroid.ui.activity.OrderActivity;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,17 @@ public class PreviewProductAdapter extends RecyclerView.Adapter<PreviewProductAd
         mContext = context;
         mItems = myItems;
         mInfoView = infoView;
-        mIvPreview = (ImageView) ((DetailsProductActivity) mContext).findViewById(R.id.iv_preview);
+        if (mContext instanceof DetailsProductActivity) {
+            mIvPreview = (ImageView) ((DetailsProductActivity) mContext).findViewById(R.id.iv_preview);
+        } else if (mContext instanceof OrderActivity) {
+            mIvPreview = (ImageView) ((OrderActivity) mContext).findViewById(R.id.iv_preview);
+        }
         showPreview(false);
+    }
+
+    public PreviewProductAdapter(Context context, ArrayList<Integer> myItems) {
+        mContext = context;
+        mItems = myItems;
     }
 
     public void setItems(ArrayList<Integer> items) {

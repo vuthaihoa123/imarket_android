@@ -64,4 +64,13 @@
     <string name="progressdialog">Authenticating...</string>
     <string name="total">Tổng:</string>
     <string name="unitVietMoney">đ</string>
+    <string name="soluong">Số lượng:</string>
+    <string name="muangay">Mua ngay</string>
+    <string name="sanpham">Sản phẩm:</string>
+    <string name="giasanpham">Giá sản phẩm:</string>
+    <string name="chiphiphatsinh">Chi phí phát sinh:</string>
+    <string name="thanhtien">Thành tiền:</string>
+    <string name="phuongthucnhanhang">Phương thức nhận hàng</string>
+    <string name="tructiep">Trực tiếp</string>
+    <string name="chuyenhang">Chuyển hàng</string>
 </resources>
