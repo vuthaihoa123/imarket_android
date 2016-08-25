@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.ui.adapter.PreviewProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.SpinnerArrayAdapter;
 import com.example.framgia.imarketandroid.ui.views.CustomSpinner;
@@ -70,12 +71,12 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void handleEvents() {
-        long giaSp = 18600000;
-        long chiphiPhatsinh = 50000;
-        mTvName.setText(getResources().getString(R.string.sanpham) + " Iphone 6S Plus");
-        mTvPrice.setText(getResources().getString(R.string.giasanpham) + " " + SystemUtil.formatMoneyStr(giaSp) + "đ");
-        mTvRedundance.setText(getResources().getString(R.string.chiphiphatsinh) + " " + SystemUtil.formatMoneyStr(chiphiPhatsinh) + "đ");
-        mTvTotPrice.setText(getResources().getString(R.string.thanhtien) + " " + SystemUtil.formatMoneyStr(giaSp+chiphiPhatsinh) + "đ");
+        long giaSp = FakeContainer.GIA_SP;
+        long chiphiPhatsinh = FakeContainer.CHI_PHI_PHAT_SINH;
+        mTvName.setText(getResources().getString(R.string.sanpham) + FakeContainer.getNameProduct());
+        mTvPrice.setText(getResources().getString(R.string.giasanpham) + SystemUtil.formatMoneyStr(giaSp));
+        mTvRedundance.setText(getResources().getString(R.string.chiphiphatsinh) + SystemUtil.formatMoneyStr(chiphiPhatsinh));
+        mTvTotPrice.setText(getResources().getString(R.string.thanhtien) + SystemUtil.formatMoneyStr(giaSp+chiphiPhatsinh));
         mTvQuantity.setText(""+mQuantity);
         mIvAscendQuan.setOnClickListener(mClickListener);
         mIvDescendQuan.setOnClickListener(mClickListener);
@@ -130,17 +131,9 @@ public class OrderActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductOrderLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRvProductOrder.setLayoutManager(mProductOrderLayoutManager);
-        mProductOrderAdapter = new PreviewProductAdapter(this, initIdResList(), (ScrollView) findViewById(R.id.sv_order));
+        mProductOrderAdapter = new PreviewProductAdapter(this, FakeContainer.initIdResList(),
+                (ScrollView) findViewById(R.id.sv_order));
         mRvProductOrder.setAdapter(mProductOrderAdapter);
-    }
-
-    private ArrayList<Integer> initIdResList() {
-        ArrayList<Integer> list = new ArrayList<>();
-        int numFakePreviews = 7;
-        for (int i = 0; i < numFakePreviews; i++) {
-            list.add(R.drawable.ic_htc_preview_01 + i);
-        }
-        return list;
     }
 
     @Override

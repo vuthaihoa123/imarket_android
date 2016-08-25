@@ -10,6 +10,13 @@ import android.widget.TextView;
  */
 public class SkewTextView extends TextView {
     private Context mContext;
+    private float mSkewX = 1.0f;
+    private float mSkewY = 0.3f;
+    private float mFromDegree = -20;
+    private float mToDegree = 30;
+    private float mCenterX = 200;
+    private float mCenterY = 200;
+    private float mDepthZ = 0;
 
     public SkewTextView(Context context) {
         super(context);
@@ -29,11 +36,10 @@ public class SkewTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.skew(1.0f, 0.3f);  //you need to change values over here
+        canvas.skew(mSkewX, mSkewY);  //you need to change values over here
         Rotate3dAnimation skew = new Rotate3dAnimation(
-                -20, 30, 200, 200, 0, false);   //here too
+                mFromDegree, mToDegree, mCenterX, mCenterY, mDepthZ, false);   //here too
         startAnimation(skew);
-
     }
 }
 

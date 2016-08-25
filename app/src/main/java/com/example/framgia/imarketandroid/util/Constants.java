@@ -23,4 +23,20 @@ public class Constants {
     public static final String USERNAME = "username";
     public static final String FULLNAME = "fullname";
     public static final String NAMESERVICE = "NotificationService";
+    public static final String BASE_URL = "https://imarket-api.herokuapp.com/api/";
+    public static final String NO_PERCENT = "0%";
+    public static final String MARKET_SUGGESTION = "marketName";
+    public static final int COLS_LIST_PRODUCT = 2;
+    public static final String COL_NAME_PRODUCT = "NAME_PRODUCT";
+    public static final String COL_PERCENT_PROMOTION = "PERCENTPROMOTION";
+    public static final String DATABASE_NAME = "LIST_PRODUCTS";
+    public static final String NAME_TABLE = "FTS";
+    public static final String MATCH_SYNTAX = " MATCH ?";
+    public static final String QUERY_ALL = "*";
+    public static final String CREATE_VIRTUAL_TABLE_SYNTAX = "CREATE VIRTUAL TABLE ";
+    public static final String USING_VIRTUAL_TABLE_SYNTAX = " USING fts3 (";
+    public static final String SEPARATION_SYNTAX = ", ";
+    public static final String CLOSE_SYNTAX = ")";
+    public static final String DEL_TABLE_SYNTAX = "DROP TABLE IF EXISTS ";
+    public static final String PATTERN_SEPARATION = "-";
 }

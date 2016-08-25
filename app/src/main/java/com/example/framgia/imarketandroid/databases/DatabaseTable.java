@@ -8,10 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.util.Flog;
+import com.example.framgia.imarketandroid.util.Constants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,11 +22,10 @@ import java.io.InputStreamReader;
  */
 public class DatabaseTable {
     //The columns we'll include in the dictionary table
-    public static final String COL_NAME_PRODUCT = "NAME_PRODUCT";
-    public static final String COL_PERCENTPROMOTION = "PERCENTPROMOTION";
-    private static final String TAG = "DatabaseTable";
-    private static final String DATABASE_NAME = "LIST_PRODUCTS";
-    private static final String FTS_VIRTUAL_TABLE = "FTS";
+    public static final String COL_NAME_PRODUCT = Constants.COL_NAME_PRODUCT;
+    public static final String COL_PERCENTPROMOTION = Constants.COL_PERCENT_PROMOTION;
+    private static final String DATABASE_NAME = Constants.DATABASE_NAME;
+    private static final String FTS_VIRTUAL_TABLE = Constants.NAME_TABLE;
     private static final int DATABASE_VERSION = 1;
     private final DatabaseOpenHelper mDatabaseOpenHelper;
 
@@ -36,8 +34,8 @@ public class DatabaseTable {
     }
 
     public Cursor getProductMatches(String query, String[] columns) {
-        String selection = COL_NAME_PRODUCT + " MATCH ?";
-        String[] selectionArgs = new String[]{query + "*"};
+        String selection = COL_NAME_PRODUCT + Constants.MATCH_SYNTAX;
+        String[] selectionArgs = new String[]{query + Constants.QUERY_ALL};
         return query(selection, selectionArgs, columns);
     }
 
@@ -57,10 +55,10 @@ public class DatabaseTable {
 
     private static class DatabaseOpenHelper extends SQLiteOpenHelper {
         private static final String FTS_TABLE_CREATE =
-            "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE +
-                " USING fts3 (" +
-                COL_NAME_PRODUCT + ", " +
-                COL_PERCENTPROMOTION + ")";
+            Constants.CREATE_VIRTUAL_TABLE_SYNTAX + FTS_VIRTUAL_TABLE +
+                Constants.USING_VIRTUAL_TABLE_SYNTAX +
+                COL_NAME_PRODUCT + Constants.SEPARATION_SYNTAX +
+                COL_PERCENTPROMOTION + Constants.CLOSE_SYNTAX;
         private final Context mHelperContext;
         private SQLiteDatabase mDatabase;
 
@@ -78,9 +76,7 @@ public class DatabaseTable {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-                + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS " + FTS_VIRTUAL_TABLE);
+            db.execSQL(Constants.DEL_TABLE_SYNTAX + FTS_VIRTUAL_TABLE);
             onCreate(db);
         }
 
@@ -103,12 +99,9 @@ public class DatabaseTable {
             try {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String[] strings = TextUtils.split(line, "-");
+                    String[] strings = TextUtils.split(line, Constants.PATTERN_SEPARATION);
                     if (strings.length < 2) continue;
-                    long id = addProduct(strings[0].trim(), strings[1].trim());
-                    if (id < 0) {
-                        Flog.i("unable to add product: " + strings[0].trim());
-                    }
+                    addProduct(strings[0].trim(), strings[1].trim());
                 }
             } finally {
                 reader.close();

@@ -48,8 +48,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         final CartItem cartItem = mItems.get(position);
         holder.mIvPreviewCart.setImageResource(cartItem.getIdRes());
         holder.mTvNameCart.setText(cartItem.getNameProduct());
-        holder.mTvPriceCart.setText(SystemUtil.formatMoneyStr(cartItem.getPriceProduct())
-                +mContext.getResources().getString(R.string.unitVietMoney));
+        holder.mTvPriceCart.setText(SystemUtil.formatMoneyStr(cartItem.getPriceProduct()));
         holder.mIvAscendQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +69,8 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         holder.mIvDelProductCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Remove " + cartItem.getNameProduct(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.remove) + " "
+                        + cartItem.getNameProduct(), Toast.LENGTH_SHORT).show();
                 cartItem.setIsDeleted(true);
                 mItems.remove(cartItem);
                 notifyDataSetChanged();

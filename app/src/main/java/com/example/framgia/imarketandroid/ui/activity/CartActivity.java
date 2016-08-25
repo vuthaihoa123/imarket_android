@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.models.CartItem;
 import com.example.framgia.imarketandroid.models.ItemBooking;
 import com.example.framgia.imarketandroid.ui.adapter.CartProductAdapter;
@@ -54,18 +55,16 @@ public class CartActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductCartLayoutManager = new LinearLayoutManager(this);
         mRvProductCart.setLayoutManager(mProductCartLayoutManager);
-        mProductCartAdapter = new CartProductAdapter(this, initCartProductList());
+        mProductCartAdapter = new CartProductAdapter(this, FakeContainer.initCartProductList());
         mRvProductCart.setAdapter(mProductCartAdapter);
 
         mTotalPrice = (TextView) findViewById(R.id.tv_total_price);
-        mTotalPrice.setText(getResources().getString(R.string.total) + " " + SystemUtil.formatMoneyStr(calTotalPrice())
-                + getResources().getString(R.string.unitVietMoney));
+        mTotalPrice.setText(getResources().getString(R.string.total) + SystemUtil.formatMoneyStr(calTotalPrice()));
         mBtAccept = (AppCompatButton) findViewById(R.id.bt_accept);
         mBtAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CartActivity.this,
-                        "Click accept button", Toast.LENGTH_SHORT).show();
+                //TODO:
             }
         });
     }
@@ -73,23 +72,9 @@ public class CartActivity extends AppCompatActivity {
     private long calTotalPrice() {
         long totPrice = 0;
         ArrayList<CartItem> list = ((CartProductAdapter)mProductCartAdapter).getItems();
-        Flog.i("size: "+list.size());
         for (int i = 0; i < list.size(); i++) {
             totPrice += list.get(i).getQuantity() * list.get(i).getPriceProduct();
         }
         return totPrice;
-    }
-
-    private ArrayList<CartItem> initCartProductList() {
-        ArrayList<CartItem> list = new ArrayList<>();
-        list.add(new CartItem(R.drawable.ic_iphone6s, "Iphone 6S", 16000000, 1, false));
-        list.add(new CartItem(R.drawable.ic_iphone5s, "Iphone 5S", 14000000, 1, false));
-        list.add(new CartItem(R.drawable.ic_htc_one, "HTC One", 12000000, 1, false));
-        list.add(new CartItem(R.drawable.ic_sky_a850, "Sky A850", 4000000, 1, false));
-        list.add(new CartItem(R.drawable.ic_lg_optimus, "LG Optimus", 9000000, 1, false));
-        list.add(new CartItem(R.drawable.ic_window_phone, "Window Phone", 6000000, 1, false));
-        list.add(new CartItem(R.drawable.ic_blackberry, "Blackberry", 12000000, 1, false));
-        list.add(new CartItem(R.drawable.ic_nokia_n8, "Nokia", 5000000, 1, false));
-        return list;
     }
 }
