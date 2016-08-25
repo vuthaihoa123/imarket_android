@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="@dimen/padding_30"
+            android:layout_marginTop="@dimen/layout_margin_comment"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@string/email"
+                android:textSize="@dimen/common_text_size_3"
+                android:textColor="@color/text_color"
+                android:textStyle="italic"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_email_book_product"
+                    android:hint="@string/hint_mail_tungb"
+                    android:textSize="@dimen/common_text_size_11"
+                    android:textColorHint="@color/text_color4"
+                    android:textColor="@color/text_color3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/button_clear_email"
+                    android:background="@drawable/ic_clear"
+                    android:layout_width="@dimen/width_height_34"
+                    android:layout_gravity="right"
+                    android:layout_height="@dimen/width_height_34" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_marginTop="@dimen/layout_margin_comment"
+                android:layout_width="match_parent"
+                android:text="@string/phone_number"
+                android:textSize="@dimen/common_text_size_3"
+                android:textColor="@color/text_color"
+                android:textStyle="italic"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edit_phone_book_product"
+                    android:hint="@string/hint_number"
+                    android:textSize="@dimen/common_text_size_11"
+                    android:textColorHint="@color/text_color4"
+                    android:textColor="@color/text_color3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/button_clear_phonenumber"
+                    android:background="@drawable/ic_clear"
+                    android:layout_width="@dimen/width_height_34"
+                    android:layout_gravity="right"
+                    android:layout_height="@dimen/width_height_34" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/layout_margin_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mua_online"
+                    android:textSize="@dimen/common_text_size_11"
+                    android:buttonTint="@color/bg_radio_color"
+                    android:textColor="@color/text_color3"
+                    android:id="@+id/radioButtonOnline" />
+
+                <LinearLayout
+                    android:id="@+id/linear_muaonline"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/margin_40"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/text_color"
+                        android:layout_marginTop="@dimen/layout_margin_comment"
+                        android:layout_width="match_parent"
+                        android:text="@string/diachi_ship"
+                        android:textSize="@dimen/common_text_size_3"
+                        android:textStyle="italic"
+                        android:layout_height="wrap_content" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/edit_address_ship"
+                            android:hint="@string/address_hint"
+                            android:textSize="@dimen/common_text_size_11"
+                            android:textColorHint="@color/text_color4"
+                            android:textColor="@color/text_color3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <Button
+                            android:id="@+id/button_clear_address_ship"
+                            android:background="@drawable/ic_clear"
+                            android:layout_width="@dimen/width_height_34"
+                            android:layout_gravity="right"
+                            android:layout_height="@dimen/width_height_34" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:textColor="@color/text_color"
+                        android:layout_marginTop="@dimen/layout_margin_comment"
+                        android:layout_width="match_parent"
+                        android:text="@string/time_ship"
+                        android:textSize="@dimen/common_text_size_3"
+                        android:textStyle="italic"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_marginTop="@dimen/padding"
+                            android:id="@+id/text_gio_ship"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/layout_margin_comment"
+                            android:textColor="@color/text_color2"
+                            android:textSize="@dimen/common_text_size_11"
+                            android:text="@string/time_time"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_width="@dimen/width_height_1"
+                            android:background="@color/text_color2"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:layout_marginTop="@dimen/padding"
+                            android:id="@+id/text_ngay_ship"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/layout_margin_comment"
+                            android:textColor="@color/text_color2"
+                            android:textSize="@dimen/common_text_size_11"
+                            android:text="@string/date_date"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/layout_margin_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:buttonTint="#e75748"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mua_off"
+                    android:textSize="@dimen/common_text_size_11"
+                    android:textColor="@color/text_color3"
+                    android:id="@+id/radioButtonOff" />
+
+                <LinearLayout
+                    android:id="@+id/linear_muataicuahang"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/margin_40"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/text_color"
+                        android:layout_marginTop="@dimen/layout_margin_comment"
+                        android:layout_width="match_parent"
+                        android:text="@string/time_go_shop"
+                        android:textSize="@dimen/common_text_size_3"
+                        android:textStyle="italic"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_marginTop="@dimen/padding"
+                            android:id="@+id/text_gioden"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/layout_margin_comment"
+                            android:textColor="@color/text_color2"
+                            android:textSize="@dimen/common_text_size_11"
+                            android:text="@string/time_time"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_width="1dp"
+                            android:background="@color/text_color2"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:layout_marginTop="@dimen/padding"
+                            android:id="@+id/text_ngay_den"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/layout_margin_comment"
+                            android:textColor="@color/text_color2"
+                            android:textSize="@dimen/common_text_size_11"
+                            android:text="@string/date_date"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="@dimen/layout_margin_comment"
+                android:id="@+id/text_forget_password"
+                android:text="@string/qu_n_m_t_kh_u"
+                android:paddingRight="@dimen/padding"
+                android:textColor="@color/text_color"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/button_continue_book_product"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:background="@color/bg_button_color"
+                android:text="@string/ti_p_t_c"
+                android:textSize="@dimen/common_text_size_11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="@dimen/layout_margin"
+                android:text="@string/ho_c_ng_nh_p_b_ng"
+                android:paddingRight="@dimen/common_size_5"
+                android:textSize="@dimen/common_text_size_9"
+                android:textColor="@color/text_color2"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/common_size_10"
+                    android:layout_weight="1"
+                    android:text="@string/facebook"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/background_button"
+                    android:drawableLeft="@drawable/ic_google_plus"
+                    android:layout_height="@dimen/width_height_50" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/common_size_10"
+                    android:text="@string/google"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/background_button"
+                    android:drawableLeft="@drawable/ic_google_plus"
+                    android:layout_height="@dimen/width_height_50" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

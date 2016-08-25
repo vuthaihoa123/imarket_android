@@ -74,4 +74,36 @@
     <string name="tructiep">Trực tiếp</string>
     <string name="chuyenhang">Chuyển hàng</string>
     <string name="remove">Remove </string>
+
+    <string name="phone_number">Phone Number</string>
+    <string name="hint_mail_tungb">tungb@gmail.com</string>
+    <string name="email">Email</string>
+    <string name="mua_online">Mua Online</string>
+    <string name="diachi_ship">Địa chỉ nhận ship hàng</string>
+    <string name="address_hint">Hà Đông - Hà Nội</string>
+    <string name="time_ship">Thời gian nhận ship hàng</string>
+    <string name="time_time">19:00</string>
+    <string name="date_date">24/08/2016</string>
+    <string name="ho_c_ng_nh_p_b_ng">Hoặc đăng nhập bằng</string>
+    <string name="ti_p_t_c">Tiếp tục</string>
+    <string name="qu_n_m_t_kh_u">Quên mật khẩu ?</string>
+    <string name="time_go_shop">Thời gian đến mua hàng</string>
+    <string name="mua_off">Mua tại cửa hàng</string>
+    <string name="restaurant_name">Hải Sản Biển Đông - Trần Thái Tông</string>
+    <string name="t_ch_ngay_qua_t_ng_i">Đặt chỗ ngay qua tổng đài</string>
+    <string name="time_gotoshop">Giờ đến</string>
+    <string name="ngayden">Ngày đến</string>
+    <string name="count_ng_lon">Người lớn</string>
+    <string name="tr_em">Trẻ em</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="select_day">Chọn ngày hoàn thành</string>
+    <string name="select_time">Select Time</string>
+    <string name="count_max_nguoi_lon">Số lượng người lớn tối thiểu là 1.</string>
+    <string name="package_dial">com.android.dialer</string>
+    <string name="tel">tel:</string>
+    <string name="hint_number">1234567890</string>
+    <string name="goi">Gọi</string>
+    <string name="continuee">Tiếp tục</string>
+    <string name="fill_note">Điền ghi chú tại đây</string>
 </resources>

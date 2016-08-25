@@ -97,4 +97,16 @@
     <dimen name="width_drop_down_size">200dp</dimen>
     <dimen name="elevation_popup">3dp</dimen>
     <dimen name="height_button_size">56dp</dimen>
+
+    <dimen name="padding_30">30dp</dimen>
+    <dimen name="width_height_34">34dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
+    <dimen name="width_height_50">50dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_pading_10">10dp</dimen>
+    <dimen name="margin_35">35dp</dimen>
+    <dimen name="width_height_101">101dp</dimen>
+    <dimen name="width_height_1">1dp</dimen>
+    <dimen name="width_height_70">70dp</dimen>
 </resources>
