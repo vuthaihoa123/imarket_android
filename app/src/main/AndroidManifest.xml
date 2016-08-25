@@ -54,7 +54,8 @@
         </activity>
 
         <activity android:name=".ui.activity.DetailsProductActivity"/>
-        <activity android:name=".ui.activity.CartActivity">
+        <activity android:name=".ui.activity.CartActivity"/>
+        <activity android:name=".ui.activity.OrderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

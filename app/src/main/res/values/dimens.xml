@@ -75,6 +75,7 @@
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="size_50dp">50dp</dimen>
     <dimen name="text_small_size">14sp</dimen>
+    <dimen name="text_xsmall_size">14sp</dimen>
     <dimen name="framelayout_login">40dp</dimen>
     <dimen name="linear_login_margin">30dp</dimen>
     <dimen name="login_height_logo">100dp</dimen>
@@ -92,4 +93,8 @@
     <dimen name="height_item_cart">150dp</dimen>
     <dimen name="width_preview_cart">120dp</dimen>
     <dimen name="delete_button_size">40dp</dimen>
+    <dimen name="width_spiner_size">200dp</dimen>
+    <dimen name="width_drop_down_size">200dp</dimen>
+    <dimen name="elevation_popup">3dp</dimen>
+    <dimen name="height_button_size">56dp</dimen>
 </resources>
