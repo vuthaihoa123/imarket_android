@@ -10,4 +10,15 @@
     <color name="default_background_color">#dcdada</color>
     <color name="backgroud_login">#1d4379</color>
     <color name="login_button_color">#5196f5</color>
+    <color name="text_color">#ab6161</color>
+    <color name="text_color4">#947474</color>
+    <color name="text_color5">#302020</color>
+    <color name="hint_color2">#564141</color>
+    <color name="text_color2">#302020</color>
+    <color name="text_color3">#483535</color>
+    <color name="bg_button_color">#f22800</color>
+    <color name="bg_bb_color">#eadbdb</color>
+    <color name="bg_radio_color">#e75748</color>
+    <color name="bg_btt_color">#f22800</color>
+    <color name="bg_bg_color">#dacece</color>
 </resources>

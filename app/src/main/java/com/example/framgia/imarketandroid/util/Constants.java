@@ -39,4 +39,6 @@ public class Constants {
     public static final String CLOSE_SYNTAX = ")";
     public static final String DEL_TABLE_SYNTAX = "DROP TABLE IF EXISTS ";
     public static final String PATTERN_SEPARATION = "-";
+    public static final String SEPARATOR = "/";
+    public static final String COLON = ":";
 }
