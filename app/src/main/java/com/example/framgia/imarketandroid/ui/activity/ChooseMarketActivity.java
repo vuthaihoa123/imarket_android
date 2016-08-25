@@ -24,11 +24,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.models.DrawerItem;
 import com.example.framgia.imarketandroid.models.Market;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
+import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.NotificationUtil;
 import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
 
@@ -41,10 +43,8 @@ import java.util.List;
 public class ChooseMarketActivity extends AppCompatActivity implements
     NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
     SearchView.OnQueryTextListener, OnRecyclerItemInteractListener {
-    private static final String MARKET_SUGGESTION = "marketName";
-    private static final String[] SUGGESTIONS = new String[]{
-        "Belgium", "France", "Italy", "Germany", "Spain", "Viet Name"
-    };
+    private static final String MARKET_SUGGESTION = Constants.MARKET_SUGGESTION;
+    private static String[] SUGGESTIONS = FakeContainer.SUGGESTIONS;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerMarket;
@@ -66,13 +66,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_choose_market);
         findViews();
         mRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
-        for (int i = 0; i < 16; i++) {
-            if (i != 15) {
-                mDrawerItems.add(new DrawerItem("Test " + (i + 1), "test"));
-            } else {
-                mDrawerItems.add(new DrawerItem("Test 16", "test", true));
-            }
-        }
+        mDrawerItems = FakeContainer.initDrawerItems();
         mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(mDrawerItems);
         mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
         setListeners();
@@ -84,10 +78,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
-        mMarkets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
-        mMarkets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
-        mMarkets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
-        mMarkets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
+        mMarkets = FakeContainer.initMarkets();
         mAdapter = new RecyclerMarketAdapter(mMarkets);
         mRecyclerMarket.setAdapter(mAdapter);
         final String[] columns = new String[]{MARKET_SUGGESTION};

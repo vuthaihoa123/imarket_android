@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.models.ItemProduct;
+import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  * Created by hoavt on 20/07/2016.
  */
 public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapter.ViewHolder> {
-    public static final String NO_PROMOTION = "0%";
+    public static final String NO_PROMOTION = Constants.NO_PERCENT;
     private ArrayList<ItemProduct> mItems = new ArrayList<>();
     private Context mContext;
 

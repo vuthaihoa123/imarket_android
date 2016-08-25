@@ -8,6 +8,6 @@ import java.text.DecimalFormat;
 public class SystemUtil {
     public static String formatMoneyStr(long money) {
         DecimalFormat dec = new DecimalFormat("###,###,###,###,###.##");
-        return dec.format(money);
+        return " " + dec.format(money) + "đ";
     }
 }

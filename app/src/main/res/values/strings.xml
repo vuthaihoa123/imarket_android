@@ -73,4 +73,5 @@
     <string name="phuongthucnhanhang">Phương thức nhận hàng</string>
     <string name="tructiep">Trực tiếp</string>
     <string name="chuyenhang">Chuyển hàng</string>
+    <string name="remove">Remove </string>
 </resources>

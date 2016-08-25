@@ -8,6 +8,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.models.ItemBooking;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.PreviewProductAdapter;
@@ -49,7 +50,7 @@ public class DetailsProductActivity extends AppCompatActivity {
         mRvPreviewProducts.setLayoutManager(mPreviewLayoutManager);
         mBookingLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRvBookingProducts.setLayoutManager(mBookingLayoutManager);
-        mPreviewAdapter = new PreviewProductAdapter(this, initIdResList(), (ScrollView) findViewById(R.id.sv_info));
+        mPreviewAdapter = new PreviewProductAdapter(this, FakeContainer.initIdResList(), (ScrollView) findViewById(R.id.sv_info));
         mBookingAdapter = new BookProductAdapter(this, initBookingProducts());
         mRvPreviewProducts.setAdapter(mPreviewAdapter);
         mRvBookingProducts.setAdapter(mBookingAdapter);
@@ -71,31 +72,8 @@ public class DetailsProductActivity extends AppCompatActivity {
     }
 
     private void setTexts() {
-        // Fake datas:
-        mTvNameProduct.setText("Điện thoại HTC One M8 Eye");
-        mTvPriceProduct.setText("5.990.000đ");
-        mTvInfoProduct.setText(
-                "    Màn hình:Super LCD 3, 5\", Full HD\n" +
-                        "    Hệ điều hành:Android 5.0 (Lollipop)\n" +
-                        "    Camera sau:13 MP\n" +
-                        "    Camera trước:5 MP\n" +
-                        "    CPU:Qualcomm Snapdragon 801 4 nhân 32-bit, 2.3 GHz\n" +
-                        "    RAM:2 GB\n" +
-                        "    Bộ nhớ trong:16 GB\n" +
-                        "    Hỗ trợ thẻ nhớ:MicroSD, 128 GB\n" +
-                        "    Thẻ SIM:1 Sim, Nano SIM\n" +
-                        "    Kết nối:WiFi, 3G, 4G LTE Cat 4\n" +
-                        "    Dung lượng pin:2600 mAh\n" +
-                        "    Thiết kế:Nguyên khối\n" +
-                        "    Chức năng đặc biệt:HTC BoomSound");
-    }
-
-    private ArrayList<Integer> initIdResList() {
-        ArrayList<Integer> list = new ArrayList<>();
-        int numFakePreviews = 7;
-        for (int i = 0; i < numFakePreviews; i++) {
-            list.add(R.drawable.ic_htc_preview_01 + i);
-        }
-        return list;
+        mTvNameProduct.setText(FakeContainer.getNameProduct());
+        mTvPriceProduct.setText(FakeContainer.getPriceProduct());
+        mTvInfoProduct.setText(FakeContainer.getInfoProduct());
     }
 }
