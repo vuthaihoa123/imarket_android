@@ -36,7 +36,7 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
             mItemBarListenner = (OnClickItemBarListenner) mContext;
         } else {
             throw new RuntimeException(mContext.toString()
-                + mContext.getString(R.string.mustbe_barclicklistener));
+                    + mContext.getString(R.string.mustbe_barclicklistener));
         }
     }
 
@@ -49,7 +49,7 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
     public BookProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.item_book_product, parent, false);
+                .inflate(R.layout.item_book_product, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -69,10 +69,10 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
                     case 0:
                         Intent intent = new Intent(Intent.ACTION_CALL);
                         intent.setData(
-                            Uri.parse(Constants.STATEMENT_CALL + Constants.PHONE_NUMBER_DEMO));
+                                Uri.parse(Constants.STATEMENT_CALL + Constants.PHONE_NUMBER_DEMO));
                         if (ActivityCompat
-                            .checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) !=
-                            PackageManager.PERMISSION_GRANTED) {
+                                .checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) !=
+                                PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
                             //    ActivityCompat#requestPermissions
                             // here to request the missing permissions, and then overriding
@@ -100,7 +100,7 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
             public void onClick(View view) {
                 if (mItemBarListenner != null) {
                     mItemBarListenner
-                        .onClickItemBar(holder.mTvBookingDes.getText().toString(), position);
+                            .onClickItemBar(holder.mTvBookingDes.getText().toString(), position);
                 }
             }
         });
@@ -128,4 +128,3 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
         void onClickItemBar(String textNameItem, int position);
     }
 }
-

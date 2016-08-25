@@ -67,6 +67,7 @@
     <dimen name="common_text_size_14">23sp</dimen>
     <dimen name="common_text_size_15">24sp</dimen>
     <dimen name="common_text_size_16">30sp</dimen>
+    <dimen name="common_text_size_40">35sp</dimen>
     <dimen name="padding_10dp">10dp</dimen>
     <dimen name="padding_5dp">5dp</dimen>
     <dimen name="radius_border">10dp</dimen>
@@ -126,6 +127,7 @@
     <dimen name="width_height_3">3dp</dimen>
     <dimen name="width_height_40">40dp</dimen>
     <dimen name="cardview_radius_3">5dp</dimen>
+
     <dimen name="wid_hei_30">30dp</dimen>
     <dimen name="margin_160">160dp</dimen>
     <dimen name="margin_80">80dp</dimen>
@@ -148,4 +150,6 @@
     <dimen name="slide_title">30sp</dimen>
     <dimen name="dots_height">30dp</dimen>
     <dimen name="dots_margin_bottom">20dp</dimen>
+
+    <dimen name="common_size_25">25dp</dimen>
 </resources>

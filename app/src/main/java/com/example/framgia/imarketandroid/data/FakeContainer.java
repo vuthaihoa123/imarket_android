@@ -34,6 +34,7 @@ public class FakeContainer {
     public static final String STORE_TYPE_4 = "4";
     public static final String STORE_TYPE_5 = "5";
     public static final String STORE_TYPE_6 = "6";
+    public static final String URL_TEST = "9gag.com";
     public static LatLng sLatLng = new LatLng(21.007380, 105.793139);
     public static float sGroundFirstParameter = 116f;
     public static float sGroundSecondParameter = 150f;
@@ -76,10 +77,10 @@ public class FakeContainer {
         return markets;
     }
 
-    public static List<Shop> initListShop(){
-        List<Shop> mShopList= new ArrayList<>();
+    public static List<Shop> initListShop() {
+        List<Shop> mShopList = new ArrayList<>();
         Shop shop0 = new Shop(0, "Chọn cửa hàng");
-        Shop shop1 = new Shop(1,"cửa hàng ăn uống");
+        Shop shop1 = new Shop(1, "cửa hàng ăn uống");
         Shop shop2 = new Shop(2, "cửa hàng quần áo");
         Shop shop3 = new Shop(3, "cửa hàng sách");
         Shop shop4 = new Shop(4, "cửa hàng mỹ phẩm");
@@ -95,8 +96,8 @@ public class FakeContainer {
         return mShopList;
     }
 
-    public static List<Store> initStore(){
-        List<Store> storeList= new ArrayList<>();
+    public static List<Store> initStore() {
+        List<Store> storeList = new ArrayList<>();
         storeList.add(new Store(R.drawable.food_avatar, "cửa hàng ăn uống"));
         storeList.add(new Store(R.drawable.fashion, "cửa hàng quần áo"));
         storeList.add(new Store(R.drawable.book_shop, "cửa hàng sách"));
@@ -208,58 +209,60 @@ public class FakeContainer {
         list.add(new AlbumShop(R.drawable.ic_htc_one, "HTC One"));
         return list;
     }
+
     public static String arr[] = {
-        "Chi nhanh 1",
-        "Chi nhanh 2",
-        "Chi nhanh 3",
-        "Chi nhanh 4",
-        "Chi nhanh 5",
-        "Chi nhanh 6" };
+            "Chi nhanh 1",
+            "Chi nhanh 2",
+            "Chi nhanh 3",
+            "Chi nhanh 4",
+            "Chi nhanh 5",
+            "Chi nhanh 6"};
+
     public static List<Object> getSampleArrayList() {
         List<Object> items = new ArrayList<>();
         List<ItemProduct> itemProductList = new ArrayList<>();
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-            "trên thị trường",
-            "25%", R
-            .drawable
-            .ic_iphone5s,
-            "1000000 VND",
-            "1100000  VND"));
+                "trên thị trường",
+                "25%", R
+                .drawable
+                .ic_iphone5s,
+                "1000000 VND",
+                "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-            "trên thị trường",
-            "25%", R
-            .drawable
-            .ic_iphone5s,
-            "1000000 VND",
-            "1100000  VND"));
+                "trên thị trường",
+                "25%", R
+                .drawable
+                .ic_iphone5s,
+                "1000000 VND",
+                "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-            "trên thị trường",
-            "25%", R
-            .drawable
-            .ic_iphone5s,
-            "1000000 VND",
-            "1100000  VND"));
+                "trên thị trường",
+                "25%", R
+                .drawable
+                .ic_iphone5s,
+                "1000000 VND",
+                "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-            "trên thị trường",
-            "25%", R
-            .drawable
-            .ic_iphone5s,
-            "1000000 VND",
-            "1100000  VND"));
+                "trên thị trường",
+                "25%", R
+                .drawable
+                .ic_iphone5s,
+                "1000000 VND",
+                "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-            "trên thị trường",
-            "25%", R
-            .drawable
-            .ic_iphone5s,
-            "1000000 VND",
-            "1100000  VND"));
+                "trên thị trường",
+                "25%", R
+                .drawable
+                .ic_iphone5s,
+                "1000000 VND",
+                "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-            "trên thị trường",
-            "25%", R
-            .drawable
-            .ic_iphone5s,
-            "1000000 VND",
-            "1100000  VND"));
+                "trên thị trường",
+                "25%", R
+                .drawable
+                .ic_iphone5s,
+                "1000000 VND",
+                "1100000  VND"));
 
         items.add(new ImageEvent1(R.drawable.banner1));
         items.add(new ImageEvent2(R.drawable.banner2, R.drawable.banner3));
@@ -270,5 +273,34 @@ public class FakeContainer {
         items.add(new ImageEvent1(R.drawable.banner1));
         items.add(new CategorySaleOff("Hàng thực phẩm", itemProductList));
         return items;
+    }
+
+    public static List<CartItem> GetInfoOrder(int mId) {
+        List<CartItem> list = new ArrayList<>();
+        list.add(new CartItem(mId, "Iphone", 2, 2, true));
+        list.add(new CartItem(mId, "Iphone", 2, 2, true));
+        list.add(new CartItem(mId, "Iphone", 2, 2, true));
+        list.add(new CartItem(mId, "Iphone", 2, 2, true));
+        return list;
+    }
+
+    public static List<CartItem> getListCartItem() {
+        List<CartItem> list = new ArrayList<>();
+        list.add(new CartItem(1, "Iphone", 1, 1, true, "20/1/2011", "14:03"));
+        list.add(new CartItem(2, "Iphone", 2, 1, true, "20/1/2011", "15:03"));
+        list.add(new CartItem(3, "Iphone", 1, 1, true, "20/1/2011", "16:03"));
+        list.add(new CartItem(4, "Samsung Galaxy", 4, 1, true, "21/1/2011", "14:04"));
+        list.add(new CartItem(5, "Samsung Galaxy", 1, 1, true, "21/1/2011", "11:03"));
+        list.add(new CartItem(6, "Bphone", 3, 1, true, "22/1/2011", "14:11"));
+        list.add(new CartItem(7, "Bphone", 1, 1, true, "22/1/2011", "12:11"));
+        return list;
+    }
+
+    public static List<String> getListHeader() {
+        List<String> list = new ArrayList<>();
+        list.add("20/1/2011");
+        list.add("21/1/2011");
+        list.add("22/1/2011");
+        return list;
     }
 }

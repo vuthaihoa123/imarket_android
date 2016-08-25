@@ -186,6 +186,7 @@
     <string name="coment">Bình luận sản phẩm</string>
     <string name="name_product_text">XẢ HÀNG ÁO NẮNG UNIQLO</string>
     <string name="price_product_fake">đ 100.000</string>
+
     <string name="info_shop">Thông tin cửa hàng</string>
     <string name="recruitment_introduction"><![CDATA[Giới thiệu & Tuyển dụng]]></string>
     <string name="intro_shop">Với hàng trăm nghìn sản phẩm thời trang nữ đang có mặt tại Sendo.vn,
@@ -235,6 +236,7 @@
     <string name="cosmetic_name">cửa hàng mỹ phẩm</string>
     <string name="movie_theater">Rạp chiếu phim</string>
     <string name="game_center_name">Trung tâm giải trí</string>
+
     <string name="confirm_signout">Bạn có muốn đăng xuất ?</string>
     <string name="cancel">Cancel</string>
     <string name="signout_done_message">Đăng xuất thành công !</string>
@@ -267,4 +269,10 @@
     <string name="title_skip">Skip</string>
     <string name="start">Start</string>
     <string name="next">Next</string>
+    <string name="detail_lower_case">detail</string>
+    <string name="detail_upper_case">DETAIL</string>
+    <string name="price">price</string>
+    <string name="quantity">quantity</string>
+    <string name="vnd_uppercase">    VND</string>
+    <string name="quantity_second">Số lượng :</string>
 </resources>

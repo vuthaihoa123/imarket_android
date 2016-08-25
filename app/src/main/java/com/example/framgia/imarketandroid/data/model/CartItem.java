@@ -9,6 +9,9 @@ public class CartItem {
     private long mPriceProduct;
     private int mQuantity = 1;
     private boolean mIsDeleted = false;
+    private String mDate;
+
+    private String mTime;
 
     public CartItem(int idRes, String nameProduct, long priceProduct, int quantity, boolean isDeleted) {
         mIdRes = idRes;
@@ -16,6 +19,16 @@ public class CartItem {
         mQuantity = quantity;
         mIsDeleted = isDeleted;
         mPriceProduct = priceProduct;
+    }
+
+    public CartItem(int idRes, String nameProduct, long priceProduct, int quantity, boolean isDeleted, String date, String time) {
+        mIdRes = idRes;
+        mNameProduct = nameProduct;
+        mQuantity = quantity;
+        mIsDeleted = isDeleted;
+        mPriceProduct = priceProduct;
+        mDate = date;
+        mTime = time;
     }
 
     public int getIdRes() {
@@ -44,5 +57,21 @@ public class CartItem {
 
     public void setIsDeleted(boolean isDeleted) {
         mIsDeleted = isDeleted;
+    }
+
+    public String getDate() {
+        return mDate;
+    }
+
+    public void setDate(String date) {
+        this.mDate = date;
+    }
+
+    public String getTime() {
+        return mTime;
+    }
+
+    public void setTime(String time) {
+        this.mTime = mTime;
     }
 }

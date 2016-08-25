@@ -17,16 +17,15 @@ import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.ui.adapter.CategoryStallAdapter;
 import com.example.framgia.imarketandroid.ui.widget.GridItemDecoration;
-import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryStallFragment extends Fragment implements
-    HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
-    public static CategoryStallAdapter mCategoryStallAdapter;
-    public static List<Category> mCategoryProducts;
+        HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
+    public static CategoryStallAdapter sCategoryStallAdapter;
+    public static List<Category> sCategoryProducts;
     private RecyclerView mRecyclerView;
     private View mView;
 
@@ -48,7 +47,7 @@ public class CategoryStallFragment extends Fragment implements
     }
 
     public void init() {
-        mCategoryProducts = new ArrayList<>();
+        sCategoryProducts = new ArrayList<>();
         HttpRequest.getInstance().init();
         HttpRequest.getInstance().setOnLoadDataListener(this);
         HttpRequest.getInstance().loadCategories();
@@ -57,13 +56,12 @@ public class CategoryStallFragment extends Fragment implements
     @Override
     public void onLoadDataSuccess(Object object) {
         if (object != null) {
-            mCategoryProducts = (List<Category>) object;
+            sCategoryProducts = (List<Category>) object;
         }
-        mCategoryStallAdapter = new CategoryStallAdapter(mCategoryProducts);
-        mRecyclerView.setAdapter(mCategoryStallAdapter);
-        mCategoryStallAdapter.setOnRecyclerItemInteractListener(this);
-        mRecyclerView
-            .setLayoutManager(new GridLayoutManager(getContext(), Constants.NUMBER_OF_COLUMN));
+        sCategoryStallAdapter = new CategoryStallAdapter(sCategoryProducts);
+        mRecyclerView.setAdapter(sCategoryStallAdapter);
+        sCategoryStallAdapter.setOnRecyclerItemInteractListener(this);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.addItemDecoration(new GridItemDecoration(getContext()));
     }
 

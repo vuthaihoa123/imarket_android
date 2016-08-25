@@ -35,6 +35,7 @@
     <color name="background_details_layout">#88f9c1</color>
     <color name="background_bar">#5f601b</color>
     <color name="background_cardview">#e9fffd</color>
+
     <color name="background_shop_hint">#3f3f4949</color>
     <color name="background_shop_color_name">#ea831c</color>
     <color name="orange">#ff5722</color>
@@ -69,4 +70,9 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+
+    <color name="purple">#7017b8</color>
+    <color name="gray">#e5eeebeb</color>
+    <color name="bold_gray">#e5cfcccc</color>
+    <color name="brown">#e5eeebeb</color>
 </resources>
