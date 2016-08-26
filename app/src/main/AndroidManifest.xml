@@ -73,19 +73,24 @@
         <receiver android:name=".services.NotificationEventReceiver"  android:enabled="true"/>
         <service android:name=".services.NotificationAlarmService" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
         <activity android:name=".ui.activity.BookTableActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <activity android:name=".ui.activity.BookProductActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <activity android:name=".ui.activity.DialogActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog"></activity>
+
+        <activity android:name=".ui.activity.SuggestStoreActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
