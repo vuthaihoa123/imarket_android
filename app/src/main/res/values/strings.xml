@@ -107,4 +107,25 @@
     <string name="continuee">Tiếp tục</string>
     <string name="fill_note">Điền ghi chú tại đây</string>
     <string name="current_location_title">Hãy nhập số cột mốc gần bạn</string>
+
+    <string name="bic_C">Bic C Thăng Long</string>
+    <string name="hast_tag_bicc">#bigcthanglong</string>
+    <string name="message_rate">Mình đã gắn bó với Lotte Cinema Land Mark Hà Nội từ hồi cấp 3. Tới nay đã được gần 5 năm rồi. Quả thật sự trải nghiệm về dịch vụ lẫn những tiện ích của trung tâm làm mình và bạn bè rất hài lòng và thích thú.</string>
+    <string name="ques">Big C Thăng Long như thế nào ?</string>
+    <string name="comment_here">Viết bình luận tại đây ...</string>
+    <string name="post">Post</string>
+    <string name="ok">OK</string>
+    <string name="cancle">Cancel</string>
+    <string name="count_vote">500 đánh giá</string>
+    <string name="name_user">Công Phương Đông</string>
+    <string name="fake_tyle">4,5 / 5</string>
+    <string name="follow">Follow</string>
+    <string name="mesage">Mesage</string>
+    <string name="share">Share</string>
+    <string name="mot_sao">1 * Tôi không thích nội dung này</string>
+    <string name="hai_sao">2 * Tôi không thích</string>
+    <string name="ba_sao">3 * Tạm được</string>
+    <string name="bon_sao">4 * Tôi thích nội dung này</string>
+    <string name="nam_sao">5 * Tôi rất thích nội dung này</string>
+
 </resources>

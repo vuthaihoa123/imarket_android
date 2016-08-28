@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@color/bg_bb_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button_back_message_rate"
+                    android:drawableLeft="@drawable/ic_back"
+                    android:background="@color/bg_button_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/width_height_34" />
+
+                <TextView
+                    android:id="@+id/text_question"
+                    android:text="@string/ques"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:textColor="@color/text_color3"
+                    android:textSize="@dimen/common_text_size_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/width_height_34" />
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/width_height_34">
+
+                    <Button
+                        android:id="@+id/button_start_vote_1"
+                        android:background="@drawable/ic_star_empty"
+                        android:layout_width="@dimen/width_height_34"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/button_start_vote_2"
+                        android:background="@drawable/ic_star_empty"
+                        android:layout_width="@dimen/width_height_34"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/button_start_vote_3"
+                        android:background="@drawable/ic_star_empty"
+                        android:layout_width="@dimen/width_height_34"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/button_start_vote_4"
+                        android:background="@drawable/ic_star_empty"
+                        android:layout_width="@dimen/width_height_34"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/button_start_vote_5"
+                        android:background="@drawable/ic_star_empty"
+                        android:layout_width="@dimen/width_height_34"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/margin_20"
+                    android:paddingLeft="@dimen/margin_40"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/text_1_sao"
+                        android:textColor="@color/text_color3"
+                        android:text="@string/mot_sao"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_20" />
+
+                    <TextView
+                        android:id="@+id/text_2_sao"
+                        android:textColor="@color/text_color3"
+                        android:text="@string/hai_sao"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_20" />
+
+                    <TextView
+                        android:id="@+id/text_3_sao"
+                        android:textColor="@color/text_color3"
+                        android:text="@string/ba_sao"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_20" />
+
+                    <TextView
+                        android:id="@+id/text_4_sao"
+                        android:textColor="@color/text_color3"
+                        android:text="@string/bon_sao"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_20" />
+
+                    <TextView
+                        android:id="@+id/text_5_sao"
+                        android:textColor="@color/text_color3"
+                        android:text="@string/nam_sao"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/margin_20"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edittext_message_rate"
+                        android:hint="@string/comment_here"
+                        android:textColorHint="@color/text_color"
+                        android:textColor="@color/text_color2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/width_height_50" />
+
+                    <Button
+                        android:id="@+id/button_post_message_rate"
+                        android:layout_marginLeft="@dimen/margin_20"
+                        android:background="@color/bg_button_color"
+                        android:text="@string/post"
+                        android:textColor="@color/bg_bb_color"
+                        android:layout_width="@dimen/width_height_70"
+                        android:layout_height="@dimen/width_height_50" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
