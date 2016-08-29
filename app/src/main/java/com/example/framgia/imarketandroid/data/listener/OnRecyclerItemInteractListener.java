@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.util;
+package com.example.framgia.imarketandroid.data.listener;
 
 /**
  * Created by VULAN on 7/29/2016.

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.DrawerItem;
+import com.example.framgia.imarketandroid.data.model.DrawerItem;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.data.local;
+package com.example.framgia.imarketandroid.data.remote;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

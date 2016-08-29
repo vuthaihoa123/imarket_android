@@ -1,10 +1,10 @@
 package com.example.framgia.imarketandroid.data;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.CartItem;
-import com.example.framgia.imarketandroid.models.DrawerItem;
-import com.example.framgia.imarketandroid.models.ItemProduct;
-import com.example.framgia.imarketandroid.models.Market;
+import com.example.framgia.imarketandroid.data.model.CartItem;
+import com.example.framgia.imarketandroid.data.model.DrawerItem;
+import com.example.framgia.imarketandroid.data.model.ItemProduct;
+import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.util.Flog;
 
 import java.util.ArrayList;

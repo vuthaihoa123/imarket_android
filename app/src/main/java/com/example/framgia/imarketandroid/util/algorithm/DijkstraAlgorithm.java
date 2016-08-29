@@ -3,13 +3,12 @@ package com.example.framgia.imarketandroid.util.algorithm;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.framgia.imarketandroid.data.DataObject.Edge;
-import com.example.framgia.imarketandroid.data.DataObject.Graph;
-import com.example.framgia.imarketandroid.data.DataObject.Point;
-import com.example.framgia.imarketandroid.data.remote.DatabaseRemote;
+import com.example.framgia.imarketandroid.data.model.Edge;
+import com.example.framgia.imarketandroid.data.model.Graph;
+import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
+import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 
-import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,6 +45,8 @@ public class DijkstraAlgorithm {
 //            e.printStackTrace();
 //        }
     }
+
+
 
     public void execute(Point source) {
         mSettledNodes = new HashSet<Point>();

@@ -3,7 +3,7 @@ package com.example.framgia.imarketandroid.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.framgia.imarketandroid.models.Session;
+import com.example.framgia.imarketandroid.data.model.Session;
 
 /**
  * Created by toannguyen201194 on 29/07/2016.

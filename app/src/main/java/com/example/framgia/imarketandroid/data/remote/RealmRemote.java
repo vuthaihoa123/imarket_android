@@ -1,17 +1,13 @@
 package com.example.framgia.imarketandroid.data.remote;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.example.framgia.imarketandroid.data.DataObject.Edge;
-import com.example.framgia.imarketandroid.data.DataObject.Point;
+import com.example.framgia.imarketandroid.data.model.Edge;
+import com.example.framgia.imarketandroid.data.model.Point;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
@@ -24,6 +20,10 @@ public class RealmRemote {
 //        RealmResults<Point> results = new RealmResults<Point>();
         return mRealm.where(Point.class).findAll();
     }
+
+    public RealmRemote() {
+    }
+
     public static RealmList<Point> getListPointDisplay(){
         RealmResults<Point> results= null;
         results= mRealm.where(Point.class).equalTo("type", 1).findAll();
