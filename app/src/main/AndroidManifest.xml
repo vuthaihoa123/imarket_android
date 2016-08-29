@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
-        android:name=".RealmApplication"
+        android:name=".ImarketApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -31,7 +31,12 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".ui.activity.ChooseMarketActivity" />
+        <activity android:name=".ui.activity.ChooseMarketActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="com.facebook.FacebookContentProvider"
@@ -63,7 +68,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".ui.activity.DetailsProductActivity" />
-        <activity android:name=".ui.activity.CartActivity"></activity>
+        <activity android:name=".ui.activity.CartActivity"/>
 
         <receiver
             android:name=".services.NotificationEventReceiver"
@@ -75,22 +80,13 @@
 
 
         </activity>
-        <activity android:name=".ui.activity.BookTableActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".ui.activity.BookTableActivity"/>
 
-        <activity android:name=".ui.activity.BookProductActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".ui.activity.BookProductActivity"/>
 
         <activity android:name=".ui.activity.DialogActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"></activity>
-
-        <activity android:name=".ui.activity.SuggestStoreActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity android:name=".ui.activity.SuggestStoreActivity"/>
     </application>
 
 </manifest>

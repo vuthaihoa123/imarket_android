@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.Session;
-import com.example.framgia.imarketandroid.models.SignupModel;
+import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.SignupModel;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.util.HttpRequest;
-import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 /**
  * Created by toannguyen201194 on 22/07/2016.

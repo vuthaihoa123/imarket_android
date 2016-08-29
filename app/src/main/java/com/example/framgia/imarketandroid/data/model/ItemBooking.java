@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.models;
+package com.example.framgia.imarketandroid.data.model;
 
 /**
  * Created by hoavt on 22/07/2016.

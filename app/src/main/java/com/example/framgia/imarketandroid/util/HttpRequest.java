@@ -1,8 +1,8 @@
 package com.example.framgia.imarketandroid.util;
 
-import com.example.framgia.imarketandroid.data.CategoryList;
-import com.example.framgia.imarketandroid.models.Session;
-import com.example.framgia.imarketandroid.models.SignupModel;
+import com.example.framgia.imarketandroid.data.model.CategoryList;
+import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.SignupModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;

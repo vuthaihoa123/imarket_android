@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.models;
+package com.example.framgia.imarketandroid.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +17,4 @@ public class Errors {
         return mEmail;
     }
 
-    public void setEmail(List<String> email) {
-        mEmail = email;
-    }
 }

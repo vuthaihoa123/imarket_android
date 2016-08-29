@@ -2,23 +2,27 @@ package com.example.framgia.imarketandroid.data.model;
 
 import java.util.List;
 
+import io.realm.RealmList;
+
 /**
  * Created by hoavt on 07/07/2016.
  */
 public class Graph {
-    private List<Point> mVertexes;
-    private List<Edge> mEdges;
+    private RealmList<Point> mVertexes;
+    private RealmList<Edge> mEdges;
 
-    public Graph(List<Point> vertexes, List<Edge> edges) {
+    public Graph(RealmList<Point> vertexes,
+                 RealmList<Edge> edges) {
         mVertexes = vertexes;
         mEdges = edges;
     }
 
-    public List<Point> getVertexes() {
+    public RealmList<Point> getVertexes() {
         return mVertexes;
     }
 
-    public List<Edge> getEdges() {
+    public RealmList<Edge> getEdges() {
         return mEdges;
     }
+
 }

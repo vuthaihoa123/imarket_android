@@ -2,14 +2,17 @@ package com.example.framgia.imarketandroid.data.model;
 
 import android.database.Cursor;
 
+import io.realm.RealmObject;
+
 /**
  * Created by nguyenxuantung on 24/06/2016.
  */
-public class Point {
+public class Point extends RealmObject {
     private int id;
     private int type;
     private double lat, lng;
     private String name;
+
     public Point(Cursor cursor){
         this.id = cursor.getInt(cursor.getColumnIndex("id"));
         this.lat = cursor.getDouble(cursor.getColumnIndex("latitude"));
@@ -23,6 +26,9 @@ public class Point {
         this.lng = lng;
         this.type= type;
         this.name= name;
+    }
+
+    public Point() {
     }
 
     public Double getLng() {

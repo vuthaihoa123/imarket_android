@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.Market;
-import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.model.Market;
+import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 
 import java.util.List;
 

@@ -2,10 +2,12 @@ package com.example.framgia.imarketandroid.data.model;
 
 import android.database.Cursor;
 
+import io.realm.RealmObject;
+
 /**
  * Created by nguyenxuantung on 24/06/2016.
  */
-public class Edge {
+public class Edge extends RealmObject {
     private String nameStart;
     private String nameEnd;
     private float edge;
@@ -14,6 +16,10 @@ public class Edge {
         this.nameEnd = cursor.getString(cursor.getColumnIndex("id_end"));
         this.edge= cursor.getFloat(cursor.getColumnIndex("edge"));
     }
+
+    public Edge() {
+    }
+
     public Edge(String nameStart, String nameEnd, float edge) {
         this.nameStart = nameStart;
         this.nameEnd = nameEnd;

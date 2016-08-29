@@ -17,11 +17,10 @@ import android.view.MenuItem;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
-import com.example.framgia.imarketandroid.databases.DatabaseTable;
-import com.example.framgia.imarketandroid.models.ItemProduct;
+import com.example.framgia.imarketandroid.data.remote.DatabaseTable;
+import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.ui.adapter.ListProductsAdapter;
 import com.example.framgia.imarketandroid.util.Constants;
-import com.example.framgia.imarketandroid.util.Flog;
 
 import java.util.ArrayList;
 

@@ -2,13 +2,11 @@ package com.example.framgia.imarketandroid.ui.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,11 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.MessageSuggestStore;
+import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
 import com.example.framgia.imarketandroid.ui.adapter.SuggestStoreAdapter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

@@ -8,14 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
-import com.example.framgia.imarketandroid.models.CartItem;
-import com.example.framgia.imarketandroid.models.ItemBooking;
+import com.example.framgia.imarketandroid.data.model.CartItem;
 import com.example.framgia.imarketandroid.ui.adapter.CartProductAdapter;
-import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.SystemUtil;
 
 import java.util.ArrayList;

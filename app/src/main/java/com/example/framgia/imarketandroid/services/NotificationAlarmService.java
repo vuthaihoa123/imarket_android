@@ -10,7 +10,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.Session;
+import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;

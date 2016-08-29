@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.ItemProduct;
+import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;

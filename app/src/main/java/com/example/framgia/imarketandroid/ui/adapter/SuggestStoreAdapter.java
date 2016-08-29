@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.MessageSuggestStore;
+import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
 
 import java.util.List;
 

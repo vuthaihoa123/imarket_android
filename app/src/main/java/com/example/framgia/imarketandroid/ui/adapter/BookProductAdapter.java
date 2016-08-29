@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.models.ItemBooking;
+import com.example.framgia.imarketandroid.data.model.ItemBooking;
 
 import java.util.ArrayList;
 

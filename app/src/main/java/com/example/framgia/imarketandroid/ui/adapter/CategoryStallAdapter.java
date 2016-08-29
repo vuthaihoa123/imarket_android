@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.Category;
-import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.model.Category;
+import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,29 +12,24 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.DataObject.Edge;
-import com.example.framgia.imarketandroid.data.DataObject.Graph;
-import com.example.framgia.imarketandroid.data.DataObject.Point;
-import com.example.framgia.imarketandroid.data.remote.DatabaseRemote;
+import com.example.framgia.imarketandroid.data.model.Edge;
+import com.example.framgia.imarketandroid.data.model.Graph;
+import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
-import com.example.framgia.imarketandroid.models.Floor;
-import com.example.framgia.imarketandroid.models.Shop;
+import com.example.framgia.imarketandroid.data.model.Floor;
+import com.example.framgia.imarketandroid.data.model.Shop;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,12 +47,12 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import io.realm.RealmList;
+import io.realm.RealmResults;
 
 /**
  * Created by toannguyen201194 on 19/07/2016.
@@ -74,7 +69,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     PolygonOptions rectOptions = new PolygonOptions();
 //    DatabaseRemote remote;
     private GoogleMap mMap;
-    private List<Point> mNodes= null;
+    private RealmResults<Point> mNodes= null;
     private RealmList<Point> mNodesDisplay= null;
     private RealmList<Point> mVertexesHoa = new RealmList<>();
     private RealmList<Edge> mEdgesHoa = new RealmList<>();

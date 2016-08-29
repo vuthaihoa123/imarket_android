@@ -13,12 +13,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.Category;
+import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.ui.adapter.CategoryStallAdapter;
 import com.example.framgia.imarketandroid.ui.widget.GridItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
-import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -25,14 +25,14 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
-import com.example.framgia.imarketandroid.models.DrawerItem;
-import com.example.framgia.imarketandroid.models.Market;
+import com.example.framgia.imarketandroid.data.model.DrawerItem;
+import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.NotificationUtil;
-import com.example.framgia.imarketandroid.util.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 
 import java.util.ArrayList;
 import java.util.List;

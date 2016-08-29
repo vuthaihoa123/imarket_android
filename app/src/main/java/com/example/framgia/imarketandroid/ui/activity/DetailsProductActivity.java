@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
-import com.example.framgia.imarketandroid.models.ItemBooking;
+import com.example.framgia.imarketandroid.data.model.ItemBooking;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.PreviewProductAdapter;
 

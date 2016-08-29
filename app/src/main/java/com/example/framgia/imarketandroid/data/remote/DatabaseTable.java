@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.databases;
+package com.example.framgia.imarketandroid.data.remote;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.models;
+package com.example.framgia.imarketandroid.data.model;
 
 import android.widget.ImageView;
 import android.widget.TextView;
