@@ -14,11 +14,8 @@ public class Constants {
     public static final String LAST_NAME = "last_name";
     public static final int MY_PERMISSIONS_REQUEST = 112;
     public static final String PACKAGE = "package";
-    public static final String KEYHASH = "KeyHash:";
-    public static final String SHA = "SHA";
     public static final String PROFILE = "Profile";
     public static final String PREFS_NAME = "AOP_PREFS";
-    public static final String PREFS_KEY = "AOP_PREFS_String";
     public static final String ID = "id";
     public static final String USERNAME = "username";
     public static final String FULLNAME = "fullname";
@@ -41,4 +38,7 @@ public class Constants {
     public static final String PATTERN_SEPARATION = "-";
     public static final String SEPARATOR = "/";
     public static final String COLON = ":";
+    public static final int ALARM_START_HOUR = 9;
+    public static final int ALARM_START_MINUTES = 30;
+    public static final int Alarm_START_SECONDS = 0;
 }

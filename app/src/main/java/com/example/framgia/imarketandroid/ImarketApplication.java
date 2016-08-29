@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.example.framgia.imarketandroid.util.NotificationUtil;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -23,6 +25,7 @@ public class ImarketApplication extends Application {
             .deleteRealmIfMigrationNeeded()
             .build();
         Realm.setDefaultConfiguration(realmConfiguration);
+        NotificationUtil.setAlarm(this);
     }
 
     @Override

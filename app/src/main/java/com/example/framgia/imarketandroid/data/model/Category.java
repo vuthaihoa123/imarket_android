@@ -37,9 +37,6 @@ public class Category  {
         mId = id;
     }
 
-    public Category() {
-    }
-
     public Category(String id, String name) {
         mId = id;
         mName = name;

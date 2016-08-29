@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmList;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 /**
@@ -16,51 +16,40 @@ import io.realm.RealmResults;
  */
 public class RealmRemote {
     private static Realm mRealm = Realm.getDefaultInstance();
-    public static RealmResults<Point> getAllPoint(){
-//        RealmResults<Point> results = new RealmResults<Point>();
-        return mRealm.where(Point.class).findAll();
+
+    public static <T extends RealmObject> RealmResults getAll(Class<T> tClass) {
+        return mRealm.where(tClass).findAll();
     }
 
-    public RealmRemote() {
+    public static <T extends RealmObject> RealmResults getListPointDisplay(Class<T> tClass) {
+        return mRealm.where(tClass).equalTo("type", 1).findAll();
     }
 
-    public static RealmList<Point> getListPointDisplay(){
-        RealmResults<Point> results= null;
-        results= mRealm.where(Point.class).equalTo("type", 1).findAll();
-        RealmList<Point> mLastResults= new RealmList<>();
-        for(Point point:results){
-            mLastResults.add(point);
-        }
-        return mLastResults;
-    }
-
-    public static LatLng getLocationFromName(String name){
-        Point point= mRealm.where(Point.class).equalTo("name", name).findFirst();
-        LatLng latLng= new LatLng(point.getLat(), point.getLng());
+    public static LatLng getLocationFromName(String name) {
+        Point point = mRealm.where(Point.class).equalTo("name", name).findFirst();
+        LatLng latLng = new LatLng(point.getLat(), point.getLng());
         return latLng;
     }
 
-    public static List<Edge> getListEdge(){
-        List<Edge> result= new ArrayList<>();
-        RealmResults<Edge> results= mRealm.where(Edge.class).findAll();
+    public static List<Edge> getListEdge() {
+        List<Edge> result = new ArrayList<>();
+        RealmResults<Edge> results = mRealm.where(Edge.class).findAll();
         return results;
     }
-    public static Point getObjectPointFromId(int id){
-        Point point= mRealm.where(Point.class).equalTo("id", id).findFirst();
+
+    public static Point getObjectPointFromId(int id) {
+        Point point = mRealm.where(Point.class).equalTo("id", id).findFirst();
         return point;
     }
-    public static Point getObjectPointFromName(String name){
-        Point point= mRealm.where(Point.class).equalTo("name", name).findFirst();
+
+    public static Point getObjectPointFromName(String name) {
+        Point point = mRealm.where(Point.class).equalTo("name", name).findFirst();
         return point;
     }
-    public static void savePoint(Point point){
+
+    public static void saveObject(Object object) {
         mRealm.beginTransaction();
-        mRealm.copyToRealm(point);
-        mRealm.commitTransaction();
-    }
-    public static void saveEdge(Edge edge){
-        mRealm.beginTransaction();
-        mRealm.copyToRealm(edge);
+        mRealm.copyToRealm((RealmObject) object);
         mRealm.commitTransaction();
     }
 }
