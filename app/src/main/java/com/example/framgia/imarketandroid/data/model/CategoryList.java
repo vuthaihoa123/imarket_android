@@ -1,8 +1,6 @@
 package com.example.framgia.imarketandroid.data.model;
 
-import com.example.framgia.imarketandroid.data.model.Category;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 

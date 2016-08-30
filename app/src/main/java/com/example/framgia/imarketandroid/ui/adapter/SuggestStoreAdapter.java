@@ -34,7 +34,8 @@ public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapte
     @Override
     public void onBindViewHolder(SuggestStoreViewHolder holder, int position) {
         holder.mMessageSuggestStore = mListOldMessage.get(position);
-        holder.mImageViewAvatarItemMessageRate.setImageResource(holder.mMessageSuggestStore.getmImageViewAva());
+        holder.mImageViewAvatarItemMessageRate
+                .setImageResource(holder.mMessageSuggestStore.getmImageViewAva());
         holder.mTextViewContentMessage.setText(holder.mMessageSuggestStore.getmTextViewContent());
         holder.mTextViewNameUser.setText(holder.mMessageSuggestStore.getmNameUser());
         holder.mImageViewStar1.setImageResource(holder.mMessageSuggestStore.getmImageViewStar1());
@@ -64,8 +65,10 @@ public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapte
         public SuggestStoreViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            mImageViewAvatarItemMessageRate = (ImageView)mView.findViewById(R.id.image_avatar_item_message_rate);
-            mTextViewContentMessage = (TextView) mView.findViewById(R.id.text_content_item_message_rate);
+            mImageViewAvatarItemMessageRate = (ImageView)mView
+                    .findViewById(R.id.image_avatar_item_message_rate);
+            mTextViewContentMessage = (TextView) mView
+                    .findViewById(R.id.text_content_item_message_rate);
             mTextViewNameUser = (TextView) mView.findViewById(R.id.text_name_user);
             mImageViewStar1 = (ImageView)mView.findViewById(R.id.image_start_item_1);
             mImageViewStar2 = (ImageView)mView.findViewById(R.id.image_start_item_2);

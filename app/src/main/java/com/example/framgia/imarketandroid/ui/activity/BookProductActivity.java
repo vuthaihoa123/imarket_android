@@ -3,7 +3,9 @@ package com.example.framgia.imarketandroid.ui.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,8 +26,6 @@ import java.util.Calendar;
  * Created by phongtran on 25/08/2016.
  */
 public class BookProductActivity extends Activity implements View.OnClickListener {
-    private static final int SHIP = 1;
-    private static final int GOTOSHOP = 2;
 
     private EditText mEditTextEmail, mEditTextAddress, mEditTextPhoneNumber;
     private Button mButtonClearEmail, mButtonClearAddress, mButtonClearPhoneNumber;
@@ -35,18 +35,22 @@ public class BookProductActivity extends Activity implements View.OnClickListene
     private Button mButtonContinue;
     private RadioButton mRadioButtonOnline, mRadioButtonOffline;
     private LinearLayout mLinearLayoutRadioOnline, mLinearLayoutRadioOffline;
+    private SharedPreferences mPreferences;
+    private Button mButtonLoginByFace;
+    private Button mButtonLoginByGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bookproduct_layout);
         initView();
+        mPreferences = getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     private void initView() {
-        mLinearLayoutRadioOnline = (LinearLayout) findViewById(R.id.linear_muaonline);
+        mLinearLayoutRadioOnline = (LinearLayout) findViewById(R.id.linear_buy_online);
         mLinearLayoutRadioOnline.setVisibility(View.GONE);
-        mLinearLayoutRadioOffline = (LinearLayout) findViewById(R.id.linear_muataicuahang);
+        mLinearLayoutRadioOffline = (LinearLayout) findViewById(R.id.linear_buy_shop);
         mLinearLayoutRadioOffline.setVisibility(View.GONE);
         mEditTextEmail = (EditText) findViewById(R.id.edit_email_book_product);
         mEditTextPhoneNumber = (EditText) findViewById(R.id.edit_phone_book_product);
@@ -57,9 +61,9 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mButtonClearPhoneNumber.setOnClickListener(this);
         mButtonClearAddress = (Button) findViewById(R.id.button_clear_address_ship);
         mButtonClearAddress.setOnClickListener(this);
-        mTextViewTimeShip = (TextView) findViewById(R.id.text_gio_ship);
+        mTextViewTimeShip = (TextView) findViewById(R.id.text_hour_ship);
         mTextViewTimeShip.setOnClickListener(this);
-        mTextViewDateShip = (TextView) findViewById(R.id.text_ngay_ship);
+        mTextViewDateShip = (TextView) findViewById(R.id.text_day_ship);
         mTextViewDateShip.setOnClickListener(this);
         mTextViewForgetPass = (TextView) findViewById(R.id.text_forget_password);
         mTextViewForgetPass.setOnClickListener(this);
@@ -69,10 +73,15 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mRadioButtonOnline.setOnClickListener(this);
         mRadioButtonOffline = (RadioButton) findViewById(R.id.radioButtonOff);
         mRadioButtonOffline.setOnClickListener(this);
-        mTextViewTimeGoToShop = (TextView) findViewById(R.id.text_gioden);
+        mTextViewTimeGoToShop = (TextView) findViewById(R.id.text_time_in);
         mTextViewTimeGoToShop.setOnClickListener(this);
-        mTextViewDateGoToShop = (TextView) findViewById(R.id.text_ngay_den);
+        mTextViewDateGoToShop = (TextView) findViewById(R.id.text_day_in);
         mTextViewDateGoToShop.setOnClickListener(this);
+
+        mButtonLoginByFace = (Button) findViewById(R.id.login_by_face_bookproduct);
+        mButtonLoginByFace.setOnClickListener(this);
+        mButtonLoginByGoogle = (Button) findViewById(R.id.login_by_gg_bookproduct);
+        mButtonLoginByGoogle.setOnClickListener(this);
     }
 
     @Override
@@ -87,14 +96,20 @@ public class BookProductActivity extends Activity implements View.OnClickListene
             case R.id.button_clear_address_ship:
                 mEditTextAddress.setText("");
                 break;
-            case R.id.text_gio_ship:
-                getTime(SHIP);
+            case R.id.text_hour_ship:
+                getTime(Constants.SHIP);
                 break;
-            case R.id.text_ngay_ship:
-                getShowDate(SHIP);
+            case R.id.text_day_ship:
+                getShowDate(Constants.SHIP);
                 break;
             case R.id.text_forget_password:
-                // TODO forget pass word
+                String userName = mPreferences.getString(Constants.USERNAME, null);
+                if (userName == null) {
+                    Intent intentLogin = new Intent(this, LoginActivity.class);
+                    startActivity(intentLogin);
+                } else {
+                    Toast.makeText(this, R.string.login_befor, Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.button_continue_book_product:
                 // TODO continue
@@ -112,11 +127,19 @@ public class BookProductActivity extends Activity implements View.OnClickListene
                 mLinearLayoutRadioOffline.setVisibility(View.VISIBLE);
                 mRadioButtonOnline.setChecked(false);
                 break;
-            case R.id.text_gioden:
-                getTime(GOTOSHOP);
+            case R.id.text_time_in:
+                getTime(Constants.GOTOSHOP);
                 break;
-            case R.id.text_ngay_den:
-                getShowDate(GOTOSHOP);
+            case R.id.text_day_in:
+                getShowDate(Constants.GOTOSHOP);
+                break;
+            case R.id.login_by_face_bookproduct:
+                Intent intentLoginF = new Intent(this, LoginActivity.class);
+                startActivity(intentLoginF);
+                break;
+            case R.id.login_by_gg_bookproduct:
+                Intent intentLoginG = new Intent(this, LoginActivity.class);
+                startActivity(intentLoginG);
                 break;
         }
     }
@@ -125,33 +148,39 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         DatePickerDialog.OnDateSetListener callback = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                if (i == SHIP) {
-                    mTextViewDateShip.setText(day + Constants.SEPARATOR + (month + 1) + Constants.SEPARATOR + year);
-                } else if (i == GOTOSHOP) {
-                    mTextViewDateGoToShop.setText(day + Constants.SEPARATOR + (month + 1) + Constants.SEPARATOR + year);
+                StringBuffer buffer = new StringBuffer()
+                        .append(day)
+                        .append(Constants.SEPARATOR)
+                        .append(month + 1)
+                        .append(Constants.SEPARATOR)
+                        .append(year);
+                if (i == Constants.SHIP) {
+                    mTextViewDateShip.setText(buffer);
+                } else if (i == Constants.GOTOSHOP) {
+                    mTextViewDateGoToShop.setText(buffer);
                 }
             }
         };
-        if (i == SHIP) {
-            String s = mTextViewDateShip.getText() + "";
+        if (i == Constants.SHIP) {
+            String s = mTextViewDateShip.getText().toString();
             String strArrtmp[] = s.split(Constants.SEPARATOR);
-            int ngay = Integer.parseInt(strArrtmp[0]);
-            int thang = Integer.parseInt(strArrtmp[1]) - 1;
-            int nam = Integer.parseInt(strArrtmp[2]);
+            int day = Integer.parseInt(strArrtmp[0]);
+            int month = Integer.parseInt(strArrtmp[1]) - 1;
+            int year = Integer.parseInt(strArrtmp[2]);
             DatePickerDialog pic = new DatePickerDialog(
                     this,
-                    callback, nam, thang, ngay);
+                    callback, year, month, year);
             pic.setTitle(getString(R.string.select_day));
             pic.show();
-        } else if (i == GOTOSHOP) {
-            String s = mTextViewDateGoToShop.getText() + "";
+        } else if (i == Constants.GOTOSHOP) {
+            String s = mTextViewDateGoToShop.getText().toString();
             String strArrtmp[] = s.split(Constants.SEPARATOR);
-            int ngay = Integer.parseInt(strArrtmp[0]);
-            int thang = Integer.parseInt(strArrtmp[1]) - 1;
-            int nam = Integer.parseInt(strArrtmp[2]);
+            int day = Integer.parseInt(strArrtmp[0]);
+            int month = Integer.parseInt(strArrtmp[1]) - 1;
+            int year = Integer.parseInt(strArrtmp[2]);
             DatePickerDialog pic = new DatePickerDialog(
                     this,
-                    callback, nam, thang, ngay);
+                    callback, year, month, day);
             pic.setTitle(getString(R.string.select_day));
             pic.show();
         }
@@ -165,10 +194,14 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                if (i == SHIP) {
-                    mTextViewTimeShip.setText(selectedHour + Constants.COLON + selectedMinute);
-                } else if (i == GOTOSHOP) {
-                    mTextViewTimeGoToShop.setText(selectedHour + Constants.COLON + selectedMinute);
+                StringBuffer buffer = new StringBuffer()
+                        .append(selectedHour)
+                        .append(Constants.COLON)
+                        .append(selectedMinute);
+                if (i == Constants.SHIP) {
+                    mTextViewTimeShip.setText(buffer);
+                } else if (i == Constants.GOTOSHOP) {
+                    mTextViewTimeGoToShop.setText(buffer);
                 }
             }
         }, gio, phut, true);//Yes 24 hour time

@@ -78,28 +78,28 @@
     <string name="phone_number">Phone Number</string>
     <string name="hint_mail_tungb">tungb@gmail.com</string>
     <string name="email">Email</string>
-    <string name="mua_online">Mua Online</string>
-    <string name="diachi_ship">Địa chỉ nhận ship hàng</string>
+    <string name="buy_online">Mua Online</string>
+    <string name="address_ship">Địa chỉ nhận ship hàng</string>
     <string name="address_hint">Hà Đông - Hà Nội</string>
     <string name="time_ship">Thời gian nhận ship hàng</string>
     <string name="time_time">19:00</string>
     <string name="date_date">24/08/2016</string>
-    <string name="ho_c_ng_nh_p_b_ng">Hoặc đăng nhập bằng</string>
-    <string name="ti_p_t_c">Tiếp tục</string>
-    <string name="qu_n_m_t_kh_u">Quên mật khẩu ?</string>
+    <string name="login_with_other">Hoặc đăng nhập bằng</string>
+    <string name="continueeee">Tiếp tục</string>
+    <string name="forget_password">Quên mật khẩu ?</string>
     <string name="time_go_shop">Thời gian đến mua hàng</string>
-    <string name="mua_off">Mua tại cửa hàng</string>
+    <string name="buy_offline">Mua tại cửa hàng</string>
     <string name="restaurant_name">Hải Sản Biển Đông - Trần Thái Tông</string>
-    <string name="t_ch_ngay_qua_t_ng_i">Đặt chỗ ngay qua tổng đài</string>
+    <string name="book_via_center">Đặt chỗ ngay qua tổng đài</string>
     <string name="time_gotoshop">Giờ đến</string>
-    <string name="ngayden">Ngày đến</string>
-    <string name="count_ng_lon">Người lớn</string>
-    <string name="tr_em">Trẻ em</string>
+    <string name="day_in">Ngày đến</string>
+    <string name="count_people">Người lớn</string>
+    <string name="kid">Trẻ em</string>
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
     <string name="select_day">Chọn ngày hoàn thành</string>
     <string name="select_time">Select Time</string>
-    <string name="count_max_nguoi_lon">Số lượng người lớn tối thiểu là 1.</string>
+    <string name="count_min_people">Số lượng người lớn tối thiểu là 1.</string>
     <string name="package_dial">com.android.dialer</string>
     <string name="tel">tel:</string>
     <string name="hint_number">1234567890</string>
@@ -110,7 +110,10 @@
 
     <string name="bic_C">Bic C Thăng Long</string>
     <string name="hast_tag_bicc">#bigcthanglong</string>
-    <string name="message_rate">Mình đã gắn bó với Lotte Cinema Land Mark Hà Nội từ hồi cấp 3. Tới nay đã được gần 5 năm rồi. Quả thật sự trải nghiệm về dịch vụ lẫn những tiện ích của trung tâm làm mình và bạn bè rất hài lòng và thích thú.</string>
+    <string name="message_rate">Mình đã gắn bó với Lotte Cinema Land Mark Hà Nội từ hồi cấp 3.
+        Tới nay đã được gần 5 năm rồi.
+        Quả thật sự trải nghiệm về dịch vụ lẫn những tiện ích của trung tâm làm mình và bạn bè
+        rất hài lòng và thích thú.</string>
     <string name="ques">Big C Thăng Long như thế nào ?</string>
     <string name="comment_here">Viết bình luận tại đây ...</string>
     <string name="post">Post</string>
@@ -127,5 +130,6 @@
     <string name="ba_sao">3 * Tạm được</string>
     <string name="bon_sao">4 * Tôi thích nội dung này</string>
     <string name="nam_sao">5 * Tôi rất thích nội dung này</string>
+    <string name="login_befor">Thiết bị này đã được đăng nhập trước đó .</string>
 
 </resources>

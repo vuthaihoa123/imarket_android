@@ -6,19 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
-
+import com.example.framgia.imarketandroid.util.Constants;
 import java.util.List;
 
 /**
  * Created by yue on 31/07/2016.
  */
 public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private static final int NORMAL_ITEM = 0;
-    private static final int TAIL_ITEM = 1;
     private List<DrawerItem> mNavigationDrawerItems;
 
     public RecyclerDrawerAdapter(List<DrawerItem> items) {
@@ -27,7 +23,7 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == NORMAL_ITEM)
+        if (viewType == Constants.NORMAL_ITEM)
             return new ItemHolder(LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.item_recycler_navigation_drawer, parent, false));
         else
@@ -53,7 +49,8 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        return mNavigationDrawerItems.get(position).isTail() ? TAIL_ITEM : NORMAL_ITEM;
+        return mNavigationDrawerItems
+                .get(position).isTail() ? Constants.TAIL_ITEM : Constants.NORMAL_ITEM;
     }
 
     class ItemHolder extends RecyclerView.ViewHolder {

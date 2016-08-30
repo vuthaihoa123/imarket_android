@@ -38,7 +38,23 @@ public class Constants {
     public static final String PATTERN_SEPARATION = "-";
     public static final String SEPARATOR = "/";
     public static final String COLON = ":";
+
     public static final int ALARM_START_HOUR = 9;
     public static final int ALARM_START_MINUTES = 30;
     public static final int Alarm_START_SECONDS = 0;
+
+    public static final int NORMAL_ITEM = 0;
+    public static final int TAIL_ITEM = 1;
+    public static final int SHIP = 1;
+    public static final int GOTOSHOP = 2;
+    public static final int COUNT_DAY_OF_MONTH = 30;
+    public static final int PHUT_30 = 30;
+    public static final int COUNT_MONTH_OF_YEAR = 12;
+    public static final int FIRST_DAY = 1;
+    public static final int FIRST_MONTH = 1;
+    public static final int MIN_COUNT_PEOPLE = 1;
+    public static final int MIN_COUNT_KID = 0;
+    public static final int CHANGE_TIME_UP = 1;
+    public static final int CHANGE_TIME_DOWN =-1;
+
 }
