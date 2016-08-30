@@ -3,7 +3,9 @@ package com.example.framgia.imarketandroid.ui.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,17 +18,14 @@ import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.util.Constants;
-import com.google.android.gms.internal.zzaoa;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by phongtran on 24/08/2016.
  */
 public class BookTableActivity extends Activity implements View.OnClickListener {
-    private Button mButtonCallTongDai;
+    private Button mButtonCallCenter;
     private Button mButtonLeftBack;
     private Button mButtonRightBack;
     private Button mButtonLeftBackKid;
@@ -42,19 +41,22 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
     private TextView mTextViewCountKid;
     private TextView mTextViewPhoneNumber;
     private EditText mEditTextNote;
-    private int mCountNguoiLon = 2, mCountTreEm = 0;
-    private int mNgay, mThang, mNam, mGio, mPhut;
+    private int mCountPeople = Constants.MIN_COUNT_PEOPLE, mCountKid = Constants.MIN_COUNT_KID;
+    private int mDay, mMonth, mYear, mHour, mMinute;
+    private TextView mTextViewForgetPass;
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booktable_layout);
         initView();
+        mPreferences = getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     private void initView() {
-        mButtonCallTongDai = (Button) findViewById(R.id.button_call_tongdai);
-        mButtonCallTongDai.setOnClickListener(this);
+        mButtonCallCenter = (Button) findViewById(R.id.button_call_center);
+        mButtonCallCenter.setOnClickListener(this);
         mButtonLeftBack = (Button) findViewById(R.id.button_left_back);
         mButtonLeftBack.setOnClickListener(this);
         mButtonRightBack = (Button) findViewById(R.id.button_right_back);
@@ -63,143 +65,205 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         mButtonLeftBackKid.setOnClickListener(this);
         mButtonRightBackKid = (Button) findViewById(R.id.button_right_back_kid);
         mButtonRightBackKid.setOnClickListener(this);
-        mButtonLeftBackDateIn = (Button) findViewById(R.id.button_left_back_ngayden);
+        mButtonLeftBackDateIn = (Button) findViewById(R.id.button_left_back_dayin);
         mButtonLeftBackDateIn.setOnClickListener(this);
-        mButtonRightBackDateIn = (Button) findViewById(R.id.button_right_back_ngayden);
+        mButtonRightBackDateIn = (Button) findViewById(R.id.button_right_back_dayin);
         mButtonRightBackDateIn.setOnClickListener(this);
-        mButtonLeftBackTimeIn = (Button) findViewById(R.id.button_left_back_gioden);
+        mButtonLeftBackTimeIn = (Button) findViewById(R.id.button_left_back_timein);
         mButtonLeftBackTimeIn.setOnClickListener(this);
-        mButtonRightBackTimeIn = (Button) findViewById(R.id.button_right_back_gioden);
+        mButtonRightBackTimeIn = (Button) findViewById(R.id.button_right_back_timein);
         mButtonRightBackTimeIn.setOnClickListener(this);
-        mButtonLeftContinue = (Button) findViewById(R.id.button_tieptuc);
+        mButtonLeftContinue = (Button) findViewById(R.id.button_continuee);
         mButtonLeftContinue.setOnClickListener(this);
         mEditTextNote = (EditText) findViewById(R.id.edit_note);
         mEditTextNote.setOnClickListener(this);
-        mTextViewDateIn = (TextView) findViewById(R.id.text_ngayden);
+        mTextViewDateIn = (TextView) findViewById(R.id.text_dayin);
         mTextViewDateIn.setOnClickListener(this);
-        mTextViewTimeIn = (TextView) findViewById(R.id.text_gioden);
+        mTextViewTimeIn = (TextView) findViewById(R.id.text_time_in);
         mTextViewTimeIn.setOnClickListener(this);
-        mTextViewCount = (TextView) findViewById(R.id.text_count_nguoilon);
+        mTextViewCount = (TextView) findViewById(R.id.text_count_people);
         mTextViewCount.setOnClickListener(this);
         mTextViewCountKid = (TextView) findViewById(R.id.text_count_kid);
         mTextViewCountKid.setOnClickListener(this);
         mTextViewPhoneNumber = (TextView) findViewById(R.id.text_phone_number);
         mTextViewPhoneNumber.setOnClickListener(this);
+        mTextViewForgetPass = (TextView) findViewById(R.id.text_forget_pass_booktable);
+        mTextViewForgetPass.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_call_tongdai:
-//                Intent intent = new Intent(Intent.ACTION_CALL);
-//                intent.setPackage("com.android.server.telecom");
-//                intent.setData(Uri.parse("tel:" + mTextViewPhoneNumber.getText()));
-//                startActivity(intent);
+            case R.id.button_call_center:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setPackage(getString(R.string.package_dial));
-                intent.setData(Uri.parse(getString(R.string.tel) + mTextViewPhoneNumber.getText()));
+                StringBuffer buffer = new StringBuffer()
+                        .append(getString(R.string.tel))
+                        .append(mTextViewPhoneNumber.getText());
+                intent.setData(Uri.parse(buffer.toString()));
                 startActivity(intent);
                 break;
             case R.id.button_left_back:
-                mCountNguoiLon--;
-                if (mCountNguoiLon > 0) {
-                    mTextViewCount.setText(mCountNguoiLon + "");
-                    mCountNguoiLon = 1;
+                mCountPeople--;
+                if (mCountPeople > 0) {
+                    mTextViewCount.setText(mCountPeople);
                 } else {
-                    Toast.makeText(this, R.string.count_max_nguoi_lon, Toast.LENGTH_SHORT).show();
+                    mCountPeople = Constants.MIN_COUNT_PEOPLE;
                 }
                 break;
             case R.id.button_right_back:
-                mCountNguoiLon++;
-                mTextViewCount.setText(mCountNguoiLon + "");
+                mCountPeople++;
+                mTextViewCount.setText(mCountPeople);
                 break;
             case R.id.button_left_back_kid:
-                mCountTreEm--;
-                if (mCountTreEm >= 0) {
-                    mTextViewCountKid.setText(mCountTreEm + "");
-                    mCountTreEm = 0;
+                mCountKid--;
+                if (mCountKid >= 0) {
+                    mTextViewCountKid.setText(mCountKid);
+                } else {
+                    mCountKid = Constants.MIN_COUNT_KID;
                 }
                 break;
             case R.id.button_right_back_kid:
-                mCountTreEm++;
-                mTextViewCountKid.setText(mCountTreEm + "");
+                mCountKid++;
+                mTextViewCountKid.setText(mCountKid);
                 break;
-            case R.id.button_left_back_ngayden:
-                changeDay(-1);
+            case R.id.button_left_back_dayin:
+                changeDay(Constants.CHANGE_TIME_DOWN);
                 break;
-            case R.id.button_right_back_ngayden:
-                changeDay(1);
+            case R.id.button_right_back_dayin:
+                changeDay(Constants.CHANGE_TIME_UP);
                 break;
-            case R.id.button_left_back_gioden:
-                changeTime(-1);
+            case R.id.button_left_back_timein:
+                changeTime(Constants.CHANGE_TIME_DOWN);
                 break;
-            case R.id.button_right_back_gioden:
-                changeTime(1);
+            case R.id.button_right_back_timein:
+                changeTime(Constants.CHANGE_TIME_UP);
                 break;
-            case R.id.button_tieptuc:
+            case R.id.button_continuee:
                 Intent intentt = new Intent(this, BookProductActivity.class);
                 startActivity(intentt);
                 finish();
                 break;
-            case R.id.text_ngayden:
+            case R.id.text_dayin:
                 getShowDate();
                 break;
-            case R.id.text_gioden:
+            case R.id.text_time_in:
                 getTime();
+                break;
+            case R.id.text_forget_pass_booktable:
+                String userName = mPreferences.getString(Constants.USERNAME, null);
+                if (userName == null) {
+                    Intent intentLogin = new Intent(this, LoginActivity.class);
+                    startActivity(intentLogin);
+                } else {
+                    Toast.makeText(this, R.string.login_befor, Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
 
     private void changeTime(int i) {
-        if (i == 1) {
-            if (mPhut < 30) {
-                mPhut += 30;
-                mTextViewTimeIn.setText(mGio + Constants.COLON + mPhut);
+        if (i == Constants.CHANGE_TIME_UP) {
+            if (mMinute < Constants.PHUT_30) {
+                mMinute += Constants.PHUT_30;
+                StringBuffer buffer = new StringBuffer()
+                        .append(mHour)
+                        .append(Constants.COLON)
+                        .append(mMinute);
+                mTextViewTimeIn.setText(buffer);
             } else {
-                mPhut -= 30;
-                mGio++;
-                mTextViewTimeIn.setText(mGio + Constants.COLON + mPhut);
+                mMinute -= Constants.PHUT_30;
+                mHour++;
+                StringBuffer buffer = new StringBuffer()
+                        .append(mHour)
+                        .append(Constants.COLON)
+                        .append(mMinute);
+                mTextViewTimeIn.setText(buffer);
             }
         } else {
-            if (mPhut > 30) {
-                mPhut -= 30;
-                mTextViewTimeIn.setText(mGio + Constants.COLON + mPhut);
+            if (mMinute > Constants.PHUT_30) {
+                mMinute -= Constants.PHUT_30;
+                StringBuffer buffer = new StringBuffer()
+                        .append(mHour)
+                        .append(Constants.COLON)
+                        .append(mMinute);
+                mTextViewTimeIn.setText(buffer);
             } else {
-                mPhut = 30 + mPhut;
-                mGio--;
-                mTextViewTimeIn.setText(mGio + Constants.COLON + mPhut);
+                mMinute = Constants.PHUT_30 + mMinute;
+                mHour--;
+                StringBuffer buffer = new StringBuffer()
+                        .append(mHour)
+                        .append(Constants.COLON)
+                        .append(mMinute);
+                mTextViewTimeIn.setText(buffer);
             }
         }
     }
 
     private void changeDay(int i) {
-        if (mNgay != 0) {
-            if (mNgay > 1 && i == -1) {
-                mNgay += i;
-                mTextViewDateIn.setText(mNgay + Constants.SEPARATOR + mThang + Constants.SEPARATOR + mNam);
-            } else if (mNgay == 1 && i == -1) {
-                mNgay = 30;
-                if (mThang > 1) {
-                    mThang--;
-                    mTextViewDateIn.setText(mNgay + Constants.SEPARATOR + mThang + Constants.SEPARATOR + mNam);
-                } else if (mThang == 1) {
-                    mThang = 12;
-                    mNam--;
-                    mTextViewDateIn.setText(mNgay + Constants.SEPARATOR + mThang + Constants.SEPARATOR + mNam);
+        if (mDay != 0) {
+            if (mDay > Constants.FIRST_DAY && i == Constants.CHANGE_TIME_DOWN) {
+                mDay += i;
+                StringBuffer buffer = new StringBuffer()
+                        .append(mDay)
+                        .append(Constants.SEPARATOR)
+                        .append(mMonth)
+                        .append(Constants.SEPARATOR)
+                        .append(mYear);
+                mTextViewDateIn.setText(buffer);
+            } else if (mDay == Constants.FIRST_DAY && i == Constants.CHANGE_TIME_DOWN) {
+                mDay = Constants.COUNT_DAY_OF_MONTH;
+                if (mMonth > Constants.FIRST_MONTH) {
+                    mMonth--;
+                    StringBuffer buffer = new StringBuffer()
+                            .append(mDay)
+                            .append(Constants.SEPARATOR)
+                            .append(mMonth)
+                            .append(Constants.SEPARATOR)
+                            .append(mYear);
+                    mTextViewDateIn.setText(buffer);
+                } else if (mMonth == Constants.FIRST_MONTH) {
+                    mMonth = Constants.COUNT_MONTH_OF_YEAR;
+                    mYear--;
+                    StringBuffer buffer = new StringBuffer()
+                            .append(mDay)
+                            .append(Constants.SEPARATOR)
+                            .append(mMonth)
+                            .append(Constants.SEPARATOR)
+                            .append(mYear);
+                    mTextViewDateIn.setText(buffer);
                 }
-            } else if (mNgay < 30 && i == 1) {
-                mNgay += i;
-                mTextViewDateIn.setText(mNgay + Constants.SEPARATOR + mThang + Constants.SEPARATOR + mNam);
-            } else if (mNgay == 30 && i == 1) {
-                mNgay = 1;
-                if (mThang < 12) {
-                    mThang++;
-                    mTextViewDateIn.setText(mNgay + Constants.SEPARATOR + mThang + Constants.SEPARATOR + mNam);
-                } else if (mThang == 12) {
-                    mThang = 1;
-                    mNam++;
-                    mTextViewDateIn.setText(mNgay + Constants.SEPARATOR + mThang + Constants.SEPARATOR + mNam);
+            } else if (mDay < Constants.COUNT_DAY_OF_MONTH && i == Constants.CHANGE_TIME_UP) {
+                mDay += i;
+                StringBuffer buffer = new StringBuffer()
+                        .append(mDay)
+                        .append(Constants.SEPARATOR)
+                        .append(mMonth)
+                        .append(Constants.SEPARATOR)
+                        .append(mYear);
+                mTextViewDateIn.setText(buffer);
+            } else if (mDay == Constants.COUNT_DAY_OF_MONTH && i == Constants.CHANGE_TIME_UP) {
+                mDay = Constants.FIRST_DAY;
+                if (mMonth < Constants.COUNT_MONTH_OF_YEAR) {
+                    mMonth++;
+                    StringBuffer buffer = new StringBuffer()
+                            .append(mDay)
+                            .append(Constants.SEPARATOR)
+                            .append(mMonth)
+                            .append(Constants.SEPARATOR)
+                            .append(mYear);
+                    mTextViewDateIn.setText(buffer);
+                } else if (mMonth == Constants.COUNT_MONTH_OF_YEAR) {
+                    mMonth = Constants.FIRST_MONTH;
+                    mYear++;
+                    StringBuffer buffer = new StringBuffer()
+                            .append(mDay)
+                            .append(Constants.SEPARATOR)
+                            .append(mMonth)
+                            .append(Constants.SEPARATOR)
+                            .append(mYear);
+                    mTextViewDateIn.setText(buffer);
                 }
             }
         }
@@ -207,35 +271,44 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
 
     public void getShowDate() {
         DatePickerDialog.OnDateSetListener callback = new DatePickerDialog.OnDateSetListener() {
-            //Sự kiện khi click vào nút Done trên Dialog
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                mTextViewDateIn.setText(day + Constants.SEPARATOR + (month + 1) + Constants.SEPARATOR + year);
+                StringBuffer buffer = new StringBuffer()
+                        .append(day)
+                        .append(Constants.SEPARATOR)
+                        .append(month + 1)
+                        .append(Constants.SEPARATOR)
+                        .append(year);
+                mTextViewDateIn.setText(buffer);
             }
         };
-        String s = mTextViewDateIn.getText() + "";
+        String s = mTextViewDateIn.getText().toString();
         String strArrtmp[] = s.split(Constants.SEPARATOR);
-        mNgay = Integer.parseInt(strArrtmp[0]);
-        mThang = Integer.parseInt(strArrtmp[1]) - 1;
-        mNam = Integer.parseInt(strArrtmp[2]);
+        mDay = Integer.parseInt(strArrtmp[0]);
+        mMonth = Integer.parseInt(strArrtmp[1]) - 1;
+        mYear = Integer.parseInt(strArrtmp[2]);
         DatePickerDialog pic = new DatePickerDialog(
                 this,
-                callback, mNam, mThang, mNgay);
+                callback, mYear, mMonth, mDay);
         pic.setTitle(getString(R.string.select_day));
         pic.show();
     }
 
     public void getTime() {
         Calendar mcurrentTime = Calendar.getInstance();
-        mGio = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        mPhut = mcurrentTime.get(Calendar.MINUTE);
+        mHour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        mMinute = mcurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                mTextViewTimeIn.setText(selectedHour + Constants.COLON + selectedMinute);
+                StringBuffer buffer = new StringBuffer()
+                        .append(selectedHour)
+                        .append(Constants.COLON)
+                        .append(selectedMinute);
+                mTextViewTimeIn.setText(buffer);
             }
-        }, mGio, mPhut, true);//Yes 24 hour time
+        }, mHour, mMinute, true);//Yes 24 hour time
         mTimePicker.setTitle(getString(R.string.select_time));
         mTimePicker.show();
     }

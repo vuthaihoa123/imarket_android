@@ -79,35 +79,35 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/text_1_sao"
+                        android:id="@+id/text_start_1"
                         android:textColor="@color/text_color3"
                         android:text="@string/mot_sao"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_size_20" />
 
                     <TextView
-                        android:id="@+id/text_2_sao"
+                        android:id="@+id/text_start_2"
                         android:textColor="@color/text_color3"
                         android:text="@string/hai_sao"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_size_20" />
 
                     <TextView
-                        android:id="@+id/text_3_sao"
+                        android:id="@+id/text_start_3"
                         android:textColor="@color/text_color3"
                         android:text="@string/ba_sao"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_size_20" />
 
                     <TextView
-                        android:id="@+id/text_4_sao"
+                        android:id="@+id/text_start_4"
                         android:textColor="@color/text_color3"
                         android:text="@string/bon_sao"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_size_20" />
 
                     <TextView
-                        android:id="@+id/text_5_sao"
+                        android:id="@+id/text_start_5"
                         android:textColor="@color/text_color3"
                         android:text="@string/nam_sao"
                         android:layout_width="match_parent"

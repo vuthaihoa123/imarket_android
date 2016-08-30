@@ -42,9 +42,8 @@ import me.leolin.shortcutbadger.ShortcutBadger;
  * Created by yue on 20/07/2016.
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
-    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener {
-    private static final String MARKET_SUGGESTION = Constants.MARKET_SUGGESTION;
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+        SearchView.OnQueryTextListener, OnRecyclerItemInteractListener {
     private static String[] SUGGESTIONS = FakeContainer.SUGGESTIONS;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
@@ -73,8 +72,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         setListeners();
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
@@ -82,14 +81,14 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mMarkets = FakeContainer.initMarkets();
         mAdapter = new RecyclerMarketAdapter(mMarkets);
         mRecyclerMarket.setAdapter(mAdapter);
-        final String[] columns = new String[]{MARKET_SUGGESTION};
+        final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-            android.R.layout.simple_list_item_1,
-            null,
-            columns,
-            displayViews,
-            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                android.R.layout.simple_list_item_1,
+                null,
+                columns,
+                displayViews,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mAdapter.setOnRecyclerItemInteractListener(this);
         // TODO: 29/08/2016  remove badge 
         ShortcutBadger.removeCount(this);
@@ -99,7 +98,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_choose_market, menu);
         SearchView searchView = (SearchView)
-            MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+                MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
@@ -185,7 +184,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void populateSuggestionAdapter(String query) {
-        final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID, MARKET_SUGGESTION});
+        final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID, Constants.MARKET_SUGGESTION});
         int length = SUGGESTIONS.length;
         for (int i = 0; i < length; i++) {
             if (SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))

@@ -49,8 +49,8 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/text_call_tongdai"
-                        android:text="@string/t_ch_ngay_qua_t_ng_i"
+                        android:id="@+id/text_call_center"
+                        android:text="@string/book_via_center"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/common_text_size_9"
                         android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content" />
 
                     <Button
-                        android:id="@+id/button_call_tongdai"
+                        android:id="@+id/button_call_center"
                         android:background="@drawable/background_button"
                         android:text="@string/goi"
                         android:drawableRight="@drawable/ic_arrow_forward_black"
@@ -91,7 +91,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color4"
-                        android:text="@string/count_ng_lon"
+                        android:text="@string/count_people"
                         android:layout_height="match_parent" />
 
                     <TextView
@@ -100,6 +100,7 @@
                         android:layout_marginBottom="@dimen/margin_5"
                         android:background="@color/bg_bb_color"
                         android:layout_height="match_parent" />
+
                     <Button
                         android:id="@+id/button_left_back"
                         android:layout_width="0dp"
@@ -108,7 +109,7 @@
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/text_count_nguoilon"
+                        android:id="@+id/text_count_people"
                         android:layout_width="0dp"
                         android:layout_weight="4"
                         android:gravity="center"
@@ -138,8 +139,9 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color4"
-                        android:text="@string/tr_em"
+                        android:text="@string/kid"
                         android:layout_height="match_parent" />
+
                     <TextView
                         android:layout_width="1dp"
                         android:layout_marginTop="@dimen/margin_5"
@@ -191,7 +193,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color4"
-                        android:text="@string/ngayden"
+                        android:text="@string/day_in"
                         android:layout_height="match_parent" />
 
                     <TextView
@@ -202,14 +204,14 @@
                         android:layout_height="match_parent" />
 
                     <Button
-                        android:id="@+id/button_left_back_ngayden"
+                        android:id="@+id/button_left_back_dayin"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_left_black"
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/text_ngayden"
+                        android:id="@+id/text_dayin"
                         android:layout_width="0dp"
                         android:layout_weight="4"
                         android:gravity="center"
@@ -220,7 +222,7 @@
                         android:layout_height="match_parent" />
 
                     <Button
-                        android:id="@+id/button_right_back_ngayden"
+                        android:id="@+id/button_right_back_dayin"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_right_black"
@@ -250,14 +252,14 @@
                         android:layout_height="match_parent" />
 
                     <Button
-                        android:id="@+id/button_left_back_gioden"
+                        android:id="@+id/button_left_back_timein"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_left_black"
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/text_gioden"
+                        android:id="@+id/text_time_in"
                         android:layout_width="0dp"
                         android:layout_weight="4"
                         android:gravity="center"
@@ -268,7 +270,7 @@
                         android:layout_height="match_parent" />
 
                     <Button
-                        android:id="@+id/button_right_back_gioden"
+                        android:id="@+id/button_right_back_timein"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_right_black"
@@ -293,11 +295,23 @@
                     android:padding="@dimen/margin_pading_10"
                     android:layout_height="match_parent" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_forget_pass_booktable"
+                android:text="@string/forget_password"
+                android:gravity="right"
+                android:layout_marginRight="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:textColor="@color/text_color3"
+                android:textSize="@dimen/common_text_size_6"
+                android:textStyle="italic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 
     <Button
-        android:id="@+id/button_tieptuc"
+        android:id="@+id/button_continuee"
         android:background="@color/bg_btt_color"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

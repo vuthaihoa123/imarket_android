@@ -28,7 +28,7 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
     private ImageView mImageViewAvaStore;
     private TextView mTextViewNameStore, mTextViewHastagStore;
     private Button mButtonFollow, mButtonMessage, mButtonShare;
-    private TextView mTextViewTyLeVote, mTextViewCountVote;
+    private TextView mTextViewProportionVote, mTextViewCountVote;
     private ImageView mImageViewStar1, mImageViewStar2, mImageViewStar3, mImageViewStar4,
             mImageViewStar5;
     private Button mButtonPostSuggestStore;
@@ -36,6 +36,11 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
     private List<MessageSuggestStore> mMessageSuggestStoreList = new ArrayList<>();
     private SuggestStoreAdapter mSuggestStoreAdapter;
     private AlertDialog mAlertDialogPostMessage;
+    private EditText mEditTextContentMess;
+    private Button mButtonBack, mButtonPost;
+    private Button mButtonStar1, mButtonStar2, mButtonStar3, mButtonStar4, mButtonStar5;
+    private TextView mTextViewStar1, mTextViewStar2, mTextViewStar3, mTextViewStar4, mTextViewStar5;
+    private MessageSuggestStore msm = new MessageSuggestStore();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +81,7 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
         mButtonFollow = (Button) findViewById(R.id.button_follow_suggetstore);
         mButtonMessage = (Button) findViewById(R.id.button_message_suggetstore);
         mButtonShare = (Button) findViewById(R.id.button_share_suggetstore);
-        mTextViewTyLeVote = (TextView) findViewById(R.id.text_ty_le_rate);
+        mTextViewProportionVote = (TextView) findViewById(R.id.text_proportion_rate);
         mTextViewCountVote = (TextView) findViewById(R.id.text_count_rate);
         mImageViewStar1 = (ImageView) findViewById(R.id.image_start_1);
         mImageViewStar2 = (ImageView) findViewById(R.id.image_start_2);
@@ -114,12 +119,6 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
         }
     }
 
-    private EditText mEditTextContentMess;
-    private Button mButtonBack, mButtonPost;
-    private Button mButtonStar1, mButtonStar2, mButtonStar3, mButtonStar4, mButtonStar5;
-    private TextView mTextViewStar1, mTextViewStar2, mTextViewStar3, mTextViewStar4, mTextViewStar5;
-    private MessageSuggestStore msm = new MessageSuggestStore();
-
     private void initAlertDiaLogPostMessage() {
         msm.setmImageViewStar1(R.drawable.ic_star_empty);
         msm.setmImageViewStar2(R.drawable.ic_star_empty);
@@ -138,11 +137,11 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
         mButtonStar3 = (Button) promptsView.findViewById(R.id.button_start_vote_3);
         mButtonStar4 = (Button) promptsView.findViewById(R.id.button_start_vote_4);
         mButtonStar5 = (Button) promptsView.findViewById(R.id.button_start_vote_5);
-        mTextViewStar1 = (TextView) promptsView.findViewById(R.id.text_1_sao);
-        mTextViewStar2 = (TextView) promptsView.findViewById(R.id.text_2_sao);
-        mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_3_sao);
-        mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_4_sao);
-        mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_5_sao);
+        mTextViewStar1 = (TextView) promptsView.findViewById(R.id.text_start_1);
+        mTextViewStar2 = (TextView) promptsView.findViewById(R.id.text_start_2);
+        mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_start_3);
+        mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_start_4);
+        mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_start_5);
         alertDialogBuilder
                 .setCancelable(false);
         mButtonBack.setOnClickListener(new View.OnClickListener() {

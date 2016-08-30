@@ -1,8 +1,5 @@
 package com.example.framgia.imarketandroid.data.model;
 
-import android.widget.ImageView;
-import android.widget.TextView;
-
 /**
  * Created by phongtran on 26/08/2016.
  */
