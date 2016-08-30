@@ -2,10 +2,12 @@ package com.example.framgia.imarketandroid.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by toannguyen201194 on 29/07/2016.
  */
-public class Session {
+public class Session extends RealmObject {
     @SerializedName("id")
     private String mId;
     @SerializedName("email")

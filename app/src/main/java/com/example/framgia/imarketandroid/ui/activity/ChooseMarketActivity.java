@@ -25,17 +25,18 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
+import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
 import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
-import com.example.framgia.imarketandroid.util.NotificationUtil;
-import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
  * Created by yue on 20/07/2016.
@@ -90,7 +91,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             displayViews,
             CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mAdapter.setOnRecyclerItemInteractListener(this);
-        NotificationUtil.setAlarm(this);
+        // TODO: 29/08/2016  remove badge 
+        ShortcutBadger.removeCount(this);
     }
 
     @Override
