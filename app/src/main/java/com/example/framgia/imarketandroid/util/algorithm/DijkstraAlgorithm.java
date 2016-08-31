@@ -3,6 +3,7 @@ package com.example.framgia.imarketandroid.util.algorithm;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Graph;
 import com.example.framgia.imarketandroid.data.model.Point;
@@ -31,22 +32,12 @@ public class DijkstraAlgorithm {
     private Map<Point, Float> mDistance;
     private Context context;
     private RealmRemote realmRemote;
-  //  private DatabaseRemote mRemote;
 
     public DijkstraAlgorithm(Graph graph, Context context) {
         mNodes = new ArrayList<Point>(graph.getVertexes());
         mEdges = new ArrayList<Edge>(graph.getEdges());
         this.context = context;
-//        realmRemote= new RealmRemote(context);
-//        mRemote = new DatabaseRemote(context);
-//        try {
-//            mRemote.openDatabase();
-//        } catch (SQLDataException e) {
-//            e.printStackTrace();
-//        }
     }
-
-
 
     public void execute(Point source) {
         mSettledNodes = new HashSet<Point>();
@@ -65,7 +56,6 @@ public class DijkstraAlgorithm {
 
     private void findMinimalDistances(Point node) {
         List<Point> adjacentNodes = getNeighbors(node);
-        Log.i(TAG, "size adjacentNodes=" + adjacentNodes.size());
         for (Point target : adjacentNodes) {
             if (getShortestDistance(target) > getShortestDistance(node)
                 + getDistance(node, target)) {
@@ -84,7 +74,7 @@ public class DijkstraAlgorithm {
                 return edge.getWeigth();
             }
         }
-        throw new RuntimeException("Should not happen");
+        throw new RuntimeException(String.valueOf(R.string.warning_input));
     }
 
     private List<Point> getNeighbors(Point node) {
@@ -134,13 +124,11 @@ public class DijkstraAlgorithm {
         Point step = target;
         // check if a path exists
         if (mPredecessors.get(step) == null) {
-            Log.i(TAG, "mPredecessors.get(step) == null");
             return null;
         }
         path.add(step);
         while (mPredecessors.get(step) != null) {
             step = mPredecessors.get(step);
-            Log.i(TAG, "step=" + step);
             path.add(step);
         }
         // Put it into the correct order

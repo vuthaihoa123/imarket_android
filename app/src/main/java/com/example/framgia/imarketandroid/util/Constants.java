@@ -35,9 +35,14 @@ public class Constants {
     public static final String PATTERN_SEPARATION = "-";
     public static final String SEPARATOR = "/";
     public static final String COLON = ":";
+    public static final String FIELD_NAME = "name";
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_TYPE = "type";
+
     public static final int ALARM_START_HOUR = 9;
     public static final int ALARM_START_MINUTES = 30;
-    public static final int Alarm_START_SECONDS = 0;
+    public static final int ALARM_START_SECONDS = 0;
+
     public static final int NORMAL_ITEM = 0;
     public static final int TAIL_ITEM = 1;
     public static final int SHIP = 1;

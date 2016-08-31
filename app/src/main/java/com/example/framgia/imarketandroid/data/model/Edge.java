@@ -8,57 +8,52 @@ import io.realm.RealmObject;
  * Created by nguyenxuantung on 24/06/2016.
  */
 public class Edge extends RealmObject {
-    private String nameStart;
-    private String nameEnd;
-    private float edge;
-    public Edge(Cursor cursor){
-        this.nameStart = cursor.getString(cursor.getColumnIndex("id_start"));
-        this.nameEnd = cursor.getString(cursor.getColumnIndex("id_end"));
-        this.edge= cursor.getFloat(cursor.getColumnIndex("edge"));
-    }
+    private String mNameStart;
+    private String mNameEnd;
+    private float mEdge;
 
     public Edge() {
     }
 
     public Edge(String nameStart, String nameEnd, float edge) {
-        this.nameStart = nameStart;
-        this.nameEnd = nameEnd;
-        this.edge= edge;
+        this.mNameStart = nameStart;
+        this.mNameEnd = nameEnd;
+        this.mEdge= edge;
     }
 
     public String getNameStart() {
-        return nameStart;
+        return mNameStart;
     }
 
     public void setIdStart(String nameStart) {
-        this.nameStart = nameStart;
+        this.mNameStart = nameStart;
     }
 
     public String getNameEnd() {
-        return nameEnd;
+        return mNameEnd;
     }
 
     public void setNameEnd(String nameEnd) {
-        this.nameEnd = nameEnd;
+        this.mNameEnd = nameEnd;
     }
 
     public float getDistance() {
-        return edge;
+        return mEdge;
     }
 
     public void setDistance(float edge) {
-        edge = edge;
+        this.mEdge = edge;
     }
 
     public String getSource() {
-        return nameStart;
+        return mNameStart;
     }
 
     public String getDestination() {
-        return nameEnd;
+        return mNameEnd;
     }
 
     public float getWeigth() {
-        return edge;
+        return mEdge;
     }
 }

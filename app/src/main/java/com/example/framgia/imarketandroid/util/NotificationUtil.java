@@ -22,7 +22,7 @@ public class NotificationUtil {
         Calendar currentCal = Calendar.getInstance();
         alarmStartTime.set(Calendar.HOUR_OF_DAY, Constants.ALARM_START_HOUR);
         alarmStartTime.set(Calendar.MINUTE, Constants.ALARM_START_MINUTES);
-        alarmStartTime.set(Calendar.SECOND, Constants.Alarm_START_SECONDS);
+        alarmStartTime.set(Calendar.SECOND, Constants.ALARM_START_SECONDS);
         alarmStartTime.set(Calendar.AM_PM, Calendar.AM);
         long intendedTime = alarmStartTime.getTimeInMillis();
         long currentTime = currentCal.getTimeInMillis();

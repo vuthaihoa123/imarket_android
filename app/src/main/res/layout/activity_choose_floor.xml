@@ -2,10 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/right_area">
+
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -19,47 +21,59 @@
                 android:layout_height="100dp">
 
                 <Button
-                    android:id="@+id/show_dialog"
+                    android:id="@+id/btn_show_dialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:layout_marginTop="20dp"
-                    android:padding="10dp"
-                    android:paddingRight="10dp"
-                    android:text="make edge" />
+                    android:layout_marginTop="@dimen/common_size_20"
+                    android:padding="@dimen/common_size_10"
+                    android:paddingRight="@dimen/common_size_10"
+                    android:text="@string/make_edge" />
 
                 <Button
-                    android:id="@+id/delete_data"
+                    android:id="@+id/btn_delete_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:layout_marginTop="20dp"
-                    android:padding="10dp"
-                    android:paddingRight="10dp"
-                    android:text="delete all" />
+                    android:layout_marginTop="@dimen/common_size_20"
+                    android:padding="@dimen/common_size_10"
+                    android:paddingRight="@dimen/common_size_10"
+                    android:text="@string/delete_point" />
 
                 <Button
-                    android:id="@+id/find_path"
+                    android:id="@+id/btn_find_path"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:layout_marginTop="20dp"
-                    android:padding="10dp"
-                    android:paddingRight="10dp"
-                    android:text="draw path" />
+                    android:layout_marginTop="@dimen/common_size_20"
+                    android:padding="@dimen/common_size_10"
+                    android:paddingRight="@dimen/common_size_10"
+                    android:text="@string/draw_path" />
+
                 <Button
-                    android:id="@+id/demo_find_way"
+                    android:id="@+id/btn_demo_find_way"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:layout_marginTop="20dp"
-                    android:padding="10dp"
-                    android:paddingRight="10dp"
-                    android:text="find way" />
+                    android:layout_marginTop="@dimen/common_size_20"
+                    android:padding="@dimen/common_size_10"
+                    android:paddingRight="@dimen/common_size_10"
+                    android:text="@string/find_way" />
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/edt_delete"
+                    android:layout_width="@dimen/common_size_60"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </fragment>
 
     </FrameLayout>
+
     <LinearLayout
         android:id="@+id/right_area"
         android:layout_width="@dimen/layout_width_right_area"
@@ -92,10 +106,10 @@
             android:foreground="@drawable/custom_spinner" />
 
         <LinearLayout
+            android:id="@+id/layout_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:id="@+id/layout_location"
             android:orientation="horizontal">
 
             <ImageView
