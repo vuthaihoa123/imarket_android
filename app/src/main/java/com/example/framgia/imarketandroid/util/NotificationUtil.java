@@ -29,7 +29,7 @@ public class NotificationUtil {
         if (intendedTime >= currentTime) {
             alarmManager
                 .setInexactRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(),
-                    alarmStartTime.getTimeInMillis(), pendingIntent);
+                    AlarmManager.INTERVAL_HOUR, pendingIntent);
         } else {
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                 intendedTime, getInterval(), pendingIntent);

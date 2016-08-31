@@ -1,5 +1,6 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.framgia.imarketandroid.BuildConfig;
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.ui.fragments.SignInFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SignUpFragment;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
 import com.facebook.appevents.AppEventsLogger;
@@ -31,11 +35,20 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferencesUtil.getInstance().init(this);
         FacebookSdk.sdkInitialize(this);
         if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
+        Session session = (Session) SharedPreferencesUtil.getInstance().getValue
+            (Constants.SESSION,
+                Session.class);
+        if (session!=null) {
+            startActivity(new Intent(this, UpdateProfileActivity.class));
+            finish();
+        }
+
         AppEventsLogger.activateApp(getApplicationContext());
         setContentView(R.layout.activity_login);
         initViews();
@@ -51,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new SignInFragment(), Constants.LOGIN);
         adapter.addFragment(new SignUpFragment(), Constants.SIGNUP);
         viewPager.setAdapter(adapter);
     }

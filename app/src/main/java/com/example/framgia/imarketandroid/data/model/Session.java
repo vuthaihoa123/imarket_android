@@ -18,6 +18,16 @@ public class Session extends RealmObject {
     private String mFullname;
     @SerializedName("password_confirmation")
     private String mPasswordConfirm;
+    @SerializedName("auth_token")
+    private String mAuthToken;
+    @SerializedName("url_image")
+    private String mUrlImage;
+    @SerializedName("birthday")
+    private String mBrithday;
+    @SerializedName("number_phone")
+    private String mNumberPhone;
+    @SerializedName("adress")
+    private String mAdress;
 
     public Session() {
     }
@@ -32,6 +42,38 @@ public class Session extends RealmObject {
         mUsername = username;
         mPassword = password;
         mPasswordConfirm = passwordConfirm;
+    }
+
+    public String getmUrlImage() {
+        return mUrlImage;
+    }
+
+    public void setmUrlImage(String mUrlImage) {
+        this.mUrlImage = mUrlImage;
+    }
+
+    public String getmBrithday() {
+        return mBrithday;
+    }
+
+    public void setmBrithday(String mBrithday) {
+        this.mBrithday = mBrithday;
+    }
+
+    public String getmNumberPhone() {
+        return mNumberPhone;
+    }
+
+    public void setmNumberPhone(String mNumberPhone) {
+        this.mNumberPhone = mNumberPhone;
+    }
+
+    public String getmAdress() {
+        return mAdress;
+    }
+
+    public void setmAdress(String mAdress) {
+        this.mAdress = mAdress;
     }
 
     public String getPasswordConfirm() {
@@ -72,5 +114,13 @@ public class Session extends RealmObject {
 
     public void setPassword(String password) {
         mPassword = password;
+    }
+
+    public String getmAuthToken() {
+        return mAuthToken;
+    }
+
+    public void setmAuthToken(String mAuthToken) {
+        this.mAuthToken = mAuthToken;
     }
 }

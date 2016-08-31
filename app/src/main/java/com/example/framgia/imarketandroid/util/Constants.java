@@ -4,6 +4,10 @@ package com.example.framgia.imarketandroid.util;
  * Created by VULAN on 7/19/2016.
  */
 public class Constants {
+    public static final int MINYEARPICKER=1954;
+    public static final int MINMONTHPICKER=0;
+    public static final int MINDATEPICKER=1;
+    public static final String SESSION = "session";
     public static final String FIELD = "fields";
     public static final String PUBLIC_PROFILE = "public_profile";
     public static final String EMAIL = "email";
@@ -38,11 +42,9 @@ public class Constants {
     public static final String FIELD_NAME = "name";
     public static final String FIELD_ID = "id";
     public static final String FIELD_TYPE = "type";
-
     public static final int ALARM_START_HOUR = 9;
     public static final int ALARM_START_MINUTES = 30;
     public static final int ALARM_START_SECONDS = 0;
-
     public static final int NORMAL_ITEM = 0;
     public static final int TAIL_ITEM = 1;
     public static final int SHIP = 1;
