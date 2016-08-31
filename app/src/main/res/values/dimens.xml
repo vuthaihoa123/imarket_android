@@ -113,4 +113,8 @@
     <dimen name="wid_hei_80">80dp</dimen>
     <dimen name="wid_hei_200">200dp</dimen>
     <dimen name="wid_hei_150">150dp</dimen>
+    <dimen name="common_size_100">100dp</dimen>
+    <dimen name="common_size_70">70dp</dimen>
+    <dimen name="common_size_50">50dp</dimen>
+    <dimen name="common_size_60">60dp</dimen>
 </resources>

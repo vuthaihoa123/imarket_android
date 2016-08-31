@@ -131,5 +131,5 @@
     <string name="bon_sao">4 * Tôi thích nội dung này</string>
     <string name="nam_sao">5 * Tôi rất thích nội dung này</string>
     <string name="login_befor">Thiết bị này đã được đăng nhập trước đó .</string>
-
+    <string name="title_activity_maps">Map</string>
 </resources>

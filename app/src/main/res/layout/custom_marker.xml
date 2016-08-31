@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/marker_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/map_marker">
+
+    <TextView
+        android:id="@+id/text_center"
+        android:layout_width="@dimen/common_size_70"
+        android:layout_height="@dimen/common_size_70"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/common_size_10"
+        android:gravity="center"
+        android:textSize="@dimen/common_text_size_7"
+        android:visibility="invisible" />
+</FrameLayout>
