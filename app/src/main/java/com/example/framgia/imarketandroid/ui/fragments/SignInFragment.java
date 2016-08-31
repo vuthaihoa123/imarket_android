@@ -58,6 +58,7 @@ import java.util.Arrays;
 public class SignInFragment extends android.support.v4.app.Fragment implements
     View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient
     .OnConnectionFailedListener {
+    private static final String SESSION = "session";
     private static final String SHOW = "show";
     private static final int RC_SIGN_IN = 0;
     private static final int PROFILE_PIC_SIZE = 400;
@@ -205,9 +206,12 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
                             .LENGTH_SHORT)
                             .show();
                     } else {
-                        SharedPreferencesUtil.getInstance().save(session);
-                        Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
-                        startActivity(intent);
+                        SharedPreferencesUtil.getInstance().save(SESSION, session);
+                        //get sharedpreferences
+                        Session session1 = (Session) SharedPreferencesUtil.getInstance().getValue
+                            (SESSION,
+                                Session.class);
+                        startActivity(new Intent(getActivity(), ChooseMarketActivity.class));
                         getActivity().finish();
                     }
                 }

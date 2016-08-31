@@ -16,9 +16,6 @@ public class Constants {
     public static final String PACKAGE = "package";
     public static final String PROFILE = "Profile";
     public static final String PREFS_NAME = "AOP_PREFS";
-    public static final String ID = "id";
-    public static final String USERNAME = "username";
-    public static final String FULLNAME = "fullname";
     public static final String NAMESERVICE = "NotificationService";
     public static final String BASE_URL = "https://imarket-api.herokuapp.com/api/";
     public static final String NO_PERCENT = "0%";
@@ -38,11 +35,9 @@ public class Constants {
     public static final String PATTERN_SEPARATION = "-";
     public static final String SEPARATOR = "/";
     public static final String COLON = ":";
-
     public static final int ALARM_START_HOUR = 9;
     public static final int ALARM_START_MINUTES = 30;
     public static final int Alarm_START_SECONDS = 0;
-
     public static final int NORMAL_ITEM = 0;
     public static final int TAIL_ITEM = 1;
     public static final int SHIP = 1;
@@ -55,6 +50,5 @@ public class Constants {
     public static final int MIN_COUNT_PEOPLE = 1;
     public static final int MIN_COUNT_KID = 0;
     public static final int CHANGE_TIME_UP = 1;
-    public static final int CHANGE_TIME_DOWN =-1;
-
+    public static final int CHANGE_TIME_DOWN = -1;
 }

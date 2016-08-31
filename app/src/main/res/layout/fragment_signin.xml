@@ -3,7 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/backgroud_login"
+              android:background="@android:color/white"
               android:orientation="vertical"
               android:scrollbars="horizontal"
               android:theme="@style/fragmentlogin">
@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/login_hint_username"
             android:singleLine="true"
-            android:textColor="@android:color/white"
             android:textStyle="italic"/>
 
         <EditText
@@ -35,7 +34,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/login_hint_password"
             android:inputType="textPassword"
-            android:textColor="@android:color/white"
             android:textStyle="italic"/>
 
         <TextView
@@ -70,7 +68,7 @@
                 android:id="@+id/frame_button_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/framelayout_login"
-                android:background="@drawable/default_button">
+                android:background="@drawable/button_login">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -94,10 +92,10 @@
             app:cardCornerRadius="@dimen/login_radius_cardview">
 
             <FrameLayout
-
                 android:id="@+id/frame_button_gmail"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/framelayout_login"
+                android:background="@drawable/button_login"
                 android:orientation="horizontal">
 
                 <TextView

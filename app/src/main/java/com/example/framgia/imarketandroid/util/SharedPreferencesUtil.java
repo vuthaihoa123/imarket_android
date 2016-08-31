@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.google.gson.Gson;
 
 /**
  * Created by toannguyen201194 on 29/07/2016.
@@ -29,24 +30,20 @@ public class SharedPreferencesUtil {
 
     public void init(Context context) {
         mSettings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
-        mEditor = mSettings.edit();
     }
-
-    public void save(Session session) {
-        mEditor.putString(Constants.ID, session.getId());
-        mEditor.putString(Constants.FULLNAME, session.getFullname());
-        mEditor.putString(Constants.USERNAME, session.getUsername());
-        mEditor.apply();
+    public void save(String nameObject, Object object) {
+        SharedPreferences.Editor prefsEditor = mSettings.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(object); // object - instance of MyObject
+        prefsEditor.putString(nameObject, json);
+        prefsEditor.apply();
     }
-
-    public Session getValue() {
-        Session session = new Session();
-        session.setId(mSettings.getString(Constants.ID, null));
-        session.setFullname(mSettings.getString(Constants.FULLNAME, null));
-        session.setUsername(mSettings.getString(Constants.USERNAME, null));
-        return session;
+    public Object getValue(String nameObject,Class aClass) {
+        Gson gson = new Gson();
+        String json = mSettings.getString(nameObject,"");
+        Object object=gson.fromJson(json,aClass);
+        return object;
     }
-
     public void clearSharedPreference(Context context) {
         mEditor = mSettings.edit();
         mEditor.clear();
