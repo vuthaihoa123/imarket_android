@@ -91,21 +91,23 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
             mProgressDialog.setMessage(getString(R.string.progressdialog));
             mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
             mProgressDialog.show();
-            Session user=new Session(mEditFullName.getText().toString(),mEditMail.getText()
-                .toString(),mEditPassword.getText().toString(),mEditPasswordConfirm.getText().toString());
-            final SignupModel signupModel=new SignupModel(user);
+            Session user = new Session(mEditFullName.getText().toString(), mEditMail.getText()
+                .toString(), mEditPassword.getText().toString(),
+                mEditPasswordConfirm.getText().toString());
+            final SignupModel signupModel = new SignupModel(user);
             HttpRequest.getInstance().register(signupModel);
             HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
                 @Override
                 public void onLoadDataSuccess(Object object) {
-                    SignupModel signupModel1 =(SignupModel) object;
+                    SignupModel signupModel1 = (SignupModel) object;
                     mProgressDialog.dismiss();
-                    if(signupModel1.getErrors().getEmail().get(0).isEmpty()){
+                    if (signupModel1.getErrors().getEmail().get(0).isEmpty()) {
                         Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
                         startActivity(intent);
                         getActivity().finish();
-                    }else{
-                        Toast.makeText(getContext(), signupModel1.getErrors().getEmail().get(0),Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), signupModel1.getErrors().getEmail().get(0),
+                            Toast.LENGTH_SHORT).show();
                     }
                 }
 

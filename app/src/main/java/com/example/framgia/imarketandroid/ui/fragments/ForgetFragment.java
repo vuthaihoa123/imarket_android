@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -27,6 +28,7 @@ public class ForgetFragment extends DialogFragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_forget_password, container, false);
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return mView;
     }
 
@@ -36,20 +38,17 @@ public class ForgetFragment extends DialogFragment implements View.OnClickListen
         findView();
     }
 
-    public void findView(){
+    public void findView() {
         mEditForgetEmail = (EditText) mView.findViewById(R.id.edit_forget_password);
         mButtonSend = (Button) mView.findViewById(R.id.button_sendemail);
-        mButtonCancel = (Button) mView.findViewById(R.id.button_cancel);
-        mButtonCancel.setOnClickListener(this);
+        mButtonSend.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_sendemail:
-                dismiss();
-                break;
-            case R.id.button_cancel:
+                // TODO: 31/08/2016  send email to server
                 dismiss();
                 break;
         }

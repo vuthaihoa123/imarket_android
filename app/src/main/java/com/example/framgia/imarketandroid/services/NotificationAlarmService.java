@@ -70,6 +70,7 @@ public class NotificationAlarmService extends IntentService {
             builder.setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.avatar)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.avatar))
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setAutoCancel(true)
                 .setContentTitle(sessions.get(0).getFullname())
                 .setContentText(sessions.get(0).getUsername());

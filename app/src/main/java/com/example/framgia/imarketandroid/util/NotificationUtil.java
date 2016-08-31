@@ -13,7 +13,6 @@ import java.util.Calendar;
  * Created by toannguyen201194 on 19/08/2016.
  */
 public class NotificationUtil {
-
     public static void setAlarm(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(context, NotificationAlarmService.class);

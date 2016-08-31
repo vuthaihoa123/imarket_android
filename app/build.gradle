@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "24.0.0"
 
     dexOptions {
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.framgia.imarketandroid"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -33,11 +33,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.facebook.android:facebook-android-sdk:4.11.0'
-    compile 'com.google.android.gms:play-services:9.2.1'
+    compile 'com.google.android.gms:play-services:9.4.0'
     compile 'com.android.support:cardview-v7:24.1.1'
     compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
-    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
@@ -46,9 +46,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'me.leolin:ShortcutBadger:1.1.6@aar'
-    compile 'com.google.maps.android:android-maps-utils:0.4.+'
-    compile 'com.google.android.gms:play-services-ads:9.2.1'
-    compile 'com.google.android.gms:play-services-auth:9.2.1'
-    compile 'com.google.android.gms:play-services-gcm:9.2.1'
+    compile 'com.google.maps.android:android-maps-utils:0.4.4'
+    compile 'com.google.android.gms:play-services-ads:9.4.0'
+    compile 'com.google.android.gms:play-services-auth:9.4.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
 }
 
