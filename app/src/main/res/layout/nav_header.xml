@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="350dp"
-                android:layout_height="170dp"
-                android:background="@drawable/nav_header"
+                android:layout_width="@dimen/width_height_350"
+                android:layout_height="@dimen/width_height_170"
+                android:background="@color/color_toolbar"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_avatar"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/width_height_70"
+        android:layout_height="@dimen/width_height_70"
         android:layout_marginBottom="@dimen/common_size_20"
         android:layout_marginLeft="@dimen/common_size_20"
-        android:layout_marginTop="@dimen/common_size_35"
+        android:layout_marginTop="@dimen/margin_5"
         android:padding="@dimen/common_size_5"
         android:src="@drawable/avatar"/>
 
@@ -23,8 +23,8 @@
         android:layout_toRightOf="@id/image_avatar"
         android:paddingBottom="@dimen/common_size_10"
         android:paddingLeft="@dimen/common_size_10"
-        android:text="Yue"
-        android:textColor="#9e7373"
+        android:text="@string/user_name_nav"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/common_text_size_15"
         android:textStyle="bold|italic"/>
 
@@ -36,16 +36,15 @@
         android:layout_toRightOf="@id/image_avatar"
         android:paddingBottom="@dimen/common_size_10"
         android:paddingLeft="@dimen/common_size_10"
-        android:text="android.studio@android.com"
-        android:textColor="#9e7373"
+        android:text="@string/mail_com"
+        android:textColor="@android:color/white"
         android:textStyle="italic"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/common_size_60"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="6.04">
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/button_favorite"
@@ -60,16 +59,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/common_size_3"
-                android:text="Favorite"
-                android:textColor="#ffe83e"
-                android:textSize="18sp"
+                android:paddingTop="@dimen/margin_10dp"
+                android:text="@string/favoritee"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/common_text_size_6"
                 android:textStyle="italic"/>
 
             <View
                 android:id="@+id/nav_drawer_stroke_1"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="@dimen/elevation_popup"
                 android:layout_alignParentBottom="true"
                 android:background="@color/white"/>
 
@@ -80,9 +79,9 @@
                 android:layout_above="@id/nav_drawer_stroke_1"
                 android:layout_below="@id/text_tmp_1"
                 android:gravity="center_horizontal|top"
-                android:text="26"
-                android:textColor="#f7f4f3"
-                android:textSize="20sp"
+                android:text="@string/count_favorite"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_11"
                 android:textStyle="bold"/>
         </RelativeLayout>
 
@@ -105,7 +104,7 @@
             <View
                 android:id="@+id/nav_drawer_stroke_2"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="@dimen/width_height_3"
                 android:layout_alignParentBottom="true"
                 android:background="@color/white"
                 android:visibility="gone"/>
@@ -115,10 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/common_size_3"
-                android:text="Bought"
-                android:textColor="#ffe83e"
-                android:textSize="18sp"
+                android:paddingTop="@dimen/margin_10dp"
+                android:text="@string/bought"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/common_text_size_6"
                 android:textStyle="italic"/>
 
             <TextView
@@ -128,9 +127,9 @@
                 android:layout_above="@id/nav_drawer_stroke_2"
                 android:layout_below="@id/text_tmp_2"
                 android:gravity="center_horizontal|top"
-                android:text="8"
-                android:textColor="#f7f4f3"
-                android:textSize="20sp"
+                android:text="@string/count_bount"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_11"
                 android:textStyle="bold"/>
         </RelativeLayout>
 
@@ -153,7 +152,7 @@
             <View
                 android:id="@+id/nav_drawer_stroke_3"
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="@dimen/width_height_3"
                 android:layout_alignParentBottom="true"
                 android:background="@color/white"
                 android:visibility="gone"/>
@@ -163,10 +162,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/common_size_3"
-                android:text="Follow"
-                android:textColor="#ffe83e"
-                android:textSize="18sp"
+                android:paddingTop="@dimen/margin_10dp"
+                android:text="@string/follow"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/common_text_size_6"
                 android:textStyle="italic"/>
 
             <TextView
@@ -176,16 +175,16 @@
                 android:layout_above="@id/nav_drawer_stroke_3"
                 android:layout_below="@id/text_tmp_3"
                 android:gravity="center_horizontal|top"
-                android:text="94"
-                android:textColor="#f7f4f3"
-                android:textSize="20sp"
+                android:text="@string/count_follow"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_11"
                 android:textStyle="bold"/>
         </RelativeLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/width_height_1"
         android:layout_alignParentBottom="true"
         android:background="@color/black"/>
 
@@ -199,44 +198,51 @@
         android:padding="@dimen/common_size_5"
         android:src="@drawable/ic_more"/>
 
-    <LinearLayout
-        android:id="@+id/linear_menu"
-        android:layout_width="150dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/button_more"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_below="@id/button_more">
 
-        <TextView
-            android:id="@+id/button_sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:padding="@dimen/common_size_10"
-            android:text="Sign in"
-            android:textColor="#07aea0"
-            android:textSize="18sp"/>
+        <LinearLayout
+            android:id="@+id/linear_menu"
+            android:layout_width="@dimen/wid_hei_150"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/button_more"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/button_profile"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:padding="@dimen/common_size_10"
-            android:text="Profile"
-            android:textColor="#07aea0"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/button_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/width_height_40"
+                android:gravity="center_vertical"
+                android:padding="@dimen/common_size_10"
+                android:text="@string/sign_in_text"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_4"/>
 
-        <TextView
-            android:id="@+id/button_sign_out"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:padding="@dimen/common_size_10"
-            android:text="Sign out"
-            android:textColor="#07aea0"
-            android:textSize="18sp"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/button_profile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/width_height_40"
+                android:gravity="center_vertical"
+                android:padding="@dimen/common_size_10"
+                android:text="@string/profile_text"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_4"/>
+
+            <TextView
+                android:id="@+id/button_sign_out"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/width_height_40"
+                android:gravity="center_vertical"
+                android:padding="@dimen/common_size_10"
+                android:text="@string/sign_out_text"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_4"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
 import com.example.framgia.imarketandroid.util.Constants;
+
 import java.util.List;
 
 /**
@@ -25,18 +27,18 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == Constants.NORMAL_ITEM)
             return new ItemHolder(LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.item_recycler_navigation_drawer, parent, false));
+                inflate(R.layout.item_recycler_navigation_drawer, parent, false));
         else
             return new TailHolder(LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.item_tail_recycler_navigation_drawer, parent, false));
+                inflate(R.layout.item_tail_recycler_navigation_drawer, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemHolder) {
             ItemHolder itemHolder = (ItemHolder) holder;
-            itemHolder.imageIcon.setImageResource(R.drawable.shirt);
-            itemHolder.textTitle.setText(mNavigationDrawerItems.get(position).getTitle());
+            itemHolder.mImageIcon.setImageResource(R.drawable.ic_iphone7);
+            itemHolder.mTextTitle.setText(R.string.name_product);
         } else {
             TailHolder tailHolder = (TailHolder) holder;
         }
@@ -50,23 +52,21 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemViewType(int position) {
         return mNavigationDrawerItems
-                .get(position).isTail() ? Constants.TAIL_ITEM : Constants.NORMAL_ITEM;
+            .get(position).isTail() ? Constants.TAIL_ITEM : Constants.NORMAL_ITEM;
     }
 
     class ItemHolder extends RecyclerView.ViewHolder {
-
-        public ImageView imageIcon;
-        public TextView textTitle;
+        public ImageView mImageIcon;
+        public TextView mTextTitle;
 
         public ItemHolder(View itemView) {
             super(itemView);
-            imageIcon = (ImageView) itemView.findViewById(R.id.image_icon);
-            textTitle = (TextView) itemView.findViewById(R.id.text_title);
+            mImageIcon = (ImageView) itemView.findViewById(R.id.image_icon);
+            mTextTitle = (TextView) itemView.findViewById(R.id.text_title);
         }
     }
 
     class TailHolder extends RecyclerView.ViewHolder {
-
         public TailHolder(View itemView) {
             super(itemView);
         }

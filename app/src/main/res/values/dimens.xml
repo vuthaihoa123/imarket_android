@@ -121,4 +121,8 @@
     <dimen name="app_bar_height">250dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="height_profile">218dp</dimen>
+    <dimen name="width_height_350">350dp</dimen>
+    <dimen name="width_height_170">170dp</dimen>
+    <dimen name="width_height_3">3dp</dimen>
+    <dimen name="width_height_40">40dp</dimen>
 </resources>
