@@ -26,9 +26,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="350dp"
+        android:layout_width="@dimen/width_height_350"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <include layout="@layout/nav_header"/>
@@ -37,7 +38,10 @@
             android:id="@+id/recycler_navigation_drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:background="@color/recycle_bg_chosemarket"
+            android:elevation="@dimen/width_height_1"
             android:scrollbars="none"/>
     </LinearLayout>
+
 </android.support.v4.widget.DrawerLayout>
