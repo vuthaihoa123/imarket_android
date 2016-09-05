@@ -3,7 +3,6 @@ package com.example.framgia.imarketandroid.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.framgia.imarketandroid.data.model.Session;
 import com.google.gson.Gson;
 
 /**
@@ -30,20 +29,23 @@ public class SharedPreferencesUtil {
 
     public void init(Context context) {
         mSettings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+        mEditor = mSettings.edit();
     }
+
     public void save(String nameObject, Object object) {
-        SharedPreferences.Editor prefsEditor = mSettings.edit();
         Gson gson = new Gson();
         String json = gson.toJson(object); // object - instance of MyObject
-        prefsEditor.putString(nameObject, json);
-        prefsEditor.apply();
+        mEditor.putString(nameObject, json);
+        mEditor.apply();
     }
-    public Object getValue(String nameObject,Class aClass) {
+
+    public Object getValue(String nameObject, Class aClass) {
         Gson gson = new Gson();
-        String json = mSettings.getString(nameObject,"");
-        Object object=gson.fromJson(json,aClass);
+        String json = mSettings.getString(nameObject, "");
+        Object object = gson.fromJson(json, aClass);
         return object;
     }
+
     public void clearSharedPreference(Context context) {
         mEditor = mSettings.edit();
         mEditor.clear();

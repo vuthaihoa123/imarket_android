@@ -18,7 +18,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
 
@@ -26,7 +28,6 @@ import java.util.Calendar;
  * Created by phongtran on 25/08/2016.
  */
 public class BookProductActivity extends Activity implements View.OnClickListener {
-
     private EditText mEditTextEmail, mEditTextAddress, mEditTextPhoneNumber;
     private Button mButtonClearEmail, mButtonClearAddress, mButtonClearPhoneNumber;
     private TextView mTextViewTimeShip, mTextViewDateShip;
@@ -77,7 +78,6 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mTextViewTimeGoToShop.setOnClickListener(this);
         mTextViewDateGoToShop = (TextView) findViewById(R.id.text_day_in);
         mTextViewDateGoToShop.setOnClickListener(this);
-
         mButtonLoginByFace = (Button) findViewById(R.id.login_by_face_bookproduct);
         mButtonLoginByFace.setOnClickListener(this);
         mButtonLoginByGoogle = (Button) findViewById(R.id.login_by_gg_bookproduct);
@@ -103,8 +103,10 @@ public class BookProductActivity extends Activity implements View.OnClickListene
                 getShowDate(Constants.SHIP);
                 break;
             case R.id.text_forget_password:
-                String userName = mPreferences.getString(Constants.USERNAME, null);
-                if (userName == null) {
+                Session session = (Session) SharedPreferencesUtil.getInstance().getValue
+                    (Constants.SESSION,
+                        Session.class);
+                if (session.getId() == null) {
                     Intent intentLogin = new Intent(this, LoginActivity.class);
                     startActivity(intentLogin);
                 } else {
@@ -149,11 +151,11 @@ public class BookProductActivity extends Activity implements View.OnClickListene
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 StringBuffer buffer = new StringBuffer()
-                        .append(day)
-                        .append(Constants.SEPARATOR)
-                        .append(month + 1)
-                        .append(Constants.SEPARATOR)
-                        .append(year);
+                    .append(day)
+                    .append(Constants.SEPARATOR)
+                    .append(month + 1)
+                    .append(Constants.SEPARATOR)
+                    .append(year);
                 if (i == Constants.SHIP) {
                     mTextViewDateShip.setText(buffer);
                 } else if (i == Constants.GOTOSHOP) {
@@ -168,8 +170,8 @@ public class BookProductActivity extends Activity implements View.OnClickListene
             int month = Integer.parseInt(strArrtmp[1]) - 1;
             int year = Integer.parseInt(strArrtmp[2]);
             DatePickerDialog pic = new DatePickerDialog(
-                    this,
-                    callback, year, month, year);
+                this,
+                callback, year, month, year);
             pic.setTitle(getString(R.string.select_day));
             pic.show();
         } else if (i == Constants.GOTOSHOP) {
@@ -179,8 +181,8 @@ public class BookProductActivity extends Activity implements View.OnClickListene
             int month = Integer.parseInt(strArrtmp[1]) - 1;
             int year = Integer.parseInt(strArrtmp[2]);
             DatePickerDialog pic = new DatePickerDialog(
-                    this,
-                    callback, year, month, day);
+                this,
+                callback, year, month, day);
             pic.setTitle(getString(R.string.select_day));
             pic.show();
         }
@@ -195,9 +197,9 @@ public class BookProductActivity extends Activity implements View.OnClickListene
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 StringBuffer buffer = new StringBuffer()
-                        .append(selectedHour)
-                        .append(Constants.COLON)
-                        .append(selectedMinute);
+                    .append(selectedHour)
+                    .append(Constants.COLON)
+                    .append(selectedMinute);
                 if (i == Constants.SHIP) {
                     mTextViewTimeShip.setText(buffer);
                 } else if (i == Constants.GOTOSHOP) {
@@ -208,6 +210,4 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mTimePicker.setTitle(getString(R.string.select_time));
         mTimePicker.show();
     }
-
-
 }

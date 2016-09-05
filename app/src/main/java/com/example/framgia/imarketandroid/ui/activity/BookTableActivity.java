@@ -17,7 +17,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
 
@@ -91,7 +93,6 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         mTextViewForgetPass.setOnClickListener(this);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -99,8 +100,8 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setPackage(getString(R.string.package_dial));
                 StringBuffer buffer = new StringBuffer()
-                        .append(getString(R.string.tel))
-                        .append(mTextViewPhoneNumber.getText());
+                    .append(getString(R.string.tel))
+                    .append(mTextViewPhoneNumber.getText());
                 intent.setData(Uri.parse(buffer.toString()));
                 startActivity(intent);
                 break;
@@ -152,8 +153,10 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
                 getTime();
                 break;
             case R.id.text_forget_pass_booktable:
-                String userName = mPreferences.getString(Constants.USERNAME, null);
-                if (userName == null) {
+                Session session = (Session) SharedPreferencesUtil.getInstance().getValue
+                    (Constants.SESSION,
+                        Session.class);
+                if (session.getId() == null) {
                     Intent intentLogin = new Intent(this, LoginActivity.class);
                     startActivity(intentLogin);
                 } else {
@@ -168,34 +171,34 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
             if (mMinute < Constants.PHUT_30) {
                 mMinute += Constants.PHUT_30;
                 StringBuffer buffer = new StringBuffer()
-                        .append(mHour)
-                        .append(Constants.COLON)
-                        .append(mMinute);
+                    .append(mHour)
+                    .append(Constants.COLON)
+                    .append(mMinute);
                 mTextViewTimeIn.setText(buffer);
             } else {
                 mMinute -= Constants.PHUT_30;
                 mHour++;
                 StringBuffer buffer = new StringBuffer()
-                        .append(mHour)
-                        .append(Constants.COLON)
-                        .append(mMinute);
+                    .append(mHour)
+                    .append(Constants.COLON)
+                    .append(mMinute);
                 mTextViewTimeIn.setText(buffer);
             }
         } else {
             if (mMinute > Constants.PHUT_30) {
                 mMinute -= Constants.PHUT_30;
                 StringBuffer buffer = new StringBuffer()
-                        .append(mHour)
-                        .append(Constants.COLON)
-                        .append(mMinute);
+                    .append(mHour)
+                    .append(Constants.COLON)
+                    .append(mMinute);
                 mTextViewTimeIn.setText(buffer);
             } else {
                 mMinute = Constants.PHUT_30 + mMinute;
                 mHour--;
                 StringBuffer buffer = new StringBuffer()
-                        .append(mHour)
-                        .append(Constants.COLON)
-                        .append(mMinute);
+                    .append(mHour)
+                    .append(Constants.COLON)
+                    .append(mMinute);
                 mTextViewTimeIn.setText(buffer);
             }
         }
@@ -206,63 +209,63 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
             if (mDay > Constants.FIRST_DAY && i == Constants.CHANGE_TIME_DOWN) {
                 mDay += i;
                 StringBuffer buffer = new StringBuffer()
-                        .append(mDay)
-                        .append(Constants.SEPARATOR)
-                        .append(mMonth)
-                        .append(Constants.SEPARATOR)
-                        .append(mYear);
+                    .append(mDay)
+                    .append(Constants.SEPARATOR)
+                    .append(mMonth)
+                    .append(Constants.SEPARATOR)
+                    .append(mYear);
                 mTextViewDateIn.setText(buffer);
             } else if (mDay == Constants.FIRST_DAY && i == Constants.CHANGE_TIME_DOWN) {
                 mDay = Constants.COUNT_DAY_OF_MONTH;
                 if (mMonth > Constants.FIRST_MONTH) {
                     mMonth--;
                     StringBuffer buffer = new StringBuffer()
-                            .append(mDay)
-                            .append(Constants.SEPARATOR)
-                            .append(mMonth)
-                            .append(Constants.SEPARATOR)
-                            .append(mYear);
-                    mTextViewDateIn.setText(buffer);
-                } else if (mMonth == Constants.FIRST_MONTH) {
-                    mMonth = Constants.COUNT_MONTH_OF_YEAR;
-                    mYear--;
-                    StringBuffer buffer = new StringBuffer()
-                            .append(mDay)
-                            .append(Constants.SEPARATOR)
-                            .append(mMonth)
-                            .append(Constants.SEPARATOR)
-                            .append(mYear);
-                    mTextViewDateIn.setText(buffer);
-                }
-            } else if (mDay < Constants.COUNT_DAY_OF_MONTH && i == Constants.CHANGE_TIME_UP) {
-                mDay += i;
-                StringBuffer buffer = new StringBuffer()
                         .append(mDay)
                         .append(Constants.SEPARATOR)
                         .append(mMonth)
                         .append(Constants.SEPARATOR)
                         .append(mYear);
+                    mTextViewDateIn.setText(buffer);
+                } else if (mMonth == Constants.FIRST_MONTH) {
+                    mMonth = Constants.COUNT_MONTH_OF_YEAR;
+                    mYear--;
+                    StringBuffer buffer = new StringBuffer()
+                        .append(mDay)
+                        .append(Constants.SEPARATOR)
+                        .append(mMonth)
+                        .append(Constants.SEPARATOR)
+                        .append(mYear);
+                    mTextViewDateIn.setText(buffer);
+                }
+            } else if (mDay < Constants.COUNT_DAY_OF_MONTH && i == Constants.CHANGE_TIME_UP) {
+                mDay += i;
+                StringBuffer buffer = new StringBuffer()
+                    .append(mDay)
+                    .append(Constants.SEPARATOR)
+                    .append(mMonth)
+                    .append(Constants.SEPARATOR)
+                    .append(mYear);
                 mTextViewDateIn.setText(buffer);
             } else if (mDay == Constants.COUNT_DAY_OF_MONTH && i == Constants.CHANGE_TIME_UP) {
                 mDay = Constants.FIRST_DAY;
                 if (mMonth < Constants.COUNT_MONTH_OF_YEAR) {
                     mMonth++;
                     StringBuffer buffer = new StringBuffer()
-                            .append(mDay)
-                            .append(Constants.SEPARATOR)
-                            .append(mMonth)
-                            .append(Constants.SEPARATOR)
-                            .append(mYear);
+                        .append(mDay)
+                        .append(Constants.SEPARATOR)
+                        .append(mMonth)
+                        .append(Constants.SEPARATOR)
+                        .append(mYear);
                     mTextViewDateIn.setText(buffer);
                 } else if (mMonth == Constants.COUNT_MONTH_OF_YEAR) {
                     mMonth = Constants.FIRST_MONTH;
                     mYear++;
                     StringBuffer buffer = new StringBuffer()
-                            .append(mDay)
-                            .append(Constants.SEPARATOR)
-                            .append(mMonth)
-                            .append(Constants.SEPARATOR)
-                            .append(mYear);
+                        .append(mDay)
+                        .append(Constants.SEPARATOR)
+                        .append(mMonth)
+                        .append(Constants.SEPARATOR)
+                        .append(mYear);
                     mTextViewDateIn.setText(buffer);
                 }
             }
@@ -274,11 +277,11 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 StringBuffer buffer = new StringBuffer()
-                        .append(day)
-                        .append(Constants.SEPARATOR)
-                        .append(month + 1)
-                        .append(Constants.SEPARATOR)
-                        .append(year);
+                    .append(day)
+                    .append(Constants.SEPARATOR)
+                    .append(month + 1)
+                    .append(Constants.SEPARATOR)
+                    .append(year);
                 mTextViewDateIn.setText(buffer);
             }
         };
@@ -288,8 +291,8 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         mMonth = Integer.parseInt(strArrtmp[1]) - 1;
         mYear = Integer.parseInt(strArrtmp[2]);
         DatePickerDialog pic = new DatePickerDialog(
-                this,
-                callback, mYear, mMonth, mDay);
+            this,
+            callback, mYear, mMonth, mDay);
         pic.setTitle(getString(R.string.select_day));
         pic.show();
     }
@@ -303,14 +306,13 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 StringBuffer buffer = new StringBuffer()
-                        .append(selectedHour)
-                        .append(Constants.COLON)
-                        .append(selectedMinute);
+                    .append(selectedHour)
+                    .append(Constants.COLON)
+                    .append(selectedMinute);
                 mTextViewTimeIn.setText(buffer);
             }
         }, mHour, mMinute, true);//Yes 24 hour time
         mTimePicker.setTitle(getString(R.string.select_time));
         mTimePicker.show();
     }
-
 }

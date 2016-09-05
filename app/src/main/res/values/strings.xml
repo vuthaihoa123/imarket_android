@@ -49,9 +49,6 @@
     <string name="err_msg_password_confirm">PassWord Confirm not like</string>
     <string name="profile_editphoto">Edit Photo</string>
     <string name="date_profile_birthday">Date</string>
-    <string name="hint_numberphone">NumberPhone</string>
-    <string name="hint_adress">Adress</string>
-    <string name="hint_mail">Mail</string>
     <string name="item_save">Save</string>
     <!--book product option-->
     <string name="call">Gọi điện</string>
@@ -153,4 +150,16 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_forget_password_text">Reset your password</string>
     <string name="title_fragment_dialog">To reset your password,enter the email address you use to sign in to Imarket</string>
+    <string name="change_profile">Change Profile</string>
+    <string name="cancle_profile">cancle Change</string>
+    <string name="username_profile_hint">imarket@gmail.com</string>
+    <string name="hint_profile_adress">Framgia VietNam</string>
+    <string name="hint_profile_mail">imarket@gmail.com</string>
+    <string name="hint_profile_numberphone">(0123)456789</string>
+    <string name="hint_profile_brithday">20/11/1994</string>
+    <string name="hint_profile_fullname">Imarket framgia VietNam</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="toast_cancel_profile">canceled update</string>
+    <string name="toast_save_successfully">successfully saved</string>
 </resources>

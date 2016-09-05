@@ -84,7 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .image(bitmapDescriptor)
                 .position(testLat, FakeContainer.sGroundFirstParameter, FakeContainer.sGroundSecondParameter)
                 .bearing(FakeContainer.sGroundThirdParameter);
-        mMap.addGroundOverlay(goo);
+      mMap.addGroundOverlay(goo);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(testLat)
                 .zoom(FakeContainer.ZOOM_RANGE)
