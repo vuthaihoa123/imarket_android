@@ -25,7 +25,7 @@ public class ImarketApplication extends Application {
             .deleteRealmIfMigrationNeeded()
             .build();
         Realm.setDefaultConfiguration(realmConfiguration);
-        NotificationUtil.setAlarm(this);
+      //  NotificationUtil.setAlarm(this);
     }
 
     @Override

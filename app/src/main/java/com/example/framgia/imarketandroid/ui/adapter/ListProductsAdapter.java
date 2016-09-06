@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
+import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
+import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;
@@ -59,6 +62,13 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         } else {
             promotionView.setVisibility(View.VISIBLE);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(mContext,DetailsProductActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -84,4 +94,5 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
             mPercentSale = (TextView) parentView.findViewById(R.id.tv_percent_sale);
         }
     }
+
 }
