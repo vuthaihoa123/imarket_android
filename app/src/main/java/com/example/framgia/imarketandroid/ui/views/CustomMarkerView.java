@@ -15,7 +15,6 @@ import com.example.framgia.imarketandroid.R;
  * Created by VULAN on 8/11/2016.
  */
 public class CustomMarkerView extends FrameLayout {
-
     private final String FONT = "KaushanScriptRegular.otf";
     public TextView mTextCenter;
     private double mPercentValue;
@@ -58,6 +57,13 @@ public class CustomMarkerView extends FrameLayout {
             return false;
         }
         return true;
+    }
+
+    public void setVisible(boolean check) {
+        if (check)
+            mFrameLayout.setVisibility(VISIBLE);
+        else
+            mFrameLayout.setVisibility(GONE);
     }
 
     public void init(Context context) {

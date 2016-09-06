@@ -174,6 +174,7 @@
     <string name="sign_in_text">Sign in</string>
     <string name="profile_text">Profile</string>
     <string name="sign_out_text">Sign out</string>
+    <string name="food_store">Cửa hàng ăn uống</string>
     <string name="address_bigC">Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội</string>
     <string name="name_market">Big C Thăng Long</string>
     <string name="name">Name</string>
@@ -227,4 +228,11 @@
     <string name="toast_message">Message Store</string>
     <string name="toast_share">Share Store</string>
     <string name="item_logout">LogOut</string>
+    <string name="store_type">Chọn cửa hàng</string>
+    <string name="food_name">cửa hàng ăn uống</string>
+    <string name="fashion_name">cửa hàng quần áo</string>
+    <string name="book_shop_name">cửa hàng sách</string>
+    <string name="cosmetic_name">cửa hàng mỹ phẩm</string>
+    <string name="movie_theater">Rạp chiếu phim</string>
+    <string name="game_center_name">Trung tâm giải trí</string>
 </resources>

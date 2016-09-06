@@ -35,15 +35,19 @@ public class RealmRemote {
         return mRealm.where(tClass).equalTo(Constants.FIELD_TYPE, 1).findAll();
     }
 
-    public static RealmList<Point> getListPointDisplay() {
+    public static RealmList<Point> getListPointDisplay(int type) {
         RealmResults<Point> results = null;
-        results = mRealm.where(Point.class).findAll();
+        if (type == 0)
+            results = mRealm.where(Point.class).findAll();
+        else
+            results = mRealm.where(Point.class).equalTo(Constants.FIELD_TYPE, type).findAll();
         RealmList<Point> mLastResults = new RealmList<>();
         for (Point point : results) {
             mLastResults.add(point);
         }
         return mLastResults;
     }
+
     public static RealmResults<Edge> getListEdgeDisplay() {
         RealmResults<Edge> results = null;
         results = mRealm.where(Edge.class).findAll();
@@ -75,7 +79,8 @@ public class RealmRemote {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmResults<Point> results = mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findAll();
+                RealmResults<Point> results =
+                    mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findAll();
                 results.deleteAllFromRealm();
             }
         });
@@ -98,9 +103,11 @@ public class RealmRemote {
         mRealm.copyToRealm(edge);
         mRealm.commitTransaction();
     }
-    public static CustomMarker createCustomMarkerFromPoint(Point point){
-        Category category1 = new Category(FakeContainer.STORE_TYPE_2, Constants.DEMO_CATEGORY);
-        CustomMarker result= new CustomMarker(point.getId(), point.getLat(), point.getLng(),
+
+    public static CustomMarker createCustomMarkerFromPoint(Point point) {
+        Category category1 =
+            new Category(Integer.toString(point.getType()), Constants.DEMO_CATEGORY);
+        CustomMarker result = new CustomMarker(point.getId(), point.getLat(), point.getLng(),
             Constants.DEMO_NUMBER,
             category1);
         return result;
