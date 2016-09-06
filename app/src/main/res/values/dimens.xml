@@ -125,4 +125,5 @@
     <dimen name="width_height_170">170dp</dimen>
     <dimen name="width_height_3">3dp</dimen>
     <dimen name="width_height_40">40dp</dimen>
+    <dimen name="cardview_radius_3">5dp</dimen>
 </resources>

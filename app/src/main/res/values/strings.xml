@@ -54,6 +54,7 @@
     <string name="call">Gọi điện</string>
     <string name="rate">Đánh giá</string>
     <string name="book">Đặt hàng</string>
+    <string name="schedule">Đặt lịch</string>
     <string name="favorite">Yêu thích</string>
     <string name="back">back</string>
     <string name="msg_login_invaild">Username or Password is not right</string>
@@ -176,4 +177,12 @@
     <string name="address_bigC">Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội</string>
     <string name="name_market">Big C Thăng Long</string>
     <string name="name">Name</string>
+    <string name="vote_product">Đánh giá</string>
+    <string name="rate_product_message">Sản phầm khá chất lượng</string>
+    <string name="danh_gia">Đánh giá</string>
+    <string name="mustbe_barclicklistener">must be implement OnclickBarListensener</string>
+    <string name="details_text">Chi tiết sản phẩm</string>
+    <string name="coment">Bình luận sản phẩm</string>
+    <string name="name_product_text">XẢ HÀNG ÁO NẮNG UNIQLO</string>
+    <string name="price_product_fake">đ 100.000</string>
 </resources>

@@ -26,11 +26,18 @@ import java.util.ArrayList;
 public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.ViewHolder> {
     private ArrayList<ItemBooking> mItems = new ArrayList<>();
     private Context mContext;
+    private OnClickItemBarListenner mItemBarListenner;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public BookProductAdapter(Context context, ArrayList<ItemBooking> myItems) {
         mContext = context;
         mItems = myItems;
+        if (mContext instanceof OnClickItemBarListenner) {
+            mItemBarListenner = (OnClickItemBarListenner) mContext;
+        } else {
+            throw new RuntimeException(mContext.toString()
+                + mContext.getString(R.string.mustbe_barclicklistener));
+        }
     }
 
     public void setItems(ArrayList<ItemBooking> items) {
@@ -49,7 +56,7 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
     }
 
     @Override
-    public void onBindViewHolder(BookProductAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final BookProductAdapter.ViewHolder holder, final int position) {
         ItemBooking itemBooking = mItems.get(position);
         ImageView ivBookingIcon = holder.mIvBookingIcon;
         TextView tvBookingDescribe = holder.mTvBookingDes;
@@ -78,16 +85,22 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
                         mContext.startActivity(intent);
                         break;
                     case 1:
-
                         break;
                     case 2:
                         intent = new Intent(mContext, BookProductActivity.class);
                         mContext.startActivity(intent);
                         break;
                     case 3:
-
                         break;
-
+                }
+            }
+        });
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mItemBarListenner != null) {
+                    mItemBarListenner
+                        .onClickItemBar(holder.mTvBookingDes.getText().toString(), position);
                 }
             }
         });
@@ -101,12 +114,18 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mIvBookingIcon;
         public TextView mTvBookingDes;
+        private final View mView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mView = itemView;
             mIvBookingIcon = (ImageView) itemView.findViewById(R.id.iv_booking_icon);
             mTvBookingDes = (TextView) itemView.findViewById(R.id.tv_booking_describe);
         }
+    }
+
+    public interface OnClickItemBarListenner {
+        void onClickItemBar(String textNameItem, int position);
     }
 }
 

@@ -31,7 +31,8 @@ public class PreviewProductAdapter extends RecyclerView.Adapter<PreviewProductAd
         mItems = myItems;
         mInfoView = infoView;
         if (mContext instanceof DetailsProductActivity) {
-            mIvPreview = (ImageView) ((DetailsProductActivity) mContext).findViewById(R.id.iv_preview);
+            mIvPreview =
+                (ImageView) ((DetailsProductActivity) mContext).findViewById(R.id.iv_preview);
         } else if (mContext instanceof OrderActivity) {
             mIvPreview = (ImageView) ((OrderActivity) mContext).findViewById(R.id.iv_preview);
         }
@@ -62,7 +63,7 @@ public class PreviewProductAdapter extends RecyclerView.Adapter<PreviewProductAd
     public PreviewProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_preview_product, parent, false);
+            .inflate(R.layout.item_preview_product, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -74,9 +75,9 @@ public class PreviewProductAdapter extends RecyclerView.Adapter<PreviewProductAd
         ImageView previewProduct = holder.mIvPreviewProduct;
         // add libs:      compile 'com.github.bumptech.glide:glide:3.7.0'     to build.gradle
         Glide.with(mContext)
-                .load(idRes)
-                .dontAnimate()
-                .into(previewProduct);
+            .load(idRes)
+            .dontAnimate()
+            .into(previewProduct);
         previewProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
