@@ -62,7 +62,7 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.FloorActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ListProductsActivity"
             android:launchMode="singleTop">
@@ -96,7 +96,6 @@
             android:name=".ui.activity.ChooseStoreTypeActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity android:name=".ui.activity.IntroduceActivity"/>
-
     </application>
 
 </manifest>

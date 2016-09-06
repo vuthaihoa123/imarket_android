@@ -24,10 +24,11 @@ import java.util.List;
  */
 public class FakeContainer {
     public static final String[] SUGGESTIONS = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain", "Viet Name"
+        "Belgium", "France", "Italy", "Germany", "Spain", "Viet Name"
     };
     public static final long GIA_SP = 18600000;
     public static final long CHI_PHI_PHAT_SINH = 50000;
+    public static final String STORE_TYPE_0 = "0";
     public static final String STORE_TYPE_1 = "1";
     public static final String STORE_TYPE_2 = "2";
     public static final String STORE_TYPE_3 = "3";
@@ -35,13 +36,14 @@ public class FakeContainer {
     public static final String STORE_TYPE_5 = "5";
     public static final String STORE_TYPE_6 = "6";
     public static final String URL_TEST = "9gag.com";
+    public static final String STORE_TYPE_7 = "7";
     public static LatLng sLatLng = new LatLng(21.007380, 105.793139);
     public static float sGroundFirstParameter = 116f;
     public static float sGroundSecondParameter = 150f;
     public static float sGroundThirdParameter = 53f;
     public static final String ID_PRODUCT = "ID Product : ";
     public static final int ZOOM_RANGE = 15;
-    public static final int CAMERA_PARAMETER = 100;
+    public static final int CAMERA_PARAMETER = 117;
 
     public static ArrayList<CartItem> initCartProductList() {
         ArrayList<CartItem> list = new ArrayList<>();
@@ -86,6 +88,7 @@ public class FakeContainer {
         Shop shop4 = new Shop(4, "cửa hàng mỹ phẩm");
         Shop shop5 = new Shop(5, "Rạp chiếu phim");
         Shop shop6 = new Shop(6, "Trung tâm giải trí");
+        Shop shop7 = new Shop(7, "Cửa hàng điện tử");
         mShopList.add(shop0);
         mShopList.add(shop1);
         mShopList.add(shop2);
@@ -93,6 +96,7 @@ public class FakeContainer {
         mShopList.add(shop4);
         mShopList.add(shop5);
         mShopList.add(shop6);
+        mShopList.add(shop7);
         return mShopList;
     }
 
@@ -104,9 +108,21 @@ public class FakeContainer {
         storeList.add(new Store(R.drawable.cosmetic, "cửa hàng mỹ phẩm"));
         storeList.add(new Store(R.drawable.stage, "Rạp chiếu phim"));
         storeList.add(new Store(R.drawable.game_icon, "Trung tâm giải trí"));
+        storeList.add(new Store(R.drawable.smartphone, "Cửa hàng điện tử"));
         return storeList;
     }
-
+    public static List<Store> initSpinnerStore() {
+        List<Store> storeList = new ArrayList<>();
+        storeList.add(new Store(R.drawable.store, "Chọn cửa hàng"));
+        storeList.add(new Store(R.drawable.food_avatar, "cửa hàng ăn uống"));
+        storeList.add(new Store(R.drawable.fashion, "cửa hàng quần áo"));
+        storeList.add(new Store(R.drawable.book_shop, "cửa hàng sách"));
+        storeList.add(new Store(R.drawable.cosmetic, "cửa hàng mỹ phẩm"));
+        storeList.add(new Store(R.drawable.stage, "Rạp chiếu phim"));
+        storeList.add(new Store(R.drawable.game_icon, "Trung tâm giải trí"));
+        storeList.add(new Store(R.drawable.smartphone, "Cửa hàng điện tử"));
+        return storeList;
+    }
     public static String getNameProduct() {
         return "Điện thoại HTC One M8 Eye";
     }
@@ -117,18 +133,18 @@ public class FakeContainer {
 
     public static String getInfoProduct() {
         return "    Màn hình:Super LCD 3, 5\", Full HD\n" +
-                "    Hệ điều hành:Android 5.0 (Lollipop)\n" +
-                "    Camera sau:13 MP\n" +
-                "    Camera trước:5 MP\n" +
-                "    CPU:Qualcomm Snapdragon 801 4 nhân 32-bit, 2.3 GHz\n" +
-                "    RAM:2 GB\n" +
-                "    Bộ nhớ trong:16 GB\n" +
-                "    Hỗ trợ thẻ nhớ:MicroSD, 128 GB\n" +
-                "    Thẻ SIM:1 Sim, Nano SIM\n" +
-                "    Kết nối:WiFi, 3G, 4G LTE Cat 4\n" +
-                "    Dung lượng pin:2600 mAh\n" +
-                "    Thiết kế:Nguyên khối\n" +
-                "    Chức năng đặc biệt:HTC BoomSound";
+            "    Hệ điều hành:Android 5.0 (Lollipop)\n" +
+            "    Camera sau:13 MP\n" +
+            "    Camera trước:5 MP\n" +
+            "    CPU:Qualcomm Snapdragon 801 4 nhân 32-bit, 2.3 GHz\n" +
+            "    RAM:2 GB\n" +
+            "    Bộ nhớ trong:16 GB\n" +
+            "    Hỗ trợ thẻ nhớ:MicroSD, 128 GB\n" +
+            "    Thẻ SIM:1 Sim, Nano SIM\n" +
+            "    Kết nối:WiFi, 3G, 4G LTE Cat 4\n" +
+            "    Dung lượng pin:2600 mAh\n" +
+            "    Thiết kế:Nguyên khối\n" +
+            "    Chức năng đặc biệt:HTC BoomSound";
     }
 
     public static ArrayList<Integer> initIdResList() {
@@ -211,59 +227,58 @@ public class FakeContainer {
     }
 
     public static String arr[] = {
-            "Chi nhanh 1",
-            "Chi nhanh 2",
-            "Chi nhanh 3",
-            "Chi nhanh 4",
-            "Chi nhanh 5",
-            "Chi nhanh 6"};
+        "Chi nhanh 1",
+        "Chi nhanh 2",
+        "Chi nhanh 3",
+        "Chi nhanh 4",
+        "Chi nhanh 5",
+        "Chi nhanh 6"};
 
     public static List<Object> getSampleArrayList() {
         List<Object> items = new ArrayList<>();
         List<ItemProduct> itemProductList = new ArrayList<>();
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
-
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         items.add(new ImageEvent1(R.drawable.banner1));
         items.add(new ImageEvent2(R.drawable.banner2, R.drawable.banner3));
         items.add(new ImageEvent2(R.drawable.banner2, R.drawable.banner3));

@@ -64,12 +64,22 @@ public class Constants {
     public static final int MIN_COUNT_KID = 0;
     public static final int CHANGE_TIME_UP = 1;
     public static final int CHANGE_TIME_DOWN = -1;
+    public static final float GROUND_BEARING = (float) 26.3248;
+    public static final float MAP_ZOOM = (float) 19.5;
     public static final String PERMISSTION_SHARE = "publish_actions";
     public static final String MESSAGEDIGEST = "SHA";
     public static final String CLEAR_EDITTEXT = "";
-    public static final int[] LIST_AVATAR_STORE = {R.drawable.food_avatar, R.drawable.fashion, R
-
-            .drawable.book_shop, R.drawable.cosmetic, R.drawable.stage, R.drawable.game_icon};
+    public static final int[] LIST_AVATAR_STORE =
+        {R.drawable.food_avatar, R.drawable.fashion, R.drawable.book_shop, R.drawable.cosmetic,
+            R.drawable.stage, R.drawable.game_icon, R
+            .drawable.smartphone, R
+            .drawable.curret_location_icon};
+    public static final int[] LIST_CURRENT_AVATAR_STORE =
+        {R.drawable.current_restaurent, R.drawable.current_fashion, R.drawable.current_book_shop, R.drawable
+            .current_cosmetic,
+            R.drawable.current_stage, R.drawable.current_game_icon, R
+            .drawable.current_smartphone, R
+            .drawable.curret_location_icon};
     public static final String SHOWCASE_ID_BOOK_TABLE = "BOOK TABLE";
     public static final String SHOWCASE_ID_DETAILS_SHOP = "DETAILS SHOP";
     public static final String SHOWCASE_ID_BOOK_PRODUCT = "BOOK PRODUCT";
@@ -82,7 +92,6 @@ public class Constants {
     public static final int SCROLL_POSITION = 0;
     public static final String KEY_DETAIL_ID = "key_detail_id";
     public static final String KEY_DETAIL_DATE = "key_detail_date";
-
     //bottom navigation
     public static final int CALLING_POSITION = 0;
     public static final int SCHEDULING_POSITION = 1;
@@ -92,5 +101,4 @@ public class Constants {
     public static final String FONT = "KaushanScriptRegular.otf";
     public static final String FORMART_STRING = "%s/%s/%s";
     public static final int RADIUS_SMALL_BANG= 50;
-
 }
