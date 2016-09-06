@@ -30,6 +30,7 @@ import com.example.framgia.imarketandroid.data.model.DrawerItem;
 import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
+import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 
@@ -159,7 +160,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(int position) {
-        startActivity(new Intent(this, CategoryStallActivity.class));
+        startActivity(new Intent(this, CategoryStallFragment.class));
     }
 
     private void findViews() {

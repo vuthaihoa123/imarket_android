@@ -43,7 +43,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bookproduct_layout);
+        setContentView(R.layout.activity_bookproduct_layout);
         initView();
         mPreferences = getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
     }

@@ -51,7 +51,7 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.booktable_layout);
+        setContentView(R.layout.activity_booktable_layout);
         initView();
         mPreferences = getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
     }

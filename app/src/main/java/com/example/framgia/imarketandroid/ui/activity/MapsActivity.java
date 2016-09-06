@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
+import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
 import com.example.framgia.imarketandroid.ui.views.CustomMarkerView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -149,7 +150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onInfoWindowClick(Marker marker) {
         CustomMarker customMarker = mMarkerPointHashMap.get(marker);
-        startActivity(new Intent(MapsActivity.this, CategoryStallActivity.class));
+        startActivity(new Intent(MapsActivity.this, CategoryStallFragment.class));
     }
 
     public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {

@@ -154,61 +154,10 @@
         android:background="@color/bg_bg_color" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_margin="@dimen/common_size_10"
         android:id="@+id/recycleview_message_rate"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/wid_hei_200"
+        android:layout_height="match_parent"
         android:layout_below="@id/text4"
-        android:layout_margin="@dimen/margin_20"
         android:background="@android:color/white" />
-
-    <TextView
-        android:id="@+id/text5"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/width_height_1"
-        android:layout_below="@id/recycleview_message_rate"
-        android:layout_marginTop="@dimen/common_size_10"
-        android:background="@color/bg_bg_color" />
-
-    <LinearLayout
-        android:id="@+id/linear6"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/width_height_70"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/margin_10dp"
-        android:layout_marginLeft="@dimen/layout_margin"
-        android:layout_marginRight="@dimen/layout_margin"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_follow_suggetstore"
-            android:layout_width="@dimen/width_height_101"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_button2"
-            android:drawableTop="@drawable/ic_follow"
-            android:gravity="center|bottom"
-            android:text="@string/follow"
-            android:textColor="@color/text_color3" />
-
-        <Button
-            android:id="@+id/button_message_suggetstore"
-            android:layout_width="@dimen/width_height_101"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/layout_margin"
-            android:layout_marginRight="@dimen/layout_margin"
-            android:background="@drawable/background_button2"
-            android:drawableTop="@drawable/ic_chat"
-            android:gravity="center|bottom"
-            android:text="@string/mesage"
-            android:textColor="@color/text_color3" />
-
-        <Button
-            android:id="@+id/button_share_suggetstore"
-            android:layout_width="@dimen/width_height_101"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_button2"
-            android:drawableTop="@drawable/ic_share"
-            android:gravity="center|bottom"
-            android:text="@string/share"
-            android:textColor="@color/text_color3" />
-    </LinearLayout>
 </RelativeLayout>

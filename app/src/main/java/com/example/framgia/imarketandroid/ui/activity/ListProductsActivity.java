@@ -31,8 +31,8 @@ import java.util.ArrayList;
  */
 public class ListProductsActivity extends AppCompatActivity implements SearchView
     .OnQueryTextListener{
-    public static final int NUMBER_OF_COLS = Constants.COLS_LIST_PRODUCT;
     private RecyclerView mRvListProducts;
+    private static String NAMECATEGORY="Apple";
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ItemProduct> mItemProducts = new ArrayList<>();
@@ -99,13 +99,13 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         mRvListProducts.setHasFixedSize(true);
         mToolbar= (Toolbar) findViewById(R.id.toolbar);
         // use a gridview layout manager
-        mLayoutManager = new GridLayoutManager(this, NUMBER_OF_COLS);
+        mLayoutManager = new GridLayoutManager(this, Constants.COLS_LIST_PRODUCT);
         mRvListProducts.setLayoutManager(mLayoutManager);
         mAdapter = new ListProductsAdapter(this, mItemProducts);
         mRvListProducts.setAdapter(mAdapter);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setTitle(NAMECATEGORY);
     }
 
     @Override

@@ -1,17 +1,18 @@
-package com.example.framgia.imarketandroid.ui.activity;
+package com.example.framgia.imarketandroid.ui.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
@@ -24,10 +25,9 @@ import java.util.List;
 /**
  * Created by phongtran on 26/08/2016.
  */
-public class SuggestStoreActivity extends Activity implements View.OnClickListener {
+public class SuggestStoreFragment extends Fragment implements View.OnClickListener {
     private ImageView mImageViewAvaStore;
     private TextView mTextViewNameStore, mTextViewHastagStore;
-    private Button mButtonFollow, mButtonMessage, mButtonShare;
     private TextView mTextViewProportionVote, mTextViewCountVote;
     private ImageView mImageViewStar1, mImageViewStar2, mImageViewStar3, mImageViewStar4,
         mImageViewStar5;
@@ -41,20 +41,27 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
     private Button mButtonStar1, mButtonStar2, mButtonStar3, mButtonStar4, mButtonStar5;
     private TextView mTextViewStar1, mTextViewStar2, mTextViewStar3, mTextViewStar4, mTextViewStar5;
     private MessageSuggestStore mMessage = new MessageSuggestStore();
+    private View mView;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return mView = inflater.inflate(R.layout.fragment_suggest_store, container, false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suggest_store);
-        initView();
-        event();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        findView();
         fakeDataMessage();
         initRecycle();
+        event();
     }
 
     private void initRecycle() {
-        mSuggestStoreAdapter = new SuggestStoreAdapter(this, mMessageSuggestStoreList);
-        mRecyclerViewOldMessage.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mSuggestStoreAdapter = new SuggestStoreAdapter(getActivity(), mMessageSuggestStoreList);
+        mRecyclerViewOldMessage.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewOldMessage.setAdapter(mSuggestStoreAdapter);
     }
 
@@ -74,46 +81,28 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
         mMessageSuggestStoreList.add(msm);
     }
 
-    private void initView() {
-        mImageViewAvaStore = (ImageView) findViewById(R.id.image_ava_store);
-        mTextViewNameStore = (TextView) findViewById(R.id.text_name_store);
-        mTextViewHastagStore = (TextView) findViewById(R.id.text_hastag_store);
-        mButtonFollow = (Button) findViewById(R.id.button_follow_suggetstore);
-        mButtonMessage = (Button) findViewById(R.id.button_message_suggetstore);
-        mButtonShare = (Button) findViewById(R.id.button_share_suggetstore);
-        mTextViewProportionVote = (TextView) findViewById(R.id.text_proportion_rate);
-        mTextViewCountVote = (TextView) findViewById(R.id.text_count_rate);
-        mImageViewStar1 = (ImageView) findViewById(R.id.image_start_1);
-        mImageViewStar2 = (ImageView) findViewById(R.id.image_start_2);
-        mImageViewStar3 = (ImageView) findViewById(R.id.image_start_3);
-        mImageViewStar4 = (ImageView) findViewById(R.id.image_start_4);
-        mImageViewStar5 = (ImageView) findViewById(R.id.image_start_5);
-        mButtonPostSuggestStore = (Button) findViewById(R.id.button_post_store);
-        mRecyclerViewOldMessage = (RecyclerView) findViewById(R.id.recycleview_message_rate);
+    private void findView() {
+        mImageViewAvaStore = (ImageView) mView.findViewById(R.id.image_ava_store);
+        mTextViewNameStore = (TextView) mView.findViewById(R.id.text_name_store);
+        mTextViewHastagStore = (TextView) mView.findViewById(R.id.text_hastag_store);
+        mTextViewProportionVote = (TextView) mView.findViewById(R.id.text_proportion_rate);
+        mTextViewCountVote = (TextView) mView.findViewById(R.id.text_count_rate);
+        mImageViewStar1 = (ImageView) mView.findViewById(R.id.image_start_1);
+        mImageViewStar2 = (ImageView) mView.findViewById(R.id.image_start_2);
+        mImageViewStar3 = (ImageView) mView.findViewById(R.id.image_start_3);
+        mImageViewStar4 = (ImageView) mView.findViewById(R.id.image_start_4);
+        mImageViewStar5 = (ImageView) mView.findViewById(R.id.image_start_5);
+        mButtonPostSuggestStore = (Button) mView.findViewById(R.id.button_post_store);
+        mRecyclerViewOldMessage = (RecyclerView) mView.findViewById(R.id.recycleview_message_rate);
     }
 
     private void event() {
-        mButtonFollow.setOnClickListener(this);
-        mButtonMessage.setOnClickListener(this);
-        mButtonShare.setOnClickListener(this);
         mButtonPostSuggestStore.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_follow_suggetstore:
-                Toast.makeText(SuggestStoreActivity.this, getString(R.string.follow),
-                    Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.button_message_suggetstore:
-                Toast.makeText(SuggestStoreActivity.this, getString(R.string.mesage),
-                    Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.button_share_suggetstore:
-                Toast.makeText(SuggestStoreActivity.this, getString(R.string.share),
-                    Toast.LENGTH_SHORT).show();
-                break;
             case R.id.button_post_store:
                 initAlertDiaLogPostMessage();
                 break;
@@ -128,9 +117,9 @@ public class SuggestStoreActivity extends Activity implements View.OnClickListen
         mMessage.setmImageViewStar3(R.drawable.ic_star_empty);
         mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
         mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-        LayoutInflater li = LayoutInflater.from(this);
+        LayoutInflater li = LayoutInflater.from(getContext());
         View promptsView = li.inflate(R.layout.dialog_post_message_rate, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setView(promptsView);
         mEditTextContentMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate);
         mButtonBack = (Button) promptsView.findViewById(R.id.button_back_message_rate);

@@ -1,6 +1,5 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
@@ -43,7 +41,7 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mRootView = LayoutInflater.from(getActivity()).inflate(R.layout
-            .activity_shop_details_interface, container, false);
+            .fragment_shop_details_interface, container, false);
         return mRootView;
     }
 
@@ -113,15 +111,6 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
                 } else {
                     mFlagInfoShop = true;
                     mLinearLayoutInfo.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.button_album_shop:
-                if (mFlagAlbum) {
-                    mFlagAlbum = false;
-                    mRecyclerViewAlbumShop.setVisibility(View.GONE);
-                } else {
-                    mFlagAlbum = true;
-                    mRecyclerViewAlbumShop.setVisibility(View.VISIBLE);
                 }
                 break;
         }
