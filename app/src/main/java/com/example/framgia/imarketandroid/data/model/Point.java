@@ -13,12 +13,12 @@ public class Point extends RealmObject {
     private double mLat, mLng;
     private String mName;
 
-    public Point(int id, double lat, double lng, int type, String name  ) {
+    public Point(int id, double lat, double lng, int type, String name) {
         this.mId = id;
         this.mLat = lat;
         this.mLng = lng;
-        this.mType= type;
-        this.mName= name;
+        this.mType = type;
+        this.mName = name;
     }
 
     public Point() {
@@ -84,7 +84,7 @@ public class Point extends RealmObject {
         if (mId == -1) {
             if (other.mId != -1)
                 return false;
-        } else if (mId!=other.mId)
+        } else if (mId != other.mId)
             return false;
         return true;
     }

@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
@@ -27,7 +29,8 @@ import java.util.ArrayList;
 /**
  * Created by hoavt on 19/07/2016.
  */
-public class ListProductsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class ListProductsActivity extends AppCompatActivity implements SearchView
+    .OnQueryTextListener{
     public static final int NUMBER_OF_COLS = Constants.COLS_LIST_PRODUCT;
     private RecyclerView mRvListProducts;
     private RecyclerView.Adapter mAdapter;
@@ -152,4 +155,5 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

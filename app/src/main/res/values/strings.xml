@@ -52,7 +52,7 @@
     <string name="item_save">Save</string>
     <!--book product option-->
     <string name="call">Gọi điện</string>
-    <string name="schedule">Đặt lịch</string>
+    <string name="rate">Đánh giá</string>
     <string name="book">Đặt hàng</string>
     <string name="favorite">Yêu thích</string>
     <string name="back">back</string>

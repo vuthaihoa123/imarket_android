@@ -65,7 +65,7 @@ public class DetailsProductActivity extends AppCompatActivity {
     private ArrayList<ItemBooking> initBookingProducts() {
         ArrayList<ItemBooking> list = new ArrayList<>();
         list.add(new ItemBooking(R.drawable.ic_call_white_24px, getResources().getString(R.string.call)));
-        list.add(new ItemBooking(R.drawable.ic_schedule_white_24px, getResources().getString(R.string.schedule)));
+        list.add(new ItemBooking(R.drawable.rating_star, getResources().getString(R.string.rate)));
         list.add(new ItemBooking(R.drawable.ic_shopping_cart_white_24px, getResources().getString(R.string.book)));
         list.add(new ItemBooking(R.drawable.ic_favorite_white_24px, getResources().getString(R.string.favorite)));
         return list;
