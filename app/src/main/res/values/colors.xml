@@ -32,4 +32,7 @@
     <color name="startcolor_bg_item">#ffffff</color>
     <color name="centercolor_bg_item">#c4ecfc</color>
     <color name="recycle_bg_chosemarket">#b2e5ed</color>
+    <color name="background_details_layout">#88f9c1</color>
+    <color name="background_bar">#5f601b</color>
+    <color name="background_cardview">#e9fffd</color>
 </resources>

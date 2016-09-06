@@ -19,6 +19,7 @@ import java.util.List;
 public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapter.SuggestStoreViewHolder>{
     private Context mContext;
     private List<MessageSuggestStore> mListOldMessage;
+//    private OnClickItemBarListenner mItemBarListenner;
 
     public SuggestStoreAdapter(Context context, List<MessageSuggestStore> listOldMessage) {
         this.mContext = context;
@@ -43,6 +44,7 @@ public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapte
         holder.mImageViewStar3.setImageResource(holder.mMessageSuggestStore.getmImageViewStar3());
         holder.mImageViewStar4.setImageResource(holder.mMessageSuggestStore.getmImageViewStar4());
         holder.mImageViewStar5.setImageResource(holder.mMessageSuggestStore.getmImageViewStar5());
+
     }
 
     @Override
