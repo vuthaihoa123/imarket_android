@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.data;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.model.AlbumShop;
 import com.example.framgia.imarketandroid.data.model.CartItem;
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
@@ -157,4 +158,22 @@ public class FakeContainer {
         list.add(new CustomMarker(5, 21.007580, 105.793139, 15, category3));
         return list;
     }
+
+    public static List<AlbumShop> fakeDataAlbum() {
+        List<AlbumShop> list = new ArrayList<>();
+        list.add(new AlbumShop(R.drawable.ic_iphone7, "Iphone 7"));
+        list.add(new AlbumShop(R.drawable.ic_iphone6s, "Iphone 6s"));
+        list.add(new AlbumShop(R.drawable.ic_iphone5s, "Iphone 5s"));
+        list.add(new AlbumShop(R.drawable.ic_window_phone, "Window phone"));
+        list.add(new AlbumShop(R.drawable.ic_blackberry, "Blackbery"));
+        list.add(new AlbumShop(R.drawable.ic_htc_one, "HTC One"));
+        return list;
+    }
+    public static String arr[] = {
+        "Chi nhanh 1",
+        "Chi nhanh 2",
+        "Chi nhanh 3",
+        "Chi nhanh 4",
+        "Chi nhanh 5",
+        "Chi nhanh 6" };
 }
