@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/wid_hei_200">
+
+            <ImageView
+                android:id="@+id/image_cover_shop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/ic_cover_nt"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/width_height_40"
+                android:layout_marginTop="@dimen/margin_160"
+                android:background="@color/background_shop_hint">
+
+                <TextView
+                    android:id="@+id/text_count_heart"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_80"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/count_heart_shop"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_7"/>
+
+                <TextView
+                    android:layout_width="@dimen/width_height_1"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/text_count_follow"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/count_follow_shop"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_7"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_avatar"
+                android:layout_width="@dimen/width_height_70"
+                android:layout_height="@dimen/width_height_70"
+                android:layout_marginLeft="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_110"
+                android:src="@drawable/avatar"/>
+
+            <TextView
+                android:id="@+id/name_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_90"
+                android:layout_marginTop="@dimen/margin_120"
+                android:text="@string/name_shop"
+                android:textColor="@color/background_shop_color_name"
+                android:textSize="@dimen/common_text_size_15"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/vote_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_90"
+                android:layout_marginTop="@dimen/margin_140"
+                android:text="@string/vote_text_shop"
+                android:textColor="@color/background_shop_color_name"
+                android:textSize="@dimen/common_text_size_11"
+                android:textStyle="normal"/>
+
+
+        </FrameLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            app:cardCornerRadius="@dimen/cardview_radius_3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_info_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/width_height_40"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/ic_drop_down"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_20"
+                    android:text="@string/info_shop"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:id="@+id/linear_info_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/wid_hei_25"
+                        android:layout_marginLeft="@dimen/size_50dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/branch_text"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"/>
+
+                        <TextView
+                            android:layout_width="@dimen/width_height_1"
+                            android:layout_height="wrap_content"
+                            android:background="@color/black"/>
+
+                        <Spinner
+                            android:id="@+id/spinner_branch_shop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:background="@color/grey"
+                            android:paddingLeft="@dimen/margin_10dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_50dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/address_shop"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"/>
+
+                        <TextView
+                            android:layout_width="@dimen/width_height_1"
+                            android:layout_height="wrap_content"
+                            android:background="@color/black"/>
+
+
+                        <TextView
+                            android:id="@+id/text_address_shop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:paddingLeft="@dimen/margin_10dp"
+                            android:text="@string/address_text"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_50dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/phonenumbershop"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"/>
+
+                        <TextView
+                            android:layout_width="@dimen/width_height_1"
+                            android:layout_height="wrap_content"
+                            android:background="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/text_phonenumber_shop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:paddingLeft="@dimen/margin_10dp"
+                            android:text="@string/hint_number"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_50dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/website_shop"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"/>
+
+                        <TextView
+                            android:layout_width="@dimen/width_height_1"
+                            android:layout_height="wrap_content"
+                            android:background="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/text_website_shop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:paddingLeft="@dimen/margin_10dp"
+                            android:text="@string/text_web_fake"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:layout_marginLeft="@dimen/size_50dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/facebook_shop"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"/>
+
+                        <TextView
+                            android:layout_width="@dimen/width_height_1"
+                            android:layout_height="wrap_content"
+                            android:background="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/text_facebook_shop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:paddingLeft="@dimen/margin_10dp"
+                            android:text="@string/text_facebook_fake"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            app:cardCornerRadius="@dimen/cardview_radius_3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_recruitment_introduction_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/width_height_40"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/ic_drop_down"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_20"
+                    android:text="@string/recruitment_introduction"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:id="@+id/linear_recruitment_introduction_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_50dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/requip_shop"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"/>
+
+                        <TextView
+                            android:layout_width="@dimen/width_height_1"
+                            android:layout_height="wrap_content"
+                            android:background="@color/black"/>
+
+
+                        <TextView
+                            android:id="@+id/text_introduction_shop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:paddingLeft="@dimen/margin_10dp"
+                            android:text="@string/intro_shop"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:layout_marginLeft="@dimen/size_50dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/introo_shop"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"/>
+
+                        <TextView
+                            android:layout_width="@dimen/width_height_1"
+                            android:layout_height="wrap_content"
+                            android:background="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/text_requipment_shop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:paddingLeft="@dimen/margin_10dp"
+                            android:text="@string/requip"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            app:cardCornerRadius="@dimen/cardview_radius_3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_album_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/width_height_40"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/ic_drop_down"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_20"
+                    android:text="@string/album_shop"
+                    android:textColor="@color/black"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_album_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10dp"
+                    android:background="@color/white"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</ScrollView>

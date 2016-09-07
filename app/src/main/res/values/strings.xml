@@ -185,4 +185,34 @@
     <string name="coment">Bình luận sản phẩm</string>
     <string name="name_product_text">XẢ HÀNG ÁO NẮNG UNIQLO</string>
     <string name="price_product_fake">đ 100.000</string>
+    <string name="info_shop">Thông tin cửa hàng</string>
+    <string name="recruitment_introduction"><![CDATA[Giới thiệu & Tuyển dụng]]></string>
+    <string name="intro_shop">Với hàng trăm nghìn sản phẩm thời trang nữ đang có mặt tại Sendo.vn,
+        các bạn gái có thể thỏa sức mua sắm và tạo nên cho mình phong cách vô cùng cuốn hút.
+        Sendo.vn với tiêu chí mua sắm trực tuyến đảm bảo sẽ là nơi mang đến cho nam giới những sản
+        phẩm thời trang nữ đẹp, giá rẻ và hợp xu hướng thời trang 2016. Bên cạnh đó, Sendo.vn còn
+        mang đến cho bạn những dịch vụ tốt nhất như: giao hàng toàn quốc, thanh toán khi nhận hàng,
+        hoàn tiền 100% nếu sản phẩm không đúng mô tả, thông tin khách hàng được bảo mật tuyệt đối.
+        Cùng nhiều chương trình ưu đãi khuyến mãi, giảm giá thường niên trong năm khác chắc chắc sẽ
+        mang đến cho phái đẹp một không gian mua sắm thật hiện đại, đảm bảo và tiện ích.</string>
+    <string name="requip">Tuyển 2 nhân viên nữ thu ngân, yêu cầu ngoại hình. Lương 5.000.000 đ
+        cộng thưởng .\nTuyển 5 nhân viên bồi bàn nam nữ, yêu cầu ngoại hình. Lương 7.000.000 đ
+        cộng thưởng .</string>
+    <string name="must_album">must be implement OnClickAlbumListener</string>
+    <string name="smart_phone">Smart Phone</string>
+    <string name="count_heart_shop">Người thích : 120</string>
+    <string name="count_follow_shop">Người theo dõi : 90</string>
+    <string name="name_shop">NAME SHOP</string>
+    <string name="vote_text_shop">Vote : 4.5</string>
+    <string name="branch_text">Chi nhánh</string>
+    <string name="address_text">Hà Đông - Hà Nội</string>
+    <string name="address_shop">Địa chỉ</string>
+    <string name="phonenumbershop">SĐT</string>
+    <string name="website_shop">Website</string>
+    <string name="text_web_fake">http://abc.com</string>
+    <string name="facebook_shop">Facebook</string>
+    <string name="text_facebook_fake">http://facebook.com</string>
+    <string name="requip_shop">Giới thiệu</string>
+    <string name="introo_shop">Tuyển dụng</string>
+    <string name="album_shop">Album</string>
 </resources>
