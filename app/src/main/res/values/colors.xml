@@ -38,4 +38,7 @@
     <color name="background_shop_hint">#3f3f4949</color>
     <color name="background_shop_color_name">#ea831c</color>
     <color name="orange">#ff5722</color>
+    <color name="color_fb">#1e7bc9</color>
+    <color name="color_bg_tint">#b62b2626</color>
+    <color name="color_bg_recyle">#c29090</color>
 </resources>

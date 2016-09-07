@@ -216,4 +216,11 @@
     <string name="introo_shop">Tuyển dụng</string>
     <string name="album_shop">Album</string>
     <string name="item_cart">cart</string>
+    <string name="text_share_title">Điều bạn muốn chia sẻ</string>
+    <string name="error">Error</string>
+    <string name="success">Share done !</string>
+    <string name="text_share_fake">Cửa hàng này rất tuyệt \nĐịa chỉ: Hà Đông -Hà Nội</string>
+    <string name="share_with_facebook">Chia sẻ với Facebook</string>
+    <string name="noti">Notification</string>
+    <string name="ok_dialog_success">OK</string>
 </resources>

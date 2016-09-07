@@ -19,6 +19,7 @@ import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SaleOffEventFragment;
 import com.example.framgia.imarketandroid.ui.fragments.ShopDetailInterfaceFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SuggestStoreFragment;
+import com.facebook.CallbackManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView.O
     private TabLayout mTabLayout;
     private ViewPager mViewPagerStore;
     private Toolbar mToolbar;
+    private CallbackManager mCallback = CallbackManager.Factory.create();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +62,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView.O
         adapter.addFragment(new CategoryStallFragment(), DANHMUC);
         adapter.addFragment(new SaleOffEventFragment(), THONGTINKHUYENMAI);
         adapter.addFragment(new SuggestStoreFragment(), DANHGIA);
-        adapter.addFragment(new ShopDetailInterfaceFragment(), THONGTINCUAHANG);
+        adapter.addFragment(new ShopDetailInterfaceFragment(mCallback), THONGTINCUAHANG);
         viewPager.setAdapter(adapter);
     }
 
@@ -108,4 +111,12 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView.O
         }
         return filterList;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode, Intent data)
+    {
+        super.onActivityResult(requestCode, responseCode, data);
+        mCallback.onActivityResult(requestCode, responseCode, data);
+    }
+
 }

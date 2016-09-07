@@ -2,9 +2,15 @@ package com.example.framgia.imarketandroid;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 
+import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.NotificationUtil;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -18,6 +24,7 @@ public class ImarketApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        printHashKey();
         notificationCount = 0;
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
             .name(Realm.DEFAULT_REALM_NAME)
@@ -25,7 +32,7 @@ public class ImarketApplication extends Application {
             .deleteRealmIfMigrationNeeded()
             .build();
         Realm.setDefaultConfiguration(realmConfiguration);
-      //  NotificationUtil.setAlarm(this);
+        //  NotificationUtil.setAlarm(this);
     }
 
     @Override
@@ -40,5 +47,20 @@ public class ImarketApplication extends Application {
 
     public int getNotificationCount() {
         return notificationCount;
+    }
+
+    public void printHashKey() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                getPackageName(),
+                PackageManager.GET_SIGNATURES);
+            for (android.content.pm.Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance(Constants.MESSAGEDIGEST);
+                md.update(signature.toByteArray());
+//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
+        }
     }
 }

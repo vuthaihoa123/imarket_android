@@ -62,4 +62,6 @@ public class Constants {
     public static final int MIN_COUNT_KID = 0;
     public static final int CHANGE_TIME_UP = 1;
     public static final int CHANGE_TIME_DOWN = -1;
+    public static final String PERMISSTION_SHARE = "publish_actions";
+    public static final String MESSAGEDIGEST = "SHA";
 }

@@ -306,5 +306,6 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         });
         mAlertDialogPostMessage = alertDialogBuilder.create();
         mAlertDialogPostMessage.show();
+        mAlertDialogPostMessage.setCanceledOnTouchOutside(true);
     }
 }
