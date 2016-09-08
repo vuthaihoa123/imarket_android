@@ -215,4 +215,5 @@
     <string name="requip_shop">Giới thiệu</string>
     <string name="introo_shop">Tuyển dụng</string>
     <string name="album_shop">Album</string>
+    <string name="item_cart">cart</string>
 </resources>

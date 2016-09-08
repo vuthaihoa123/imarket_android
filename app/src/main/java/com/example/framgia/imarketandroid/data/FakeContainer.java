@@ -4,8 +4,11 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.AlbumShop;
 import com.example.framgia.imarketandroid.data.model.CartItem;
 import com.example.framgia.imarketandroid.data.model.Category;
+import com.example.framgia.imarketandroid.data.model.CategorySaleOff;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
+import com.example.framgia.imarketandroid.data.model.ImageEvent1;
+import com.example.framgia.imarketandroid.data.model.ImageEvent2;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.util.Flog;
@@ -176,4 +179,60 @@ public class FakeContainer {
         "Chi nhanh 4",
         "Chi nhanh 5",
         "Chi nhanh 6" };
+    public static List<Object> getSampleArrayList() {
+        List<Object> items = new ArrayList<>();
+        List<ItemProduct> itemProductList = new ArrayList<>();
+        itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
+        itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
+        itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
+        itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
+        itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
+        itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
+
+        items.add(new ImageEvent1(R.drawable.banner1));
+        items.add(new ImageEvent2(R.drawable.banner2, R.drawable.banner3));
+        items.add(new ImageEvent2(R.drawable.banner2, R.drawable.banner3));
+        items.add(new ImageEvent1(R.drawable.banner1));
+        items.add(new CategorySaleOff("Hàng điện tử", itemProductList));
+        items.add(new CategorySaleOff("Hàng gia dụng", itemProductList));
+        items.add(new ImageEvent1(R.drawable.banner1));
+        items.add(new CategorySaleOff("Hàng thực phẩm", itemProductList));
+        return items;
+    }
 }

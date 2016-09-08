@@ -27,12 +27,8 @@ public class ShopDetailInterfaceAdapter
                                       List<AlbumShop> listAlbum) {
         this.mContext = context;
         this.mListAlbum = listAlbum;
-        if (mContext instanceof OnClickAlbumListener) {
+        if (mContext instanceof OnClickAlbumListener)
             mAlbumListener = (OnClickAlbumListener) mContext;
-        } else {
-            throw new RuntimeException(
-                mContext.toString() + context.getString(R.string.must_album));
-        }
     }
 
     @Override
@@ -61,6 +57,10 @@ public class ShopDetailInterfaceAdapter
         return mListAlbum == null ? 0 : mListAlbum.size();
     }
 
+    public interface OnClickAlbumListener {
+        void OnClickAlbumShop(AlbumShop albumShop, int position);
+    }
+
     public class ShopInterfaceViewHolver extends RecyclerView.ViewHolder {
         private final View mView;
         private ImageView mImageViewAlbum;
@@ -73,9 +73,5 @@ public class ShopDetailInterfaceAdapter
             mImageViewAlbum = (ImageView) itemView.findViewById(R.id.image_item_album_shop);
             mTextViewNameAlbum = (TextView) itemView.findViewById(R.id.text_name_item_album_shop);
         }
-    }
-
-    public interface OnClickAlbumListener {
-        void OnClickAlbumShop(AlbumShop albumShop, int position);
     }
 }
