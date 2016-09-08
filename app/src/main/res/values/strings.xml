@@ -223,4 +223,8 @@
     <string name="share_with_facebook">Chia sẻ với Facebook</string>
     <string name="noti">Notification</string>
     <string name="ok_dialog_success">OK</string>
+    <string name="toast_follow">Follow Store</string>
+    <string name="toast_message">Message Store</string>
+    <string name="toast_share">Share Store</string>
+    <string name="item_logout">LogOut</string>
 </resources>
