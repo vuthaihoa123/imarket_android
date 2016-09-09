@@ -12,7 +12,6 @@ import com.example.framgia.imarketandroid.util.DialogShareUtil;
 
 public class DialogActivity extends AppCompatActivity {
     public static String sFirstPoint, sSecondPoint;
-    public static int sDraw = 0;
     private EditText mFirstText, mSecondText;
     private Button mBtnAccept;
 
@@ -32,7 +31,6 @@ public class DialogActivity extends AppCompatActivity {
                 if (first.length() > 0 && second.length() > 0) {
                     sFirstPoint = first;
                     sSecondPoint = second;
-                    sDraw = FloorActivity.sStatement;
                     finish();
                 } else {
                     DialogShareUtil.toastDialogMessage(getString(R.string.warning_text),

@@ -36,7 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap
+    .OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     private List<CustomMarker> mCustomMarkers = new ArrayList<>();
@@ -102,8 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         customMarkerView.setTextforMarker();
         switch (marker.getCategory().getId()) {
             case FakeContainer.STORE_TYPE_1:
-                customMarkerView.setBackground(
-                        ResourcesCompat.getDrawable(getResources(), R.drawable.map_marker, null));
+
                 break;
             case FakeContainer.STORE_TYPE_2:
                 customMarkerView.setBackground(

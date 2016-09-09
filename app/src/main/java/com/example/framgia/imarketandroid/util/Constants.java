@@ -1,12 +1,14 @@
 package com.example.framgia.imarketandroid.util;
 
+import com.example.framgia.imarketandroid.R;
+
 /**
  * Created by VULAN on 7/19/2016.
  */
 public class Constants {
-    public static final int MINYEARPICKER=1954;
-    public static final int MINMONTHPICKER=0;
-    public static final int MINDATEPICKER=1;
+    public static final int MINYEARPICKER = 1954;
+    public static final int MINMONTHPICKER = 0;
+    public static final int MINDATEPICKER = 1;
     public static final String SESSION = "session";
     public static final String DEMO_CATEGORY = "Bakery Store";
     public static final String FIELD = "fields";
@@ -65,4 +67,6 @@ public class Constants {
     public static final String PERMISSTION_SHARE = "publish_actions";
     public static final String MESSAGEDIGEST = "SHA";
     public static final String CLEAR_EDITTEXT = "";
+    public static final int[] LIST_AVATAR_STORE = {R.drawable.food_avatar, R.drawable.fashion, R
+        .drawable.book_shop, R.drawable.cosmetic, R.drawable.stage, R.drawable.game_icon};
 }

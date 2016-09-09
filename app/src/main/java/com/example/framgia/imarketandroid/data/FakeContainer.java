@@ -11,6 +11,8 @@ import com.example.framgia.imarketandroid.data.model.ImageEvent1;
 import com.example.framgia.imarketandroid.data.model.ImageEvent2;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.Market;
+import com.example.framgia.imarketandroid.data.model.Shop;
+import com.example.framgia.imarketandroid.data.model.Store;
 import com.example.framgia.imarketandroid.util.Flog;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -28,6 +30,10 @@ public class FakeContainer {
     public static final long CHI_PHI_PHAT_SINH = 50000;
     public static final String STORE_TYPE_1 = "1";
     public static final String STORE_TYPE_2 = "2";
+    public static final String STORE_TYPE_3 = "3";
+    public static final String STORE_TYPE_4 = "4";
+    public static final String STORE_TYPE_5 = "5";
+    public static final String STORE_TYPE_6 = "6";
     public static LatLng sLatLng = new LatLng(21.007380, 105.793139);
     public static float sGroundFirstParameter = 116f;
     public static float sGroundSecondParameter = 150f;
@@ -68,6 +74,36 @@ public class FakeContainer {
         markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
         markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
         return markets;
+    }
+
+    public static List<Shop> initListShop(){
+        List<Shop> mShopList= new ArrayList<>();
+        Shop shop0 = new Shop(0, "Chọn cửa hàng");
+        Shop shop1 = new Shop(1,"cửa hàng ăn uống");
+        Shop shop2 = new Shop(2, "cửa hàng quần áo");
+        Shop shop3 = new Shop(3, "cửa hàng sách");
+        Shop shop4 = new Shop(4, "cửa hàng mỹ phẩm");
+        Shop shop5 = new Shop(5, "Rạp chiếu phim");
+        Shop shop6 = new Shop(6, "Trung tâm giải trí");
+        mShopList.add(shop0);
+        mShopList.add(shop1);
+        mShopList.add(shop2);
+        mShopList.add(shop3);
+        mShopList.add(shop4);
+        mShopList.add(shop5);
+        mShopList.add(shop6);
+        return mShopList;
+    }
+
+    public static List<Store> initStore(){
+        List<Store> storeList= new ArrayList<>();
+        storeList.add(new Store(R.drawable.food_avatar, "cửa hàng ăn uống"));
+        storeList.add(new Store(R.drawable.fashion, "cửa hàng quần áo"));
+        storeList.add(new Store(R.drawable.book_shop, "cửa hàng sách"));
+        storeList.add(new Store(R.drawable.cosmetic, "cửa hàng mỹ phẩm"));
+        storeList.add(new Store(R.drawable.stage, "Rạp chiếu phim"));
+        storeList.add(new Store(R.drawable.game_icon, "Trung tâm giải trí"));
+        return storeList;
     }
 
     public static String getNameProduct() {
