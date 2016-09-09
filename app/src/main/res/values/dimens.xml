@@ -137,4 +137,9 @@
     <dimen name="common_size_80">80dp</dimen>
     <dimen name="margin_135">135dp</dimen>
     <dimen name="common_text_size_20">20sp</dimen>
+    <dimen name="wid_hei_300">300dp</dimen>
+    <dimen name="wid_hei_400">400dp</dimen>
+    <dimen name="wid_hei_270">270dp</dimen>
+    <dimen name="cardview_radius_8">8dp</dimen>
+    <dimen name="wid_hei_250">250dp</dimen>
 </resources>

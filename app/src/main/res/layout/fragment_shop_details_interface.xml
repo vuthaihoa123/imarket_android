@@ -25,6 +25,16 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_cover_nt"/>
 
+            <Button
+                android:id="@+id/button_share_info_shop_on_fb"
+                android:layout_gravity="right"
+                android:backgroundTint="@color/color_bg_tint"
+                android:background="@drawable/ic_share_black"
+                android:layout_marginRight="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_width="@dimen/wid_hei_30"
+                android:layout_height="@dimen/wid_hei_30"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/width_height_40"
@@ -400,7 +410,7 @@
                     android:id="@+id/recycle_album_shop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"/>
+                    android:background="@color/color_bg_recyle"/>
             </LinearLayout>
     </LinearLayout>
 

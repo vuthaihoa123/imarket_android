@@ -17,6 +17,8 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.AlbumShop;
 import com.example.framgia.imarketandroid.ui.adapter.ShopDetailInterfaceAdapter;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.facebook.CallbackManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,12 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
     private ShopDetailInterfaceAdapter mShopDetailInterfaceAdapter;
     private List<AlbumShop> mAlbumShopList = new ArrayList<>();
     private View mRootView;
+    private Button mButtonShare;
+    private CallbackManager mCallback;
+
+    public ShopDetailInterfaceFragment(CallbackManager callbackManager) {
+        mCallback = callbackManager;
+    }
 
     @Nullable
     @Override
@@ -66,6 +74,7 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
         mButtonInfoShop.setOnClickListener(this);
         mButtonRecruitmentIntroduction.setOnClickListener(this);
         mButtonAlbum.setOnClickListener(this);
+        mButtonShare.setOnClickListener(this);
     }
 
     private void initView() {
@@ -90,6 +99,7 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
         adapter.setDropDownViewResource
             (android.R.layout.simple_list_item_single_choice);
         mSpinnerBranchShop.setAdapter(adapter);
+        mButtonShare = (Button)mRootView.findViewById(R.id.button_share_info_shop_on_fb);
     }
 
     @Override
@@ -112,6 +122,9 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
                     mFlagInfoShop = true;
                     mLinearLayoutInfo.setVisibility(View.VISIBLE);
                 }
+                break;
+            case R.id.button_share_info_shop_on_fb :
+                DialogShareUtil.dialogShare(getActivity(),R.drawable.ic_iphone5s,mCallback);
                 break;
         }
     }
