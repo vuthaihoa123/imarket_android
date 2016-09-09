@@ -53,10 +53,6 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider530129487174289"/>
 
-        <activity android:name=".ui.fragments.CategoryStallFragment">
-
-        </activity>
-
         <activity android:name=".ui.activity.LoginActivity">
         </activity>
 

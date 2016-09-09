@@ -11,6 +11,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Category;
@@ -20,6 +22,7 @@ import com.example.framgia.imarketandroid.ui.fragments.SaleOffEventFragment;
 import com.example.framgia.imarketandroid.ui.fragments.ShopDetailInterfaceFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SuggestStoreFragment;
 import com.facebook.CallbackManager;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +30,16 @@ import java.util.List;
 /**
  * Created by toannguyen201194 on 06/09/2016.
  */
-public class HomeStoreActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class HomeStoreActivity extends AppCompatActivity implements SearchView
+    .OnQueryTextListener, View.OnClickListener {
     private static final String DANHMUC = "Danh Mục";
     private static final String THONGTINKHUYENMAI = "Chương Trình Khuyến Mãi";
     private static final String DANHGIA = "Đánh Giá & Góp Ý";
     private static final String THONGTINCUAHANG = "Thông Tin Của Hàng";
-    private static final String NAMESTORE ="Apple Store";
+    private static final String NAMESTORE = "Apple Store";
     private TabLayout mTabLayout;
     private ViewPager mViewPagerStore;
+    private FloatingActionButton mFabShare, mFabMessage, mFabFollow;
     private Toolbar mToolbar;
     private CallbackManager mCallback = CallbackManager.Factory.create();
 
@@ -51,6 +56,12 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView.O
         mTabLayout = (TabLayout) findViewById(R.id.tab_home_store);
         mViewPagerStore = (ViewPager) findViewById(R.id.view_home_store);
         mTabLayout.setupWithViewPager(mViewPagerStore);
+        mFabFollow = (FloatingActionButton) findViewById(R.id.fab_follow);
+        mFabMessage = (FloatingActionButton) findViewById(R.id.fab_message);
+        mFabShare = (FloatingActionButton) findViewById(R.id.fab_share);
+        mFabFollow.setOnClickListener(this);
+        mFabMessage.setOnClickListener(this);
+        mFabShare.setOnClickListener(this);
         setupViewPager(mViewPagerStore);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,10 +88,10 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
-        switch (id){
+        int id = item.getItemId();
+        switch (id) {
             case R.id.item_cart:
-                startActivity(new Intent(HomeStoreActivity.this,CartActivity.class));
+                startActivity(new Intent(HomeStoreActivity.this, CartActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -118,5 +129,18 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView.O
         super.onActivityResult(requestCode, responseCode, data);
         mCallback.onActivityResult(requestCode, responseCode, data);
     }
-
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.fab_follow:
+                Toast.makeText(this, R.string.toast_follow, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_message:
+                Toast.makeText(this, R.string.toast_message, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_share:
+                Toast.makeText(this, R.string.toast_share, Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 }

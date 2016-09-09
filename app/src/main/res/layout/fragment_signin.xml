@@ -50,6 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layout_margin_comment"
             android:background="@drawable/button_login"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
             android:text="@string/login_button_text"
             android:textSize="@dimen/login_button_textsize"
             />
@@ -64,7 +66,6 @@
             app:cardPreventCornerOverlap="false">
 
             <FrameLayout
-
                 android:id="@+id/frame_button_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/framelayout_login"
@@ -75,7 +76,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/login_button_log_in_with_facabook"/>
+                    android:text="@string/login_button_log_in_with_facabook"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -95,7 +98,7 @@
                 android:id="@+id/frame_button_gmail"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/framelayout_login"
-                android:background="@drawable/button_login"
+                android:background="@drawable/button_gmail"
                 android:orientation="horizontal">
 
                 <TextView
@@ -103,7 +106,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/login_button_login_in_with_gmail"/>
+                    android:text="@string/login_button_login_in_with_gmail"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

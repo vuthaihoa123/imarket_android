@@ -2,6 +2,7 @@ package com.example.framgia.imarketandroid.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -136,11 +137,17 @@ public class UpdateProfileActivity extends AppCompatActivity {
             case R.id.action_save:
                 saveUpdate();
                 showProfile();
+                showEnableEditText(false);
                 break;
             case R.id.action_cancel:
                 showProfile();
                 showEnableEditText(false);
                 Toast.makeText(this, R.string.toast_cancel_profile, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_logout:
+                SharedPreferencesUtil.getInstance().clearSharedPreference(this);
+                startActivity(new Intent(UpdateProfileActivity.this,LoginActivity.class));
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
