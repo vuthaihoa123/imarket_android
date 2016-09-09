@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
 
 public class DialogActivity extends AppCompatActivity {
     public static String sFirstPoint, sSecondPoint;
@@ -34,7 +35,8 @@ public class DialogActivity extends AppCompatActivity {
                     sDraw = FloorActivity.sStatement;
                     finish();
                 } else {
-                    Toast.makeText(DialogActivity.this, R.string.warning_text, Toast.LENGTH_LONG).show();
+                    DialogShareUtil.toastDialogMessage(getString(R.string.warning_text),
+                        DialogActivity.this);
                 }
             }
         });

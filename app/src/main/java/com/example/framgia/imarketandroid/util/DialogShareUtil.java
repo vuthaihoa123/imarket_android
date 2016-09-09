@@ -86,14 +86,12 @@ public class DialogShareUtil {
 
             @Override
             public void onCancel() {
-                Toast.makeText(mActivity, mActivity.getString(R.string.cancle), Toast.LENGTH_SHORT)
-                    .show();
+                toastDialogMessage(mActivity.getString(R.string.cancle), mActivity);
             }
 
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(mActivity, mActivity.getString(R.string.error), Toast.LENGTH_SHORT)
-                    .show();
+                toastDialogMessage(mActivity.getString(R.string.error), mActivity);
             }
         });
     }

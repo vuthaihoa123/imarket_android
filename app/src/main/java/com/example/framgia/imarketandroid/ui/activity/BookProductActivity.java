@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
@@ -88,13 +89,13 @@ public class BookProductActivity extends Activity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_clear_email:
-                mEditTextEmail.setText("");
+                mEditTextEmail.setText(Constants.CLEAR_EDITTEXT);
                 break;
             case R.id.button_clear_phonenumber:
-                mEditTextPhoneNumber.setText("");
+                mEditTextPhoneNumber.setText(Constants.CLEAR_EDITTEXT);
                 break;
             case R.id.button_clear_address_ship:
-                mEditTextAddress.setText("");
+                mEditTextAddress.setText(Constants.CLEAR_EDITTEXT);
                 break;
             case R.id.text_hour_ship:
                 getTime(Constants.SHIP);
@@ -110,7 +111,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
                     Intent intentLogin = new Intent(this, LoginActivity.class);
                     startActivity(intentLogin);
                 } else {
-                    Toast.makeText(this, R.string.login_befor, Toast.LENGTH_SHORT).show();
+                    DialogShareUtil.toastDialogMessage(getString(R.string.login_befor), this);
                 }
                 break;
             case R.id.button_continue_book_product:
