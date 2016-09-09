@@ -1,5 +1,7 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.MatrixCursor;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Visibility;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,15 +31,18 @@ import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
 import com.example.framgia.imarketandroid.data.model.Market;
+import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
-import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
@@ -44,8 +50,8 @@ import me.leolin.shortcutbadger.ShortcutBadger;
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
     NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener {
-    private static String[] SUGGESTIONS = FakeContainer.SUGGESTIONS;
+    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener,
+    RecyclerDrawerAdapter.OnClickItemDrawer {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerMarket;
@@ -59,7 +65,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private RecyclerDrawerAdapter mRecyclerDrawerAdapter;
     private View mStrokeLine1, mStrokeLine2, mStrokeLine3;
     private View mLinearMenu;
-    private View mButtonSignIn, mButtonProfile, mButtonSignOut;
+    private TextView mTextSignIn, mTextSignOut, mTextProfile;
+    private TextView mTextUsername;
+    private CircleImageView mCircleImageView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +76,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         findViews();
         mRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
         mDrawerItems = FakeContainer.initDrawerItems();
-        mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(mDrawerItems);
+        mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(this, mDrawerItems);
         mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
         setListeners();
         setSupportActionBar(mToolbar);
@@ -93,6 +101,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mAdapter.setOnRecyclerItemInteractListener(this);
         // TODO: 29/08/2016  remove badge 
         ShortcutBadger.removeCount(this);
+        getInfo();
     }
 
     @Override
@@ -123,19 +132,13 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_favorite:
-                mStrokeLine1.setVisibility(View.VISIBLE);
-                mStrokeLine2.setVisibility(View.GONE);
-                mStrokeLine3.setVisibility(View.GONE);
+                getVisible(mStrokeLine1, mStrokeLine2, mStrokeLine3, mLinearMenu);
                 break;
             case R.id.button_bought:
-                mStrokeLine1.setVisibility(View.GONE);
-                mStrokeLine2.setVisibility(View.VISIBLE);
-                mStrokeLine3.setVisibility(View.GONE);
+                getVisible(mStrokeLine2, mStrokeLine1, mStrokeLine3, mLinearMenu);
                 break;
             case R.id.button_follow:
-                mStrokeLine1.setVisibility(View.GONE);
-                mStrokeLine2.setVisibility(View.GONE);
-                mStrokeLine3.setVisibility(View.VISIBLE);
+                getVisible(mStrokeLine3, mStrokeLine2, mStrokeLine1, mLinearMenu);
                 break;
             case R.id.button_more:
                 if (mLinearMenu.getVisibility() == View.GONE) {
@@ -143,6 +146,29 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 } else {
                     mLinearMenu.setVisibility(View.GONE);
                 }
+                break;
+            case R.id.button_sign_in:
+                mLinearMenu.setVisibility(View.GONE);
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case R.id.button_sign_out:
+                SharedPreferencesUtil.getInstance().init(this);
+                Session session = (Session) SharedPreferencesUtil
+                    .getInstance()
+                    .getValue(Constants.SESSION, Session.class);
+                if (session != null) {
+                    actionSignout();
+                } else {
+                    DialogShareUtil.toastDialogMessage(getString(R.string.signout_fails_message),
+                        ChooseMarketActivity.this);
+                }
+                mLinearMenu.setVisibility(View.GONE);
+                break;
+            case R.id.button_profile:
+                startActivity(new Intent(this, UpdateProfileActivity.class));
+                break;
+            case R.id.image_avatar:
+                mLinearMenu.setVisibility(View.GONE);
                 break;
         }
     }
@@ -160,7 +186,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(int position) {
-        startActivity(new Intent(this, CategoryStallFragment.class));
+        mLinearMenu.setVisibility(View.GONE);
+        startActivity(new Intent(this, FloorActivity.class));
     }
 
     private void findViews() {
@@ -172,9 +199,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mStrokeLine2 = findViewById(R.id.nav_drawer_stroke_2);
         mStrokeLine3 = findViewById(R.id.nav_drawer_stroke_3);
         mLinearMenu = findViewById(R.id.linear_menu);
-        mButtonSignIn = findViewById(R.id.button_sign_in);
-        mButtonProfile = findViewById(R.id.button_profile);
-        mButtonSignOut = findViewById(R.id.button_sign_out);
+        mTextProfile = (TextView) findViewById(R.id.button_profile);
+        mTextSignIn = (TextView) findViewById(R.id.button_sign_in);
+        mTextSignOut = (TextView) findViewById(R.id.button_sign_out);
+        mTextUsername = (TextView) findViewById(R.id.text_user_name);
+        mTextEmail = (TextView) findViewById(R.id.text_email);
+        mCircleImageView = (CircleImageView) findViewById(R.id.image_avatar);
     }
 
     private void setListeners() {
@@ -182,16 +212,81 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         findViewById(R.id.button_bought).setOnClickListener(this);
         findViewById(R.id.button_follow).setOnClickListener(this);
         findViewById(R.id.button_more).setOnClickListener(this);
+        mTextProfile.setOnClickListener(this);
+        mTextSignIn.setOnClickListener(this);
+        mTextSignOut.setOnClickListener(this);
+        mCircleImageView.setOnClickListener(this);
     }
 
     private void populateSuggestionAdapter(String query) {
         final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID,
             Constants.MARKET_SUGGESTION});
-        int length = SUGGESTIONS.length;
+        int length = FakeContainer.SUGGESTIONS.length;
         for (int i = 0; i < length; i++) {
-            if (SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
-                c.addRow(new Object[]{i, SUGGESTIONS[i]});
+            if (FakeContainer.SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
+                c.addRow(new Object[]{i, FakeContainer.SUGGESTIONS[i]});
+            mSearchSuggestionAdapter.changeCursor(c);
         }
-        mSearchSuggestionAdapter.changeCursor(c);
+    }
+
+    private void getInfo() {
+        SharedPreferencesUtil.getInstance().init(this);
+        Session session = (Session) SharedPreferencesUtil
+            .getInstance()
+            .getValue(Constants.SESSION, Session.class);
+        if (session != null) {
+            if (session.getFullname() != null) {
+                mTextUsername.setText(session.getFullname().toString());
+            }
+            if (session.getUsername() != null) {
+                mTextEmail.setText(session.getUsername().toString());
+            }
+            if (session.getUrlImage() != null) {
+                // TODO xu li avatar
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mLinearMenu.setVisibility(View.GONE);
+        getInfo();
+    }
+
+    private void actionSignout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.noti);
+        builder.setMessage(R.string.confirm_signout);
+        builder
+            .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferencesUtil.getInstance()
+                        .clearSharedPreference(ChooseMarketActivity.this);
+                    dialog.dismiss();
+                    DialogShareUtil.toastDialogMessage(getString(R.string.signout_done_message),
+                        ChooseMarketActivity.this);
+                }
+            });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public void onClickItemDrawer(int pos) {
+        startActivity(new Intent(this, DetailsProductActivity.class));
+    }
+
+    public void getVisible(View view1, View view2, View view3, View view4) {
+        view1.setVisibility(View.VISIBLE);
+        view2.setVisibility(View.GONE);
+        view3.setVisibility(View.GONE);
+        view4.setVisibility(View.GONE);
     }
 }
