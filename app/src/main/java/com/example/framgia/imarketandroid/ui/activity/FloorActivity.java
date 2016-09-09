@@ -31,6 +31,7 @@ import com.example.framgia.imarketandroid.data.model.Graph;
 import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.model.Shop;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -195,8 +196,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                         marker.showInfoWindow();
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
                     } else
-                        Toast.makeText(FloorActivity.this, R.string.warning_location,
-                                Toast.LENGTH_LONG).show();
+                        DialogShareUtil.toastDialogMessage(getString(R.string.warning_location),
+                            FloorActivity.this);
                 }
             }
         });
@@ -297,8 +298,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                             mTargetLocation = RealmRemote.getObjectPointFromName(marker.getTitle());
                             setDrawPath();
                         } else
-                            Toast.makeText(FloorActivity.this, R.string.current_location_title, Toast
-                                    .LENGTH_LONG).show();
+                            DialogShareUtil.toastDialogMessage(getString(R.string.current_location_title),
+                                FloorActivity.this);
+
                     }
                     return false;
                 }

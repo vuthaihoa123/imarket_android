@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
@@ -160,7 +161,7 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
                     Intent intentLogin = new Intent(this, LoginActivity.class);
                     startActivity(intentLogin);
                 } else {
-                    Toast.makeText(this, R.string.login_befor, Toast.LENGTH_SHORT).show();
+                    DialogShareUtil.toastDialogMessage(getString(R.string.login_befor), this);
                 }
                 break;
         }
