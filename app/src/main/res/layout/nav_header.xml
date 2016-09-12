@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="@dimen/width_height_350"
                 android:layout_height="@dimen/width_height_170"
-                android:background="@color/color_toolbar"
+                android:background="@drawable/background_profile"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_avatar"
-        android:layout_width="@dimen/width_height_70"
-        android:layout_height="@dimen/width_height_70"
+        android:layout_width="@dimen/wid_hei_80"
+        android:layout_height="@dimen/wid_hei_80"
         android:layout_marginBottom="@dimen/common_size_20"
         android:layout_marginLeft="@dimen/common_size_20"
         android:layout_marginTop="@dimen/margin_5"
@@ -80,7 +80,7 @@
                 android:layout_below="@id/text_tmp_1"
                 android:gravity="center_horizontal|top"
                 android:text="@string/count_favorite"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/common_text_size_11"
                 android:textStyle="bold"/>
         </RelativeLayout>
@@ -128,7 +128,7 @@
                 android:layout_below="@id/text_tmp_2"
                 android:gravity="center_horizontal|top"
                 android:text="@string/count_bount"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/common_text_size_11"
                 android:textStyle="bold"/>
         </RelativeLayout>
@@ -176,7 +176,7 @@
                 android:layout_below="@id/text_tmp_3"
                 android:gravity="center_horizontal|top"
                 android:text="@string/count_follow"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/common_text_size_11"
                 android:textStyle="bold"/>
         </RelativeLayout>

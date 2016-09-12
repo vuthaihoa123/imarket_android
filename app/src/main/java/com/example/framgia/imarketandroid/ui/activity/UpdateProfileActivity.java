@@ -102,21 +102,23 @@ public class UpdateProfileActivity extends AppCompatActivity {
         Session session =
             (Session) SharedPreferencesUtil.getInstance()
                 .getValue(Constants.SESSION, Session.class);
-        mEditFullname.setText(session.getFullname());
-        mEditMail.setText(session.getUsername());
-        mEditAdress.setText(session.getmAdress());
-        mEditNumber.setText(session.getmNumberPhone());
-        mTextBirthday.setText(session.getmBrithday());
+        if (session != null) {
+            mEditFullname.setText(session.getFullname());
+            mEditMail.setText(session.getUsername());
+            mEditAdress.setText(session.getAdress());
+            mEditNumber.setText(session.getNumberPhone());
+            mTextBirthday.setText(session.getBrithday());
+        }
     }
 
     private void saveUpdate() {
         // TODO: 05/09/2016 send server check update
         Session session = new Session();
         session.setFullname(mEditFullname.getText().toString());
-        session.setmAdress(mEditAdress.getText().toString());
+        session.setAdress(mEditAdress.getText().toString());
         session.setUsername(mEditMail.getText().toString());
-        session.setmNumberPhone(mEditNumber.getText().toString());
-        session.setmBrithday(mTextBirthday.getText().toString());
+        session.setNumberPhone(mEditNumber.getText().toString());
+        session.setBrithday(mTextBirthday.getText().toString());
         SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
         Toast.makeText(this, R.string.toast_save_successfully, Toast.LENGTH_SHORT).show();
     }

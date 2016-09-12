@@ -44,35 +44,35 @@ public class Session extends RealmObject {
         mPasswordConfirm = passwordConfirm;
     }
 
-    public String getmUrlImage() {
+    public String getUrlImage() {
         return mUrlImage;
     }
 
-    public void setmUrlImage(String mUrlImage) {
+    public void setUrlImage(String mUrlImage) {
         this.mUrlImage = mUrlImage;
     }
 
-    public String getmBrithday() {
+    public String getBrithday() {
         return mBrithday;
     }
 
-    public void setmBrithday(String mBrithday) {
+    public void setBrithday(String mBrithday) {
         this.mBrithday = mBrithday;
     }
 
-    public String getmNumberPhone() {
+    public String getNumberPhone() {
         return mNumberPhone;
     }
 
-    public void setmNumberPhone(String mNumberPhone) {
+    public void setNumberPhone(String mNumberPhone) {
         this.mNumberPhone = mNumberPhone;
     }
 
-    public String getmAdress() {
+    public String getAdress() {
         return mAdress;
     }
 
-    public void setmAdress(String mAdress) {
+    public void setAdress(String mAdress) {
         this.mAdress = mAdress;
     }
 

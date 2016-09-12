@@ -235,4 +235,8 @@
     <string name="cosmetic_name">cửa hàng mỹ phẩm</string>
     <string name="movie_theater">Rạp chiếu phim</string>
     <string name="game_center_name">Trung tâm giải trí</string>
+    <string name="confirm_signout">Bạn có muốn đăng xuất ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="signout_done_message">Đăng xuất thành công !</string>
+    <string name="signout_fails_message">Chưa đăng nhập !</string>
 </resources>

@@ -37,7 +37,7 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
 
     @Override
     public void onBindViewHolder(ItemHolder holder, final int position) {
-        Market market = mMarkets.get(position);
+        final Market market = mMarkets.get(position);
         holder.textName.setText(market.getName());
         holder.textAddress.setText(market.getAddress());
         holder.imageMarket.setImageResource(R.drawable.logo_big_c);
