@@ -39,10 +39,10 @@ public class BookProductActivity extends Activity implements View.OnClickListene
     private Button mButtonContinue;
     private RadioButton mRadioButtonOnline, mRadioButtonOffline;
     private LinearLayout mLinearLayoutRadioOnline, mLinearLayoutRadioOffline;
-    private SharedPreferences mPreferences;
     private Button mButtonLoginByFace;
     private Button mButtonLoginByGoogle;
     private TextView mLoginOther;
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

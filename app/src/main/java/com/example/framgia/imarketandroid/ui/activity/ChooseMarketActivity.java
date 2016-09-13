@@ -152,7 +152,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.button_sign_out:
-                SharedPreferencesUtil.getInstance().init(this);
+                SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
                 Session session = (Session) SharedPreferencesUtil
                     .getInstance()
                     .getValue(Constants.SESSION, Session.class);
@@ -230,7 +230,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void getInfo() {
-        SharedPreferencesUtil.getInstance().init(this);
+        SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
         Session session = (Session) SharedPreferencesUtil
             .getInstance()
             .getValue(Constants.SESSION, Session.class);
