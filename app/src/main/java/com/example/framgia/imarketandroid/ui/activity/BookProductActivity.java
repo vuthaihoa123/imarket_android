@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
@@ -24,6 +23,9 @@ import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 /**
  * Created by phongtran on 25/08/2016.
@@ -40,6 +42,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
     private SharedPreferences mPreferences;
     private Button mButtonLoginByFace;
     private Button mButtonLoginByGoogle;
+    private TextView mLoginOther;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.activity_bookproduct_layout);
         initView();
         mPreferences = getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+        initGuide();
     }
 
     private void initView() {
@@ -55,7 +59,9 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mLinearLayoutRadioOffline = (LinearLayout) findViewById(R.id.linear_buy_shop);
         mLinearLayoutRadioOffline.setVisibility(View.GONE);
         mEditTextEmail = (EditText) findViewById(R.id.edit_email_book_product);
+        mEditTextEmail.setFocusable(false);
         mEditTextPhoneNumber = (EditText) findViewById(R.id.edit_phone_book_product);
+        mEditTextPhoneNumber.setFocusable(false);
         mEditTextAddress = (EditText) findViewById(R.id.edit_address_ship);
         mButtonClearEmail = (Button) findViewById(R.id.button_clear_email);
         mButtonClearEmail.setOnClickListener(this);
@@ -67,8 +73,6 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mTextViewTimeShip.setOnClickListener(this);
         mTextViewDateShip = (TextView) findViewById(R.id.text_day_ship);
         mTextViewDateShip.setOnClickListener(this);
-        mTextViewForgetPass = (TextView) findViewById(R.id.text_forget_password);
-        mTextViewForgetPass.setOnClickListener(this);
         mButtonContinue = (Button) findViewById(R.id.button_continue_book_product);
         mButtonContinue.setOnClickListener(this);
         mRadioButtonOnline = (RadioButton) findViewById(R.id.radioButtonOnline);
@@ -79,10 +83,8 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mTextViewTimeGoToShop.setOnClickListener(this);
         mTextViewDateGoToShop = (TextView) findViewById(R.id.text_day_in);
         mTextViewDateGoToShop.setOnClickListener(this);
-        mButtonLoginByFace = (Button) findViewById(R.id.login_by_face_bookproduct);
-        mButtonLoginByFace.setOnClickListener(this);
-        mButtonLoginByGoogle = (Button) findViewById(R.id.login_by_gg_bookproduct);
-        mButtonLoginByGoogle.setOnClickListener(this);
+        mLoginOther = (TextView)findViewById(R.id.login_other);
+        mLoginOther.setOnClickListener(this);
     }
 
     @Override
@@ -102,17 +104,6 @@ public class BookProductActivity extends Activity implements View.OnClickListene
                 break;
             case R.id.text_day_ship:
                 getShowDate(Constants.SHIP);
-                break;
-            case R.id.text_forget_password:
-                Session session = (Session) SharedPreferencesUtil.getInstance().getValue
-                    (Constants.SESSION,
-                        Session.class);
-                if (session.getId() == null) {
-                    Intent intentLogin = new Intent(this, LoginActivity.class);
-                    startActivity(intentLogin);
-                } else {
-                    DialogShareUtil.toastDialogMessage(getString(R.string.login_befor), this);
-                }
                 break;
             case R.id.button_continue_book_product:
                 // TODO continue
@@ -136,13 +127,16 @@ public class BookProductActivity extends Activity implements View.OnClickListene
             case R.id.text_day_in:
                 getShowDate(Constants.GOTOSHOP);
                 break;
-            case R.id.login_by_face_bookproduct:
-                Intent intentLoginF = new Intent(this, LoginActivity.class);
-                startActivity(intentLoginF);
-                break;
-            case R.id.login_by_gg_bookproduct:
-                Intent intentLoginG = new Intent(this, LoginActivity.class);
-                startActivity(intentLoginG);
+            case R.id.login_other :
+                Session session = (Session) SharedPreferencesUtil.getInstance().getValue
+                    (Constants.SESSION,
+                        Session.class);
+                if (session.getId() == null) {
+                    Intent intentLogin = new Intent(this, LoginActivity.class);
+                    startActivity(intentLogin);
+                } else {
+                    DialogShareUtil.toastDialogMessage(getString(R.string.login_befor), this);
+                }
                 break;
         }
     }
@@ -210,5 +204,20 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         }, gio, phut, true);//Yes 24 hour time
         mTimePicker.setTitle(getString(R.string.select_time));
         mTimePicker.show();
+    }
+
+    private void initGuide() {
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(Constants.TIME_DELAY_GUIDE); // half second between each showcase view
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this,
+            Constants.SHOWCASE_ID_BOOK_PRODUCT);
+        sequence.setConfig(config);
+        sequence.addSequenceItem(mRadioButtonOnline, getString(R.string.sequence_radio_online),
+            Constants.GOT_IT);
+        sequence.addSequenceItem(mRadioButtonOffline, getString(R.string.sequence_radio_offline),
+            Constants.GOT_IT);
+        sequence.addSequenceItem(mButtonContinue, getString(R.string.click_continue_book_table),
+            Constants.GOT_IT);
+        sequence.start();
     }
 }

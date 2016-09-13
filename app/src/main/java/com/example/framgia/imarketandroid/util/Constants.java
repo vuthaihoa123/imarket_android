@@ -69,4 +69,12 @@ public class Constants {
     public static final String CLEAR_EDITTEXT = "";
     public static final int[] LIST_AVATAR_STORE = {R.drawable.food_avatar, R.drawable.fashion, R
         .drawable.book_shop, R.drawable.cosmetic, R.drawable.stage, R.drawable.game_icon};
+    public static final String SHOWCASE_ID_BOOK_TABLE = "BOOK TABLE";
+    public static final String SHOWCASE_ID_DETAILS_SHOP = "DETAILS SHOP";
+    public static final String SHOWCASE_ID_BOOK_PRODUCT = "BOOK PRODUCT";
+    public static final String SHOWCASE_ID_SUGGEST_STORE = "SUGGEST STORE";
+    public static final String SHOWCASE_ID_DETAILS_PRODUCT = "DETAILS PRODUCT";
+    public static final String SHOWCASE_ID_HOME = "HOME";
+    public static final String GOT_IT = "GOT IT";
+    public static final int TIME_DELAY_GUIDE = 500;
 }

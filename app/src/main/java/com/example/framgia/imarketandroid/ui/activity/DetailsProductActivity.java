@@ -19,10 +19,13 @@ import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.PreviewProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.SuggestStoreAdapter;
+import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by hoavt on 22/07/2016.
@@ -56,6 +59,7 @@ public class DetailsProductActivity extends AppCompatActivity
         initViews();
         fakeMessage();
         initRecycle();
+        initGuide();
     }
 
     private void initViews() {
@@ -334,5 +338,15 @@ public class DetailsProductActivity extends AppCompatActivity
         if (textNameItem.equalsIgnoreCase(getString(R.string.danh_gia))) {
             initAlertDiaLogPostMessage();
         }
+    }
+
+    private void initGuide() {
+        new MaterialShowcaseView.Builder(this)
+            .setTarget(mButtonPostProductMess)
+            .setDismissText(Constants.GOT_IT)
+            .setContentText(getString(R.string.sequence_write_vote))
+            .setDelay(Constants.TIME_DELAY_GUIDE)
+            .singleUse(Constants.SHOWCASE_ID_DETAILS_PRODUCT)
+            .show();
     }
 }

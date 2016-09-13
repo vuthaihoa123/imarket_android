@@ -1,5 +1,6 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,12 +17,17 @@ import android.widget.Spinner;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.AlbumShop;
+import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
+import com.example.framgia.imarketandroid.ui.activity.HomeStoreActivity;
 import com.example.framgia.imarketandroid.ui.adapter.ShopDetailInterfaceAdapter;
+import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.facebook.CallbackManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by phongtran on 07/09/2016.
@@ -131,5 +137,16 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
 
     @Override
     public void OnClickAlbumShop(AlbumShop albumShop, int position) {
+        startActivity(new Intent(getActivity(), DetailsProductActivity.class));
+    }
+
+    public void initGuide() {
+        new MaterialShowcaseView.Builder(getActivity())
+            .setTarget(mButtonShare)
+            .setDismissText(Constants.GOT_IT)
+            .setContentText(getString(R.string.sequence_share_fb))
+            .setDelay(Constants.TIME_DELAY_GUIDE)
+            .singleUse(Constants.SHOWCASE_ID_DETAILS_SHOP)
+            .show();
     }
 }

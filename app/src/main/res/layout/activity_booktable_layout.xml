@@ -297,16 +297,17 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/text_forget_pass_booktable"
-                android:text="@string/forget_password"
-                android:gravity="right"
-                android:layout_marginRight="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:textColor="@color/text_color3"
-                android:textSize="@dimen/common_text_size_6"
-                android:textStyle="italic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:id="@+id/login_other_booktable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:paddingRight="@dimen/common_size_5"
+                android:text="@string/login_with_other"
+                android:textColor="@color/text_color2"
+                android:textSize="@dimen/common_text_size_9"/>
+
         </LinearLayout>
     </ScrollView>
 

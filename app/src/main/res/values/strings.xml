@@ -81,7 +81,7 @@
     <string name="time_ship">Thời gian nhận ship hàng</string>
     <string name="time_time">19:00</string>
     <string name="date_date">24/08/2016</string>
-    <string name="login_with_other">Hoặc đăng nhập bằng</string>
+    <string name="login_with_other">Đăng nhập</string>
     <string name="continueeee">Tiếp tục</string>
     <string name="forget_password">Quên mật khẩu ?</string>
     <string name="time_go_shop">Thời gian đến mua hàng</string>
@@ -239,4 +239,19 @@
     <string name="cancel">Cancel</string>
     <string name="signout_done_message">Đăng xuất thành công !</string>
     <string name="signout_fails_message">Chưa đăng nhập !</string>
+    <string name="click_continue_book_table">Nhấp vào đây để thực hiện tiếp việc đặt bàn</string>
+    <string name="click_forget_pass">"Nhấp vào đây nếu quên mật khẩu "</string>
+    <string name="sequence_time_in">Đặt bàn vào giờ</string>
+    <string name="sequen_date_in">Đặt bàn vào ngày</string>
+    <string name="sequence_count_kid">Số lượng trẻ em</string>
+    <string name="sequence_count">Số lượng người lớn</string>
+    <string name="sequence_call_canter">Gọi điện tới cửa hàng</string>
+    <string name="sequence_note">Ghi chú tại đây</string>
+    <string name="sequence_radio_online">Nhấn vào đây nếu bạn mua mua online </string>
+    <string name="sequence_radio_offline">Nhấn vào đây nếu bạn muốn đến mua tại cửa hàng</string>
+    <string name="sequence_write_vote">Nhấn vào đây nếu bạn muốn đánh giá cửa hàng</string>
+    <string name="sequence_share_fb">Nhấn vào đây để chia sẻ thông tin cửa hàng lên mạng
+        xã hội của bạn</string>
+    <string name="sequence_search">Nhấn vào đây để tìm kiếm</string>
+    <string name="sequence_cart">Nhấn vào đây để chuyển sang giỏ hàng của bạn</string>
 </resources>
