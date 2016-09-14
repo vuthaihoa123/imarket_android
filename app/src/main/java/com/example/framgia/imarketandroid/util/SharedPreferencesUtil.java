@@ -9,6 +9,7 @@ import com.google.gson.Gson;
  * Created by toannguyen201194 on 29/07/2016.
  */
 public class SharedPreferencesUtil {
+    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     private static SharedPreferencesUtil sInstance;
     private SharedPreferences.Editor mEditor;
     private SharedPreferences mSettings;
@@ -27,8 +28,8 @@ public class SharedPreferencesUtil {
         return sInstance;
     }
 
-    public void init(Context context) {
-        mSettings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+    public void init(Context context, String name) {
+        mSettings = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         mEditor = mSettings.edit();
     }
 
@@ -50,5 +51,14 @@ public class SharedPreferencesUtil {
         mEditor = mSettings.edit();
         mEditor.clear();
         mEditor.apply();
+    }
+
+    public boolean isFirstTimeLaunch() {
+        return mSettings.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+    }
+
+    public void setFirstTimeLaunch(boolean isFirstTime) {
+        mEditor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
+        mEditor.commit();
     }
 }

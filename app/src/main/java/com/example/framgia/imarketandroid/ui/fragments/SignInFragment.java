@@ -99,7 +99,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         AppEventsLogger.activateApp(getContext());
         mCallbackManager = CallbackManager.Factory.create();
         createBuilderGoogleApi();
-        SharedPreferencesUtil.getInstance().init(getActivity());
+        SharedPreferencesUtil.getInstance().init(getActivity(),Constants.PREFS_NAME);
         return mView;
     }
 

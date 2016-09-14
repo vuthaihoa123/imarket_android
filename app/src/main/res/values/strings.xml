@@ -254,4 +254,17 @@
         xã hội của bạn</string>
     <string name="sequence_search">Nhấn vào đây để tìm kiếm</string>
     <string name="sequence_cart">Nhấn vào đây để chuyển sang giỏ hàng của bạn</string>
+    <string name="slide_1_desc">Tìm Kiếm Gian Hàng Trong Siêu Thị Một Cách Dễ Dàng </string>
+    <string name="slide_1_title">Tìm Kiếm Gian Hàng</string>
+    <string name="slide_2_desc">Một Lần Chạm Tay Có Ngay Hàng Thích</string>
+    <string name="slide_2_title">Mua Hàng</string>
+    <string name="slide_3_desc">Sản Phẩm Tới Tay,Chúng Tôi Nhận Tiền</string>
+    <string name="slide_3_title">Thanh Toán</string>
+    <string name="slide_4_title">Sản Phẩm Hot</string>
+    <string name="slide_4_desc">Chỉ Cần Ngồi Nhà Bạn Cũng Có Thể Biết Được Những Sản Phẩm
+        Mới Nhất</string>
+    <string name="title_next">Next</string>
+    <string name="title_skip">Skip</string>
+    <string name="start">Start</string>
+    <string name="next">Next</string>
 </resources>

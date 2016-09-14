@@ -77,7 +77,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Constants.PROFILE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        SharedPreferencesUtil.getInstance().init(this);
+        SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
     }
 
     @Override
