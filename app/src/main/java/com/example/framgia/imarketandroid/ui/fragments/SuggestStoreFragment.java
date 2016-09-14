@@ -1,11 +1,13 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,15 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
+import com.example.framgia.imarketandroid.ui.activity.HomeStoreActivity;
 import com.example.framgia.imarketandroid.ui.adapter.SuggestStoreAdapter;
+import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by phongtran on 26/08/2016.
@@ -308,4 +314,15 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mAlertDialogPostMessage.show();
         mAlertDialogPostMessage.setCanceledOnTouchOutside(true);
     }
+
+    public void initGuide() {
+        new MaterialShowcaseView.Builder(getActivity())
+            .setTarget(mButtonPostSuggestStore)
+            .setDismissText(Constants.GOT_IT)
+            .setContentText(getString(R.string.sequence_write_vote))
+            .setDelay(Constants.TIME_DELAY_GUIDE)
+            .singleUse(Constants.SHOWCASE_ID_SUGGEST_STORE)
+            .show();
+    }
+
 }

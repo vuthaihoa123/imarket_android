@@ -51,5 +51,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
     compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'com.github.deano2390:MaterialShowcaseView:1.1.0'
 }
 

@@ -14,7 +14,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
@@ -23,6 +22,9 @@ import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 /**
  * Created by phongtran on 24/08/2016.
@@ -46,8 +48,8 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
     private EditText mEditTextNote;
     private int mCountPeople = Constants.MIN_COUNT_PEOPLE, mCountKid = Constants.MIN_COUNT_KID;
     private int mDay, mMonth, mYear, mHour, mMinute;
-    private TextView mTextViewForgetPass;
     private SharedPreferences mPreferences;
+    private TextView mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         setContentView(R.layout.activity_booktable_layout);
         initView();
         mPreferences = getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+        initGuide();
     }
 
     private void initView() {
@@ -79,6 +82,7 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         mButtonLeftContinue = (Button) findViewById(R.id.button_continuee);
         mButtonLeftContinue.setOnClickListener(this);
         mEditTextNote = (EditText) findViewById(R.id.edit_note);
+        mEditTextNote.setFocusable(false);
         mEditTextNote.setOnClickListener(this);
         mTextViewDateIn = (TextView) findViewById(R.id.text_dayin);
         mTextViewDateIn.setOnClickListener(this);
@@ -90,8 +94,8 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         mTextViewCountKid.setOnClickListener(this);
         mTextViewPhoneNumber = (TextView) findViewById(R.id.text_phone_number);
         mTextViewPhoneNumber.setOnClickListener(this);
-        mTextViewForgetPass = (TextView) findViewById(R.id.text_forget_pass_booktable);
-        mTextViewForgetPass.setOnClickListener(this);
+        mLogin = (TextView)findViewById(R.id.login_other_booktable);
+        mLogin.setOnClickListener(this);
     }
 
     @Override
@@ -153,7 +157,7 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
             case R.id.text_time_in:
                 getTime();
                 break;
-            case R.id.text_forget_pass_booktable:
+            case R.id.login_other_booktable:
                 Session session = (Session) SharedPreferencesUtil.getInstance().getValue
                     (Constants.SESSION,
                         Session.class);
@@ -315,5 +319,18 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         }, mHour, mMinute, true);//Yes 24 hour time
         mTimePicker.setTitle(getString(R.string.select_time));
         mTimePicker.show();
+    }
+
+    private void initGuide() {
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(Constants.TIME_DELAY_GUIDE); // half second between each showcase view
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this,
+            Constants.SHOWCASE_ID_BOOK_TABLE);
+        sequence.setConfig(config);
+        sequence.addSequenceItem(mButtonCallCenter, getString(R.string.sequence_call_canter),
+            Constants.GOT_IT);
+        sequence.addSequenceItem(mButtonLeftContinue, getString(R.string.click_continue_book_table),
+            Constants.GOT_IT);
+        sequence.start();
     }
 }
