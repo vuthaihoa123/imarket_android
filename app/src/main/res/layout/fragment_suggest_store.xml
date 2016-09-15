@@ -39,7 +39,7 @@
                 android:layout_marginLeft="@dimen/layout_margin_comment"
                 android:text="@string/bic_C"
                 android:textColor="@color/text_color3"
-                android:textSize="@dimen/common_text_size_14"
+                android:textSize="@dimen/common_text_size_23"
                 android:textStyle="bold" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:layout_marginLeft="@dimen/layout_margin_comment"
                 android:text="@string/hast_tag_bicc"
                 android:textColor="@color/text_color3"
-                android:textSize="@dimen/common_text_size_8"
+                android:textSize="@dimen/common_text_size_17"
                 android:textStyle="italic" />
         </LinearLayout>
     </LinearLayout>

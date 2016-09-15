@@ -28,7 +28,6 @@ import java.util.Calendar;
  */
 public class UpdateProfileActivity extends AppCompatActivity {
     private final int DILOG_ID = 115;
-    private boolean mFlagToggleButton = false;
     private Toolbar mToolbar;
     private FloatingActionButton mFloatEdit;
     private EditText mEditFullname, mEditNumber, mEditAdress, mEditMail;
@@ -77,7 +76,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Constants.PROFILE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
+        SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
     }
 
     @Override
@@ -148,8 +147,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 break;
             case R.id.action_logout:
                 SharedPreferencesUtil.getInstance().clearSharedPreference(this);
-                startActivity(new Intent(UpdateProfileActivity.this,LoginActivity.class));
+                startActivity(new Intent(UpdateProfileActivity.this, LoginActivity.class));
                 finish();
+                break;
+            case android.R.id.home:
+                onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -163,4 +165,5 @@ public class UpdateProfileActivity extends AppCompatActivity {
         mFloatEdit.setEnabled(check);
         mEditNumber.setEnabled(check);
     }
+
 }

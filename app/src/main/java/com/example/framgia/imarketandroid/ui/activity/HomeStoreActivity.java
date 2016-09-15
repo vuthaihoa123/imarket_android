@@ -1,7 +1,6 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,12 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
@@ -34,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 /**
@@ -42,20 +37,14 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
  */
 public class HomeStoreActivity extends AppCompatActivity implements SearchView
     .OnQueryTextListener, View.OnClickListener {
-    private static final String DANHMUC = "Danh Mục";
-    private static final String THONGTINKHUYENMAI = "Chương Trình Khuyến Mãi";
-    private static final String DANHGIA = "Đánh Giá & Góp Ý";
-    private static final String THONGTINCUAHANG = "Thông Tin Của Hàng";
-    private static final String NAMESTORE = "Apple Store";
+    private final String NAMESTORE = "Apple Store";
     private TabLayout mTabLayout;
     private ViewPager mViewPagerStore;
     private FloatingActionButton mFabShare, mFabMessage, mFabFollow;
     private Toolbar mToolbar;
     private CallbackManager mCallback = CallbackManager.Factory.create();
-    public static int FLAG_GUIDE = 0;
     private SuggestStoreFragment mSuggestStoreFragment;
     private ShopDetailInterfaceFragment mShopDetailInterfaceFragment;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +84,6 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                         mShopDetailInterfaceFragment.initGuide();
                         break;
                 }
-
             }
 
             @Override
@@ -106,23 +94,21 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CategoryStallFragment(), DANHMUC);
-        adapter.addFragment(new SaleOffEventFragment(), THONGTINKHUYENMAI);
+        adapter.addFragment(new CategoryStallFragment(),getString(R.string.title_fragment_Category));
+        adapter.addFragment(new SaleOffEventFragment(), getString(R.string.title_fragment_saleoffevent));
         mSuggestStoreFragment = new SuggestStoreFragment();
-        adapter.addFragment(mSuggestStoreFragment, DANHGIA);
+        adapter.addFragment(mSuggestStoreFragment, getString(R.string.title_fragment_rate));
         mShopDetailInterfaceFragment = new ShopDetailInterfaceFragment(mCallback);
-        adapter.addFragment(mShopDetailInterfaceFragment, THONGTINCUAHANG);
+        adapter.addFragment(mShopDetailInterfaceFragment, getString(R.string.title_fragment_informationstore));
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-
         MenuItem menuItem = menu.findItem(R.id.item_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
-
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -132,7 +118,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 config.setDelay(Constants.TIME_DELAY_GUIDE);
                 MaterialShowcaseSequence sequence = new MaterialShowcaseSequence
                     (HomeStoreActivity.this,
-                    Constants.SHOWCASE_ID_HOME);
+                        Constants.SHOWCASE_ID_HOME);
                 sequence.setConfig(config);
                 sequence.addSequenceItem(searchView,
                     getString(R.string.sequence_search),
@@ -143,7 +129,6 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 sequence.start();
             }
         });
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -185,11 +170,11 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int responseCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int responseCode, Intent data) {
         super.onActivityResult(requestCode, responseCode, data);
         mCallback.onActivityResult(requestCode, responseCode, data);
     }
+
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -204,5 +189,4 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 break;
         }
     }
-
 }

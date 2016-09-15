@@ -163,8 +163,8 @@
     <string name="action_cancel">Cancel</string>
     <string name="toast_cancel_profile">canceled update</string>
     <string name="toast_save_successfully">successfully saved</string>
-    <string name="user_name_nav">Nguyen Xuan Tung</string>
-    <string name="mail_com">android.studio@android.com</string>
+    <string name="user_name_nav">Imarket</string>
+    <string name="mail_com">Imarket@framgia.com</string>
     <string name="count_favorite">26</string>
     <string name="favoritee">Favorite</string>
     <string name="bought">Bought</string>
@@ -275,4 +275,8 @@
     <string name="quantity">quantity</string>
     <string name="vnd_uppercase">    VND</string>
     <string name="quantity_second">Số lượng :</string>
+    <string name="title_fragment_Category">Danh Mục</string>
+    <string name="title_fragment_saleoffevent">Chương Trình Khuyến Mãi</string>
+    <string name="title_fragment_rate">Đánh Giá - Góp Ý</string>
+    <string name="title_fragment_informationstore">Thông Tin Của Hàng</string>
 </resources>
