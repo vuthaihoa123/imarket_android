@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,13 @@ import android.widget.Spinner;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.AlbumShop;
+import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
 import com.example.framgia.imarketandroid.ui.activity.HomeStoreActivity;
 import com.example.framgia.imarketandroid.ui.adapter.ShopDetailInterfaceAdapter;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 import com.facebook.CallbackManager;
 
 import java.util.ArrayList;
@@ -105,7 +108,7 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
         adapter.setDropDownViewResource
             (android.R.layout.simple_list_item_single_choice);
         mSpinnerBranchShop.setAdapter(adapter);
-        mButtonShare = (Button)mRootView.findViewById(R.id.button_share_info_shop_on_fb);
+        mButtonShare = (Button) mRootView.findViewById(R.id.button_share_info_shop_on_fb);
     }
 
     @Override
@@ -129,24 +132,19 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
                     mLinearLayoutInfo.setVisibility(View.VISIBLE);
                 }
                 break;
-            case R.id.button_share_info_shop_on_fb :
-                DialogShareUtil.dialogShare(getActivity(),R.drawable.ic_iphone5s,mCallback);
+            case R.id.button_share_info_shop_on_fb:
+                DialogShareUtil.dialogShare(getActivity(), R.drawable.ic_iphone5s, mCallback);
                 break;
         }
     }
 
     @Override
     public void OnClickAlbumShop(AlbumShop albumShop, int position) {
-        startActivity(new Intent(getActivity(), DetailsProductActivity.class));
+//        startActivity(new Intent(getActivity(), DetailsProductActivity.class));
     }
 
-    public void initGuide() {
-        new MaterialShowcaseView.Builder(getActivity())
-            .setTarget(mButtonShare)
-            .setDismissText(Constants.GOT_IT)
-            .setContentText(getString(R.string.sequence_share_fb))
-            .setDelay(Constants.TIME_DELAY_GUIDE)
-            .singleUse(Constants.SHOWCASE_ID_DETAILS_SHOP)
-            .show();
+    public void initGuideShopDetail() {
+        ShowcaseGuideUtil.singleShowcase(getActivity(), Constants.SHOWCASE_ID_DETAILS_SHOP,
+            new Showcase(mButtonShare, getString(R.string.sequence_share_fb)));
     }
 }

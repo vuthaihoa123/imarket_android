@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.ui.adapter.ViewPagerAdapter;
 import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
@@ -23,6 +24,7 @@ import com.example.framgia.imarketandroid.ui.fragments.SaleOffEventFragment;
 import com.example.framgia.imarketandroid.ui.fragments.ShopDetailInterfaceFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SuggestStoreFragment;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.facebook.CallbackManager;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -78,10 +80,10 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
             public void onPageSelected(int position) {
                 switch (position) {
                     case 2:
-                        mSuggestStoreFragment.initGuide();
+                        mSuggestStoreFragment.initGuideSuggestStore();
                         break;
                     case 3:
-                        mShopDetailInterfaceFragment.initGuide();
+                        mShopDetailInterfaceFragment.initGuideShopDetail();
                         break;
                 }
             }
@@ -185,7 +187,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 Toast.makeText(this, R.string.toast_message, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_share:
-                Toast.makeText(this, R.string.toast_share, Toast.LENGTH_SHORT).show();
+                DialogShareUtil.dialogShare(this, R.drawable.ic_iphone5s, mCallback);
                 break;
         }
     }

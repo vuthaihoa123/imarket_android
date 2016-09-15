@@ -85,7 +85,10 @@
             android:name="android.app.searchable"
             android:resource="@xml/searchable"/>
 
-        <activity android:name=".ui.activity.DetailsProductActivity"/>
+        <activity android:name=".ui.activity.DetailsProductActivity">
+            <action android:name="android.intent.action.DIAL" />
+        </activity>
+
         <activity android:name=".ui.activity.CartActivity"/>
         <activity android:name=".ui.activity.OrderActivity"/>
 
@@ -93,7 +96,12 @@
 
         <service android:name=".services.NotificationAlarmService"/>
 
-        <activity android:name=".ui.activity.BookProductActivity"/>
+        <activity android:name=".ui.activity.BookProductActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.DialogActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
@@ -108,12 +116,7 @@
 
         </activity>
 
-        <activity android:name=".ui.activity.HistoryOrderActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.activity.HistoryOrderActivity"/>
 
     </application>
 

@@ -54,7 +54,7 @@
     <string name="call">Gọi điện</string>
     <string name="rate">Đánh giá</string>
     <string name="book">Đặt hàng</string>
-    <string name="schedule">Đặt lịch</string>
+    <string name="schedule">Share</string>
     <string name="favorite">Yêu thích</string>
     <string name="back">back</string>
     <string name="msg_login_invaild">Username or Password is not right</string>
@@ -111,7 +111,7 @@
         Quả thật sự trải nghiệm về dịch vụ lẫn những tiện ích của trung tâm làm mình và bạn bè
         rất hài lòng và thích thú.</string>
     <string name="ques">Big C Thăng Long như thế nào ?</string>
-    <string name="comment_here">Viết bình luận tại đây ...</string>
+    <string name="comment_here">Bình luận ...</string>
     <string name="post">Post</string>
     <string name="ok">OK</string>
     <string name="cancle">Cancel</string>
@@ -279,4 +279,5 @@
     <string name="title_fragment_saleoffevent">Chương Trình Khuyến Mãi</string>
     <string name="title_fragment_rate">Đánh Giá - Góp Ý</string>
     <string name="title_fragment_informationstore">Thông Tin Của Hàng</string>
+    <string name="text_product_sale">\n Đang giảm giá tại đỉa chỉ Big C Thăng Long</string>
 </resources>

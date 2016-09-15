@@ -222,7 +222,7 @@
                             android:textSize="@dimen/common_text_size_20"/>
 
                         <TextView
-                            android:layout_width="1dp"
+                            android:layout_width="@dimen/width_height_1"
                             android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/padding"
                             android:background="@color/text_color2"/>
@@ -242,14 +242,20 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button_continue_book_product"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/layout_margin"
+                android:gravity="center"
                 android:background="@color/bg_button_color"
-                android:text="@string/continueeee"
-                android:textSize="@dimen/common_text_size_20"/>
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/button_continue_book_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_button_color"
+                    android:text="@string/continueeee"
+                    android:textSize="@dimen/common_text_size_20"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/login_other"
