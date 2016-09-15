@@ -19,7 +19,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Visibility;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,9 +48,9 @@ import me.leolin.shortcutbadger.ShortcutBadger;
  * Created by yue on 20/07/2016.
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
-    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener,
-    RecyclerDrawerAdapter.OnClickItemDrawer {
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+        SearchView.OnQueryTextListener, OnRecyclerItemInteractListener,
+        RecyclerDrawerAdapter.OnClickItemDrawer {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerMarket;
@@ -81,8 +80,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         setListeners();
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
@@ -93,13 +92,13 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-            android.R.layout.simple_list_item_1,
-            null,
-            columns,
-            displayViews,
-            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                android.R.layout.simple_list_item_1,
+                null,
+                columns,
+                displayViews,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mAdapter.setOnRecyclerItemInteractListener(this);
-        // TODO: 29/08/2016  remove badge 
+        // TODO: 29/08/2016  remove badge
         ShortcutBadger.removeCount(this);
         getInfo();
     }
@@ -108,7 +107,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_choose_market, menu);
         SearchView searchView = (SearchView)
-            MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+                MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
@@ -154,13 +153,13 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             case R.id.button_sign_out:
                 SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
                 Session session = (Session) SharedPreferencesUtil
-                    .getInstance()
-                    .getValue(Constants.SESSION, Session.class);
+                        .getInstance()
+                        .getValue(Constants.SESSION, Session.class);
                 if (session != null) {
                     actionSignout();
                 } else {
                     DialogShareUtil.toastDialogMessage(getString(R.string.signout_fails_message),
-                        ChooseMarketActivity.this);
+                            ChooseMarketActivity.this);
                 }
                 mLinearMenu.setVisibility(View.GONE);
                 break;
@@ -220,7 +219,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void populateSuggestionAdapter(String query) {
         final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID,
-            Constants.MARKET_SUGGESTION});
+                Constants.MARKET_SUGGESTION});
         int length = FakeContainer.SUGGESTIONS.length;
         for (int i = 0; i < length; i++) {
             if (FakeContainer.SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
@@ -232,8 +231,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void getInfo() {
         SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
         Session session = (Session) SharedPreferencesUtil
-            .getInstance()
-            .getValue(Constants.SESSION, Session.class);
+                .getInstance()
+                .getValue(Constants.SESSION, Session.class);
         if (session != null) {
             if (session.getFullname() != null) {
                 mTextUsername.setText(session.getFullname().toString());
@@ -259,16 +258,16 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         builder.setTitle(R.string.noti);
         builder.setMessage(R.string.confirm_signout);
         builder
-            .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferencesUtil.getInstance()
-                        .clearSharedPreference(ChooseMarketActivity.this);
-                    dialog.dismiss();
-                    DialogShareUtil.toastDialogMessage(getString(R.string.signout_done_message),
-                        ChooseMarketActivity.this);
-                }
-            });
+                .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferencesUtil.getInstance()
+                                .clearSharedPreference(ChooseMarketActivity.this);
+                        dialog.dismiss();
+                        DialogShareUtil.toastDialogMessage(getString(R.string.signout_done_message),
+                                ChooseMarketActivity.this);
+                    }
+                });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

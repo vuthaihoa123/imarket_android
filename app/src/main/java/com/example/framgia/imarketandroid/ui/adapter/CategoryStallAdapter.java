@@ -1,16 +1,18 @@
 package com.example.framgia.imarketandroid.ui.adapter;
 
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.model.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +34,23 @@ public class CategoryStallAdapter extends RecyclerView.Adapter<CategoryStallAdap
 
     @Override
     public CategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
         return new CategoryHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CategoryHolder holder, final int position) {
+//        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.linearLayout.getLayoutParams();
+//        if (layoutParams.leftMargin != layoutParams.rightMargin) {
+//            int margin;
+//            if (layoutParams.leftMargin - layoutParams.rightMargin > 0) {
+//                margin = layoutParams.leftMargin;
+//            } else {
+//                margin = layoutParams.rightMargin;
+//            }
+//            GridLayout.LayoutParams gridParams=new GridLayout.LayoutParams(margin);
+//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        }
         Category categoryProduct = mCategoryProducts.get(position);
         holder.textView.setText(categoryProduct.getName());
         holder.imageView.setImageResource(R.drawable.logo_big_c);
@@ -56,9 +69,10 @@ public class CategoryStallAdapter extends RecyclerView.Adapter<CategoryStallAdap
         return mCategoryProducts == null ? 0 : mCategoryProducts.size();
     }
 
-    public void removeItem(int position) {
-        mCategoryProducts.remove(position);
+    public Category removeItem(int position) {
+        final Category category = mCategoryProducts.remove(position);
         notifyItemRemoved(position);
+        return category;
     }
 
     public void addItem(int position, Category model) {
@@ -67,7 +81,7 @@ public class CategoryStallAdapter extends RecyclerView.Adapter<CategoryStallAdap
     }
 
     public void moveItem(int fromPosition, int toPosition) {
-        Category category = mCategoryProducts.remove(fromPosition);
+        final Category category = mCategoryProducts.remove(fromPosition);
         mCategoryProducts.add(toPosition, category);
         notifyItemMoved(fromPosition, toPosition);
     }

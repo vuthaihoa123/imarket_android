@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.example.framgia.imarketandroid.BuildConfig;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
-import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
+import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
 import com.example.framgia.imarketandroid.ui.activity.UpdateProfileActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
@@ -57,8 +57,8 @@ import java.util.Arrays;
  * Created by toannguyen201194 on 22/07/2016.
  */
 public class SignInFragment extends android.support.v4.app.Fragment implements
-    View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient
-    .OnConnectionFailedListener {
+        View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient
+        .OnConnectionFailedListener {
     private static final String SHOW = "show";
     private static final int RC_SIGN_IN = 0;
     private static final int PROFILE_PIC_SIZE = 400;
@@ -121,9 +121,9 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
 
     public void createBuilderGoogleApi() {
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this).addApi(Plus.API)
-            .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).addApi(Plus.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
     }
 
     private void initView() {
@@ -185,12 +185,12 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
 
     public void eventClickButtonLogin() {
         if (mEditUsername.getText().toString().isEmpty() || mEditPassword.getText().toString()
-            .trim().isEmpty()) {
+                .trim().isEmpty()) {
             Toast.makeText(getContext(), R.string.notification_user_pass, Toast.LENGTH_SHORT)
-                .show();
+                    .show();
         } else {
             final Session session = new Session(mEditUsername.getText().toString(), mEditPassword
-                .getText().toString());
+                    .getText().toString());
             mProgressDialog = new ProgressDialog(getActivity());
             mProgressDialog.setMessage(getString(R.string.progressdialog));
             mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
@@ -203,8 +203,8 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
                     mProgressDialog.dismiss();
                     if (session == null) {
                         Toast.makeText(getContext(), R.string.msg_login_invaild, Toast
-                            .LENGTH_SHORT)
-                            .show();
+                                .LENGTH_SHORT)
+                                .show();
                     } else {
                         SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
                         startActivity(new Intent(getActivity(), UpdateProfileActivity.class));
@@ -221,49 +221,50 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
 
     public void eventClickButtonLoginFacabook() {
         LoginManager.getInstance().registerCallback(mCallbackManager,
-            new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    mAccessToken = loginResult.getAccessToken();
-                    GraphRequest graphRequest =
-                        GraphRequest.newMeRequest(mAccessToken,
-                            new GraphRequest.GraphJSONObjectCallback() {
-                                @Override
-                                public void onCompleted(JSONObject object, GraphResponse response) {
-                                    try {
-                                        AccessToken accessToken =
-                                            AccessToken.getCurrentAccessToken();
-                                        String name =
-                                            object.getString(Constants.LAST_NAME) + object.getString
-                                                (Constants.FIRST_NAME);
-                                        String mail = object.getString(Constants.EMAIL);
-                                        // TODO: 26/07/2016  post data token at here
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-                    Bundle parameters = new Bundle();
-                    parameters.putString(Constants.FIELD,
-                        "" + Constants.FIRST_NAME + "," + Constants.LAST_NAME + "," +
-                            Constants.EMAIL + "");
-                    graphRequest.setParameters(parameters);
-                    graphRequest.executeAsync();
-                }
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        mAccessToken = loginResult.getAccessToken();
+                        GraphRequest graphRequest =
+                                GraphRequest.newMeRequest(mAccessToken,
+                                        new GraphRequest.GraphJSONObjectCallback() {
+                                            @Override
+                                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                                try {
+                                                    AccessToken accessToken =
+                                                            AccessToken.getCurrentAccessToken();
+                                                    String name =
+                                                            object.getString(Constants.LAST_NAME) + object.getString
+                                                                    (Constants.FIRST_NAME);
+                                                    String mail = object.getString(Constants.EMAIL);
+                                                    startActivity(new Intent(getActivity(), DetailsProductActivity.class));
+                                                    // TODO: 26/07/2016  post data token at here
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                        Bundle parameters = new Bundle();
+                        parameters.putString(Constants.FIELD,
+                                "" + Constants.FIRST_NAME + "," + Constants.LAST_NAME + "," +
+                                        Constants.EMAIL + "");
+                        graphRequest.setParameters(parameters);
+                        graphRequest.executeAsync();
+                    }
 
-                @Override
-                public void onCancel() {
-                }
+                    @Override
+                    public void onCancel() {
+                    }
 
-                @Override
-                public void onError(FacebookException error) {
-                }
-            });
+                    @Override
+                    public void onError(FacebookException error) {
+                    }
+                });
     }
 
     private void checkReadPermission() {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(Constants
-            .PUBLIC_PROFILE, Constants.EMAIL));
+                .PUBLIC_PROFILE, Constants.EMAIL));
     }
 
     private void signInWithGplus() {
@@ -303,14 +304,14 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         try {
             if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
                 Person currentPerson = Plus.PeopleApi
-                    .getCurrentPerson(mGoogleApiClient);
+                        .getCurrentPerson(mGoogleApiClient);
                 String personName = currentPerson.getDisplayName();
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
                 personPhotoUrl = personPhotoUrl.substring(mStartIndex,
-                    personPhotoUrl.length() - mSubLetter)
-                    + PROFILE_PIC_SIZE;
+                        personPhotoUrl.length() - mSubLetter)
+                        + PROFILE_PIC_SIZE;
             } else {
             }
         } catch (Exception e) {
@@ -322,7 +323,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     public void onConnectionFailed(@NonNull ConnectionResult result) {
         if (!result.hasResolution()) {
             GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), (Activity) getContext(),
-                0).show();
+                    0).show();
             return;
         }
         if (!mIntentInProgress) {
@@ -335,24 +336,24 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
 
     public void requestPermissions() {
         if (ActivityCompat
-            .checkSelfPermission(getActivity(), Manifest.permission.GET_ACCOUNTS)
-            != PackageManager.PERMISSION_GRANTED) {
+                .checkSelfPermission(getActivity(), Manifest.permission.GET_ACCOUNTS)
+                != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat
-                .shouldShowRequestPermissionRationale(getActivity(), Manifest.permission
-                    .GET_ACCOUNTS)) {
+                    .shouldShowRequestPermissionRationale(getActivity(), Manifest.permission
+                            .GET_ACCOUNTS)) {
                 Snackbar.make(mView, getString(R.string.permission),
-                    Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.retry), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ActivityCompat.requestPermissions(getActivity(),
-                                new String[]{Manifest.permission.GET_ACCOUNTS},
-                                Constants.MY_PERMISSIONS_REQUEST);
-                        }
-                    }).show();
+                        Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getString(R.string.retry), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[]{Manifest.permission.GET_ACCOUNTS},
+                                        Constants.MY_PERMISSIONS_REQUEST);
+                            }
+                        }).show();
             } else {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission
-                    .GET_ACCOUNTS}, Constants.MY_PERMISSIONS_REQUEST);
+                        .GET_ACCOUNTS}, Constants.MY_PERMISSIONS_REQUEST);
             }
         } else {
             signInWithGplus();
@@ -368,18 +369,18 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
                 signInWithGplus();
             } else {
                 Snackbar.make(mView, getString(R.string.no_allow_print),
-                    Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.Settings), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intentSetting =
-                                new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                    Uri.fromParts(Constants.PACKAGE, getActivity().getPackageName(),
-                                        null));
-                            intentSetting.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intentSetting);
-                        }
-                    }).show();
+                        Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getString(R.string.Settings), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intentSetting =
+                                        new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts(Constants.PACKAGE, getActivity().getPackageName(),
+                                                        null));
+                                intentSetting.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intentSetting);
+                            }
+                        }).show();
             }
         }
     }

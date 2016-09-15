@@ -15,7 +15,7 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     private int mSpace;
 
     public LinearItemDecoration(Context context) {
-        this(context.getResources().getDimensionPixelSize(R.dimen.recycler_item_default_space));
+        this(context.getResources().getDimensionPixelSize(R.dimen.common_size_7));
     }
 
     public LinearItemDecoration(int space) {
@@ -26,7 +26,9 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildLayoutPosition(view);
         if (position == 0) {
-            outRect.top = mSpace;
+            if (outRect.top == 0) {
+                outRect.top = mSpace;
+            }
         } else {
             outRect.top = 0;
         }

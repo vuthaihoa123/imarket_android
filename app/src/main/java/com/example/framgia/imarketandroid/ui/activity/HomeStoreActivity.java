@@ -165,8 +165,8 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
 
     @Override
     public boolean onQueryTextChange(String query) {
-        List<Category> list = filter(CategoryStallFragment.mCategoryProducts, query);
-        CategoryStallFragment.mCategoryStallAdapter.animateTo(list);
+        List<Category> list = filter(CategoryStallFragment.sCategoryProducts, query);
+        CategoryStallFragment.sCategoryStallAdapter.animateTo(list);
         return true;
     }
 
