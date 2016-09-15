@@ -37,6 +37,7 @@ public class DialogShareUtil {
     private static Activity mActivity;
     private static AlertDialog mAlertDialogShare;
     private static LoginManager mLogin;
+    private static String mNameProduct;
 
     public static void dialogShare(Activity context, final int idImageView,
                                    final CallbackManager callbackManager) {
@@ -112,12 +113,51 @@ public class DialogShareUtil {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(R.string.noti);
         builder.setMessage(mess);
-        builder.setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+        builder
+            .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        builder.create().show();
+    }
+
+    public static void dialogShareProduct(Activity context, final int idImageView,
+                                          final CallbackManager callbackManager, String namePro) {
+        mActivity = context;
+        mNameProduct = namePro;
+        LayoutInflater li = LayoutInflater.from(mActivity);
+        View promptsView = li.inflate(R.layout.dialog_share, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
+        alertDialogBuilder.setView(promptsView);
+        final EditText editTextShare = (EditText) promptsView.findViewById(R.id.edittext_share);
+        StringBuffer buffer = new StringBuffer()
+            .append(mNameProduct.toString())
+            .append(mActivity.getString(R.string.text_product_sale));
+        editTextShare.setText(buffer);
+        ImageView imgShare = (ImageView) promptsView.findViewById(R.id.image_share);
+        Button buttonCancel = (Button) promptsView.findViewById(R.id.button_cancel_share_dialog);
+        Button buttonSuccess = (Button) promptsView.findViewById(R.id.button_success_share_dialog);
+        imgShare.setImageResource(idImageView);
+        alertDialogBuilder
+            .setCancelable(false);
+        mAlertDialogShare = alertDialogBuilder.create();
+        mAlertDialogShare.show();
+        mAlertDialogShare.setCanceledOnTouchOutside(true);
+        editTextShare.requestFocus();
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View view) {
+                mAlertDialogShare.dismiss();
             }
         });
-        builder.create().show();
+        buttonSuccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionShare(idImageView, editTextShare.getText().toString(), callbackManager);
+                mAlertDialogShare.dismiss();
+            }
+        });
     }
 }

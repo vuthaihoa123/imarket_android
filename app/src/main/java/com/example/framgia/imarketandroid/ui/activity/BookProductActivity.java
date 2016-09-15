@@ -18,11 +18,15 @@ import android.widget.TimePicker;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
+import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
@@ -207,17 +211,11 @@ public class BookProductActivity extends Activity implements View.OnClickListene
     }
 
     private void initGuide() {
-        ShowcaseConfig config = new ShowcaseConfig();
-        config.setDelay(Constants.TIME_DELAY_GUIDE); // half second between each showcase view
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this,
-            Constants.SHOWCASE_ID_BOOK_PRODUCT);
-        sequence.setConfig(config);
-        sequence.addSequenceItem(mRadioButtonOnline, getString(R.string.sequence_radio_online),
-            Constants.GOT_IT);
-        sequence.addSequenceItem(mRadioButtonOffline, getString(R.string.sequence_radio_offline),
-            Constants.GOT_IT);
-        sequence.addSequenceItem(mButtonContinue, getString(R.string.click_continue_book_table),
-            Constants.GOT_IT);
-        sequence.start();
+        List<Showcase> showList = new ArrayList<>();
+        showList.add(new Showcase(mRadioButtonOnline, getString(R.string.sequence_radio_online)));
+        showList.add(new Showcase(mRadioButtonOffline, getString(R.string.sequence_radio_offline)));
+        showList.add(new Showcase(mButtonContinue, getString(R.string.click_continue_book_table)));
+        ShowcaseGuideUtil.mutilShowcase(BookProductActivity.this, Constants
+            .SHOWCASE_ID_BOOK_PRODUCT, showList);
     }
 }
