@@ -1,7 +1,9 @@
 package com.example.framgia.imarketandroid.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.AlbumShop;
+import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +28,8 @@ public class ShopDetailInterfaceAdapter
 
     public ShopDetailInterfaceAdapter(Context context,
                                       List<AlbumShop> listAlbum) {
-        this.mContext = context;
-        this.mListAlbum = listAlbum;
+        mContext = context;
+        mListAlbum = listAlbum;
         if (mContext instanceof OnClickAlbumListener)
             mAlbumListener = (OnClickAlbumListener) mContext;
     }
@@ -39,15 +42,18 @@ public class ShopDetailInterfaceAdapter
     }
 
     @Override
-    public void onBindViewHolder(ShopInterfaceViewHolver holder,
-                                 int position) {
+    public void onBindViewHolder(final ShopInterfaceViewHolver holder,
+                                 final int position) {
         holder.mAlbumShop = mListAlbum.get(position);
         holder.mImageViewAlbum.setImageResource(holder.mAlbumShop.getImageId());
         holder.mTextViewNameAlbum.setText(holder.mAlbumShop.getNameAlbum());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO some thing when click album item
+                mContext.startActivity(new Intent(mContext, DetailsProductActivity.class));
+                if (mAlbumListener != null) {
+                    mAlbumListener.OnClickAlbumShop(holder.mAlbumShop, position);
+                }
             }
         });
     }

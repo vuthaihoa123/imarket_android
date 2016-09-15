@@ -76,7 +76,7 @@ public class Constants {
     public static final String SHOWCASE_ID_SUGGEST_STORE = "SUGGEST STORE";
     public static final String SHOWCASE_ID_DETAILS_PRODUCT = "DETAILS PRODUCT";
     public static final String SHOWCASE_ID_HOME = "HOME";
-    public static final String GOT_IT = "GOT IT";
+    public static final String GOT_IT = "SKIP";
     public static final int TIME_DELAY_GUIDE = 500;
     public static final String PREF_WELCOME = "WelcomeApp";
     public static final int SCROLL_POSITION = 0;

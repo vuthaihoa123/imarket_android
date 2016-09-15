@@ -1,13 +1,16 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,11 +20,15 @@ import android.widget.TimePicker;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
+import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
@@ -94,7 +101,7 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         mTextViewCountKid.setOnClickListener(this);
         mTextViewPhoneNumber = (TextView) findViewById(R.id.text_phone_number);
         mTextViewPhoneNumber.setOnClickListener(this);
-        mLogin = (TextView)findViewById(R.id.login_other_booktable);
+        mLogin = (TextView) findViewById(R.id.login_other_booktable);
         mLogin.setOnClickListener(this);
     }
 
@@ -102,13 +109,23 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_call_center:
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setPackage(getString(R.string.package_dial));
                 StringBuffer buffer = new StringBuffer()
                     .append(getString(R.string.tel))
                     .append(mTextViewPhoneNumber.getText());
-                intent.setData(Uri.parse(buffer.toString()));
-                startActivity(intent);
+                Uri call = Uri.parse(buffer.toString());
+                Intent surf = new Intent(Intent.ACTION_CALL, call);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                startActivity(surf);
                 break;
             case R.id.button_left_back:
                 mCountPeople--;
@@ -322,15 +339,10 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
     }
 
     private void initGuide() {
-        ShowcaseConfig config = new ShowcaseConfig();
-        config.setDelay(Constants.TIME_DELAY_GUIDE); // half second between each showcase view
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this,
-            Constants.SHOWCASE_ID_BOOK_TABLE);
-        sequence.setConfig(config);
-        sequence.addSequenceItem(mButtonCallCenter, getString(R.string.sequence_call_canter),
-            Constants.GOT_IT);
-        sequence.addSequenceItem(mButtonLeftContinue, getString(R.string.click_continue_book_table),
-            Constants.GOT_IT);
-        sequence.start();
+        List<Showcase> showList = new ArrayList<>();
+        showList.add(new Showcase(mButtonCallCenter, getString(R.string.sequence_call_canter)));
+        showList.add(new Showcase(mButtonLeftContinue, getString(R.string.click_continue_book_table)));
+        ShowcaseGuideUtil.mutilShowcase(BookTableActivity.this, Constants
+            .SHOWCASE_ID_BOOK_TABLE, showList);
     }
 }

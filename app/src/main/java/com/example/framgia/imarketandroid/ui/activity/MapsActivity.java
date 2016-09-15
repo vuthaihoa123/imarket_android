@@ -150,7 +150,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onInfoWindowClick(Marker marker) {
         CustomMarker customMarker = mMarkerPointHashMap.get(marker);
-        startActivity(new Intent(MapsActivity.this, CategoryStallFragment.class));
     }
 
     public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
