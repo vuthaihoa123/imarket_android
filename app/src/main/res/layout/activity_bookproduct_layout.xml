@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/email"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/common_text_size_3"
+                android:textSize="@dimen/common_text_size_12"
                 android:textStyle="italic"/>
 
             <FrameLayout
@@ -35,7 +35,7 @@
                     android:hint="@string/hint_mail_tungb"
                     android:textColor="@color/text_color3"
                     android:textColorHint="@color/text_color4"
-                    android:textSize="@dimen/common_text_size_11"/>
+                    android:textSize="@dimen/common_text_size_20"/>
 
                 <Button
                     android:id="@+id/button_clear_email"
@@ -51,7 +51,7 @@
                 android:layout_marginTop="@dimen/layout_margin_comment"
                 android:text="@string/phone_number"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/common_text_size_3"
+                android:textSize="@dimen/common_text_size_12"
                 android:textStyle="italic"/>
 
             <FrameLayout
@@ -65,7 +65,7 @@
                     android:hint="@string/hint_number"
                     android:textColor="@color/text_color3"
                     android:textColorHint="@color/text_color4"
-                    android:textSize="@dimen/common_text_size_11"/>
+                    android:textSize="@dimen/common_text_size_20"/>
 
                 <Button
                     android:id="@+id/button_clear_phonenumber"
@@ -88,7 +88,7 @@
                     android:buttonTint="@color/bg_radio_color"
                     android:text="@string/buy_online"
                     android:textColor="@color/text_color3"
-                    android:textSize="@dimen/common_text_size_11"/>
+                    android:textSize="@dimen/common_text_size_20"/>
 
                 <LinearLayout
                     android:id="@+id/linear_buy_online"
@@ -103,7 +103,7 @@
                         android:layout_marginTop="@dimen/layout_margin_comment"
                         android:text="@string/address_ship"
                         android:textColor="@color/text_color"
-                        android:textSize="@dimen/common_text_size_3"
+                        android:textSize="@dimen/common_text_size_12"
                         android:textStyle="italic"/>
 
                     <FrameLayout
@@ -117,7 +117,7 @@
                             android:hint="@string/address_hint"
                             android:textColor="@color/text_color3"
                             android:textColorHint="@color/text_color4"
-                            android:textSize="@dimen/common_text_size_11"/>
+                            android:textSize="@dimen/common_text_size_20"/>
 
                         <Button
                             android:id="@+id/button_clear_address_ship"
@@ -133,7 +133,7 @@
                         android:layout_marginTop="@dimen/layout_margin_comment"
                         android:text="@string/time_ship"
                         android:textColor="@color/text_color"
-                        android:textSize="@dimen/common_text_size_3"
+                        android:textSize="@dimen/common_text_size_12"
                         android:textStyle="italic"/>
 
                     <LinearLayout
@@ -150,7 +150,7 @@
                             android:paddingLeft="@dimen/layout_margin_comment"
                             android:text="@string/time_time"
                             android:textColor="@color/text_color2"
-                            android:textSize="@dimen/common_text_size_11"/>
+                            android:textSize="@dimen/common_text_size_20"/>
 
                         <TextView
                             android:layout_width="@dimen/width_height_1"
@@ -168,7 +168,7 @@
                             android:paddingLeft="@dimen/layout_margin_comment"
                             android:text="@string/date_date"
                             android:textColor="@color/text_color2"
-                            android:textSize="@dimen/common_text_size_11"/>
+                            android:textSize="@dimen/common_text_size_20"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -187,7 +187,7 @@
                     android:buttonTint="@color/bg_radio_color"
                     android:text="@string/buy_offline"
                     android:textColor="@color/text_color3"
-                    android:textSize="@dimen/common_text_size_11"/>
+                    android:textSize="@dimen/common_text_size_20"/>
 
                 <LinearLayout
                     android:id="@+id/linear_buy_shop"
@@ -202,7 +202,7 @@
                         android:layout_marginTop="@dimen/layout_margin_comment"
                         android:text="@string/time_go_shop"
                         android:textColor="@color/text_color"
-                        android:textSize="@dimen/common_text_size_3"
+                        android:textSize="@dimen/common_text_size_12"
                         android:textStyle="italic"/>
 
                     <LinearLayout
@@ -219,7 +219,7 @@
                             android:paddingLeft="@dimen/layout_margin_comment"
                             android:text="@string/time_time"
                             android:textColor="@color/text_color2"
-                            android:textSize="@dimen/common_text_size_11"/>
+                            android:textSize="@dimen/common_text_size_20"/>
 
                         <TextView
                             android:layout_width="1dp"
@@ -237,7 +237,7 @@
                             android:paddingLeft="@dimen/layout_margin_comment"
                             android:text="@string/date_date"
                             android:textColor="@color/text_color2"
-                            android:textSize="@dimen/common_text_size_11"/>
+                            android:textSize="@dimen/common_text_size_20"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -249,7 +249,7 @@
                 android:layout_marginTop="@dimen/layout_margin"
                 android:background="@color/bg_button_color"
                 android:text="@string/continueeee"
-                android:textSize="@dimen/common_text_size_11"/>
+                android:textSize="@dimen/common_text_size_20"/>
 
             <TextView
                 android:id="@+id/login_other"
@@ -260,7 +260,7 @@
                 android:paddingRight="@dimen/common_size_5"
                 android:text="@string/login_with_other"
                 android:textColor="@color/text_color2"
-                android:textSize="@dimen/common_text_size_9"/>
+                android:textSize="@dimen/common_text_size_18"/>
 
         </LinearLayout>
     </ScrollView>

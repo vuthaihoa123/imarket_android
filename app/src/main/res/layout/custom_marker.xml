@@ -12,6 +12,6 @@
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/common_size_10"
         android:gravity="center"
-        android:textSize="@dimen/common_text_size_7"
+        android:textSize="@dimen/common_text_size_16"
         android:visibility="invisible" />
 </FrameLayout>

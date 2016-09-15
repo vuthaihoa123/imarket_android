@@ -145,7 +145,7 @@
                     android:layout_weight="1"
                     android:text="@string/details_text"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/common_text_size_6"
+                    android:textSize="@dimen/common_text_size_15"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -166,7 +166,7 @@
                 android:layout_weight="1"
                 android:text="@string/coment"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/common_text_size_6"
+                android:textSize="@dimen/common_text_size_15"
                 android:textStyle="bold"/>
 
             <android.support.v7.widget.RecyclerView

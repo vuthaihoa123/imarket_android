@@ -6,7 +6,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/default_background_color"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
@@ -20,13 +19,14 @@
             layout="@layout/toolbar"/>
 
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="@dimen/margin_10dp"
             android:id="@+id/recycler_market"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="@dimen/width_height_350"
+        android:layout_width="@dimen/comon_size_300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/white"
@@ -39,8 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_10dp"
-            android:background="@color/recycle_bg_chosemarket"
-            android:elevation="@dimen/width_height_1"
             android:scrollbars="none"/>
     </LinearLayout>
 

@@ -52,7 +52,7 @@
         android:paddingLeft="@dimen/margin_10dp"
         android:text="@string/text_share_title"
         android:textColor="@color/black"
-        android:textSize="@dimen/common_text_size_6"
+        android:textSize="@dimen/common_text_size_15"
         android:textStyle="bold"/>
 
     <TextView
@@ -66,5 +66,5 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="@string/text_share_fake"
-        android:textSize="@dimen/common_text_size_6"/>
+        android:textSize="@dimen/common_text_size_15"/>
 </LinearLayout>

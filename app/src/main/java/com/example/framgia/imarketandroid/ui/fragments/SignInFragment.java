@@ -207,8 +207,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
                                 .show();
                     } else {
                         SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
-                        startActivity(new Intent(getActivity(), UpdateProfileActivity.class));
-                        getActivity().finish();
+                        getActivity().onBackPressed();
                     }
                 }
 

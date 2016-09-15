@@ -51,23 +51,22 @@
     <dimen name="common_size_50">50dp</dimen>
     <dimen name="common_size_60">60dp</dimen>
     <!--Common text size-->
-    <dimen name="common_text_size_1">10sp</dimen>
-    <dimen name="common_text_size_2">11sp</dimen>
-    <dimen name="common_text_size_3">12sp</dimen>
-    <dimen name="common_text_size_4">13sp</dimen>
-    <dimen name="common_text_size_5">14sp</dimen>
-    <dimen name="common_text_size_6">15sp</dimen>
-    <dimen name="common_text_size_7">16sp</dimen>
-    <dimen name="common_text_size_8">17sp</dimen>
-    <dimen name="common_text_size_9">18sp</dimen>
-    <dimen name="common_text_size_10">19sp</dimen>
-    <dimen name="common_text_size_11">20sp</dimen>
-    <dimen name="common_text_size_12">21sp</dimen>
-    <dimen name="common_text_size_13">22sp</dimen>
-    <dimen name="common_text_size_14">23sp</dimen>
-    <dimen name="common_text_size_15">24sp</dimen>
-    <dimen name="common_text_size_16">30sp</dimen>
-    <dimen name="common_text_size_40">35sp</dimen>
+    <dimen name="common_text_size_10">10sp</dimen>
+    <dimen name="common_text_size_11">11sp</dimen>
+    <dimen name="common_text_size_12">12sp</dimen>
+    <dimen name="common_text_size_13">13sp</dimen>
+    <dimen name="common_text_size_14">14sp</dimen>
+    <dimen name="common_text_size_15">15sp</dimen>
+    <dimen name="common_text_size_16">16sp</dimen>
+    <dimen name="common_text_size_17">17sp</dimen>
+    <dimen name="common_text_size_18">18sp</dimen>
+    <dimen name="common_text_size_19">19sp</dimen>
+    <dimen name="common_text_size_20">20sp</dimen>
+    <dimen name="common_text_size_21">21sp</dimen>
+    <dimen name="common_text_size_22">22sp</dimen>
+    <dimen name="common_text_size_23">23sp</dimen>
+    <dimen name="common_text_size_24">24sp</dimen>
+    <dimen name="common_text_size_30">30sp</dimen>
     <dimen name="padding_10dp">10dp</dimen>
     <dimen name="padding_5dp">5dp</dimen>
     <dimen name="radius_border">10dp</dimen>
@@ -138,7 +137,6 @@
     <dimen name="wid_hei_25">25dp</dimen>
     <dimen name="common_size_80">80dp</dimen>
     <dimen name="margin_135">135dp</dimen>
-    <dimen name="common_text_size_20">20sp</dimen>
     <dimen name="wid_hei_300">300dp</dimen>
     <dimen name="wid_hei_400">400dp</dimen>
     <dimen name="wid_hei_270">270dp</dimen>
@@ -150,6 +148,7 @@
     <dimen name="slide_title">30sp</dimen>
     <dimen name="dots_height">30dp</dimen>
     <dimen name="dots_margin_bottom">20dp</dimen>
-
     <dimen name="common_size_25">25dp</dimen>
+    <dimen name="comon_size_300dp">300dp</dimen>
+>>>>>>> fix_bug_app
 </resources>

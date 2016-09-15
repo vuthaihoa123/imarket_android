@@ -31,7 +31,7 @@
                         android:id="@+id/text_res_name"
                         android:text="@string/restaurant_name"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/common_text_size_11"
+                        android:textSize="@dimen/common_text_size_20"
                         android:textStyle="bold"
                         android:gravity="center"
                         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                         android:id="@+id/text_phone_number"
                         android:text="@string/hint_number"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/common_text_size_9"
+                        android:textSize="@dimen/common_text_size_18"
                         android:layout_marginLeft="@dimen/margin_20"
                         android:layout_marginBottom="@dimen/margin_35"
                         android:layout_alignParentBottom="true"
@@ -52,7 +52,7 @@
                         android:id="@+id/text_call_center"
                         android:text="@string/book_via_center"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/common_text_size_9"
+                        android:textSize="@dimen/common_text_size_18"
                         android:layout_width="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/margin_20"
@@ -115,7 +115,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color5"
-                        android:textSize="@dimen/common_text_size_11"
+                        android:textSize="@dimen/common_text_size_20"
                         android:text="2"
                         android:layout_height="match_parent" />
 
@@ -163,7 +163,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color5"
-                        android:textSize="@dimen/common_text_size_11"
+                        android:textSize="@dimen/common_text_size_20"
                         android:text="2"
                         android:layout_height="match_parent" />
 
@@ -217,7 +217,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color5"
-                        android:textSize="@dimen/common_text_size_11"
+                        android:textSize="@dimen/common_text_size_20"
                         android:text="@string/date_date"
                         android:layout_height="match_parent" />
 
@@ -265,7 +265,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color5"
-                        android:textSize="@dimen/common_text_size_11"
+                        android:textSize="@dimen/common_text_size_20"
                         android:text="@string/time_time"
                         android:layout_height="match_parent" />
 
@@ -306,7 +306,7 @@
                 android:paddingRight="@dimen/common_size_5"
                 android:text="@string/login_with_other"
                 android:textColor="@color/text_color2"
-                android:textSize="@dimen/common_text_size_9"/>
+                android:textSize="@dimen/common_text_size_18"/>
 
         </LinearLayout>
     </ScrollView>
