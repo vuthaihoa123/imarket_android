@@ -325,7 +325,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             public void onMapClick(LatLng latLng) {
                 FloorActivity.sResumeValue = mFlagThree;
                 mTempLatLng = latLng;
-                Intent intent = new Intent(FloorActivity.this, ChooseStoreType.class);
+                Intent intent = new Intent(FloorActivity.this, ChooseStoreTypeActivity.class);
                 startActivity(intent);
             }
         });
@@ -439,7 +439,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             editor.putInt(getString(R.string.idPoint), mIndex);
             editor.commit();
             Point mPoint = new Point(mIndex, mTempLatLng.latitude, mTempLatLng
-                .longitude, ChooseStoreType.sAvatar + 1, getString(R
+                .longitude, ChooseStoreTypeActivity.sAvatar + 1, getString(R
                 .string.M) + mIndex);
             RealmRemote.savePoint(mPoint);
             drawMarker(RealmRemote.createCustomMarkerFromPoint(mPoint));
@@ -557,7 +557,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.custom_marker_view:
-                Intent intent = new Intent(FloorActivity.this, ChooseStoreType.class);
+                Intent intent = new Intent(FloorActivity.this, ChooseStoreTypeActivity.class);
                 startActivity(intent);
                 break;
         }

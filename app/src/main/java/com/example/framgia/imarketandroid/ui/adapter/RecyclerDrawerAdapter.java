@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
@@ -20,15 +21,17 @@ import java.util.List;
  */
 public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<DrawerItem> mNavigationDrawerItems;
-    private OnClickItemDrawer mListener;
     private Context mContext;
-
-    public RecyclerDrawerAdapter(Context context , List<DrawerItem> items) {
+    private OnRecyclerItemInteractListener mOnRecyclerItemInteractListener;
+    public RecyclerDrawerAdapter(Context context, List<DrawerItem> items
+    ) {
         mContext = context;
         mNavigationDrawerItems = items;
-        if (mContext instanceof OnClickItemDrawer) {
-            mListener = (OnClickItemDrawer) mContext;
-        }
+    }
+
+    public void setOnClick(OnRecyclerItemInteractListener onRecyclerItemInteractListener) {
+        // truyen mot interface nham bat su kien bat cu khi nào có recyclerview
+        mOnRecyclerItemInteractListener = onRecyclerItemInteractListener;
     }
 
     @Override
@@ -47,14 +50,6 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ItemHolder itemHolder = (ItemHolder) holder;
             itemHolder.mImageIcon.setImageResource(R.drawable.ic_iphone7);
             itemHolder.mTextTitle.setText(R.string.name_product);
-            ((ItemHolder) holder).mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null) {
-                        mListener.onClickItemDrawer(position);
-                    }
-                }
-            });
         } else {
             TailHolder tailHolder = (TailHolder) holder;
         }
@@ -72,15 +67,30 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     class ItemHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageIcon;
+        public ImageView mImageIcon, mImageDelete;
+        public LinearLayout mlinearDrawer;
         public TextView mTextTitle;
-        private View mView;
 
         public ItemHolder(View itemView) {
             super(itemView);
-            mView = itemView;
+            mlinearDrawer = (LinearLayout) itemView.findViewById(R.id.linear_navigation_drawer);
             mImageIcon = (ImageView) itemView.findViewById(R.id.image_icon);
             mTextTitle = (TextView) itemView.findViewById(R.id.text_title);
+            mImageDelete = (ImageView) itemView.findViewById(R.id.image_btn_delete);
+            // bat su kien click vao item
+            mImageDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnRecyclerItemInteractListener.onItemClick(view, getAdapterPosition());
+                }
+            });
+            mlinearDrawer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnRecyclerItemInteractListener.onItemClick(view, getAdapterPosition());
+                }
+            });
+
         }
     }
 
@@ -90,7 +100,4 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    public interface OnClickItemDrawer {
-        void onClickItemDrawer(int pos);
-    }
 }

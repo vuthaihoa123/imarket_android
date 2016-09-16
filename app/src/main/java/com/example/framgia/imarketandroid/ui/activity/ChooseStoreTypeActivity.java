@@ -1,10 +1,10 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
@@ -15,7 +15,7 @@ import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChooseStoreType extends AppCompatActivity implements OnRecyclerItemInteractListener {
+public class ChooseStoreTypeActivity extends AppCompatActivity implements OnRecyclerItemInteractListener {
     public static int sAvatar;
     private ChooseStoreTypeAdapter mAdapter;
     private List<Store> mListStore = new ArrayList<>();
@@ -34,7 +34,7 @@ public class ChooseStoreType extends AppCompatActivity implements OnRecyclerItem
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(View view,int position) {
         sAvatar = position;
         finish();
     }

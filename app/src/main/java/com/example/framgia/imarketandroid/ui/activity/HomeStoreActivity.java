@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.ui.adapter.ViewPagerAdapter;
 import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
@@ -31,6 +30,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
@@ -53,6 +53,8 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_store);
         initView();
+        // TODO: 29/08/2016  remove badge
+        ShortcutBadger.removeCount(this);
     }
 
     private void initView() {
@@ -70,7 +72,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(NAMESTORE);
-        mViewPagerStore.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+       mViewPagerStore.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset,
                                        int positionOffsetPixels) {
@@ -96,12 +98,13 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CategoryStallFragment(),getString(R.string.title_fragment_Category));
+        adapter.addFragment(new CategoryStallFragment(), getString(R.string.title_fragment_Category));
         adapter.addFragment(new SaleOffEventFragment(), getString(R.string.title_fragment_saleoffevent));
         mSuggestStoreFragment = new SuggestStoreFragment();
         adapter.addFragment(mSuggestStoreFragment, getString(R.string.title_fragment_rate));
         mShopDetailInterfaceFragment = new ShopDetailInterfaceFragment(mCallback);
-        adapter.addFragment(mShopDetailInterfaceFragment, getString(R.string.title_fragment_informationstore));
+        adapter.addFragment(mShopDetailInterfaceFragment,
+            getString(R.string.title_fragment_informationstore));
         viewPager.setAdapter(adapter);
     }
 

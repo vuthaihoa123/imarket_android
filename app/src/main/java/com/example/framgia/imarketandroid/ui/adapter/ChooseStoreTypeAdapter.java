@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.Store;
-import com.example.framgia.imarketandroid.ui.activity.ChooseStoreType;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class ChooseStoreTypeAdapter
             @Override
             public void onClick(View view) {
                 if (mListener != null)
-                    mListener.onItemClick(position);
+                    mListener.onItemClick(view,position);
             }
         });
     }
