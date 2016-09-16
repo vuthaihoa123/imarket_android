@@ -25,15 +25,11 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildLayoutPosition(view);
-        if (position == 0) {
-            if (outRect.top == 0) {
-                outRect.top = mSpace;
-            }
-        } else {
-            outRect.top = 0;
+        if (position == 0 && outRect.top == 0) {
+            outRect.top = mSpace;
         }
         outRect.bottom = mSpace;
-        outRect.left = mSpace;
         outRect.right = mSpace;
+        outRect.left = mSpace;
     }
 }

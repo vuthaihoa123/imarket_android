@@ -77,53 +77,6 @@ public class HistoryTimeAdapter extends RecyclerView.Adapter<HistoryTimeAdapter.
         notifyDataSetChanged();
     }
 
-    private void addItem(int position, String model) {
-        mNameHeaders.add(position, model);
-        notifyItemInserted(position);
-    }
-
-    private void moveItem(int fromPosition, int toPosition) {
-        String category = mNameHeaders.remove(fromPosition);
-        mNameHeaders.add(toPosition, category);
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    private void applyAndAnimateRemovals(List<String> categoryList) {
-        int size = mNameHeaders.size();
-        for (int i = size - 1; i >= 0; i--) {
-            String item = mNameHeaders.get(i);
-            if (!categoryList.contains(item)) {
-                removeItem(i);
-            }
-        }
-    }
-
-    private void applyAndAnimateAddition(List<String> categoryList) {
-        for (int i = 0, count = categoryList.size(); i < count; i++) {
-            String categoryProduct = categoryList.get(i);
-            if (!mNameHeaders.contains(categoryProduct)) {
-                addItem(i, categoryProduct);
-            }
-        }
-    }
-
-    private void applyAndAnimateMoveItems(List<String> categoryList) {
-        int size = categoryList.size();
-        for (int toPosition = size - 1; toPosition > 0; toPosition--) {
-            String item = categoryList.get(toPosition);
-            int fromPosition = mNameHeaders.indexOf(item);
-            if (fromPosition != 0 && fromPosition != toPosition) {
-                moveItem(fromPosition, toPosition);
-            }
-        }
-    }
-
-    public void animateTo(List<String> list) {
-        applyAndAnimateAddition(list);
-        applyAndAnimateMoveItems(list);
-        applyAndAnimateRemovals(list);
-    }
-
     class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView dateText;
         public LinearLayout layoutHeader;
