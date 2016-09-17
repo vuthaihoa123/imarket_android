@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/marker_background"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="@dimen/common_size_100"
+    android:layout_height="@dimen/common_size_100"
+    android:layout_gravity="center"
     android:background="@drawable/marker">
 
-    <TextView
-        android:id="@+id/text_center"
-        android:layout_width="@dimen/common_size_70"
-        android:layout_height="@dimen/common_size_70"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/common_size_10"
-        android:gravity="center"
-        android:textSize="@dimen/common_text_size_16"
-        android:visibility="invisible" />
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/common_size_40"
+        android:layout_height="@dimen/common_size_40"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_promotions">
+
+        <com.example.framgia.imarketandroid.ui.views.SkewTextView
+            android:id="@+id/skew_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

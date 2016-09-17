@@ -7,7 +7,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.example.framgia.imarketandroid.R;
 
@@ -16,14 +16,14 @@ import com.example.framgia.imarketandroid.R;
  */
 public class CustomMarkerView extends FrameLayout {
     private final String FONT = "KaushanScriptRegular.otf";
-    public TextView mTextCenter;
+    public SkewTextView mTextPromotion;
     private double mPercentValue;
     private int mConvertedNumber;
-    private FrameLayout mFrameLayout;
+    private RelativeLayout mMarkerBackground;
 
     public void setBackground(Drawable drawable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mFrameLayout.setBackground(drawable);
+            mMarkerBackground.setBackground(drawable);
         }
     }
 
@@ -61,28 +61,28 @@ public class CustomMarkerView extends FrameLayout {
 
     public void setVisible(boolean check) {
         if (check)
-            mFrameLayout.setVisibility(VISIBLE);
+            mMarkerBackground.setVisibility(VISIBLE);
         else
-            mFrameLayout.setVisibility(GONE);
+            mMarkerBackground.setVisibility(GONE);
     }
 
     public void init(Context context) {
         View.inflate(context, R.layout.custom_marker, this);
         findView();
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), FONT);
-        mTextCenter.setTypeface(typeface);
+        mTextPromotion.setTypeface(typeface);
     }
 
     public void setTextforMarker() {
         if (compareNumber()) {
-            mTextCenter.setText("" + getConvertedNumber() + "%");
+            mTextPromotion.setText("" + getConvertedNumber() + "%");
         } else {
-            mTextCenter.setText("" + getPercentValue() + "%");
+            mTextPromotion.setText("" + getPercentValue() + "%");
         }
     }
 
     public void findView() {
-        mTextCenter = (TextView) findViewById(R.id.text_center);
-        mFrameLayout = (FrameLayout) findViewById(R.id.marker_background);
+        mTextPromotion = (SkewTextView) findViewById(R.id.skew_text);
+        mMarkerBackground = (RelativeLayout) findViewById(R.id.marker_background);
     }
 }

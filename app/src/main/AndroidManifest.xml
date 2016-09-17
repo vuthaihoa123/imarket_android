@@ -97,10 +97,7 @@
         <service android:name=".services.NotificationAlarmService"/>
 
         <activity android:name=".ui.activity.BookProductActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".ui.activity.DialogActivity"
@@ -108,7 +105,12 @@
         <activity android:name=".ui.activity.HomeStoreActivity"/>
         <activity
             android:name=".ui.activity.MapsActivity"
-            android:label="@string/title_activity_maps"/>
+            android:label="@string/title_activity_maps">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.ChooseStoreType"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
