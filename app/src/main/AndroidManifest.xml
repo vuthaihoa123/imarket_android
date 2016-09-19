@@ -82,10 +82,16 @@
         <activity
             android:name=".ui.activity.DialogActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".ui.activity.HomeStoreActivity" />
         <activity
             android:name=".ui.activity.MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity android:name=".ui.activity.HomeStoreActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.ChooseStoreTypeActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>

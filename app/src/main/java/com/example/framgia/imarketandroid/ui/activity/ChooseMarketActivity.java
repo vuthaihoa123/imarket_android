@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
@@ -71,6 +72,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private List<CartItem> mCartItems = new ArrayList<>();
     private List<String> mHeaderNames = new ArrayList<>();
     private HistoryTimeAdapter mHistoryTimeAdapter;
+    private RelativeLayout mReFavorite, mReBound, mReFollow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,16 +84,20 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         setSearchSuggestionAdapter();
         initRececlerView();
     }
-    private void initRececlerView(){
+
+    private void initRececlerView() {
         // recyclerview navigation drawer
         mRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
-        mDrawerItems = FakeContainer.initDrawerItems();
-        mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(this, mDrawerItems);
+        getRecycleFavorite();
         mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
-        mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
         mRecyclerDrawerAdapter.setOnClick(this);
-
-        //recyclerview choose imarket
+        setListeners();
+        setSupportActionBar(mToolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
         mMarkets = FakeContainer.initMarkets();
@@ -99,7 +105,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mRecyclerMarket.setAdapter(mAdapter);
         mAdapter.setOnRecyclerItemInteractListener(this);
     }
-    private void supportActionBar(){
+
+    private void supportActionBar() {
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
             this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
@@ -107,7 +114,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
-    private void setSearchSuggestionAdapter(){
+
+    private void setSearchSuggestionAdapter() {
         final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
@@ -116,13 +124,17 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             columns,
             displayViews,
             CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+//        mAdapter.setOnRecyclerItemInteractListener(this);
+        // TODO: 29/08/2016  remove badge
+        ShortcutBadger.removeCount(this);
+        getInfo();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_choose_market, menu);
         SearchView searchView = (SearchView)
-                MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+            MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
@@ -146,21 +158,27 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_favorite:
+                getRecycleFavorite();
                 getVisible(mStrokeLine1, mStrokeLine2, mStrokeLine3, mLinearMenu);
+                DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReFavorite);
                 break;
             case R.id.button_bought:
+                DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReBound);
                 getVisible(mStrokeLine2, mStrokeLine1, mStrokeLine3, mLinearMenu);
                 mHeaderNames = FakeContainer.getListHeader();
                 mCartItems = FakeContainer.getListCartItem();
                 if (mHistoryTimeAdapter == null) {
                     mHistoryTimeAdapter = new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                    mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
                     mRecyclerDrawer.setLayoutManager(linearLayoutManager);
+                    mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
+                    mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
+                } else {
                     mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
                 }
                 break;
             case R.id.button_follow:
+                DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReFollow);
                 getVisible(mStrokeLine3, mStrokeLine2, mStrokeLine1, mLinearMenu);
                 break;
             case R.id.button_more:
@@ -177,13 +195,13 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             case R.id.button_sign_out:
                 SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                 Session session = (Session) SharedPreferencesUtil
-                        .getInstance()
-                        .getValue(Constants.SESSION, Session.class);
+                    .getInstance()
+                    .getValue(Constants.SESSION, Session.class);
                 if (session != null) {
                     actionSignout();
                 } else {
                     DialogShareUtil.toastDialogMessage(getString(R.string.signout_fails_message),
-                            ChooseMarketActivity.this);
+                        ChooseMarketActivity.this);
                 }
                 mLinearMenu.setVisibility(View.GONE);
                 break;
@@ -206,6 +224,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         populateSuggestionAdapter(newText);
         return false;
     }
+
     private void findViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -221,6 +240,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mTextUsername = (TextView) findViewById(R.id.text_user_name);
         mTextEmail = (TextView) findViewById(R.id.text_email);
         mCircleImageView = (CircleImageView) findViewById(R.id.image_avatar);
+        mReFavorite = (RelativeLayout) findViewById(R.id.button_favorite);
+        mReFavorite.setOnClickListener(this);
+        mReBound = (RelativeLayout) findViewById(R.id.button_bought);
+        mReBound.setOnClickListener(this);
+        mReFollow = (RelativeLayout) findViewById(R.id.button_follow);
+        mReFollow.setOnClickListener(this);
     }
 
     private void setListeners() {
@@ -236,7 +261,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void populateSuggestionAdapter(String query) {
         final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID,
-                Constants.MARKET_SUGGESTION});
+            Constants.MARKET_SUGGESTION});
         int length = FakeContainer.SUGGESTIONS.length;
         for (int i = 0; i < length; i++) {
             if (FakeContainer.SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
@@ -248,8 +273,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void getInfo() {
         SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
         Session session = (Session) SharedPreferencesUtil
-                .getInstance()
-                .getValue(Constants.SESSION, Session.class);
+            .getInstance()
+            .getValue(Constants.SESSION, Session.class);
         if (session != null) {
             if (session.getFullname() != null) {
                 mTextUsername.setText(session.getFullname().toString());
@@ -275,16 +300,16 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         builder.setTitle(R.string.noti);
         builder.setMessage(R.string.confirm_signout);
         builder
-                .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferencesUtil.getInstance()
-                                .clearSharedPreference(ChooseMarketActivity.this);
-                        dialog.dismiss();
-                        DialogShareUtil.toastDialogMessage(getString(R.string.signout_done_message),
-                                ChooseMarketActivity.this);
-                    }
-                });
+            .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferencesUtil.getInstance()
+                        .clearSharedPreference(ChooseMarketActivity.this);
+                    dialog.dismiss();
+                    DialogShareUtil.toastDialogMessage(getString(R.string.signout_done_message),
+                        ChooseMarketActivity.this);
+                }
+            });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -316,5 +341,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 startActivity(new Intent(this, FloorActivity.class));
                 break;
         }
+    }
+
+    private void getRecycleFavorite() {
+        mDrawerItems = FakeContainer.initDrawerItems();
+        mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(this, mDrawerItems);
+        mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
     }
 }

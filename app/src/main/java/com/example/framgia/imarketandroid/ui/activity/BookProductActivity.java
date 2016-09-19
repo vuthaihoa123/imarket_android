@@ -39,7 +39,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
     private Button mButtonClearEmail, mButtonClearAddress, mButtonClearPhoneNumber;
     private TextView mTextViewTimeShip, mTextViewDateShip;
     private TextView mTextViewTimeGoToShop, mTextViewDateGoToShop;
-    private TextView mTextViewForgetPass;
+    private TextView mTextViewEmail, mTextViewPhoneNumber, mTextViewAddress;
     private Button mButtonContinue;
     private RadioButton mRadioButtonOnline, mRadioButtonOffline;
     private LinearLayout mLinearLayoutRadioOnline, mLinearLayoutRadioOffline;
@@ -87,8 +87,14 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         mTextViewTimeGoToShop.setOnClickListener(this);
         mTextViewDateGoToShop = (TextView) findViewById(R.id.text_day_in);
         mTextViewDateGoToShop.setOnClickListener(this);
-        mLoginOther = (TextView)findViewById(R.id.login_other);
+        mLoginOther = (TextView) findViewById(R.id.login_other);
         mLoginOther.setOnClickListener(this);
+        mTextViewEmail = (TextView) findViewById(R.id.text_email_bok_product);
+        mEditTextEmail.setOnClickListener(this);
+        mEditTextPhoneNumber.setOnClickListener(this);
+        mEditTextAddress.setOnClickListener(this);
+        mTextViewPhoneNumber = (TextView) findViewById(R.id.text_pn_bok_product);
+        mTextViewAddress = (TextView) findViewById(R.id.text_address_bok_product);
     }
 
     @Override
@@ -110,10 +116,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
                 getShowDate(Constants.SHIP);
                 break;
             case R.id.button_continue_book_product:
-                // TODO continue
-                Intent intent = new Intent(this, BookTableActivity.class);
-                startActivity(intent);
-                finish();
+                DialogShareUtil.initAlertContinueBooking(this);
                 break;
             case R.id.radioButtonOnline:
                 mLinearLayoutRadioOnline.setVisibility(View.VISIBLE);
@@ -131,7 +134,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
             case R.id.text_day_in:
                 getShowDate(Constants.GOTOSHOP);
                 break;
-            case R.id.login_other :
+            case R.id.login_other:
                 Session session = (Session) SharedPreferencesUtil.getInstance().getValue
                     (Constants.SESSION,
                         Session.class);
@@ -141,6 +144,15 @@ public class BookProductActivity extends Activity implements View.OnClickListene
                 } else {
                     DialogShareUtil.toastDialogMessage(getString(R.string.login_befor), this);
                 }
+                break;
+            case R.id.edit_email_book_product:
+                DialogShareUtil.getSmallBang(BookProductActivity.this, mTextViewEmail);
+                break;
+            case R.id.edit_phone_book_product:
+                DialogShareUtil.getSmallBang(BookProductActivity.this, mTextViewPhoneNumber);
+                break;
+            case R.id.edit_address_ship:
+                DialogShareUtil.getSmallBang(BookProductActivity.this, mTextViewAddress);
                 break;
         }
     }

@@ -28,7 +28,11 @@ import com.facebook.share.model.SharePhotoContent;
 
 import java.security.interfaces.RSAKey;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import xyz.hanks.library.SmallBang;
+import xyz.hanks.library.SmallBangListener;
 
 /**
  * Created by phongtran on 08/09/2016.
@@ -157,6 +161,53 @@ public class DialogShareUtil {
             public void onClick(View view) {
                 actionShare(idImageView, editTextShare.getText().toString(), callbackManager);
                 mAlertDialogShare.dismiss();
+            }
+        });
+    }
+
+    public static void initAlertContinueBooking(final Activity activity) {
+        mActivity = activity;
+        LayoutInflater li = LayoutInflater.from(mActivity);
+        View promptsView = li.inflate(R.layout.continue_book_dialog, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
+        alertDialogBuilder.setView(promptsView);
+
+        Button butCancel = (Button) promptsView.findViewById(R.id.buttn_cancel_dialog_confirm_book);
+        Button butOk = (Button) promptsView.findViewById(R.id.buttn_ok_dialog_confirm_book);
+        TextView textInfo = (TextView) promptsView.findViewById(R.id.text_marque);
+        textInfo.setSelected(true);
+        textInfo.setMarqueeRepeatLimit(-1);
+
+        alertDialogBuilder
+            .setCancelable(false);
+        butCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlertDialogShare.dismiss();
+                toastDialogMessage(mActivity.getString(R.string.transaction_fails), mActivity);
+            }
+        });
+        butOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlertDialogShare.dismiss();
+                toastDialogMessage(mActivity.getString(R.string.transaction_done), mActivity);
+            }
+        });
+        mAlertDialogShare = alertDialogBuilder.create();
+        mAlertDialogShare.show();
+        mAlertDialogShare.setCanceledOnTouchOutside(true);
+    }
+
+    public static void getSmallBang(Activity activity, View view) {
+        SmallBang mSmallBang = SmallBang.attach2Window(activity);
+        mSmallBang.bang(view, Constants.RADIUS_SMALL_BANG, new SmallBangListener() {
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationEnd() {
             }
         });
     }

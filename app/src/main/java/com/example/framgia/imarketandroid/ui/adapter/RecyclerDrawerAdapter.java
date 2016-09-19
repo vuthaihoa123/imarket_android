@@ -81,13 +81,17 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             mImageDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnRecyclerItemInteractListener.onItemClick(view, getAdapterPosition());
+                    if (mOnRecyclerItemInteractListener != null) {
+                        mOnRecyclerItemInteractListener.onItemClick(view, getAdapterPosition());
+                    }
                 }
             });
             mlinearDrawer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnRecyclerItemInteractListener.onItemClick(view, getAdapterPosition());
+                    if (mOnRecyclerItemInteractListener != null) {
+                        mOnRecyclerItemInteractListener.onItemClick(view, getAdapterPosition());
+                    }
                 }
             });
 
