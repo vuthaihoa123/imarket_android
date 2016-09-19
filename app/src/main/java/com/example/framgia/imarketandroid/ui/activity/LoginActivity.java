@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
+        SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
         FacebookSdk.sdkInitialize(this);
         if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);

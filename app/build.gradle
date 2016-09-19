@@ -2,11 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
-
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
+    buildToolsVersion '24.0.0'
     defaultConfig {
         applicationId "com.example.framgia.imarketandroid"
         minSdkVersion 15
@@ -31,8 +27,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.facebook.android:facebook-android-sdk:4.11.0'
+    compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.google.android.gms:play-services:9.4.0'
     compile 'com.android.support:cardview-v7:24.1.1'
     compile 'com.android.support:recyclerview-v7:24.1.1'

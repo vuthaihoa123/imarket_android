@@ -74,7 +74,6 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     private boolean mSignInClicked;
     private int mStartIndex = 0;
     private int mSubLetter = 2;
-    private SharedPreferences mSharedpreferences;
     private ProgressDialog mProgressDialog;
     private ConnectionResult mConnectionResult;
 

@@ -6,15 +6,17 @@ import com.example.framgia.imarketandroid.R;
  * Created by VULAN on 7/19/2016.
  */
 public class Constants {
+    public final static String BUNDLE_DATA = "data";
+    public static final int CAMERA_REQUEST = 0;
+    public static final int GALLERY_REQUEST = 1;
+    public static final String SETTYPEDATA = "image/*";
     public static final int MINYEARPICKER = 1954;
     public static final int MINMONTHPICKER = 0;
     public static final int MINDATEPICKER = 1;
     public static final String SESSION = "session";
-    public static final String DEMO_CATEGORY = "Bakery Store";
     public static final String FIELD = "fields";
     public static final String PUBLIC_PROFILE = "public_profile";
     public static final String EMAIL = "email";
-    public static final int NUMBER_OF_COLUMN = 2;
     public static final String LOGIN = "LOG IN";
     public static final String SIGNUP = "SIGN UP";
     public static final String FIRST_NAME = "first_name";
@@ -24,7 +26,7 @@ public class Constants {
     public static final String PROFILE = "Profile";
     public static final String PREFS_NAME = "AOP_PREFS";
     public static final String NAMESERVICE = "NotificationService";
-    public static final String BASE_URL = "https://imarket-api.herokuapp.com/api/";
+    public static final String BASE_URL = "http://172.16.0.165:3000/api/";
     public static final String NO_PERCENT = "0%";
     public static final String MARKET_SUGGESTION = "marketName";
     public static final int COLS_LIST_PRODUCT = 2;
@@ -89,16 +91,9 @@ public class Constants {
     public static final String GOT_IT = "SKIP";
     public static final int TIME_DELAY_GUIDE = 500;
     public static final String PREF_WELCOME = "WelcomeApp";
-    public static final int SCROLL_POSITION = 0;
-    public static final String KEY_DETAIL_ID = "key_detail_id";
-    public static final String KEY_DETAIL_DATE = "key_detail_date";
     //bottom navigation
-    public static final int CALLING_POSITION = 0;
-    public static final int SCHEDULING_POSITION = 1;
-    public static final int ORDER_POSITION = 2;
-    public static final int LIKE_POSITION = 3;
-    public static final int RATE_POSITION = 4;
     public static final String FONT = "KaushanScriptRegular.otf";
     public static final String FORMART_STRING = "%s/%s/%s";
     public static final int RADIUS_SMALL_BANG= 50;
+    public static final int REQUEST_PERMISSION=113;
 }

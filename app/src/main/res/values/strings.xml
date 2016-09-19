@@ -40,7 +40,7 @@
     <string name="forget_send">Reset my password</string>
     <string name="notification_user_pass">UserName or PassWord empty</string>
     <string name="permission">read_contact</string>
-    <string name="retry">Retry</string>
+    <string name="retry">Thử lại</string>
     <string name="no_allow_print">if you read_contact, you can access gmail</string>
     <string name="Settings">Setting</string>
     <string name="err_msg_name">Enter your full name</string>
@@ -285,7 +285,13 @@
     <string name="transaction_done">Giao dịch thành công. Xin cảm ơn !</string>
     <string name="request_confirm">Yêu cầu xác nhận</string>
     <string name="info_confirm">Xác nhận thông tin cá nhân và nhấp OK để hoàn tất giao dịch</string>
-
     <string name="infor">Thông báo</string>
     <string name="not_internet">Kết nối mạng thất bại</string>
+    <string name="dialog_picture">Upload picture option..</string>
+    <string name="message_picture">Where to upload picture ?</string>
+    <string name="gallery">Gallery</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="toast_camerarequest">No extras to retrieve!</string>
+    <string name="dialog_camera">Camera</string>
+    <string name="toastPermisson">Cấp quyền đề làm việc với chức năng này</string>
 </resources>

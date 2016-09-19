@@ -2,12 +2,15 @@ package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.data.model.CategoryList;
 import com.example.framgia.imarketandroid.data.model.Session;
-import com.example.framgia.imarketandroid.data.model.SignupModel;
+import com.example.framgia.imarketandroid.data.model.UserModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 /**
  * Created by yue on 22/07/2016.
@@ -21,5 +24,8 @@ public interface IMarketApiEndPoint {
     @POST("sessions")
     Call<Session> login(@Body Session session);
     @POST("users")
-    Call<SignupModel> register(@Body SignupModel user);
+    Call<UserModel> register(@Body UserModel user);
+    @PATCH("users/{iduser}")
+    Call<UserModel> updateUser(@Path(value = "iduser",encoded = true) int iduser
+        ,@Body UserModel userModel);
 }

@@ -138,7 +138,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
                 Session session = (Session) SharedPreferencesUtil.getInstance().getValue
                     (Constants.SESSION,
                         Session.class);
-                if (session.getId() == null) {
+                if (session.getId()==0) {
                     Intent intentLogin = new Intent(this, LoginActivity.class);
                     startActivity(intentLogin);
                 } else {

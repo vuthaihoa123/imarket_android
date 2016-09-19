@@ -38,7 +38,9 @@ import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.ConvertImageToBase64Util;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.RequestPermissionUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 
@@ -126,9 +128,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             columns,
             displayViews,
             CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-//        mAdapter.setOnRecyclerItemInteractListener(this);
-        // TODO: 29/08/2016  remove badge
-        ShortcutBadger.removeCount(this);
         getInfo();
     }
 
@@ -262,7 +261,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mTextProfile.setOnClickListener(this);
         mTextSignIn.setOnClickListener(this);
         mTextSignOut.setOnClickListener(this);
-        mCircleImageView.setOnClickListener(this);
     }
 
     private void populateSuggestionAdapter(String query) {
@@ -289,7 +287,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 mTextEmail.setText(session.getUsername().toString());
             }
             if (session.getUrlImage() != null) {
-                // TODO xu li avatar
+                mCircleImageView.setImageBitmap(ConvertImageToBase64Util.decodeBase64(session.getUrlImage()));
             }
         }
     }

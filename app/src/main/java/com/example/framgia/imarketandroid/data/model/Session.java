@@ -9,7 +9,7 @@ import io.realm.RealmObject;
  */
 public class Session extends RealmObject {
     @SerializedName("id")
-    private String mId;
+    private int mId;
     @SerializedName("email")
     private String mUsername;
     @SerializedName("password")
@@ -84,11 +84,11 @@ public class Session extends RealmObject {
         mPasswordConfirm = passwordConfirm;
     }
 
-    public String getId() {
+    public int getId() {
         return mId;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         mId = id;
     }
 
