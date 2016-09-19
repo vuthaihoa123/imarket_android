@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
@@ -46,7 +46,7 @@ public class HistoryOrderAdapter extends RecyclerView.Adapter<HistoryOrderAdapte
         holder.textPrice.setText(cartItem.getPriceProduct() + " " + mContext.getResources().getString(R.string.vnd_uppercase));
         holder.textName.setText(cartItem.getNameProduct());
         holder.textQuantity.setText(mContext.getResources().getString(R.string.quantity_second) + cartItem.getQuantity());
-        holder.imageRemoving.setOnClickListener(new View.OnClickListener() {
+        holder.layoutRemoving.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeItem(position);
@@ -79,15 +79,15 @@ public class HistoryOrderAdapter extends RecyclerView.Adapter<HistoryOrderAdapte
         public TextView textName;
         public TextView textQuantity;
         public TextView textPrice;
-        public ImageView imageRemoving;
         public LinearLayout layoutDetail;
+        public RelativeLayout layoutRemoving;
 
         public ItemHolder(View itemView) {
             super(itemView);
             textName = (TextView) itemView.findViewById(R.id.text_name);
             textPrice = (TextView) itemView.findViewById(R.id.text_price);
             textQuantity = (TextView) itemView.findViewById(R.id.text_quantity);
-            imageRemoving = (ImageView) itemView.findViewById(R.id.image_remove);
+            layoutRemoving = (RelativeLayout) itemView.findViewById(R.id.layout_remove);
             layoutDetail = (LinearLayout) itemView.findViewById(R.id.layout_detail);
         }
     }

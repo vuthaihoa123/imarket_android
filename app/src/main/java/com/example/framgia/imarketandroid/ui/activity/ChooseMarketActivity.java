@@ -28,9 +28,11 @@ import android.widget.TextView;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.model.CartItem;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
 import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.ui.adapter.HistoryTimeAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
@@ -67,6 +69,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private TextView mTextSignIn, mTextSignOut, mTextProfile;
     private TextView mTextUsername;
     private CircleImageView mCircleImageView;
+    private List<CartItem> mCartItems = new ArrayList<>();
+    private List<String> mHeaderNames = new ArrayList<>();
+    private HistoryTimeAdapter mHistoryTimeAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,6 +140,15 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 break;
             case R.id.button_bought:
                 getVisible(mStrokeLine2, mStrokeLine1, mStrokeLine3, mLinearMenu);
+                mHeaderNames = FakeContainer.getListHeader();
+                mCartItems = FakeContainer.getListCartItem();
+                if (mHistoryTimeAdapter == null) {
+                    mHistoryTimeAdapter = new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                    mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
+                    mRecyclerDrawer.setLayoutManager(linearLayoutManager);
+                    mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
+                }
                 break;
             case R.id.button_follow:
                 getVisible(mStrokeLine3, mStrokeLine2, mStrokeLine1, mLinearMenu);
@@ -151,7 +165,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.button_sign_out:
-                SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
+                SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                 Session session = (Session) SharedPreferencesUtil
                         .getInstance()
                         .getValue(Constants.SESSION, Session.class);
@@ -229,7 +243,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void getInfo() {
-        SharedPreferencesUtil.getInstance().init(this,Constants.PREFS_NAME);
+        SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
         Session session = (Session) SharedPreferencesUtil
                 .getInstance()
                 .getValue(Constants.SESSION, Session.class);
