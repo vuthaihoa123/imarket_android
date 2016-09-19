@@ -98,8 +98,10 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CategoryStallFragment(), getString(R.string.title_fragment_Category));
-        adapter.addFragment(new SaleOffEventFragment(), getString(R.string.title_fragment_saleoffevent));
+        adapter.addFragment(new CategoryStallFragment(),
+            getString(R.string.title_fragment_Category));
+        adapter.addFragment(new SaleOffEventFragment(),
+            getString(R.string.title_fragment_saleoffevent));
         mSuggestStoreFragment = new SuggestStoreFragment();
         adapter.addFragment(mSuggestStoreFragment, getString(R.string.title_fragment_rate));
         mShopDetailInterfaceFragment = new ShopDetailInterfaceFragment(mCallback);
@@ -187,7 +189,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 Toast.makeText(this, R.string.toast_follow, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_message:
-                Toast.makeText(this, R.string.toast_message, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, BookTableActivity.class));
                 break;
             case R.id.fab_share:
                 DialogShareUtil.dialogShare(this, R.drawable.ic_iphone5s, mCallback);

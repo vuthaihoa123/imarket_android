@@ -13,12 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
@@ -26,7 +29,7 @@ import java.util.Calendar;
 /**
  * Created by toannguyen201194 on 27/07/2016.
  */
-public class UpdateProfileActivity extends AppCompatActivity {
+public class UpdateProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private final int DILOG_ID = 115;
     private Toolbar mToolbar;
     private FloatingActionButton mFloatEdit;
@@ -42,9 +45,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 mMonth = selectedMonth + 1;
                 mDay = selectedDay;
                 // Show selected date
-                mTextBirthday.setText(String.format("%s/%s/%s", mDay, mMonth, mYear));
+                mTextBirthday.setText(String.format(Constants.FORMART_STRING, mDay, mMonth, mYear));
             }
         };
+    private RelativeLayout mReContact, mReBirthday, mRePhone, mReEmail, mReCompany;
+    private ImageView mImageContact, mImageBirthday, mImagePhone, mImageEmail, mImageCompany;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,16 +64,30 @@ public class UpdateProfileActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mFloatEdit = (FloatingActionButton) findViewById(R.id.float_picture);
         mEditFullname = (EditText) findViewById(R.id.edit_fullname);
+        mEditFullname.setOnClickListener(this);
         mEditNumber = (EditText) findViewById(R.id.edit_number);
+        mEditNumber.setOnClickListener(this);
         mEditAdress = (EditText) findViewById(R.id.edit_adress);
+        mEditAdress.setOnClickListener(this);
         mEditMail = (EditText) findViewById(R.id.edit_mail);
+        mEditMail.setOnClickListener(this);
         mTextBirthday = (TextView) findViewById(R.id.text_birthday);
-        mTextBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog(DILOG_ID);
-            }
-        });
+        mTextBirthday.setOnClickListener(this);
+        mReContact = (RelativeLayout) findViewById(R.id.rela_contact);
+        mReContact.setOnClickListener(this);
+        mReBirthday = (RelativeLayout) findViewById(R.id.rela_birthday);
+        mReBirthday.setOnClickListener(this);
+        mRePhone = (RelativeLayout) findViewById(R.id.rela_phone_number);
+        mRePhone.setOnClickListener(this);
+        mReEmail = (RelativeLayout) findViewById(R.id.rela_mail);
+        mReEmail.setOnClickListener(this);
+        mReCompany = (RelativeLayout) findViewById(R.id.rela_company);
+        mReCompany.setOnClickListener(this);
+        mImageContact = (ImageView) findViewById(R.id.ivContactItem1);
+        mImageBirthday = (ImageView) findViewById(R.id.ivContactItem2);
+        mImagePhone = (ImageView) findViewById(R.id.ivContactItem3);
+        mImageEmail = (ImageView) findViewById(R.id.ivContactItem4);
+        mImageCompany = (ImageView) findViewById(R.id.ivContactItem5);
     }
 
     private void init() {
@@ -166,4 +185,40 @@ public class UpdateProfileActivity extends AppCompatActivity {
         mEditNumber.setEnabled(check);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rela_contact:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageContact);
+                break;
+            case R.id.rela_birthday:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageBirthday);
+                break;
+            case R.id.rela_phone_number:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImagePhone);
+                break;
+            case R.id.rela_mail:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageEmail);
+                break;
+            case R.id.rela_company:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageCompany);
+                break;
+            case R.id.edit_fullname:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageContact);
+                break;
+            case R.id.text_birthday:
+                showDialog(DILOG_ID);
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageBirthday);
+                break;
+            case R.id.edit_number:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImagePhone);
+                break;
+            case R.id.edit_mail:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageEmail);
+                break;
+            case R.id.edit_adress:
+                DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageCompany);
+                break;
+        }
+    }
 }

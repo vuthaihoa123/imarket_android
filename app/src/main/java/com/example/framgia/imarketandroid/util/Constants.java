@@ -90,5 +90,7 @@ public class Constants {
     public static final int LIKE_POSITION = 3;
     public static final int RATE_POSITION = 4;
     public static final String FONT = "KaushanScriptRegular.otf";
+    public static final String FORMART_STRING = "%s/%s/%s";
+    public static final int RADIUS_SMALL_BANG= 50;
 
 }

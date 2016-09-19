@@ -280,4 +280,8 @@
     <string name="title_fragment_rate">Đánh Giá - Góp Ý</string>
     <string name="title_fragment_informationstore">Thông Tin Của Hàng</string>
     <string name="text_product_sale">\n Đang giảm giá tại đỉa chỉ Big C Thăng Long</string>
+    <string name="transaction_fails">Giao dịch không thành công !</string>
+    <string name="transaction_done">Giao dịch thành công. Xin cảm ơn !</string>
+    <string name="request_confirm">Yêu cầu xác nhận</string>
+    <string name="info_confirm">Xác nhận thông tin cá nhân và nhấp OK để hoàn tất giao dịch</string>
 </resources>

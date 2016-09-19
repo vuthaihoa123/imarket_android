@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rela_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -52,6 +53,7 @@
         <include layout="@layout/item_divider"/>
 
         <RelativeLayout
+            android:id="@+id/rela_birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -86,6 +88,7 @@
         <include layout="@layout/item_divider"/>
 
         <RelativeLayout
+            android:id="@+id/rela_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -121,6 +124,7 @@
         <include layout="@layout/item_divider"/>
 
         <RelativeLayout
+            android:id="@+id/rela_mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -158,6 +162,7 @@
         <include layout="@layout/item_divider"/>
 
         <RelativeLayout
+            android:id="@+id/rela_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"

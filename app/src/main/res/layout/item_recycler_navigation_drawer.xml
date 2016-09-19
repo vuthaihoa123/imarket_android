@@ -5,27 +5,26 @@
     android:layout_height="@dimen/common_size_40"
     android:layout_marginBottom="@dimen/common_size_10"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/common_size_10"
-    android:weightSum="2">
+    android:paddingLeft="@dimen/common_size_10">
 
     <LinearLayout
         android:id="@+id/linear_navigation_drawer"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1.5">
+        android:layout_weight="5">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:src="@drawable/ic_iphone7"/>
 
         <TextView
             android:id="@+id/text_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/common_size_10"
             android:text="@string/name"
@@ -38,7 +37,7 @@
         android:id="@+id/image_btn_delete"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:padding="@dimen/common_size_10"
         android:src="@drawable/ic_delete"
         />

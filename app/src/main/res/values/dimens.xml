@@ -151,4 +151,5 @@
     <dimen name="common_size_25">25dp</dimen>
     <dimen name="comon_size_300dp">300dp</dimen>
     <dimen name="commen_size_1">1dp</dimen>
+    <dimen name="wid_hei_60">60dp</dimen>
 </resources>

@@ -301,9 +301,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
-                android:layout_marginTop="@dimen/layout_margin"
-                android:paddingRight="@dimen/common_size_5"
+                android:background="@drawable/background_button"
+                android:paddingLeft="@dimen/padding_10dp"
+                android:paddingRight="@dimen/padding_10dp"
+                android:layout_marginTop="@dimen/padding_10dp"
                 android:text="@string/login_with_other"
                 android:textColor="@color/text_color2"
                 android:textSize="@dimen/common_text_size_18"/>

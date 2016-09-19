@@ -130,43 +130,49 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
             case R.id.button_left_back:
                 mCountPeople--;
                 if (mCountPeople > 0) {
-                    mTextViewCount.setText(mCountPeople);
+                    mTextViewCount.setText(mCountPeople+"");
                 } else {
                     mCountPeople = Constants.MIN_COUNT_PEOPLE;
                 }
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCount);
                 break;
             case R.id.button_right_back:
                 mCountPeople++;
-                mTextViewCount.setText(mCountPeople);
+                mTextViewCount.setText(mCountPeople+"");
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCount);
                 break;
             case R.id.button_left_back_kid:
                 mCountKid--;
                 if (mCountKid >= 0) {
-                    mTextViewCountKid.setText(mCountKid);
+                    mTextViewCountKid.setText(mCountKid+"");
                 } else {
                     mCountKid = Constants.MIN_COUNT_KID;
                 }
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCountKid);
                 break;
             case R.id.button_right_back_kid:
                 mCountKid++;
-                mTextViewCountKid.setText(mCountKid);
+                mTextViewCountKid.setText(mCountKid+"");
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCountKid);
                 break;
             case R.id.button_left_back_dayin:
                 changeDay(Constants.CHANGE_TIME_DOWN);
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewDateIn);
                 break;
             case R.id.button_right_back_dayin:
                 changeDay(Constants.CHANGE_TIME_UP);
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewDateIn);
                 break;
             case R.id.button_left_back_timein:
                 changeTime(Constants.CHANGE_TIME_DOWN);
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewTimeIn);
                 break;
             case R.id.button_right_back_timein:
                 changeTime(Constants.CHANGE_TIME_UP);
+                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewTimeIn);
                 break;
             case R.id.button_continuee:
-                Intent intentt = new Intent(this, BookProductActivity.class);
-                startActivity(intentt);
-                finish();
+                DialogShareUtil.initAlertContinueBooking(this);
                 break;
             case R.id.text_dayin:
                 getShowDate();

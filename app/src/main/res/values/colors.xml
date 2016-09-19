@@ -75,4 +75,7 @@
     <color name="gray">#e5eeebeb</color>
     <color name="bold_gray">#e5cfcccc</color>
     <color name="brown">#e5eeebeb</color>
+
+    <color name="colorSecondPrimary">#128672</color>
+    <color name="colorThirdPrimary">#67dfca</color>
 </resources>
