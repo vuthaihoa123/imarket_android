@@ -1,11 +1,9 @@
 package com.example.framgia.imarketandroid.ui.adapter;
 
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +18,8 @@ import java.util.List;
 /**
  * Created by VULAN on 7/20/2016.
  */
-public class CategoryStallAdapter extends RecyclerView.Adapter<CategoryStallAdapter.CategoryHolder> {
+public class CategoryStallAdapter
+    extends RecyclerView.Adapter<CategoryStallAdapter.CategoryHolder> {
     private List<Category> mCategoryProducts;
     private OnRecyclerItemInteractListener mListener;
 
@@ -34,7 +33,8 @@ public class CategoryStallAdapter extends RecyclerView.Adapter<CategoryStallAdap
 
     @Override
     public CategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
+        final View view =
+            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
         return new CategoryHolder(view);
     }
 
@@ -58,7 +58,7 @@ public class CategoryStallAdapter extends RecyclerView.Adapter<CategoryStallAdap
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.onItemClick(position);
+                    mListener.onItemClick(view, position);
                 }
             }
         });

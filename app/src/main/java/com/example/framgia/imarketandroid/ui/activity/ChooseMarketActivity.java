@@ -50,9 +50,8 @@ import me.leolin.shortcutbadger.ShortcutBadger;
  * Created by yue on 20/07/2016.
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-        SearchView.OnQueryTextListener, OnRecyclerItemInteractListener,
-        RecyclerDrawerAdapter.OnClickItemDrawer {
+    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerMarket;
@@ -78,34 +77,45 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_market);
         findViews();
+        setListeners();
+        supportActionBar();
+        setSearchSuggestionAdapter();
+        initRececlerView();
+    }
+    private void initRececlerView(){
+        // recyclerview navigation drawer
         mRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
         mDrawerItems = FakeContainer.initDrawerItems();
         mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(this, mDrawerItems);
+        mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
         mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
-        setListeners();
-        setSupportActionBar(mToolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        mDrawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        mRecyclerDrawerAdapter.setOnClick(this);
+
+        //recyclerview choose imarket
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
         mMarkets = FakeContainer.initMarkets();
         mAdapter = new RecyclerMarketAdapter(mMarkets);
         mRecyclerMarket.setAdapter(mAdapter);
+        mAdapter.setOnRecyclerItemInteractListener(this);
+    }
+    private void supportActionBar(){
+        setSupportActionBar(mToolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+    private void setSearchSuggestionAdapter(){
         final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
-                null,
-                columns,
-                displayViews,
-                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        mAdapter.setOnRecyclerItemInteractListener(this);
-        // TODO: 29/08/2016  remove badge
-        ShortcutBadger.removeCount(this);
-        getInfo();
+            android.R.layout.simple_list_item_1,
+            null,
+            columns,
+            displayViews,
+            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
     }
 
     @Override
@@ -196,13 +206,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         populateSuggestionAdapter(newText);
         return false;
     }
-
-    @Override
-    public void onItemClick(int position) {
-        mLinearMenu.setVisibility(View.GONE);
-        startActivity(new Intent(this, FloorActivity.class));
-    }
-
     private void findViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -291,15 +294,27 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         builder.create().show();
     }
 
-    @Override
-    public void onClickItemDrawer(int pos) {
-        startActivity(new Intent(this, DetailsProductActivity.class));
-    }
-
     public void getVisible(View view1, View view2, View view3, View view4) {
         view1.setVisibility(View.VISIBLE);
         view2.setVisibility(View.GONE);
         view3.setVisibility(View.GONE);
         view4.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onItemClick(View v, int position) {
+        switch (v.getId()) {
+            case R.id.image_btn_delete:
+                mDrawerItems.remove(position);
+                mRecyclerDrawerAdapter.notifyDataSetChanged();
+                break;
+            case R.id.linear_navigation_drawer:
+                startActivity(new Intent(this, DetailsProductActivity.class));
+                break;
+            case R.id.item_recycler_market:
+                mLinearMenu.setVisibility(View.GONE);
+                startActivity(new Intent(this, FloorActivity.class));
+                break;
+        }
     }
 }

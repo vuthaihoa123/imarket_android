@@ -10,8 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +26,7 @@ import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.PreviewProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.SuggestStoreAdapter;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -35,13 +34,10 @@ import com.facebook.LoggingBehavior;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
-import com.example.framgia.imarketandroid.util.DialogShareUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by hoavt on 22/07/2016.

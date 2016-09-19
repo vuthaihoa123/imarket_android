@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryStallFragment extends Fragment implements
-        HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
+    HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
     public static CategoryStallAdapter sCategoryStallAdapter;
     public static List<Category> sCategoryProducts;
     private RecyclerView mRecyclerView;
@@ -71,7 +71,7 @@ public class CategoryStallFragment extends Fragment implements
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(View view, int position) {
         startActivity(new Intent(getContext(), ListProductsActivity.class));
     }
 }

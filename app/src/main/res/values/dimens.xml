@@ -150,5 +150,5 @@
     <dimen name="dots_margin_bottom">20dp</dimen>
     <dimen name="common_size_25">25dp</dimen>
     <dimen name="comon_size_300dp">300dp</dimen>
->>>>>>> fix_bug_app
+    <dimen name="commen_size_1">1dp</dimen>
 </resources>

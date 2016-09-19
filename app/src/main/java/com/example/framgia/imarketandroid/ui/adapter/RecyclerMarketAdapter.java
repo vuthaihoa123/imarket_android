@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.model.Market;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.
-                from(parent.getContext()).inflate(R.layout.item_recycler_market, parent, false);
+            from(parent.getContext()).inflate(R.layout.item_recycler_market, parent, false);
         return new ItemHolder(view);
     }
 
@@ -45,7 +45,7 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.onItemClick(position);
+                    mListener.onItemClick(view, position);
                 }
             }
         });
