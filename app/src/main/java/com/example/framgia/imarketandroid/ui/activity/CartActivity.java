@@ -48,15 +48,14 @@ public class CartActivity extends AppCompatActivity {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRvProductCart.setHasFixedSize(true);
-
         // use a linear layout manager
         mProductCartLayoutManager = new LinearLayoutManager(this);
         mRvProductCart.setLayoutManager(mProductCartLayoutManager);
         mProductCartAdapter = new CartProductAdapter(this, FakeContainer.initCartProductList());
         mRvProductCart.setAdapter(mProductCartAdapter);
-
         mTotalPrice = (TextView) findViewById(R.id.tv_total_price);
-        mTotalPrice.setText(getResources().getString(R.string.total) + SystemUtil.formatMoneyStr(calTotalPrice()));
+        mTotalPrice.setText(
+            getResources().getString(R.string.total) + SystemUtil.formatMoneyStr(calTotalPrice()));
         mBtAccept = (AppCompatButton) findViewById(R.id.bt_accept);
         mBtAccept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +67,7 @@ public class CartActivity extends AppCompatActivity {
 
     private long calTotalPrice() {
         long totPrice = 0;
-        ArrayList<CartItem> list = ((CartProductAdapter)mProductCartAdapter).getItems();
+        ArrayList<CartItem> list = ((CartProductAdapter) mProductCartAdapter).getItems();
         for (int i = 0; i < list.size(); i++) {
             totPrice += list.get(i).getQuantity() * list.get(i).getPriceProduct();
         }

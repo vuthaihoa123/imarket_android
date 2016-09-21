@@ -1,29 +1,57 @@
 package com.example.framgia.imarketandroid.data.remote;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
+import com.example.framgia.imarketandroid.data.model.Migration;
 import com.example.framgia.imarketandroid.data.model.Point;
+import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmList;
+import io.realm.RealmMigration;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmMigrationNeededException;
+import io.realm.internal.Table;
 
 /**
  * Created by framgia on 24/08/2016.
  */
 public class RealmRemote {
-    private static Realm mRealm = Realm.getDefaultInstance();
+    private static Realm mRealm=Realm.getDefaultInstance();
+
+    public static void openDatabaseRealm(Context context, InputStream inputStream, String
+        outFileName) {
+        copyBundledRealmFile(context, inputStream, outFileName);
+        RealmConfiguration config0 = new RealmConfiguration.Builder(context)
+            .name(outFileName)
+            .schemaVersion(3)
+            .build();
+        try {
+            Realm.migrateRealm(config0, new Migration());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        mRealm.getInstance(config0);
+    }
 
     public static RealmResults<Point> getAllPoint() {
-//        RealmResults<Point> results = new RealmResults<Point>();
         return mRealm.where(Point.class).findAll();
     }
 
@@ -106,10 +134,28 @@ public class RealmRemote {
 
     public static CustomMarker createCustomMarkerFromPoint(Point point) {
         Category category1 =
-            new Category(Integer.toString(point.getType()), Constants.DEMO_CATEGORY);
+            new Category(Integer.toString(point.getType()), point.getName());
         CustomMarker result = new CustomMarker(point.getId(), point.getLat(), point.getLng(),
             Constants.DEMO_NUMBER,
             category1);
         return result;
+    }
+
+    private static String copyBundledRealmFile(Context context, InputStream inputStream, String
+        outFileName) {
+        try {
+            File file = new File(context.getFilesDir(), outFileName);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buf)) > 0) {
+                outputStream.write(buf, 0, bytesRead);
+            }
+            outputStream.close();
+            return file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">IMarketAndroid</string>
     <string name="floor_prompt">Choose a floor</string>
-    <string name="location_current">Vị Trí Hiện Tại Của Bạn</string>
+    <string name="location_current">Vị Trí Hiện tại</string>
     <string name="number_event">Số Lượng Sự Kiện</string>
     <string name="market_name_text">Siêu Thị Big C</string>
     <string name="found_shop">Cửa Hàng Tìm Được</string>
@@ -113,8 +113,8 @@
     <string name="ques">Big C Thăng Long như thế nào ?</string>
     <string name="comment_here">Bình luận ...</string>
     <string name="post">Post</string>
-    <string name="ok">OK</string>
-    <string name="cancle">Cancel</string>
+    <string name="ok">Hoàn thành</string>
+    <string name="cancle">Thoát</string>
     <string name="count_vote">500 đánh giá</string>
     <string name="name_user">Công Phương Đông</string>
     <string name="fake_tyle">4,5 / 5</string>
@@ -181,6 +181,8 @@
     <string name="vote_product">Đánh giá</string>
     <string name="rate_product_message">Sản phầm khá chất lượng</string>
     <string name="danh_gia">Đánh giá</string>
+    <string name="input_current_location">Bạn cần nhập vị trí của mình trước khi sử dụng
+        tính năng này</string>
     <string name="mustbe_barclicklistener">must be implement OnclickBarListensener</string>
     <string name="details_text">Chi tiết sản phẩm</string>
     <string name="coment">Bình luận sản phẩm</string>
@@ -236,7 +238,6 @@
     <string name="cosmetic_name">cửa hàng mỹ phẩm</string>
     <string name="movie_theater">Rạp chiếu phim</string>
     <string name="game_center_name">Trung tâm giải trí</string>
-
     <string name="confirm_signout">Bạn có muốn đăng xuất ?</string>
     <string name="cancel">Cancel</string>
     <string name="signout_done_message">Đăng xuất thành công !</string>

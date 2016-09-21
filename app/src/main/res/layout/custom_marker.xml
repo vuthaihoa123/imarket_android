@@ -3,14 +3,12 @@
     android:id="@+id/marker_background"
     android:layout_width="@dimen/common_size_100"
     android:layout_height="@dimen/common_size_100"
-    android:layout_gravity="center"
-    android:background="@drawable/marker">
+    android:layout_gravity="center">
 
     <RelativeLayout
         android:layout_width="@dimen/common_size_40"
         android:layout_height="@dimen/common_size_40"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/ic_promotions">
+        android:layout_alignParentRight="true">
 
         <com.example.framgia.imarketandroid.ui.views.SkewTextView
             android:id="@+id/skew_text"

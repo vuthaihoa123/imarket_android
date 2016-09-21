@@ -8,8 +8,8 @@ public class Store {
     private String mName;
 
     public Store(int food_avatar, String name) {
-        this.mAvatar= food_avatar;
-        this.mName= name;
+        this.mAvatar = food_avatar;
+        this.mName = name;
     }
 
     public int getAvatar() {

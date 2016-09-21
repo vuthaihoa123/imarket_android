@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/common_size_40"
             android:layout_weight="1"
             android:paddingBottom="@dimen/common_size_5"
             android:text="@string/food_store"

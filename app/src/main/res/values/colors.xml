@@ -27,6 +27,7 @@
     <color name="blue">#518df5</color>
     <color name="yeallow">#f5e551</color>
     <color name="icon">#1373E8</color>
+    <color name="background_visible">#90FFFFFF</color>
     <color name="color_toolbar">#2473a3</color>
     <color name="endcolor_bg_item">#d4eef9</color>
     <color name="startcolor_bg_item">#ffffff</color>
@@ -39,6 +40,8 @@
     <color name="background_shop_hint">#3f3f4949</color>
     <color name="background_shop_color_name">#ea831c</color>
     <color name="orange">#ff5722</color>
+    <color name="background_slidding">#95FFFFFF</color>
+    <color name="background_slidding_visible">#00FFFFFF</color>
     <color name="color_fb">#1e7bc9</color>
     <color name="color_bg_tint">#b62b2626</color>
     <color name="color_bg_recyle">#c29090</color>
