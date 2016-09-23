@@ -316,9 +316,4 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mAlertDialogPostMessage.show();
         mAlertDialogPostMessage.setCanceledOnTouchOutside(true);
     }
-
-    public void initGuideSuggestStore() {
-        ShowcaseGuideUtil.singleShowcase(getActivity(), Constants.SHOWCASE_ID_SUGGEST_STORE, new
-            Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote)));
-    }
 }
