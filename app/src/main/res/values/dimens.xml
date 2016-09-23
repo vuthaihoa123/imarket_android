@@ -78,7 +78,7 @@
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="size_50dp">50dp</dimen>
     <dimen name="text_small_size">14sp</dimen>
-    <dimen name="text_xsmall_size">14sp</dimen>
+    <dimen name="text_xsmall_size">12sp</dimen>
     <dimen name="framelayout_login">40dp</dimen>
     <dimen name="linear_login_margin">30dp</dimen>
     <dimen name="login_height_logo">100dp</dimen>
@@ -91,8 +91,9 @@
     <dimen name="singup_marginbottom">10dp</dimen>
 
     <dimen name="text_xlarge_size">20sp</dimen>
+    <dimen name="text_huge_size">60sp</dimen>
     <dimen name="width_preview">200dp</dimen>
-    <dimen name="width_book_view">100dp</dimen>
+    <dimen name="width_book_view">150dp</dimen>
     <dimen name="height_item_cart">150dp</dimen>
     <dimen name="width_preview_cart">120dp</dimen>
     <dimen name="delete_button_size">40dp</dimen>
@@ -104,7 +105,6 @@
     <dimen name="width_height_34">34dp</dimen>
     <dimen name="margin_40">40dp</dimen>
     <dimen name="width_height_50">50dp</dimen>
-    <dimen name="margin_5">5dp</dimen>
     <dimen name="margin_20">20dp</dimen>
     <dimen name="margin_pading_10">10dp</dimen>
     <dimen name="margin_35">35dp</dimen>
@@ -152,4 +152,14 @@
     <dimen name="comon_size_300dp">300dp</dimen>
     <dimen name="commen_size_1">1dp</dimen>
     <dimen name="wid_hei_60">60dp</dimen>
+    <dimen name="margin_15dp">15dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="height_image_preview">220dp</dimen>
+    <dimen name="avatar_size">46dp</dimen>
+    <dimen name="height_text">75dp</dimen>
+    <dimen name="margin_23dp">23dp</dimen>
+    <dimen name="margin_3dp">3dp</dimen>
+    <dimen name="margin_60dp">60dp</dimen>
+    <dimen name="margin_90dp">90dp</dimen>
+    <dimen name="avatar_xsize">54dp</dimen>
 </resources>

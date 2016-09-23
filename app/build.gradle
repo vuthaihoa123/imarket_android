@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.0'
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
     defaultConfig {
         applicationId "com.example.framgia.imarketandroid"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -28,11 +29,11 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.facebook.android:facebook-android-sdk:4.11.0'
-    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.google.android.gms:play-services:9.4.0'
-    compile 'com.android.support:cardview-v7:24.1.1'
-    compile 'com.android.support:recyclerview-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'

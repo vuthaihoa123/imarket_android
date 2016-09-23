@@ -318,4 +318,12 @@ public class FakeContainer {
         list.add("22/1/2011");
         return list;
     }
+
+    public static String getGeneralRate() {
+        return "3.9";
+    }
+
+    public static String getAmountOfRates() {
+        return "1,307";
+    }
 }

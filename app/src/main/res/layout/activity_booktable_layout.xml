@@ -96,8 +96,8 @@
 
                     <TextView
                         android:layout_width="@dimen/width_height_1"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:layout_marginBottom="@dimen/margin_5"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:layout_marginBottom="@dimen/margin_5dp"
                         android:background="@color/bg_bb_color"
                         android:layout_height="match_parent" />
 

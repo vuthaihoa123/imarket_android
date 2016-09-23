@@ -39,7 +39,7 @@
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/color_primary"
                     android:textSize="@dimen/text_small_size"/>
                 <TextView
                     android:layout_marginBottom="@dimen/common_size_5"

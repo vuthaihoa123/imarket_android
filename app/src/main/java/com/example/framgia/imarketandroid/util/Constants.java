@@ -98,4 +98,7 @@ public class Constants {
     public static final int REQUEST_PERMISSION = 113;
     public static final int RADIUS_SMALL_BANG = 50;
     public static final String CACHED_KEY = "cached_key";
+    public static final String EXTRA_NAME_PRODUCT = "EXTRA_NAME_PRODUCT";
+    public static final String EXTRA_INFOR_PRODUCT = "EXTRA_INFOR_PRODUCT";
+    public static final String EXTRA_PRICE_PRODUCT = "EXTRA_PRICE_PRODUCT";
 }

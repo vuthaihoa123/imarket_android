@@ -5,7 +5,7 @@
     android:layout_width="@dimen/wid_hei_300"
     android:layout_height="@dimen/wid_hei_400"
     android:background="@color/color_fb"
-    android:padding="@dimen/margin_5"
+    android:padding="@dimen/margin_5dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -39,8 +39,8 @@
         android:id="@+id/image_share"
         android:layout_width="match_parent"
         android:layout_height="@dimen/wid_hei_250"
-        android:layout_marginTop="@dimen/margin_5"
-        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:layout_marginBottom="@dimen/margin_5dp"
         android:background="@color/white"
         android:src="@drawable/ic_iphone5s"/>
 
