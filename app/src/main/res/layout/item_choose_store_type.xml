@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     app:cardCornerRadius="@dimen/common_size_3"
     app:cardPreventCornerOverlap="false">
 
@@ -12,12 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:background="@color/grey"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/avatar_store"
-            android:layout_width="@dimen/recycler_market_item_image_size"
-            android:layout_height="@dimen/recycler_market_item_image_size"
+            android:layout_width="@dimen/common_size_60"
+            android:layout_height="@dimen/common_size_60"
             android:layout_margin="@dimen/common_size_10"
             android:scaleType="fitXY"
             android:src="@drawable/food_avatar"/>
@@ -27,12 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/common_size_40"
+            android:layout_marginLeft="@dimen/margin_20"
             android:layout_weight="1"
             android:paddingBottom="@dimen/common_size_5"
             android:text="@string/food_store"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/common_text_size_20"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_text_size_16"
             android:textStyle="bold"/>
 
     </LinearLayout>

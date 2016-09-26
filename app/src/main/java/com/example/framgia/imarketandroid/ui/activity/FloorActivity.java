@@ -12,11 +12,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -32,18 +38,24 @@ import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
+import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.Graph;
 import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.model.Shop;
+import com.example.framgia.imarketandroid.data.model.Store;
+import com.example.framgia.imarketandroid.data.model.StoreType;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
+import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
 import com.example.framgia.imarketandroid.ui.views.CustomMarkerView;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.MapUntils;
+import com.example.framgia.imarketandroid.util.OnSwipeTouchListener;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
+import com.google.android.gms.internal.zzng;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -75,19 +87,25 @@ import io.realm.RealmResults;
  */
 public class FloorActivity extends AppCompatActivity implements AdapterView
     .OnItemSelectedListener, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback, View
-    .OnClickListener {
+    .OnClickListener, BookProductAdapter.OnClickItemBarListenner, OnRecyclerItemInteractListener {
     private SlidingUpPanelLayout mSlidingLayout;
     public static int sResumeValue = 0;
     private GoogleMap mMap;
-    private Spinner mSpinerFloor, mSpinnerProduct;
+    private RecyclerView mRvDiagramOption;
+    private RecyclerView.Adapter mAdapterDiagramOption;
+    private RecyclerView.LayoutManager mLayoutManagerDiagramOption;
+    private ListView mListFloor;
+    private int sAvatar;
+    private ChooseStoreTypeAdapter mAdapterStore;
+    private List<StoreType> mListStore = new ArrayList<>();
+    private RecyclerView mRecyclerViewStore;
     private Button mBtnDelete, mBtnGetPath, mBtnDrawPath, mBtnCurrentLocation;
     private Button mBtnDoneLocation, mBtnCancelLocation;
     private Dialog mDialog;
-    private LinearLayout mLayoutLocation;
+    private LinearLayout mLayoutFloor;
     private Switch mSwitchLocation;
     private List<Marker> mListMarker = new ArrayList<>();
     private List<Polyline> mListPolyline = new ArrayList<>();
-    private List<Shop> mShopList = new ArrayList<>();
     private List<Floor> mFloorList = new ArrayList<>();
     private List<Edge> mEdges;
     private List<Point> mNodes = null;
@@ -95,9 +113,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private RealmList<Point> mNodesDisplay = null;
     private RealmList<Point> mVertexesHoa = new RealmList<>();
     private RealmList<Edge> mEdgesHoa = new RealmList<>();
-    private ArrayAdapter<Shop> mAdapterShop;
     private ChooseStoreTypeAdapter mAdapter;
-    private ArrayAdapter<Floor> mAdapterFloor;
     private EditText edtLocation;
     private Polyline mLine;
     private TextView mTextSwitch;
@@ -105,6 +121,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private boolean mCheckZoom = false;
     private boolean mCheckSwitch = false;
     private boolean mCheckSlide = false;
+    private boolean mCheckSlideStore = false;
+    private boolean mCheckSlideFloor = false;
     private boolean mCheckCurrentLocation = false;
     private Point mCurrentLocation;
     private Point mTargetLocation;
@@ -117,18 +135,19 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private Collection<Marker> mListcustomMarker = new ArrayList<>();
     private LatLng mAeon = new LatLng(21.026975, 105.899302);
     private CustomMarker mLocationCustomMarker;
-    private static final String SHOWCASE_ID = "sequence example";
     private ImageButton mArrowImageButton;
+    private TextView mTxtNameStore;
+    private String mTextStoreName = "";
+    private Animation mSlideRightIn, mSlideRightOut, mSlideLeftIn, mSlideLeftOut;
+    private EditText edtDelete;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_floor);
-        mShopList = FakeContainer.initListShop();
         initMap();
         hideStatusBar();
         initViews();
-        createDataForFloor();
     }
 
     private void initMap() {
@@ -138,17 +157,32 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mNodes = RealmRemote.getAllPoint();
         mNodesDisplay = RealmRemote.getListPointDisplay(0);
         mEdges = RealmRemote.getListEdge();
-        mBtnDrawPath=(Button) findViewById(R.id.btn_show_dialog);
+        mBtnDrawPath = (Button) findViewById(R.id.btn_show_dialog);
         mBtnDrawPath.setOnClickListener(this);
         mBtnDelete = (Button) findViewById(R.id.btn_delete_data);
         mBtnDelete.setOnClickListener(this);
         mBtnGetPath = (Button) findViewById(R.id.btn_demo_find_way);
         mBtnGetPath.setOnClickListener(this);
-        mDialog = new Dialog(FloorActivity.this);
-        mDialog.setContentView(R.layout.custom_dialog);
     }
 
     private void initViews() {
+        edtDelete = (EditText) findViewById(R.id.edt_delete);
+        initListViewFloor();
+        initRvStore();
+        mSlideRightIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
+        mSlideRightOut = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
+        mSlideLeftIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
+        mSlideLeftOut = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
+        slideLayoutRight(mLayoutFloor, mSlideRightIn, mSlideRightOut);
+        slideLayoutLeft(mRecyclerViewStore, mSlideLeftOut, mSlideLeftIn);
+        mRvDiagramOption = (RecyclerView) findViewById(R.id.rv_diagram_option);
+        mRvDiagramOption.setHasFixedSize(true);
+        mLayoutManagerDiagramOption = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false);
+        mAdapterDiagramOption = new BookProductAdapter(this, FakeContainer.initDiagramOption());
+        mRvDiagramOption.setAdapter(mAdapterDiagramOption);
+        mRvDiagramOption.setLayoutManager(mLayoutManagerDiagramOption);
+        mTxtNameStore = (TextView) findViewById(R.id.txt_store_name);
         mSlidingLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mSlidingLayout.setPanelSlideListener(onSlideListener());
         mArrowImageButton = (ImageButton) findViewById(R.id.image_button_slide);
@@ -175,35 +209,38 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 }
             }
         });
-        mSpinerFloor = (Spinner) findViewById(R.id.spinner_choose_floor);
-        mSpinnerProduct = (Spinner) findViewById(R.id.spinner_choose_product);
-        mAdapterFloor = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mFloorList);
-        mAdapterFloor.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        mSpinerFloor.setAdapter(mAdapterFloor);
-        mAdapterShop = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mShopList);
-        mAdapterShop.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        mSpinnerProduct.setAdapter(mAdapterShop);
-        mSpinerFloor.setOnItemSelectedListener(this);
-        mSpinnerProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setCustomMarkers(i);
-            }
+    }
 
+    private void initListViewFloor() {
+        mLayoutFloor = (LinearLayout) findViewById(R.id.layout_list_floor);
+        mListFloor = (ListView) findViewById(R.id.list_floor);
+        ArrayAdapter adapter =
+            new ArrayAdapter<String>(this, R.layout.item_floor, R.id.floor_content,
+                FakeContainer
+                    .initFloor());
+        mListFloor.setAdapter(adapter);
+        mListFloor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-        mLayoutLocation = (LinearLayout) findViewById(R.id.layout_location);
-        mLayoutLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDiaLogLocation();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0)
+                    Toast.makeText(FloorActivity.this, R.string.floor_instruction + i, Toast
+                        .LENGTH_LONG).show();
             }
         });
     }
 
+    private void initRvStore() {
+        mRecyclerViewStore = (RecyclerView) findViewById(R.id.recycler_store_type);
+        mRecyclerViewStore.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mListStore = FakeContainer.initStore();
+        mAdapter = new ChooseStoreTypeAdapter(this, mListStore);
+        mAdapter.setOnRecyclerItemInteractListener(this);
+        mRecyclerViewStore.setAdapter(mAdapter);
+    }
+
     private void setDiaLogLocation() {
+        mDialog = new Dialog(FloorActivity.this);
+        mDialog.setContentView(R.layout.custom_dialog);
         mDialog.setTitle(R.string.current_location_title);
         edtLocation = (EditText) mDialog.findViewById(R.id.edtLocation);
         mBtnDoneLocation = (Button) mDialog.findViewById(R.id.done_location);
@@ -228,16 +265,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mDialog.show();
     }
 
-    private void createDataForFloor() {
-        Floor floor = new Floor(0, getString(R.string.choose_floor));
-        Floor floor1 = new Floor(1, getString(R.string.first_floor));
-        Floor floor2 = new Floor(2, getString(R.string.second_floor));
-        mFloorList.add(floor);
-        mFloorList.add(floor1);
-        mFloorList.add(floor2);
-        mAdapterFloor.notifyDataSetChanged();
-    }
-
     private void hideStatusBar() {
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -251,12 +278,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 actionBar.hide();
             }
         }
-    }
-
-    private void loadListShop(Floor floor) {
-        mShopList.clear();
-        mShopList.addAll(floor.getShopList());
-        mAdapterShop.notifyDataSetChanged();
     }
 
     @Override
@@ -300,6 +321,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     }
                     marker.showInfoWindow();
                 }
+                Point tempPoint = RealmRemote.getObjectPointFromName(marker.getTitle());
+                if (tempPoint != null)
+                    if (tempPoint.getType() != 0) {
+                        mTxtNameStore.setText(mTextStoreName);
+                    }
                 return true;
             }
         });
@@ -320,7 +346,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     editor.putInt(getString(R.string.idPoint), mIndexStore);
                     editor.commit();
                     Point mPoint =
-                        new Point(mIndexStore, lat, lng, 0, getString(R.string.C) + mIndexStore);
+                        new Point(mIndexStore, 0, lat, lng, getString(R.string.C) + mIndexStore);
                     RealmRemote.savePoint(mPoint);
                     Marker locationMarket = mMap.addMarker(
                         new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude))
@@ -355,11 +381,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         if (type != 0)
             setMarkerVisible(false);
         mNodesDisplay = RealmRemote.getListPointDisplay(type);
-        if (mCheckCurrentLocation)
-            drawMarker(mLocationCustomMarker);
         for (Point point : mNodesDisplay) {
             drawMarker(RealmRemote.createCustomMarkerFromPoint(point));
         }
+        if (mCheckCurrentLocation)
+            drawMarker(mLocationCustomMarker);
         mListcustomMarker = mMarkerPointHashMap.keySet();
     }
 
@@ -420,7 +446,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     protected void onResume() {
         super.onResume();
         if (FloorActivity.sResumeValue == mFlagOne) {
-            if (DialogActivity.sFirstPoint.length() > 0 &&
+            if (DialogActivity.sFirstPoint != null && DialogActivity.sFirstPoint.length() > 0 &&
                 DialogActivity.sSecondPoint.length() > 0) {
                 LatLng first = RealmRemote.getLocationFromName(DialogActivity.sFirstPoint);
                 LatLng second;
@@ -455,11 +481,15 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             mIndex++;
             editor.putInt(getString(R.string.idPoint), mIndex);
             editor.commit();
-            Point point = new Point(mIndex, mTempLatLng.latitude, mTempLatLng
-                .longitude, ChooseStoreTypeActivity.sAvatar + 1, getString(R
-                .string.M) + mIndex);
-            RealmRemote.savePoint(point);
-            drawMarker(RealmRemote.createCustomMarkerFromPoint(point));
+            Store store = new Store(mIndex, getString(R.string.M) + mIndex, "", 1, 1,
+                ChooseStoreTypeActivity
+                    .sAvatar, mTempLatLng
+                .latitude, mTempLatLng
+                .longitude);
+            Point mPoint = store.getPoint();
+            RealmRemote.saveObject(store);
+            RealmRemote.savePoint(mPoint);
+            drawMarker(RealmRemote.createCustomMarkerFromPoint(mPoint));
             FloorActivity.sResumeValue = 0;
         }
     }
@@ -477,6 +507,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     customMarkerView.setBackground(
                         ResourcesCompat.getDrawable(getResources(), Constants.LIST_AVATAR_STORE[7],
                             null));
+                else
+                    customMarkerView.setInvisibleBackground();
                 break;
             case FakeContainer.STORE_TYPE_1:
                 setBackground(customMarkerView, 0);
@@ -541,6 +573,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 FloorActivity.sResumeValue = 1;
                 startActivity(new Intent(FloorActivity.this, DialogActivity.class));
                 break;
+            case R.id.btn_delete_data:
+                RealmRemote.deletePoint(edtDelete.getText().toString());
             case R.id.done_location:
                 if (edtLocation.getText().length() > 0) {
                     if (mCheckCurrentLocation == true) {
@@ -554,9 +588,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                         mCheckCurrentLocation = true;
                         mLocationCustomMarker = RealmRemote.createCustomMarkerFromPoint
                             (mCurrentLocation);
-                        drawMarker(mLocationCustomMarker);
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(RealmRemote
                             .getLocationFromName(mLocation)));
+                        drawMarker(mLocationCustomMarker);
                     } else
                         Toast.makeText(FloorActivity.this, R.string.warning_location,
                             Toast.LENGTH_LONG).show();
@@ -571,6 +605,47 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         startActivity(new Intent(FloorActivity.this, HomeStoreActivity.class));
     }
 
+    @Override
+    public void onClickItemBar(String textNameItem, int position) {
+        switch (textNameItem) {
+            case Constants.LOCATION:
+                setDiaLogLocation();
+                break;
+            case Constants.FLOOR:
+                if (mCheckSlideFloor == false) {
+                    mLayoutFloor.startAnimation(mSlideRightIn);
+                    mLayoutFloor.setVisibility(View.VISIBLE);
+                    mCheckSlideFloor = true;
+                } else {
+                    mLayoutFloor.startAnimation(mSlideRightOut);
+                    mLayoutFloor.setVisibility(View.INVISIBLE);
+                    mCheckSlideFloor = false;
+                }
+                break;
+            case Constants.STORE:
+                if (mCheckSlideStore == false) {
+                    mRecyclerViewStore.startAnimation(mSlideLeftIn);
+                    mRecyclerViewStore.setVisibility(View.VISIBLE);
+                    mCheckSlideStore = true;
+                } else {
+                    mRecyclerViewStore.startAnimation(mSlideLeftOut);
+                    mRecyclerViewStore.setVisibility(View.INVISIBLE);
+                    mCheckSlideStore = false;
+                }
+        }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        sAvatar = position;
+        if (mCheckCurrentLocation) {
+            mCheckCurrentLocation = false;
+            setCustomMarkers(position);
+            mCheckCurrentLocation = true;
+            drawMarker(mLocationCustomMarker);
+        } else setCustomMarkers(position);
+    }
+
     public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
         @Override
         public View getInfoWindow(Marker marker) {
@@ -581,45 +656,46 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         public View getInfoContents(Marker marker) {
             View v = getLayoutInflater().inflate(R.layout.item_marker_information, null);
             TextView textView = (TextView) v.findViewById(R.id.text_marker);
-            String text = "";
             CustomMarker customMarker = mMarkerPointHashMap.get(marker);
             if (customMarker != null)
                 switch (customMarker.getCategory().getId()) {
                     case FakeContainer.STORE_TYPE_1:
-                        text =
+                        mTextStoreName =
                             String.valueOf(getString(R.string.food_store)) + " " +
                                 customMarker.getId();
                         break;
                     case FakeContainer.STORE_TYPE_2:
-                        text = String.valueOf(getString(R.string.fashion_name)) + " " + customMarker
-                            .getId();
+                        mTextStoreName =
+                            String.valueOf(getString(R.string.fashion_name)) + " " + customMarker
+                                .getId();
                         break;
                     case FakeContainer.STORE_TYPE_3:
-                        text =
+                        mTextStoreName =
                             String.valueOf(getString(R.string.book_shop_name)) + " " + customMarker
                                 .getId();
                         break;
                     case FakeContainer.STORE_TYPE_4:
-                        text =
+                        mTextStoreName =
                             String.valueOf(getString(R.string.cosmetic_name)) + " " + customMarker
                                 .getId();
                         break;
                     case FakeContainer.STORE_TYPE_5:
-                        text =
+                        mTextStoreName =
                             String.valueOf(getString(R.string.movie_theater)) + " " + customMarker
                                 .getId();
                         break;
                     case FakeContainer.STORE_TYPE_6:
-                        text = String.valueOf(getString(R.string.game_center_name)) + " " +
-                            customMarker.getId();
+                        mTextStoreName =
+                            String.valueOf(getString(R.string.game_center_name)) + " " +
+                                customMarker.getId();
                         break;
                 }
             else {
                 ImageView image = (ImageView) v.findViewById(R.id.image_marker);
                 image.setVisibility(View.INVISIBLE);
-                text = marker.getTitle();
+                mTextStoreName = marker.getTitle();
             }
-            textView.setText(text);
+            textView.setText(mTextStoreName);
             return v;
         }
     }
@@ -675,18 +751,51 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             mPath.clear();
         mPath = dijkstra.getPath(vertex1);
         if (mPath != null) {
-            for (Point point : mPath) {
-                LatLng src = RealmRemote.getLocationFromName(point.getName());
-                LatLng dest = RealmRemote.getLocationFromName(point.getName());
+            for (int i = 0; i < mPath.size() - 1; i++) {
+                LatLng src = RealmRemote.getLocationFromName(mPath.get(i).getName());
+                LatLng dest = RealmRemote.getLocationFromName(mPath.get(i + 1).getName());
                 mLine = mMap.addPolyline(
                     new PolylineOptions().add(
                         src, dest).width(2).color(Color.BLUE));
                 mListPolyline.add(mLine);
             }
-        } else
+        } else {
             Toast
                 .makeText(FloorActivity.this, R.string.current_location_warning, Toast.LENGTH_LONG)
                 .show();
+        }
         FloorActivity.sResumeValue = 0;
+    }
+
+    private void slideLayoutRight(final View view, final Animation a, final Animation b) {
+        new OnSwipeTouchListener(view).setOnSwipeListener(
+            new OnSwipeTouchListener.onSwipeEvent() {
+                @Override
+                public void SwipeEventDetected(View v,
+                                               OnSwipeTouchListener.SwipeTypeEnum SwipeType) {
+                    if (SwipeType == OnSwipeTouchListener.SwipeTypeEnum
+                        .LEFT_TO_RIGHT && mCheckSlideFloor == true) {
+                        view.startAnimation(b);
+                        view.setVisibility(View.INVISIBLE);
+                        mCheckSlideFloor = false;
+                    }
+                }
+            });
+    }
+
+    private void slideLayoutLeft(final View view, final Animation a, final Animation b) {
+        new OnSwipeTouchListener(view).setOnSwipeListener(
+            new OnSwipeTouchListener.onSwipeEvent() {
+                @Override
+                public void SwipeEventDetected(View v,
+                                               OnSwipeTouchListener.SwipeTypeEnum SwipeType) {
+                    if (SwipeType == OnSwipeTouchListener.SwipeTypeEnum
+                        .RIGHT_TO_LEFT && mCheckSlideStore == true) {
+                        view.startAnimation(a);
+                        view.setVisibility(View.INVISIBLE);
+                        mCheckSlideStore = false;
+                    }
+                }
+            });
     }
 }

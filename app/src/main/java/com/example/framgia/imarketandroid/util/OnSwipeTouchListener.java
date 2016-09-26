@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,70 +10,131 @@ import android.view.View;
  * Created by framgia on 14/09/2016.
  */
 public class OnSwipeTouchListener implements View.OnTouchListener {
+    private int min_distance = 100;
+    private float downX, downY, upX, upY;
+    private View v;
+
+    private onSwipeEvent swipeEventListener;
 
 
-    private final GestureDetector gestureDetector;
 
-    public OnSwipeTouchListener (Context ctx){
-        gestureDetector = new GestureDetector(ctx, new GestureListener());
+    public OnSwipeTouchListener(View v){
+        this.v=v;
+        v.setOnTouchListener(this);
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
-    }
-
-    private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
+    public void setOnSwipeListener(onSwipeEvent listener)
+    {
+        try{
+            swipeEventListener=listener;
         }
+        catch(ClassCastException e)
+        {
+            Log.e("ClassCastException","please pass SwipeDetector.onSwipeEvent Interface instance",e);
+        }
+    }
 
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            boolean result = false;
-            try {
-                float diffY = e2.getY() - e1.getY();
-                float diffX = e2.getX() - e1.getX();
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            onSwipeRight();
-                        } else {
-                            onSwipeLeft();
+
+    public void onRightToLeftSwipe(){
+        if(swipeEventListener!=null)
+            swipeEventListener.SwipeEventDetected(v,SwipeTypeEnum.RIGHT_TO_LEFT);
+        else
+            Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
+    }
+
+    public void onLeftToRightSwipe(){
+        if(swipeEventListener!=null)
+            swipeEventListener.SwipeEventDetected(v,SwipeTypeEnum.LEFT_TO_RIGHT);
+        else
+            Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
+    }
+
+    public void onTopToBottomSwipe(){
+        if(swipeEventListener!=null)
+            swipeEventListener.SwipeEventDetected(v,SwipeTypeEnum.TOP_TO_BOTTOM);
+        else
+            Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
+    }
+
+    public void onBottomToTopSwipe(){
+        if(swipeEventListener!=null)
+            swipeEventListener.SwipeEventDetected(v,SwipeTypeEnum.BOTTOM_TO_TOP);
+        else
+            Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
+    }
+
+    public boolean onTouch(View v, MotionEvent event) {
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN: {
+                downX = event.getX();
+                downY = event.getY();
+                return true;
+            }
+            case MotionEvent.ACTION_UP: {
+                upX = event.getX();
+                upY = event.getY();
+
+                float deltaX = downX - upX;
+                float deltaY = downY - upY;
+
+                //HORIZONTAL SCROLL
+                if(Math.abs(deltaX) > Math.abs(deltaY))
+                {
+                    if(Math.abs(deltaX) > min_distance){
+                        // left or right
+                        if(deltaX < 0)
+                        {
+                            this.onLeftToRightSwipe();
+                            return true;
+                        }
+                        if(deltaX > 0) {
+                            this.onRightToLeftSwipe();
+                            return true;
                         }
                     }
-                    result = true;
-                }
-                else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffY > 0) {
-                        onSwipeBottom();
-                    } else {
-                        onSwipeTop();
+                    else {
+                        //not long enough swipe...
+                        return false;
                     }
                 }
-                result = true;
+                //VERTICAL SCROLL
+                else
+                {
+                    if(Math.abs(deltaY) > min_distance){
+                        // top or down
+                        if(deltaY < 0)
+                        { this.onTopToBottomSwipe();
+                            return true;
+                        }
+                        if(deltaY > 0)
+                        { this.onBottomToTopSwipe();
+                            return true;
+                        }
+                    }
+                    else {
+                        //not long enough swipe...
+                        return false;
+                    }
+                }
 
-            } catch (Exception exception) {
-                exception.printStackTrace();
+                return true;
             }
-            return result;
         }
+        return false;
+    }
+    public interface onSwipeEvent
+    {
+        public void SwipeEventDetected(View v, SwipeTypeEnum SwipeType);
     }
 
-    public void onSwipeRight() {
+    public OnSwipeTouchListener setMinDistanceInPixels(int min_distance)
+    {
+        this.min_distance=min_distance;
+        return this;
     }
 
-    public void onSwipeLeft() {
-    }
-
-    public void onSwipeTop() {
-    }
-
-    public void onSwipeBottom() {
+    public enum SwipeTypeEnum
+    {
+        RIGHT_TO_LEFT,LEFT_TO_RIGHT,TOP_TO_BOTTOM,BOTTOM_TO_TOP
     }
 }

@@ -2,18 +2,27 @@ package com.example.framgia.imarketandroid.data.model;
 
 import android.database.Cursor;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by nguyenxuantung on 24/06/2016.
  */
 public class Point extends RealmObject {
+    //@SerializedName("id")
     private int mId;
+    //@SerializedName("type")
     private int mType;
-    private double mLat, mLng;
+    //@SerializedName("lat")
+    private double mLat;
+    //@SerializedName("lng")
+    private double mLng;
+    // @SerializedName("name")
     private String mName;
 
-    public Point(int id, double lat, double lng, int type, String name) {
+    public Point(int id, int type, double lat, double lng, String name) {
         this.mId = id;
         this.mLat = lat;
         this.mLng = lng;

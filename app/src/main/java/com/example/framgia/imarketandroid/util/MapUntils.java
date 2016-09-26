@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
@@ -88,5 +89,42 @@ public class MapUntils {
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         return bitmap;
+    }
+
+    public static void slideLayoutRight(final View view, final Animation a, final Animation b) {
+        new OnSwipeTouchListener(view).setOnSwipeListener(
+            new OnSwipeTouchListener.onSwipeEvent() {
+                @Override
+                public void SwipeEventDetected(View v,
+                                               OnSwipeTouchListener.SwipeTypeEnum SwipeType) {
+                    if (SwipeType == OnSwipeTouchListener.SwipeTypeEnum
+                        .RIGHT_TO_LEFT) {
+                        view.startAnimation(a);
+                        view.setVisibility(View.VISIBLE);
+                    }
+                    if (SwipeType == OnSwipeTouchListener.SwipeTypeEnum.LEFT_TO_RIGHT) {
+                        view.startAnimation(b);
+                        view.setVisibility(View.INVISIBLE);
+                    }
+                }
+            });
+    }
+
+    public static void slideLayoutLeft(final View view, final Animation a, final Animation b) {
+        new OnSwipeTouchListener(view).setOnSwipeListener(
+            new OnSwipeTouchListener.onSwipeEvent() {
+                @Override
+                public void SwipeEventDetected(View v,
+                                               OnSwipeTouchListener.SwipeTypeEnum SwipeType) {
+                    if (SwipeType == OnSwipeTouchListener.SwipeTypeEnum.RIGHT_TO_LEFT) {
+                        view.startAnimation(a);
+                        view.setVisibility(View.INVISIBLE);
+                    }
+                    if (SwipeType == OnSwipeTouchListener.SwipeTypeEnum.LEFT_TO_RIGHT) {
+                        view.startAnimation(b);
+                        view.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
     }
 }

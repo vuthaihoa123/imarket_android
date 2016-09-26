@@ -51,6 +51,9 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_book_product, parent, false);
         // set the view's size, margins, paddings and layout parameters
+        int height = parent.getMeasuredHeight();
+        int width = parent.getMeasuredWidth()/3;
+        v.setLayoutParams(new RecyclerView.LayoutParams(width, height));
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

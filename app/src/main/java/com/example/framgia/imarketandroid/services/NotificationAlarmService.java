@@ -35,7 +35,7 @@ public class NotificationAlarmService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         ImarketApplication imarketApplication = (ImarketApplication) getApplication();
-        imarketApplication.incrementCount();
+        imarketApplication. incrementCount();
         HttpRequest.getInstance().init();
         Context context = this.getApplicationContext();
         notificationManager =

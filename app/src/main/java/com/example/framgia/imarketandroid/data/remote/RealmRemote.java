@@ -1,12 +1,14 @@
 package com.example.framgia.imarketandroid.data.remote;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Migration;
 import com.example.framgia.imarketandroid.data.model.Point;
+import com.example.framgia.imarketandroid.data.model.Store;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -132,6 +134,12 @@ public class RealmRemote {
     public static void saveEdge(Edge edge) {
         mRealm.beginTransaction();
         mRealm.copyToRealm(edge);
+        mRealm.commitTransaction();
+    }
+
+    public static void saveStore(Store store) {
+        mRealm.beginTransaction();
+        mRealm.copyToRealm(store);
         mRealm.commitTransaction();
     }
 

@@ -10,6 +10,7 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.Store;
+import com.example.framgia.imarketandroid.data.model.StoreType;
 import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ChooseStoreTypeActivity extends AppCompatActivity implements OnRecyclerItemInteractListener {
     public static int sAvatar;
     private ChooseStoreTypeAdapter mAdapter;
-    private List<Store> mListStore = new ArrayList<>();
+    private List<StoreType> mListStore = new ArrayList<>();
     private RecyclerView mRecyclerView;
 
     @Override

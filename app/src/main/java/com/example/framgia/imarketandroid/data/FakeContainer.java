@@ -9,10 +9,13 @@ import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
 import com.example.framgia.imarketandroid.data.model.ImageEvent1;
 import com.example.framgia.imarketandroid.data.model.ImageEvent2;
+import com.example.framgia.imarketandroid.data.model.ItemBooking;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.data.model.Shop;
 import com.example.framgia.imarketandroid.data.model.Store;
+import com.example.framgia.imarketandroid.data.model.StoreType;
+import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.Flog;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -79,6 +82,35 @@ public class FakeContainer {
         return markets;
     }
 
+    public static ArrayList<ItemBooking> initDiagramOption() {
+        ArrayList<ItemBooking> list = new ArrayList<>();
+        list.add(new ItemBooking(R.drawable.pin, Constants.LOCATION));
+        list.add(new ItemBooking(R.drawable.shop, Constants.STORE));
+        list.add(new ItemBooking(R.drawable.floor, Constants.FLOOR));
+        return list;
+    }
+
+    public static List<String> initFloor() {
+        List<String> listFloor = new ArrayList<>();
+        listFloor.add("Tầng");
+        listFloor.add("1");
+        listFloor.add("2");
+        listFloor.add("3");
+        listFloor.add("4");
+        listFloor.add("5");
+        listFloor.add("6");
+        listFloor.add("7");
+        listFloor.add("8");
+        listFloor.add("9");
+        listFloor.add("10");
+        listFloor.add("11");
+        listFloor.add("12");
+        listFloor.add("13");
+        listFloor.add("14");
+        listFloor.add("15");
+        return listFloor;
+    }
+
     public static List<Shop> initListShop() {
         List<Shop> mShopList = new ArrayList<>();
         Shop shop0 = new Shop(0, "Chọn cửa hàng");
@@ -100,29 +132,32 @@ public class FakeContainer {
         return mShopList;
     }
 
-    public static List<Store> initStore() {
-        List<Store> storeList = new ArrayList<>();
-        storeList.add(new Store(R.drawable.food_avatar, "cửa hàng ăn uống"));
-        storeList.add(new Store(R.drawable.fashion, "cửa hàng quần áo"));
-        storeList.add(new Store(R.drawable.book_shop, "cửa hàng sách"));
-        storeList.add(new Store(R.drawable.cosmetic, "cửa hàng mỹ phẩm"));
-        storeList.add(new Store(R.drawable.stage, "Rạp chiếu phim"));
-        storeList.add(new Store(R.drawable.game_icon, "Trung tâm giải trí"));
-        storeList.add(new Store(R.drawable.smartphone, "Cửa hàng điện tử"));
+    public static List<StoreType> initStore() {
+        List<StoreType> storeList = new ArrayList<>();
+        storeList.add(new StoreType(0, "Chọn cửa hàng", R.drawable.store, 1));
+        storeList.add(new StoreType(1, "cửa hàng ăn uống", R.drawable.food_avatar, 1));
+        storeList.add(new StoreType(2, "cửa hàng quần áo", R.drawable.fashion, 1));
+        storeList.add(new StoreType(3, "cửa hàng sách", R.drawable.book_shop, 1));
+        storeList.add(new StoreType(4, "cửa hàng mỹ phẩm", R.drawable.cosmetic, 1));
+        storeList.add(new StoreType(5, "Rạp chiếu phim", R.drawable.stage, 1));
+        storeList.add(new StoreType(6, "Trung tâm giải trí", R.drawable.game_icon, 1));
+        storeList.add(new StoreType(7, "Cửa hàng điện tử", R.drawable.smartphone, 1));
         return storeList;
     }
+
     public static List<Store> initSpinnerStore() {
         List<Store> storeList = new ArrayList<>();
-        storeList.add(new Store(R.drawable.store, "Chọn cửa hàng"));
-        storeList.add(new Store(R.drawable.food_avatar, "cửa hàng ăn uống"));
-        storeList.add(new Store(R.drawable.fashion, "cửa hàng quần áo"));
-        storeList.add(new Store(R.drawable.book_shop, "cửa hàng sách"));
-        storeList.add(new Store(R.drawable.cosmetic, "cửa hàng mỹ phẩm"));
-        storeList.add(new Store(R.drawable.stage, "Rạp chiếu phim"));
-        storeList.add(new Store(R.drawable.game_icon, "Trung tâm giải trí"));
-        storeList.add(new Store(R.drawable.smartphone, "Cửa hàng điện tử"));
+//        storeList.add(new Store(R.drawable.store, "Chọn cửa hàng"));
+//        storeList.add(new Store(R.drawable.food_avatar, "cửa hàng ăn uống"));
+//        storeList.add(new Store(R.drawable.fashion, "cửa hàng quần áo"));
+//        storeList.add(new Store(R.drawable.book_shop, "cửa hàng sách"));
+//        storeList.add(new Store(R.drawable.cosmetic, "cửa hàng mỹ phẩm"));
+//        storeList.add(new Store(R.drawable.stage, "Rạp chiếu phim"));
+//        storeList.add(new Store(R.drawable.game_icon, "Trung tâm giải trí"));
+//        storeList.add(new Store(R.drawable.smartphone, "Cửa hàng điện tử"));
         return storeList;
     }
+
     public static String getNameProduct() {
         return "Điện thoại HTC One M8 Eye";
     }
