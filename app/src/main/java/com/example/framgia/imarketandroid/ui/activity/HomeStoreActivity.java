@@ -19,11 +19,13 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.ui.adapter.ViewPagerAdapter;
 import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
+import com.example.framgia.imarketandroid.ui.fragments.NoConnectFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SaleOffEventFragment;
 import com.example.framgia.imarketandroid.ui.fragments.ShopDetailInterfaceFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SuggestStoreFragment;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 import com.facebook.CallbackManager;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -38,7 +40,7 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
  * Created by toannguyen201194 on 06/09/2016.
  */
 public class HomeStoreActivity extends AppCompatActivity implements SearchView
-    .OnQueryTextListener, View.OnClickListener {
+    .OnQueryTextListener, View.OnClickListener, NoConnectFragment.OnClickToLoadConnect {
     private final String NAMESTORE = "Apple Store";
     private TabLayout mTabLayout;
     private ViewPager mViewPagerStore;
@@ -47,6 +49,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
     private CallbackManager mCallback = CallbackManager.Factory.create();
     private SuggestStoreFragment mSuggestStoreFragment;
     private ShopDetailInterfaceFragment mShopDetailInterfaceFragment;
+    private ViewPagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,42 +75,32 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(NAMESTORE);
-       mViewPagerStore.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 2:
-                        mSuggestStoreFragment.initGuideSuggestStore();
-                        break;
-                    case 3:
-                        mShopDetailInterfaceFragment.initGuideShopDetail();
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CategoryStallFragment(),
-            getString(R.string.title_fragment_Category));
-        adapter.addFragment(new SaleOffEventFragment(),
-            getString(R.string.title_fragment_saleoffevent));
-        mSuggestStoreFragment = new SuggestStoreFragment();
-        adapter.addFragment(mSuggestStoreFragment, getString(R.string.title_fragment_rate));
-        mShopDetailInterfaceFragment = new ShopDetailInterfaceFragment(mCallback);
-        adapter.addFragment(mShopDetailInterfaceFragment,
-            getString(R.string.title_fragment_informationstore));
-        viewPager.setAdapter(adapter);
+    public void setupViewPager(ViewPager viewPager) {
+        mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        if (InternetUtil.isInternetConnected(HomeStoreActivity.this)) {
+            mPagerAdapter.addFragment(new CategoryStallFragment(),
+                getString(R.string.title_fragment_Category));
+            mPagerAdapter.addFragment(new SaleOffEventFragment(),
+                getString(R.string.title_fragment_saleoffevent));
+            mSuggestStoreFragment = new SuggestStoreFragment();
+            mPagerAdapter.addFragment(mSuggestStoreFragment, getString(R.string.title_fragment_rate));
+            mShopDetailInterfaceFragment = new ShopDetailInterfaceFragment(mCallback);
+            mPagerAdapter.addFragment(mShopDetailInterfaceFragment,
+                getString(R.string.title_fragment_informationstore));
+            viewPager.setAdapter(mPagerAdapter);
+        } else {
+            mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
+                getString(R.string.title_fragment_Category));
+            mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
+                getString(R.string.title_fragment_saleoffevent));
+            mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
+                getString(R.string.title_fragment_rate));
+            mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
+                getString(R.string.title_fragment_informationstore));
+            viewPager.setAdapter(mPagerAdapter);
+        }
     }
 
     @Override
@@ -195,5 +188,11 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 DialogShareUtil.dialogShare(this, R.drawable.ic_iphone5s, mCallback);
                 break;
         }
+    }
+
+    @Override
+    public void onClickLoadConnect() {
+        finish();
+        startActivity(getIntent());
     }
 }

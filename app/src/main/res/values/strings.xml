@@ -285,4 +285,7 @@
     <string name="transaction_done">Giao dịch thành công. Xin cảm ơn !</string>
     <string name="request_confirm">Yêu cầu xác nhận</string>
     <string name="info_confirm">Xác nhận thông tin cá nhân và nhấp OK để hoàn tất giao dịch</string>
+
+    <string name="infor">Thông báo</string>
+    <string name="not_internet">Kết nối mạng thất bại</string>
 </resources>

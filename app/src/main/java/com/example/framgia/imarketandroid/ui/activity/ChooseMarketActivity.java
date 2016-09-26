@@ -40,6 +40,7 @@ import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
+import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         supportActionBar();
         setSearchSuggestionAdapter();
         initRececlerView();
+        InternetUtil.isInternetConnected(ChooseMarketActivity.this);
     }
 
     private void initRececlerView() {
@@ -156,61 +158,65 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_favorite:
-                getRecycleFavorite();
-                getVisible(mStrokeLine1, mStrokeLine2, mStrokeLine3, mLinearMenu);
-                DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReFavorite);
-                break;
-            case R.id.button_bought:
-                DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReBound);
-                getVisible(mStrokeLine2, mStrokeLine1, mStrokeLine3, mLinearMenu);
-                mHeaderNames = FakeContainer.getListHeader();
-                mCartItems = FakeContainer.getListCartItem();
-                if (mHistoryTimeAdapter == null) {
-                    mHistoryTimeAdapter = new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                    mRecyclerDrawer.setLayoutManager(linearLayoutManager);
-                    mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
-                    mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
-                } else {
-                    mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
-                }
-                break;
-            case R.id.button_follow:
-                DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReFollow);
-                getVisible(mStrokeLine3, mStrokeLine2, mStrokeLine1, mLinearMenu);
-                break;
-            case R.id.button_more:
-                if (mLinearMenu.getVisibility() == View.GONE) {
-                    mLinearMenu.setVisibility(View.VISIBLE);
-                } else {
+        if (InternetUtil.isInternetConnected(ChooseMarketActivity.this)) {
+            switch (view.getId()) {
+                case R.id.button_favorite:
+                    getRecycleFavorite();
+                    getVisible(mStrokeLine1, mStrokeLine2, mStrokeLine3, mLinearMenu);
+                    DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReFavorite);
+                    break;
+                case R.id.button_bought:
+                    DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReBound);
+                    getVisible(mStrokeLine2, mStrokeLine1, mStrokeLine3, mLinearMenu);
+                    mHeaderNames = FakeContainer.getListHeader();
+                    mCartItems = FakeContainer.getListCartItem();
+                    if (mHistoryTimeAdapter == null) {
+                        mHistoryTimeAdapter =
+                            new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                        mRecyclerDrawer.setLayoutManager(linearLayoutManager);
+                        mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
+                        mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
+                    } else {
+                        mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
+                    }
+                    break;
+                case R.id.button_follow:
+                    DialogShareUtil.getSmallBang(ChooseMarketActivity.this, mReFollow);
+                    getVisible(mStrokeLine3, mStrokeLine2, mStrokeLine1, mLinearMenu);
+                    break;
+                case R.id.button_more:
+                    if (mLinearMenu.getVisibility() == View.GONE) {
+                        mLinearMenu.setVisibility(View.VISIBLE);
+                    } else {
+                        mLinearMenu.setVisibility(View.GONE);
+                    }
+                    break;
+                case R.id.button_sign_in:
                     mLinearMenu.setVisibility(View.GONE);
-                }
-                break;
-            case R.id.button_sign_in:
-                mLinearMenu.setVisibility(View.GONE);
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-            case R.id.button_sign_out:
-                SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
-                Session session = (Session) SharedPreferencesUtil
-                    .getInstance()
-                    .getValue(Constants.SESSION, Session.class);
-                if (session != null) {
-                    actionSignout();
-                } else {
-                    DialogShareUtil.toastDialogMessage(getString(R.string.signout_fails_message),
-                        ChooseMarketActivity.this);
-                }
-                mLinearMenu.setVisibility(View.GONE);
-                break;
-            case R.id.button_profile:
-                startActivity(new Intent(this, UpdateProfileActivity.class));
-                break;
-            case R.id.image_avatar:
-                mLinearMenu.setVisibility(View.GONE);
-                break;
+                    startActivity(new Intent(this, LoginActivity.class));
+                    break;
+                case R.id.button_sign_out:
+                    SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
+                    Session session = (Session) SharedPreferencesUtil
+                        .getInstance()
+                        .getValue(Constants.SESSION, Session.class);
+                    if (session != null) {
+                        actionSignout();
+                    } else {
+                        DialogShareUtil
+                            .toastDialogMessage(getString(R.string.signout_fails_message),
+                                ChooseMarketActivity.this);
+                    }
+                    mLinearMenu.setVisibility(View.GONE);
+                    break;
+                case R.id.button_profile:
+                    startActivity(new Intent(this, UpdateProfileActivity.class));
+                    break;
+                case R.id.image_avatar:
+                    mLinearMenu.setVisibility(View.GONE);
+                    break;
+            }
         }
     }
 

@@ -142,9 +142,4 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
     public void OnClickAlbumShop(AlbumShop albumShop, int position) {
 //        startActivity(new Intent(getActivity(), DetailsProductActivity.class));
     }
-
-    public void initGuideShopDetail() {
-        ShowcaseGuideUtil.singleShowcase(getActivity(), Constants.SHOWCASE_ID_DETAILS_SHOP,
-            new Showcase(mButtonShare, getString(R.string.sequence_share_fb)));
-    }
 }
