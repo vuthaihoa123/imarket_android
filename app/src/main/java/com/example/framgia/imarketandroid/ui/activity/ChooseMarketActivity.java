@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.media.TransportPerformer;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
@@ -25,7 +26,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
@@ -33,6 +36,7 @@ import com.example.framgia.imarketandroid.data.model.CartItem;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
 import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.adapter.HistoryTimeAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
@@ -194,6 +198,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 case R.id.button_sign_in:
                     mLinearMenu.setVisibility(View.GONE);
                     startActivity(new Intent(this, LoginActivity.class));
+                    getInfo();
                     break;
                 case R.id.button_sign_out:
                     SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
@@ -210,7 +215,17 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                     mLinearMenu.setVisibility(View.GONE);
                     break;
                 case R.id.button_profile:
-                    startActivity(new Intent(this, UpdateProfileActivity.class));
+                    SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
+                    Session session2 = (Session) SharedPreferencesUtil
+                        .getInstance()
+                        .getValue(Constants.SESSION, Session.class);
+                    if (session2 != null)
+                        startActivity(new Intent(this, UpdateProfileActivity.class));
+                    else {
+                        mLinearMenu.setVisibility(View.GONE);
+                        startActivity(new Intent(this, LoginActivity.class));
+                        getInfo();
+                    }
                     break;
                 case R.id.image_avatar:
                     mLinearMenu.setVisibility(View.GONE);
@@ -276,19 +291,27 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void getInfo() {
         SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
-        Session session = (Session) SharedPreferencesUtil
+        UserModel userModel = (UserModel) SharedPreferencesUtil
             .getInstance()
-            .getValue(Constants.SESSION, Session.class);
-        if (session != null) {
-            if (session.getFullname() != null) {
-                mTextUsername.setText(session.getFullname().toString());
+            .getValue(Constants.SESSION, UserModel.class);
+        if (userModel != null && userModel.getSession() != null) {
+            if (userModel.getSession().getFullname() != null) {
+                mTextUsername.setText(userModel.getSession().getFullname().toString());
             }
-            if (session.getUsername() != null) {
-                mTextEmail.setText(session.getUsername().toString());
+            if (userModel.getSession().getUsername() != null) {
+                mTextEmail.setText(userModel.getSession().getUsername().toString());
             }
-            if (session.getUrlImage() != null) {
-                mCircleImageView.setImageBitmap(ConvertImageToBase64Util.decodeBase64(session.getUrlImage()));
+            if (userModel.getSession().getUrlImage() != null) {
+                String url =
+                    Constants.HEAD_URL + userModel.getSession().getUrlImage();
+                Glide.with(this).load(url).into(mCircleImageView);
+            } else {
+                mCircleImageView.setImageResource(R.drawable.ic_framgia);
             }
+        } else {
+            mTextUsername.setText(R.string.login_hint_username);
+            mTextEmail.setText(R.string.email);
+            mCircleImageView.setImageResource(R.drawable.ic_framgia);
         }
     }
 
@@ -307,11 +330,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferencesUtil.getInstance()
-                        .clearSharedPreference(ChooseMarketActivity.this);
+                    SharedPreferencesUtil.getInstance().clearSharedPreference();
                     dialog.dismiss();
-                    DialogShareUtil.toastDialogMessage(getString(R.string.signout_done_message),
-                        ChooseMarketActivity.this);
+                    Toast.makeText(ChooseMarketActivity.this,
+                        getString(R.string.signout_done_message), Toast.LENGTH_SHORT).show();
+                    getInfo();
                 }
             });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -321,6 +344,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             }
         });
         builder.create().show();
+        SharedPreferencesUtil.getInstance().clearSharedPreference();
     }
 
     public void getVisible(View view1, View view2, View view3, View view4) {
@@ -352,4 +376,5 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(this, mDrawerItems);
         mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
     }
+
 }

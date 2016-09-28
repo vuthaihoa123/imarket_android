@@ -18,23 +18,42 @@
             android:id="@+id/image_view_logo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_height_logo"
+            android:background="@drawable/background_profile"
             android:contentDescription="@string/show_logo_app"/>
 
         <EditText
             android:id="@+id/edit_text_username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/width_height_40"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:hint="@string/login_hint_username"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/text_color"
             android:singleLine="true"
             android:textStyle="italic"/>
 
-        <EditText
-            android:id="@+id/edit_text_password"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/login_hint_password"
-            android:inputType="textPassword"
-            android:textStyle="italic"/>
+            android:layout_height="@dimen/width_height_40"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColorHint="@color/text_color"
+                android:hint="@string/login_hint_password"
+                android:inputType="textPassword"
+                android:textStyle="italic"/>
+
+            <Button
+                android:id="@+id/button_see_pass"
+                android:layout_width="@dimen/width_height_40"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@drawable/ic_visibility_black"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_view_forget_password"
@@ -50,10 +69,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layout_margin_comment"
             android:background="@drawable/button_login"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
             android:text="@string/login_button_text"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/login_button_textsize"
+            android:textStyle="bold"
             />
 
         <android.support.v7.widget.CardView

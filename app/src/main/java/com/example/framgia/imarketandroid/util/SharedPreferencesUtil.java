@@ -47,7 +47,7 @@ public class SharedPreferencesUtil {
         return object;
     }
 
-    public void clearSharedPreference(Context context) {
+    public void clearSharedPreference() {
         mEditor = mSettings.edit();
         mEditor.clear();
         mEditor.apply();
@@ -56,7 +56,6 @@ public class SharedPreferencesUtil {
     public boolean isFirstTimeLaunch() {
         return mSettings.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
-
     public void setFirstTimeLaunch(boolean isFirstTime) {
         mEditor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
         mEditor.commit();

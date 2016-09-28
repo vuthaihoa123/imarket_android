@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.UserModel;
@@ -40,8 +43,8 @@ import java.util.Calendar;
  */
 public class UpdateProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private final int DILOG_ID = 115;
-    private final int WIDTHIMAGE=800;
-    private final int HEIGHTIMAGE=600;
+    private final int WIDTHIMAGE = 800;
+    private final int HEIGHTIMAGE = 600;
     Bitmap bitmap;
     Uri uri;
     private Toolbar mToolbar;
@@ -53,6 +56,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
     private ProgressDialog mProgressDialog;
     private int mYear, mMonth, mDay;
     private int mId;
+    Session mSession = new Session();
     private DatePickerDialog.OnDateSetListener pickerListener =
         new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -67,6 +71,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         };
     private RelativeLayout mReContact, mReBirthday, mRePhone, mReEmail, mReCompany;
     private ImageView mImageContact, mImageBirthday, mImagePhone, mImageEmail, mImageCompany;
+    private String mAuthToken;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +79,15 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_update_profile);
         initView();
         init();
-        HttpRequest.getInstance().init();
+        UserModel userModel =
+            (UserModel) SharedPreferencesUtil.getInstance()
+                .getValue(Constants.SESSION, UserModel.class);
+        if (userModel.getSession() != null) {
+            if (userModel.getSession().getmAuthToken() != null) {
+                mAuthToken = userModel.getSession().getmAuthToken();
+            }
+            HttpRequest.getInstance().initAuthToken(mAuthToken);
+        }
         showProfile();
         showEnableEditText(false);
     }
@@ -139,55 +152,71 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
     }
 
     private void showProfile() {
-        Session session =
-            (Session) SharedPreferencesUtil.getInstance()
-                .getValue(Constants.SESSION, Session.class);
-        if (session != null) {
-            if (session.getUrlImage() != null) {
-                mImageAvatar
-                    .setImageBitmap(ConvertImageToBase64Util.decodeBase64(session.getUrlImage()));
+        UserModel userModel =
+            (UserModel) SharedPreferencesUtil.getInstance()
+                .getValue(Constants.SESSION, UserModel.class);
+        if (userModel != null && userModel.getSession() != null) {
+            if (userModel.getSession().getUrlImage() != null) {
+                String url = Constants.HEAD_URL + userModel.getSession().getUrlImage();
+                Glide.with(getBaseContext()).load(url)
+                    .placeholder(R.drawable.avatar)
+                    .error(R.drawable.game_icon)
+                    .into(mImageAvatar);
             }
-            mId = session.getId();
-            mEditFullname.setText(session.getFullname());
-            mEditMail.setText(session.getUsername());
-            mEditAdress.setText(session.getAdress());
-            mEditNumber.setText(session.getNumberPhone());
-            mTextBirthday.setText(session.getBrithday());
+            mId = userModel.getSession().getId();
+            mEditFullname.setText(userModel.getSession().getFullname());
+            mEditMail.setText(userModel.getSession().getUsername());
+            mEditAdress.setText(userModel.getSession().getAdress());
+            mEditNumber.setText(userModel.getSession().getNumberPhone());
+            mTextBirthday.setText(userModel.getSession().getBrithday());
         }
     }
 
     private void saveUpdate() {
         // TODO: 05/09/2016 send server check update
-        Session session = new Session();
-        session.setFullname(mEditFullname.getText().toString());
-        session.setAdress(mEditAdress.getText().toString());
-        session.setUsername(mEditMail.getText().toString());
-        session.setNumberPhone(mEditNumber.getText().toString());
-        session.setBrithday(mTextBirthday.getText().toString());
-        final UserModel userModel = new UserModel(session);
+        mSession.setId(mId);
+        mSession.setFullname(mEditFullname.getText().toString());
+        mSession.setAdress(mEditAdress.getText().toString());
+        mSession.setUsername(mEditMail.getText().toString());
+        mSession.setNumberPhone(mEditNumber.getText().toString());
+        mSession.setBrithday(mTextBirthday.getText().toString());
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.progressdialog));
         mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.show();
-        HttpRequest.getInstance().updateUser(mId, userModel);
+        HttpRequest.getInstance().updateUser(mId, new UserModel(mSession));
         HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
                 UserModel userModel1 = (UserModel) object;
                 mProgressDialog.dismiss();
-                if (userModel1.getErrors().getEmail().get(0).isEmpty()) {
+                if (userModel1.getSession() != null) {
                     Toast.makeText(getBaseContext(), R.string.toast_save_successfully,
                         Toast.LENGTH_SHORT).show();
-                    SharedPreferencesUtil.getInstance()
-                        .save(Constants.SESSION, userModel1.getSession());
+                    SharedPreferencesUtil.getInstance().clearSharedPreference();
+                    SharedPreferencesUtil.getInstance().save(Constants.SESSION, userModel1);
+                    String url = Constants.HEAD_URL + userModel1.getSession().getUrlImage();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Glide.get(UpdateProfileActivity.this).clearDiskCache();
+                        }
+                    }).start();
+                    Glide.get(UpdateProfileActivity.this).clearMemory();
+                    Glide.with(getBaseContext()).load(url)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(false)
+                        .centerCrop()
+                        .into(mImageAvatar);
                 } else {
-                    Toast.makeText(getBaseContext(), userModel1.getErrors().getEmail().get(0),
+                    Toast.makeText(getBaseContext(), userModel1.getmErrors().toString(),
                         Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onLoadDataFailure(String message) {
+                mProgressDialog.dismiss();
             }
         });
     }
@@ -211,7 +240,6 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.action_save:
                 saveUpdate();
-                showProfile();
                 showEnableEditText(false);
                 break;
             case R.id.action_cancel:
@@ -220,7 +248,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(this, R.string.toast_cancel_profile, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_logout:
-                SharedPreferencesUtil.getInstance().clearSharedPreference(this);
+                SharedPreferencesUtil.getInstance().clearSharedPreference();
                 startActivity(new Intent(UpdateProfileActivity.this, LoginActivity.class));
                 finish();
                 break;
@@ -302,9 +330,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                         Bitmap image = BitmapFactory
                             .decodeStream(getContentResolver().openInputStream(uri), null, options);
                         String imAvater = ConvertImageToBase64Util.encodeToBase64(image, 100);
-                        Session session = new Session();
-                        session.setUrlImage(imAvater);
-                        SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
+                        mSession.setUrlImage(imAvater);
                         mImageAvatar.setImageBitmap(ConvertImageToBase64Util.decodeBase64
                             (imAvater));
                     } catch (FileNotFoundException e) {
@@ -323,9 +349,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                 if (data.hasExtra(Constants.BUNDLE_DATA)) {
                     bitmap = (Bitmap) data.getExtras().get(Constants.BUNDLE_DATA);
                     String imAvater = ConvertImageToBase64Util.encodeToBase64(bitmap, 100);
-                    Session session = new Session();
-                    session.setUrlImage(imAvater);
-                    SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
+                    mSession.setUrlImage(imAvater);
                     mImageAvatar.setImageBitmap(ConvertImageToBase64Util.decodeBase64(imAvater));
                 } else if (data.getExtras() == null) {
                     Toast.makeText(getApplicationContext(),

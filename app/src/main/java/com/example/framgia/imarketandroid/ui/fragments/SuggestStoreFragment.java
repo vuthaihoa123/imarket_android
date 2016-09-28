@@ -123,8 +123,7 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
                 (ViewGroup) getActivity().findViewById(R.id.view_group_details));
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setView(promptsView);
-        mEditTextContentMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate);
-        mButtonBack = (Button) promptsView.findViewById(R.id.button_back_message_rate);
+        mEditTextContentMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate_comment);
         mButtonPost = (Button) promptsView.findViewById(R.id.button_post_message_rate);
         mButtonStar1 = (Button) promptsView.findViewById(R.id.button_start_vote_1);
         mButtonStar2 = (Button) promptsView.findViewById(R.id.button_start_vote_2);
@@ -136,12 +135,6 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_start_3);
         mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_start_4);
         mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_start_5);
-        mButtonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAlertDialogPostMessage.dismiss();
-            }
-        });
         mButtonPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

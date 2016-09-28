@@ -7,6 +7,8 @@ import com.example.framgia.imarketandroid.data.model.UserModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -22,10 +24,11 @@ public interface IMarketApiEndPoint {
     @GET("users/32")
     Call<Session> eventNotification();
     @POST("sessions")
-    Call<Session> login(@Body Session session);
+    Call<UserModel> login(@Body Session session);
     @POST("users")
     Call<UserModel> register(@Body UserModel user);
+    @Headers("Content-Type: application/json")
     @PATCH("users/{iduser}")
-    Call<UserModel> updateUser(@Path(value = "iduser",encoded = true) int iduser
-        ,@Body UserModel userModel);
+    Call<UserModel> updateUser(@Path(value =
+        "iduser", encoded = true) int iduser,@Body UserModel userModel);
 }

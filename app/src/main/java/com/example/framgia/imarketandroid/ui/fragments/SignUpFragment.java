@@ -101,12 +101,12 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
                 public void onLoadDataSuccess(Object object) {
                     UserModel signupModel1 = (UserModel) object;
                     mProgressDialog.dismiss();
-                    if (signupModel1.getErrors().getEmail().get(0).isEmpty()) {
+                    if (signupModel1.getmErrors().isEmpty()) {
                         Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
                         startActivity(intent);
                         getActivity().finish();
                     } else {
-                        Toast.makeText(getContext(), signupModel1.getErrors().getEmail().get(0),
+                        Toast.makeText(getContext(), signupModel1.getmErrors(),
                             Toast.LENGTH_SHORT).show();
                     }
                 }
