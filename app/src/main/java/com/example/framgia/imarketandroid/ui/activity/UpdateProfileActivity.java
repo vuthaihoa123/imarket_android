@@ -2,7 +2,12 @@ package com.example.framgia.imarketandroid.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -20,10 +25,14 @@ import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.ConvertImageToBase64Util;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.HttpRequest;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
+import java.io.FileNotFoundException;
 import java.util.Calendar;
 
 /**
@@ -31,11 +40,19 @@ import java.util.Calendar;
  */
 public class UpdateProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private final int DILOG_ID = 115;
+    private final int WIDTHIMAGE=800;
+    private final int HEIGHTIMAGE=600;
+    Bitmap bitmap;
+    Uri uri;
     private Toolbar mToolbar;
+    private View mView;
+    private ImageView mImageAvatar;
     private FloatingActionButton mFloatEdit;
     private EditText mEditFullname, mEditNumber, mEditAdress, mEditMail;
     private TextView mTextBirthday;
+    private ProgressDialog mProgressDialog;
     private int mYear, mMonth, mDay;
+    private int mId;
     private DatePickerDialog.OnDateSetListener pickerListener =
         new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -57,12 +74,15 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_update_profile);
         initView();
         init();
+        HttpRequest.getInstance().init();
         showProfile();
+        showEnableEditText(false);
     }
 
     private void initView() {
+        mView = findViewById(android.R.id.content);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mFloatEdit = (FloatingActionButton) findViewById(R.id.float_picture);
+        mImageAvatar = (ImageView) findViewById(R.id.image_avatar);
         mEditFullname = (EditText) findViewById(R.id.edit_fullname);
         mEditFullname.setOnClickListener(this);
         mEditNumber = (EditText) findViewById(R.id.edit_number);
@@ -88,6 +108,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         mImagePhone = (ImageView) findViewById(R.id.ivContactItem3);
         mImageEmail = (ImageView) findViewById(R.id.ivContactItem4);
         mImageCompany = (ImageView) findViewById(R.id.ivContactItem5);
+        mFloatEdit = (FloatingActionButton) findViewById(R.id.float_picture);
+        mFloatEdit.setOnClickListener(this);
     }
 
     private void init() {
@@ -121,6 +143,11 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             (Session) SharedPreferencesUtil.getInstance()
                 .getValue(Constants.SESSION, Session.class);
         if (session != null) {
+            if (session.getUrlImage() != null) {
+                mImageAvatar
+                    .setImageBitmap(ConvertImageToBase64Util.decodeBase64(session.getUrlImage()));
+            }
+            mId = session.getId();
             mEditFullname.setText(session.getFullname());
             mEditMail.setText(session.getUsername());
             mEditAdress.setText(session.getAdress());
@@ -137,8 +164,37 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         session.setUsername(mEditMail.getText().toString());
         session.setNumberPhone(mEditNumber.getText().toString());
         session.setBrithday(mTextBirthday.getText().toString());
-        SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
-        Toast.makeText(this, R.string.toast_save_successfully, Toast.LENGTH_SHORT).show();
+        final UserModel userModel = new UserModel(session);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getString(R.string.progressdialog));
+        mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.show();
+        HttpRequest.getInstance().updateUser(mId, userModel);
+        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+            @Override
+            public void onLoadDataSuccess(Object object) {
+                UserModel userModel1 = (UserModel) object;
+                mProgressDialog.dismiss();
+                if (userModel1.getErrors().getEmail().get(0).isEmpty()) {
+                    Toast.makeText(getBaseContext(), R.string.toast_save_successfully,
+                        Toast.LENGTH_SHORT).show();
+                    SharedPreferencesUtil.getInstance()
+                        .save(Constants.SESSION, userModel1.getSession());
+                } else {
+                    Toast.makeText(getBaseContext(), userModel1.getErrors().getEmail().get(0),
+                        Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onLoadDataFailure(String message) {
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -151,7 +207,6 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                // TODO: 01/09/2016  event when click save 
                 showEnableEditText(true);
                 break;
             case R.id.action_save:
@@ -183,6 +238,11 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         mEditFullname.setEnabled(check);
         mFloatEdit.setEnabled(check);
         mEditNumber.setEnabled(check);
+        if (check) {
+            mFloatEdit.setVisibility(View.VISIBLE);
+        } else {
+            mFloatEdit.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -219,6 +279,66 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             case R.id.edit_adress:
                 DialogShareUtil.getSmallBang(UpdateProfileActivity.this, mImageCompany);
                 break;
+            case R.id.float_picture:
+                DialogShareUtil.startDilog(UpdateProfileActivity.this, mView);
+                break;
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.GALLERY_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    uri = data.getData();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = true;
+                    try {
+                        BitmapFactory
+                            .decodeStream(getContentResolver().openInputStream(uri), null, options);
+                        options.inSampleSize = ConvertImageToBase64Util.calculateInSampleSize
+                            (options, WIDTHIMAGE, HEIGHTIMAGE);
+                        options.inJustDecodeBounds = false;
+                        Bitmap image = BitmapFactory
+                            .decodeStream(getContentResolver().openInputStream(uri), null, options);
+                        String imAvater = ConvertImageToBase64Util.encodeToBase64(image, 100);
+                        Session session = new Session();
+                        session.setUrlImage(imAvater);
+                        SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
+                        mImageAvatar.setImageBitmap(ConvertImageToBase64Util.decodeBase64
+                            (imAvater));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.cancelled,
+                        Toast.LENGTH_SHORT).show();
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), R.string.cancelled,
+                    Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == Constants.CAMERA_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                if (data.hasExtra(Constants.BUNDLE_DATA)) {
+                    bitmap = (Bitmap) data.getExtras().get(Constants.BUNDLE_DATA);
+                    String imAvater = ConvertImageToBase64Util.encodeToBase64(bitmap, 100);
+                    Session session = new Session();
+                    session.setUrlImage(imAvater);
+                    SharedPreferencesUtil.getInstance().save(Constants.SESSION, session);
+                    mImageAvatar.setImageBitmap(ConvertImageToBase64Util.decodeBase64(imAvater));
+                } else if (data.getExtras() == null) {
+                    Toast.makeText(getApplicationContext(),
+                        R.string.toast_camerarequest, Toast.LENGTH_SHORT)
+                        .show();
+                    BitmapDrawable thumbnail = new BitmapDrawable(
+                        getResources(), data.getData().getPath());
+                    mImageAvatar.setImageDrawable(thumbnail);
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), R.string.cancelled,
+                    Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

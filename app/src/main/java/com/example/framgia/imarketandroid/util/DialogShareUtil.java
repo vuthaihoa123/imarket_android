@@ -1,19 +1,20 @@
 package com.example.framgia.imarketandroid.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.design.widget.Snackbar;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.facebook.CallbackManager;
@@ -26,9 +27,7 @@ import com.facebook.share.ShareApi;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 
-import java.security.interfaces.RSAKey;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import xyz.hanks.library.SmallBang;
@@ -171,13 +170,11 @@ public class DialogShareUtil {
         View promptsView = li.inflate(R.layout.continue_book_dialog, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
         alertDialogBuilder.setView(promptsView);
-
         Button butCancel = (Button) promptsView.findViewById(R.id.buttn_cancel_dialog_confirm_book);
         Button butOk = (Button) promptsView.findViewById(R.id.buttn_ok_dialog_confirm_book);
         TextView textInfo = (TextView) promptsView.findViewById(R.id.text_marque);
         textInfo.setSelected(true);
         textInfo.setMarqueeRepeatLimit(-1);
-
         alertDialogBuilder
             .setCancelable(false);
         butCancel.setOnClickListener(new View.OnClickListener() {
@@ -210,5 +207,37 @@ public class DialogShareUtil {
             public void onAnimationEnd() {
             }
         });
+    }
+
+    public static void startDilog(final Activity activity, final View view) {
+        AlertDialog.Builder myAlertDilog = new AlertDialog.Builder(activity);
+        myAlertDilog.setTitle(R.string.dialog_picture);
+        myAlertDilog.setMessage(R.string.message_picture);
+        myAlertDilog.setPositiveButton(R.string.gallery, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent picIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                picIntent.setType(Constants.SETTYPEDATA);
+                picIntent.putExtra(Constants.BUNDLE_DATA, true);
+                activity.startActivityForResult(picIntent, Constants.GALLERY_REQUEST);
+            }
+        });
+        myAlertDilog
+            .setNegativeButton(R.string.dialog_camera, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (!RequestPermissionUtil.checkIfAlreadyhavePermission(activity, Manifest
+                        .permission.CAMERA)) {
+                        ActivityCompat.requestPermissions(activity, new String[]{
+                            Manifest.permission.CAMERA
+                        }, Constants
+                            .REQUEST_PERMISSION);
+                    } else {
+                        Intent picIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        activity.startActivityForResult(picIntent, Constants.CAMERA_REQUEST);
+                    }
+                }
+            });
+        myAlertDilog.show();
     }
 }

@@ -2,7 +2,7 @@ package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.data.model.CategoryList;
 import com.example.framgia.imarketandroid.data.model.Session;
-import com.example.framgia.imarketandroid.data.model.SignupModel;
+import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -92,19 +92,19 @@ public class HttpRequest {
         });
     }
 
-    public void register(SignupModel user) {
+    public void register(UserModel user) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<SignupModel> callRegister = mApi.register(user);
-        callRegister.enqueue(new Callback<SignupModel>() {
+        Call<UserModel> callRegister = mApi.register(user);
+        callRegister.enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                 if (response.isSuccessful() && mListener != null) {
                     mListener.onLoadDataSuccess(response.body());
                 } else {
-                    SignupModel signupModel = null;
+                    UserModel signupModel = null;
                     try {
                         signupModel =
-                            new Gson().fromJson(response.errorBody().string(), SignupModel.class);
+                            new Gson().fromJson(response.errorBody().string(), UserModel.class);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -113,7 +113,35 @@ public class HttpRequest {
             }
 
             @Override
-            public void onFailure(Call<SignupModel> call, Throwable t) {
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                if (mListener != null) {
+                    mListener.onLoadDataFailure(t.getMessage());
+                }
+            }
+        });
+    }
+    public void updateUser(int iduser,UserModel userUpdate){
+        mApi=mRetrofit.create(IMarketApiEndPoint.class);
+        Call<UserModel> callUpdateUser=mApi.updateUser(iduser,userUpdate);
+        callUpdateUser.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                if (response.isSuccessful() && mListener != null) {
+                    mListener.onLoadDataSuccess(response.body());
+                } else {
+                    UserModel userUpdate = null;
+                    try {
+                        userUpdate =
+                            new Gson().fromJson(response.errorBody().string(), UserModel.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mListener.onLoadDataSuccess(userUpdate);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }

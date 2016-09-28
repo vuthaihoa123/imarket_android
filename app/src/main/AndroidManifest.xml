@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.framgia.imarketandroid">
+<manifest package="com.example.framgia.imarketandroid"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-feature
         android:name="android.hardware.location"
-        android:required="true" />
+        android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true"/>
     <uses-feature
         android:name="android.hardware.location.gps"
-        android:required="true" />
+        android:required="true"/>
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true" />
+        android:required="true"/>
 
     <application
         android:name=".ImarketApplication"
@@ -32,12 +36,12 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-        <meta-data android:name="com.google.android.gms.version" />
+            android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.google.android.gms.version"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"/>
 
         <service android:name=".services.NotificationAlarmService"/>
 
@@ -48,24 +52,24 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-
+            android:label="@string/app_name"/>
         <activity android:name=".ui.activity.ChooseMarketActivity">
 
         </activity>
 
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.UpdateProfileActivity" />
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.UpdateProfileActivity"/>
+        <activity android:name=".ui.activity.MainActivity"/>
         <activity
             android:name=".ui.activity.FloorActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.ListProductsActivity"
             android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter><meta-data
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
@@ -78,21 +82,21 @@
         <activity android:name=".ui.activity.BookProductActivity"/>
         <activity
             android:name=".ui.activity.DialogActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity
             android:name=".ui.activity.MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
-        <activity android:name=".ui.activity.HomeStoreActivity">
+        <activity android:name=".ui.activity.HomeStoreActivity"/>
+        <activity
+            android:name=".ui.activity.ChooseStoreTypeActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity android:name=".ui.activity.IntroduceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activity.ChooseStoreTypeActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
-        <activity android:name=".ui.activity.IntroduceActivity"/>
     </application>
 
 </manifest>

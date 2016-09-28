@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by toannguyen201194 on 01/08/2016.
  */
-public class SignupModel {
+public class UserModel {
     @SerializedName("user")
     private Session mSession;
     @SerializedName("errors")
     private Errors mErrors;
-    public SignupModel(Session session) {
+    public UserModel(Session session) {
         mSession = session;
     }
 

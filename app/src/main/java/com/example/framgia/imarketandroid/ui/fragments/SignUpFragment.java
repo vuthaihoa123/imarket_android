@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
-import com.example.framgia.imarketandroid.data.model.SignupModel;
+import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 
@@ -94,12 +94,12 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
             Session user = new Session(mEditFullName.getText().toString(), mEditMail.getText()
                 .toString(), mEditPassword.getText().toString(),
                 mEditPasswordConfirm.getText().toString());
-            final SignupModel signupModel = new SignupModel(user);
+            final UserModel signupModel = new UserModel(user);
             HttpRequest.getInstance().register(signupModel);
             HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
                 @Override
                 public void onLoadDataSuccess(Object object) {
-                    SignupModel signupModel1 = (SignupModel) object;
+                    UserModel signupModel1 = (UserModel) object;
                     mProgressDialog.dismiss();
                     if (signupModel1.getErrors().getEmail().get(0).isEmpty()) {
                         Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
