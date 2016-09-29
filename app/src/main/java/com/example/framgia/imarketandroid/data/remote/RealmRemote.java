@@ -1,15 +1,12 @@
 package com.example.framgia.imarketandroid.data.remote;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Migration;
 import com.example.framgia.imarketandroid.data.model.Point;
-import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -18,37 +15,34 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
-import io.realm.RealmMigration;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
-import io.realm.exceptions.RealmMigrationNeededException;
-import io.realm.internal.Table;
 
 /**
  * Created by framgia on 24/08/2016.
  */
 public class RealmRemote {
-    private static Realm mRealm=Realm.getDefaultInstance();
+    private static Realm mRealm = Realm.getDefaultInstance();
+    private static final int SCHEMA_VERSION = 3;
 
     public static void openDatabaseRealm(Context context, InputStream inputStream, String
-        outFileName) {
+            outFileName) {
         copyBundledRealmFile(context, inputStream, outFileName);
-        RealmConfiguration config0 = new RealmConfiguration.Builder(context)
-            .name(outFileName)
-            .schemaVersion(3)
-            .build();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context)
+                .name(outFileName)
+                .schemaVersion(SCHEMA_VERSION)
+                .build();
         try {
-            Realm.migrateRealm(config0, new Migration());
+            Realm.migrateRealm(realmConfiguration, new Migration());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        mRealm.getInstance(config0);
+        mRealm.getInstance(realmConfiguration);
     }
 
     public static RealmResults<Point> getAllPoint() {
@@ -103,12 +97,21 @@ public class RealmRemote {
         return point;
     }
 
+    public static List<Category> getListCategory() {
+        RealmResults<Category> listCategory = mRealm.where(Category.class).findAll();
+        return listCategory;
+    }
+
+    public static long getCategorySize() {
+        return mRealm.where(Category.class).count();
+    }
+
     public static void deletePoint(final String name) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmResults<Point> results =
-                    mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findAll();
+                        mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findAll();
                 results.deleteAllFromRealm();
             }
         });
@@ -132,17 +135,23 @@ public class RealmRemote {
         mRealm.commitTransaction();
     }
 
+    public static void saveCategory(List<Category> categoryList) {
+        mRealm.beginTransaction();
+        mRealm.copyToRealmOrUpdate(categoryList);
+        mRealm.commitTransaction();
+    }
+
     public static CustomMarker createCustomMarkerFromPoint(Point point) {
         Category category1 =
-            new Category(Integer.toString(point.getType()), point.getName());
+                new Category(Integer.toString(point.getType()), point.getName());
         CustomMarker result = new CustomMarker(point.getId(), point.getLat(), point.getLng(),
-            Constants.DEMO_NUMBER,
-            category1);
+                Constants.DEMO_NUMBER,
+                category1);
         return result;
     }
 
     private static String copyBundledRealmFile(Context context, InputStream inputStream, String
-        outFileName) {
+            outFileName) {
         try {
             File file = new File(context.getFilesDir(), outFileName);
             FileOutputStream outputStream = new FileOutputStream(file);

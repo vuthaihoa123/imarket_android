@@ -19,7 +19,7 @@ import java.util.List;
  * Created by VULAN on 7/20/2016.
  */
 public class CategoryStallAdapter
-    extends RecyclerView.Adapter<CategoryStallAdapter.CategoryHolder> {
+        extends RecyclerView.Adapter<CategoryStallAdapter.CategoryHolder> {
     private List<Category> mCategoryProducts;
     private OnRecyclerItemInteractListener mListener;
 
@@ -34,23 +34,12 @@ public class CategoryStallAdapter
     @Override
     public CategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view =
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
         return new CategoryHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CategoryHolder holder, final int position) {
-//        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.linearLayout.getLayoutParams();
-//        if (layoutParams.leftMargin != layoutParams.rightMargin) {
-//            int margin;
-//            if (layoutParams.leftMargin - layoutParams.rightMargin > 0) {
-//                margin = layoutParams.leftMargin;
-//            } else {
-//                margin = layoutParams.rightMargin;
-//            }
-//            GridLayout.LayoutParams gridParams=new GridLayout.LayoutParams(margin);
-//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//        }
         Category categoryProduct = mCategoryProducts.get(position);
         holder.textView.setText(categoryProduct.getName());
         holder.imageView.setImageResource(R.drawable.logo_big_c);
@@ -84,6 +73,11 @@ public class CategoryStallAdapter
         final Category category = mCategoryProducts.remove(fromPosition);
         mCategoryProducts.add(toPosition, category);
         notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void addAll(List<Category> list) {
+        mCategoryProducts.addAll(list);
+        notifyDataSetChanged();
     }
 
     private void applyAndAnimateRemovals(List<Category> categoryProducts) {

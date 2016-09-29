@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Category;
+import com.example.framgia.imarketandroid.data.remote.RealmRemote;
 import com.example.framgia.imarketandroid.ui.adapter.ViewPagerAdapter;
 import com.example.framgia.imarketandroid.ui.fragments.CategoryStallFragment;
 import com.example.framgia.imarketandroid.ui.fragments.NoConnectFragment;
@@ -40,7 +42,7 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
  * Created by toannguyen201194 on 06/09/2016.
  */
 public class HomeStoreActivity extends AppCompatActivity implements SearchView
-    .OnQueryTextListener, View.OnClickListener, NoConnectFragment.OnClickToLoadConnect {
+        .OnQueryTextListener, View.OnClickListener, NoConnectFragment.OnClickToLoadConnect {
     private final String NAMESTORE = "Apple Store";
     private TabLayout mTabLayout;
     private ViewPager mViewPagerStore;
@@ -50,6 +52,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
     private SuggestStoreFragment mSuggestStoreFragment;
     private ShopDetailInterfaceFragment mShopDetailInterfaceFragment;
     private ViewPagerAdapter mPagerAdapter;
+    private boolean mIsCached;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,24 +84,36 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         if (InternetUtil.isInternetConnected(HomeStoreActivity.this)) {
             mPagerAdapter.addFragment(new CategoryStallFragment(),
-                getString(R.string.title_fragment_Category));
+                    getString(R.string.title_fragment_Category));
             mPagerAdapter.addFragment(new SaleOffEventFragment(),
-                getString(R.string.title_fragment_saleoffevent));
+                    getString(R.string.title_fragment_saleoffevent));
             mSuggestStoreFragment = new SuggestStoreFragment();
             mPagerAdapter.addFragment(mSuggestStoreFragment, getString(R.string.title_fragment_rate));
             mShopDetailInterfaceFragment = new ShopDetailInterfaceFragment(mCallback);
             mPagerAdapter.addFragment(mShopDetailInterfaceFragment,
-                getString(R.string.title_fragment_informationstore));
+                    getString(R.string.title_fragment_informationstore));
             viewPager.setAdapter(mPagerAdapter);
         } else {
+            if (RealmRemote.getCategorySize() > 0) {
+                mIsCached = true;
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(Constants.CACHED_KEY, mIsCached);
+                CategoryStallFragment categoryStallFragment = new CategoryStallFragment();
+                categoryStallFragment.setArguments(bundle);
+                mPagerAdapter.addFragment(categoryStallFragment,
+                        getString(R.string.title_fragment_Category));
+                mIsCached = false;
+            } else {
+               long size=RealmRemote.getCategorySize();
+                mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
+                        getString(R.string.title_fragment_Category));
+            }
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                getString(R.string.title_fragment_Category));
+                    getString(R.string.title_fragment_saleoffevent));
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                getString(R.string.title_fragment_saleoffevent));
+                    getString(R.string.title_fragment_rate));
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                getString(R.string.title_fragment_rate));
-            mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                getString(R.string.title_fragment_informationstore));
+                    getString(R.string.title_fragment_informationstore));
             viewPager.setAdapter(mPagerAdapter);
         }
     }
@@ -112,20 +127,20 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                View searchView = (View) findViewById(R.id.item_search);
-                View cartView = (View) findViewById(R.id.item_cart);
+                View searchView = findViewById(R.id.item_search);
+                View cartView = findViewById(R.id.item_cart);
                 ShowcaseConfig config = new ShowcaseConfig();
                 config.setDelay(Constants.TIME_DELAY_GUIDE);
                 MaterialShowcaseSequence sequence = new MaterialShowcaseSequence
-                    (HomeStoreActivity.this,
-                        Constants.SHOWCASE_ID_HOME);
+                        (HomeStoreActivity.this,
+                                Constants.SHOWCASE_ID_HOME);
                 sequence.setConfig(config);
                 sequence.addSequenceItem(searchView,
-                    getString(R.string.sequence_search),
-                    Constants.GOT_IT);
+                        getString(R.string.sequence_search),
+                        Constants.GOT_IT);
                 sequence.addSequenceItem(cartView,
-                    getString(R.string.sequence_cart),
-                    Constants.GOT_IT);
+                        getString(R.string.sequence_cart),
+                        Constants.GOT_IT);
                 sequence.start();
             }
         });

@@ -294,4 +294,8 @@
     <string name="toast_camerarequest">No extras to retrieve!</string>
     <string name="dialog_camera">Camera</string>
     <string name="toastPermisson">Cấp quyền đề làm việc với chức năng này</string>
+    <string name="no_internet">Kết nối mạng thất bại</string>
+    <string name="no_data">No Data</string>
+    <string name="network_error">Network Error</string>
+    <string name="try_again">Try Again</string>
 </resources>

@@ -27,6 +27,7 @@ public class Constants {
     public static final String PREFS_NAME = "AOP_PREFS";
     public static final String NAMESERVICE = "NotificationService";
     public static final String BASE_URL = "http://172.16.0.165:3000/api/";
+    public static final String SECOND_CATEGORY_URL="https://imarket-api.herokuapp.com/api/";
     public static final String NO_PERCENT = "0%";
     public static final String MARKET_SUGGESTION = "marketName";
     public static final int COLS_LIST_PRODUCT = 2;
@@ -72,16 +73,16 @@ public class Constants {
     public static final String MESSAGEDIGEST = "SHA";
     public static final String CLEAR_EDITTEXT = "";
     public static final int[] LIST_AVATAR_STORE =
-        {R.drawable.food_avatar, R.drawable.fashion, R.drawable.book_shop, R.drawable.cosmetic,
-            R.drawable.stage, R.drawable.game_icon, R
-            .drawable.smartphone, R
-            .drawable.curret_location_icon};
+            {R.drawable.food_avatar, R.drawable.fashion, R.drawable.book_shop, R.drawable.cosmetic,
+                    R.drawable.stage, R.drawable.game_icon, R
+                    .drawable.smartphone, R
+                    .drawable.curret_location_icon};
     public static final int[] LIST_CURRENT_AVATAR_STORE =
-        {R.drawable.current_restaurent, R.drawable.current_fashion, R.drawable.current_book_shop, R.drawable
-            .current_cosmetic,
-            R.drawable.current_stage, R.drawable.current_game_icon, R
-            .drawable.current_smartphone, R
-            .drawable.curret_location_icon};
+            {R.drawable.current_restaurent, R.drawable.current_fashion, R.drawable.current_book_shop, R.drawable
+                    .current_cosmetic,
+                    R.drawable.current_stage, R.drawable.current_game_icon, R
+                    .drawable.current_smartphone, R
+                    .drawable.curret_location_icon};
     public static final String SHOWCASE_ID_BOOK_TABLE = "BOOK TABLE";
     public static final String SHOWCASE_ID_DETAILS_SHOP = "DETAILS SHOP";
     public static final String SHOWCASE_ID_BOOK_PRODUCT = "BOOK PRODUCT";
@@ -94,6 +95,7 @@ public class Constants {
     //bottom navigation
     public static final String FONT = "KaushanScriptRegular.otf";
     public static final String FORMART_STRING = "%s/%s/%s";
-    public static final int RADIUS_SMALL_BANG= 50;
-    public static final int REQUEST_PERMISSION=113;
+    public static final int REQUEST_PERMISSION = 113;
+    public static final int RADIUS_SMALL_BANG = 50;
+    public static final String CACHED_KEY = "cached_key";
 }

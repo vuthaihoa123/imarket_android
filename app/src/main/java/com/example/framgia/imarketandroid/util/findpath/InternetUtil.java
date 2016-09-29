@@ -28,7 +28,7 @@ public class InternetUtil {
         if (!result)
             new AlertDialog.Builder(context)
                 .setTitle(R.string.infor)
-                .setMessage(R.string.not_internet)
+                .setMessage(R.string.no_internet)
                 .setPositiveButton(context.getResources().getString(R.string.ok_dialog_success),
                     new DialogInterface.OnClickListener() {
                         @Override
