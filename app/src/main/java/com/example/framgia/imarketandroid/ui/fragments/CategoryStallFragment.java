@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.Category;
+import com.example.framgia.imarketandroid.data.remote.RealmRemote;
 import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.ui.adapter.CategoryStallAdapter;
 import com.example.framgia.imarketandroid.ui.widget.GridItemDecoration;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryStallFragment extends Fragment implements
-    HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
+        HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
     public static CategoryStallAdapter sCategoryStallAdapter;
     public static List<Category> sCategoryProducts;
     private RecyclerView mRecyclerView;
@@ -48,21 +49,32 @@ public class CategoryStallFragment extends Fragment implements
 
     public void init() {
         sCategoryProducts = new ArrayList<>();
-        HttpRequest.getInstance().init();
-        HttpRequest.getInstance().setOnLoadDataListener(this);
-        HttpRequest.getInstance().loadCategories();
+        sCategoryStallAdapter = new CategoryStallAdapter(sCategoryProducts);
+        mRecyclerView.setAdapter(sCategoryStallAdapter);
+        sCategoryStallAdapter.setOnRecyclerItemInteractListener(this);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mRecyclerView.addItemDecoration(new GridItemDecoration(getContext()));
+        getData();
+    }
+
+    public void getData() {
+        Bundle bundle = getArguments();
+        if (bundle == null) {
+            HttpRequest.getInstance().init();
+            HttpRequest.getInstance().setOnLoadDataListener(this);
+            HttpRequest.getInstance().loadCategories();
+        } else {
+            sCategoryStallAdapter.addAll(RealmRemote.getListCategory());
+        }
     }
 
     @Override
     public void onLoadDataSuccess(Object object) {
         if (object != null) {
             sCategoryProducts = (List<Category>) object;
+            RealmRemote.saveCategory(sCategoryProducts);
+            sCategoryStallAdapter.addAll(sCategoryProducts);
         }
-        sCategoryStallAdapter = new CategoryStallAdapter(sCategoryProducts);
-        mRecyclerView.setAdapter(sCategoryStallAdapter);
-        sCategoryStallAdapter.setOnRecyclerItemInteractListener(this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mRecyclerView.addItemDecoration(new GridItemDecoration(getContext()));
     }
 
     @Override

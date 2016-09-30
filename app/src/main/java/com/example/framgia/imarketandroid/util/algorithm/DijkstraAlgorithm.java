@@ -1,14 +1,12 @@
 package com.example.framgia.imarketandroid.util.algorithm;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Graph;
 import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
-import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
