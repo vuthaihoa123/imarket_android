@@ -89,8 +89,8 @@
         Quả thật sự trải nghiệm về dịch vụ lẫn những tiện ích của trung tâm làm mình và bạn bè
         rất hài lòng và thích thú.</string>
     <string name="ques">Big C Thăng Long như thế nào ?</string>
-    <string name="comment_here">Bình luận ...</string>
-    <string name="post">Post</string>
+    <string name="comment_here">Bình luận</string>
+    <string name="post">POST</string>
     <string name="ok">Hoàn thành</string>
     <string name="cancle">Thoát</string>
     <string name="count_vote">500 đánh giá</string>
@@ -256,4 +256,7 @@
     <string name="network_error">Lỗi kết nối mạng</string>
     <string name="try_again">Thử Lại</string>
     <string name="detail_upper_case">Chi tiết</string>
+    <string name="readmore">READ MORE</string>
+    <string name="review_by">Review by</string>
+    <string name="enter_title">Tiêu đề</string>
 </resources>

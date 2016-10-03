@@ -49,6 +49,8 @@ public class PreviewProductAdapter extends RecyclerView.Adapter<PreviewProductAd
     }
 
     public void showPreview(boolean show) {
+        if (true)
+            return;
         if (show) {
             mIvPreview.setVisibility(View.VISIBLE);
             mInfoView.setVisibility(View.GONE);
@@ -78,27 +80,27 @@ public class PreviewProductAdapter extends RecyclerView.Adapter<PreviewProductAd
             .load(idRes)
             .dontAnimate()
             .into(previewProduct);
-        previewProduct.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int idAction = event.getAction();
-                switch (idAction) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_MOVE:
-                        mIvPreview.setImageResource(idRes);
-                        showPreview(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        showPreview(false);
-                        break;
-                    default:
-                        showPreview(false);
-                        break;
-                }
-                return true;
-            }
-        });
+//        previewProduct.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                int idAction = event.getAction();
+//                switch (idAction) {
+//                    case MotionEvent.ACTION_DOWN:
+//                    case MotionEvent.ACTION_MOVE:
+//                        mIvPreview.setImageResource(idRes);
+//                        showPreview(true);
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                    case MotionEvent.ACTION_CANCEL:
+//                        showPreview(false);
+//                        break;
+//                    default:
+//                        showPreview(false);
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
     }
 
     @Override

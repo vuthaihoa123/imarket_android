@@ -1,143 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_23dp"
+        android:background="@android:color/white">
 
         <LinearLayout
-            android:background="@color/bg_bb_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-                <Button
-                    android:id="@+id/button_back_message_rate"
-                    android:drawableLeft="@drawable/ic_close_white"
-                    android:background="@color/colorPrimary"
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/width_height_34" />
+                    android:layout_height="@dimen/common_size_50"
+                    android:src="@drawable/ic_bg_avatar"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/text_question"
-                    android:text="@string/ques"
-                    android:gravity="center"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:textColor="@color/text_color3"
-                    android:textSize="@dimen/common_text_size_18"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/width_height_34" />
+                    android:layout_height="@dimen/width_height_34"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:gravity="center"
+                    android:text="@string/ques"
+                    android:textColor="@color/color_primary"
+                    android:textSize="@dimen/common_text_size_18" />
 
                 <LinearLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/width_height_34">
+                    android:layout_height="@dimen/width_height_34"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/button_start_vote_1"
-                        android:background="@drawable/ic_star_empty"
                         android:layout_width="@dimen/width_height_34"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_star_empty" />
 
                     <Button
                         android:id="@+id/button_start_vote_2"
-                        android:background="@drawable/ic_star_empty"
                         android:layout_width="@dimen/width_height_34"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_star_empty" />
 
                     <Button
                         android:id="@+id/button_start_vote_3"
-                        android:background="@drawable/ic_star_empty"
                         android:layout_width="@dimen/width_height_34"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_star_empty" />
 
                     <Button
                         android:id="@+id/button_start_vote_4"
-                        android:background="@drawable/ic_star_empty"
                         android:layout_width="@dimen/width_height_34"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_star_empty" />
 
                     <Button
                         android:id="@+id/button_start_vote_5"
-                        android:background="@drawable/ic_star_empty"
                         android:layout_width="@dimen/width_height_34"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_star_empty" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_margin="@dimen/margin_20"
-                    android:paddingLeft="@dimen/margin_40"
-                    android:layout_height="wrap_content">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/text_start_1"
-                        android:textColor="@color/text_color3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/mot_sao"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_size_20" />
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/text_small_size"
+                        android:layout_marginBottom="@dimen/margin_3dp"/>
 
                     <TextView
                         android:id="@+id/text_start_2"
-                        android:textColor="@color/text_color3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/hai_sao"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_size_20" />
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/text_small_size"
+                        android:layout_marginBottom="@dimen/margin_3dp"/>
 
                     <TextView
                         android:id="@+id/text_start_3"
-                        android:textColor="@color/text_color3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/common_size_20"
                         android:text="@string/ba_sao"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_size_20" />
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/text_small_size"
+                        android:layout_marginBottom="@dimen/margin_3dp"/>
 
                     <TextView
                         android:id="@+id/text_start_4"
-                        android:textColor="@color/text_color3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/common_size_20"
                         android:text="@string/bon_sao"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_size_20" />
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/text_small_size"
+                        android:layout_marginBottom="@dimen/margin_3dp"/>
 
                     <TextView
                         android:id="@+id/text_start_5"
-                        android:textColor="@color/text_color3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/common_size_20"
                         android:text="@string/nam_sao"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_size_20" />
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/text_small_size"
+                        android:layout_marginBottom="@dimen/margin_3dp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/margin_20"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_10dp">
 
                     <EditText
-                        android:id="@+id/edittext_message_rate"
-                        android:hint="@string/comment_here"
-                        android:textColorHint="@color/text_color"
-                        android:textColor="@color/text_color2"
-                        android:layout_width="0dp"
+                        android:id="@+id/edittext_message_rate_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_height="@dimen/width_height_50" />
+                        android:hint="@string/enter_title"
+                        android:textColor="@color/text_color2"
+                        android:textColorHint="@color/text_color"
+                        android:textSize="@dimen/text_small_size"/>
 
-                    <Button
+                    <EditText
+                        android:id="@+id/edittext_message_rate_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/comment_here"
+                        android:textColor="@color/text_color2"
+                        android:textColorHint="@color/text_color"
+                        android:textSize="@dimen/text_small_size"/>
+
+                    <TextView
                         android:id="@+id/button_post_message_rate"
-                        android:layout_marginLeft="@dimen/margin_20"
-                        android:background="@drawable/background_button3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/post"
-                        android:textColor="@color/bg_bb_color"
-                        android:layout_width="@dimen/width_height_70"
-                        android:layout_height="@dimen/width_height_50" />
+                        android:textColor="@color/color_primary"
+                        android:textSize="@dimen/text_small_size"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/margin_35"
+                        android:layout_marginBottom="@dimen/margin_10dp"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_avatar_item_message_rate"
+            android:layout_width="@dimen/avatar_xsize"
+            android:layout_height="@dimen/avatar_xsize"
+            android:src="@drawable/avatar"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/text_name_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5dp"
+            android:layout_below="@+id/image_avatar_item_message_rate"
+            android:text="@string/review_by"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/text_small_size"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</FrameLayout>

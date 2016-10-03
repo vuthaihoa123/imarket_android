@@ -1,16 +1,15 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,17 +17,11 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
-import com.example.framgia.imarketandroid.data.model.Showcase;
-import com.example.framgia.imarketandroid.ui.activity.HomeStoreActivity;
 import com.example.framgia.imarketandroid.ui.adapter.SuggestStoreAdapter;
-import com.example.framgia.imarketandroid.util.Constants;
-import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 /**
  * Created by phongtran on 26/08/2016.
@@ -38,7 +31,7 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
     private TextView mTextViewNameStore, mTextViewHastagStore;
     private TextView mTextViewProportionVote, mTextViewCountVote;
     private ImageView mImageViewStar1, mImageViewStar2, mImageViewStar3, mImageViewStar4,
-        mImageViewStar5;
+            mImageViewStar5;
     private Button mButtonPostSuggestStore;
     private RecyclerView mRecyclerViewOldMessage;
     private List<MessageSuggestStore> mMessageSuggestStoreList = new ArrayList<>();
@@ -75,14 +68,14 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
 
     private void fakeDataMessage() {
         MessageSuggestStore msm = new MessageSuggestStore(
-            R.drawable.avatar,
-            getString(R.string.message_rate),
-            getString(R.string.name_user),
-            R.drawable.ic_star_full,
-            R.drawable.ic_star_full,
-            R.drawable.ic_star_full,
-            R.drawable.ic_star_half,
-            R.drawable.ic_star_empty);
+                R.drawable.avatar,
+                getString(R.string.message_rate),
+                getString(R.string.name_user),
+                R.drawable.ic_star_full,
+                R.drawable.ic_star_full,
+                R.drawable.ic_star_full,
+                R.drawable.ic_star_half,
+                R.drawable.ic_star_empty);
         mMessageSuggestStoreList.add(msm);
         mMessageSuggestStoreList.add(msm);
         mMessageSuggestStoreList.add(msm);
@@ -126,7 +119,8 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
         mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
         LayoutInflater li = LayoutInflater.from(getContext());
-        View promptsView = li.inflate(R.layout.dialog_post_message_rate, null);
+        View promptsView = li.inflate(R.layout.dialog_post_message_rate,
+                (ViewGroup) getActivity().findViewById(R.id.view_group_details));
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setView(promptsView);
         mEditTextContentMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate);
@@ -142,8 +136,6 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_start_3);
         mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_start_4);
         mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_start_5);
-        alertDialogBuilder
-            .setCancelable(false);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -313,7 +305,12 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
             }
         });
         mAlertDialogPostMessage = alertDialogBuilder.create();
-        mAlertDialogPostMessage.show();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(mAlertDialogPostMessage.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         mAlertDialogPostMessage.setCanceledOnTouchOutside(true);
+        mAlertDialogPostMessage.show();
+        mAlertDialogPostMessage.getWindow().setAttributes(lp);
     }
 }

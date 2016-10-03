@@ -37,7 +37,7 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <meta-data android:name="com.google.android.gms.version" />
+        <!--<meta-data android:name="com.google.android.gms.version" />-->
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -74,6 +74,10 @@
         <activity android:name=".ui.activity.BookTableActivity" />
         <activity android:name=".ui.activity.DetailsProductActivity">
             <action android:name="android.intent.action.DIAL" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.activity.CartActivity" />
         <activity android:name=".ui.activity.OrderActivity" />
@@ -90,11 +94,12 @@
             android:name=".ui.activity.ChooseStoreTypeActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".ui.activity.IntroduceActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
+        <activity android:name=".ui.activity.ReadmoreActivity" />
     </application>
 
 </manifest>

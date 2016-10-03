@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_10dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/color_primary_dark"
                 android:textSize="@dimen/text_large_size"
                 android:textStyle="bold" />
 

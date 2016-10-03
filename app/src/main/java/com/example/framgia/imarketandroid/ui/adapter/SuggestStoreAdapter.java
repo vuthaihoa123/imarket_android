@@ -13,6 +13,8 @@ import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by phongtran on 26/08/2016.
  */
@@ -28,7 +30,7 @@ public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapte
 
     @Override
     public SuggestStoreViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_message_rate,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_message_rate, parent, false);
         return new SuggestStoreViewHolder(view);
     }
 
@@ -44,7 +46,6 @@ public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapte
         holder.mImageViewStar3.setImageResource(holder.mMessageSuggestStore.getmImageViewStar3());
         holder.mImageViewStar4.setImageResource(holder.mMessageSuggestStore.getmImageViewStar4());
         holder.mImageViewStar5.setImageResource(holder.mMessageSuggestStore.getmImageViewStar5());
-
     }
 
     @Override
@@ -53,7 +54,7 @@ public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapte
     }
 
     public class SuggestStoreViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImageViewAvatarItemMessageRate;
+        private CircleImageView mImageViewAvatarItemMessageRate;
         private TextView mTextViewContentMessage;
         private TextView mTextViewNameUser;
         private ImageView mImageViewStar1;
@@ -67,7 +68,7 @@ public class SuggestStoreAdapter extends RecyclerView.Adapter<SuggestStoreAdapte
         public SuggestStoreViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            mImageViewAvatarItemMessageRate = (ImageView)mView
+            mImageViewAvatarItemMessageRate = (CircleImageView)mView
                     .findViewById(R.id.image_avatar_item_message_rate);
             mTextViewContentMessage = (TextView) mView
                     .findViewById(R.id.text_content_item_message_rate);
