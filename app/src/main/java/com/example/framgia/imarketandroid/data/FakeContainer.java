@@ -182,10 +182,11 @@ public class FakeContainer {
             "    Chức năng đặc biệt:HTC BoomSound";
     }
 
+    public static final int NUM_FAKE_PREVIEWS = 7;
+
     public static ArrayList<Integer> initIdResList() {
         ArrayList<Integer> list = new ArrayList<>();
-        int numFakePreviews = 7;
-        for (int i = 0; i < numFakePreviews; i++) {
+        for (int i = 0; i < NUM_FAKE_PREVIEWS; i++) {
             list.add(R.drawable.ic_htc_preview_01 + i);
         }
         return list;

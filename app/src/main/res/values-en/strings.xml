@@ -96,11 +96,11 @@
     <string name="name_user">Công Phương Đông</string>
     <string name="fake_tyle">4,5 / 5</string>
     <string name="follow">Follow</string>
-    <string name="mot_sao">1 * bad</string>
-    <string name="hai_sao">2 * I dont Like</string>
-    <string name="ba_sao">3 * Above</string>
-    <string name="bon_sao">4 * I like it</string>
-    <string name="nam_sao">5 * I enjoyed this content</string>
+    <string name="mot_sao">1 * Hated it</string>
+    <string name="hai_sao">2 * Disliked it</string>
+    <string name="ba_sao">3 * It\'s OK</string>
+    <string name="bon_sao">4 * Liked it</string>
+    <string name="nam_sao">5 * Loved it</string>
     <string name="share_point">id_point</string>
     <string name="idPoint">idPoint</string>
     <string name="M">M</string>
