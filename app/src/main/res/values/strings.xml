@@ -2,7 +2,7 @@
     <string name="app_name">IMarketAndroid</string>
     <string name="location_current">Vị Trí Hiện tại</string>
     <string name="number_event">Số Lượng Sự Kiện</string>
-    <string name="market_name_text">Siêu Thị Big C</string>
+    <string name="market_name_text">Trung tâm thương mại AEON</string>
     <string name="found_shop">Cửa Hàng Tìm Được</string>
     <string name="facebook_app_id">530129487174289</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -117,6 +117,8 @@
     <string name="find_way">Tìm đường</string>
     <string name="delete_point">Xóa điểm</string>
     <string name="second_floor">Tầng 2</string>
+    <string name="clother">Quần áo</string>
+    <string name="origin_store">Cửa hàng...</string>
     <string name="warning_text">hay nhap day du cac o trong</string>
     <string name="warning_input">warning input</string>
     <string name="comma">,</string>
@@ -231,6 +233,7 @@
     <string name="next">Next</string>
     <string name="price">price</string>
     <string name="quantity">quantity</string>
+    <string name="floor_instruction">Bạn đang ở tầng </string>
     <string name="vnd_uppercase">    VND</string>
     <string name="quantity_second">Số lượng :</string>
     <string name="title_fragment_Category">Danh Mục</string>

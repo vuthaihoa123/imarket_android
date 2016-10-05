@@ -7,6 +7,7 @@ public class Market {
     private String mId;
     private String mName;
     private String mAddress;
+    private String mImage;
 
     public Market() {
     }

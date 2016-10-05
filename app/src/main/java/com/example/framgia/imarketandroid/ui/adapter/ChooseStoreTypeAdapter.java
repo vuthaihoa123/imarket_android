@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.Store;
+import com.example.framgia.imarketandroid.data.model.StoreType;
 
 import java.util.List;
 
@@ -20,10 +22,10 @@ import java.util.List;
 public class ChooseStoreTypeAdapter
     extends RecyclerView.Adapter<ChooseStoreTypeAdapter.ItemHolderStore> {
     private Context mContext;
-    private List<Store> mListStore;
+    private List<StoreType> mListStore;
     private OnRecyclerItemInteractListener mListener;
 
-    public ChooseStoreTypeAdapter(Context context, List<Store> listStore) {
+    public ChooseStoreTypeAdapter(Context context, List<StoreType> listStore) {
         mListStore = listStore;
         mContext = context;
     }
@@ -42,7 +44,7 @@ public class ChooseStoreTypeAdapter
 
     @Override
     public void onBindViewHolder(ItemHolderStore holder, final int position) {
-        Store store = mListStore.get(position);
+        StoreType store = mListStore.get(position);
         holder.avatar.setImageResource(store.getAvatar());
         holder.textName.setText(store.getName());
         holder.itemRecyclerMarket.setOnClickListener(new View.OnClickListener() {
@@ -70,5 +72,6 @@ public class ChooseStoreTypeAdapter
             textName = (TextView) itemView.findViewById(R.id.name_store);
             itemRecyclerMarket = itemView.findViewById(R.id.item_recycler_market);
         }
+
     }
 }

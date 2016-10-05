@@ -2,15 +2,20 @@ package com.example.framgia.imarketandroid.data.model;
 
 import android.database.Cursor;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 
 /**
  * Created by nguyenxuantung on 24/06/2016.
  */
 public class Edge extends RealmObject {
+    @SerializedName("name_start")
     private String mNameStart;
+    @SerializedName("name_end")
     private String mNameEnd;
-    private float mEdge;
+    @SerializedName("length_edge")
+    private float mLengthEdge;
 
     public Edge() {
     }
@@ -18,7 +23,7 @@ public class Edge extends RealmObject {
     public Edge(String nameStart, String nameEnd, float edge) {
         this.mNameStart = nameStart;
         this.mNameEnd = nameEnd;
-        this.mEdge= edge;
+        this.mLengthEdge = edge;
     }
 
     public String getNameStart() {
@@ -38,11 +43,11 @@ public class Edge extends RealmObject {
     }
 
     public float getDistance() {
-        return mEdge;
+        return mLengthEdge;
     }
 
     public void setDistance(float edge) {
-        this.mEdge = edge;
+        this.mLengthEdge = edge;
     }
 
     public String getSource() {
@@ -54,6 +59,6 @@ public class Edge extends RealmObject {
     }
 
     public float getWeigth() {
-        return mEdge;
+        return mLengthEdge;
     }
 }

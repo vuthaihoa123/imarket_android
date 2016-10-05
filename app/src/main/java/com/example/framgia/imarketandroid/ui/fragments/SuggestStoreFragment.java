@@ -17,7 +17,10 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
+import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.ui.adapter.SuggestStoreAdapter;
+import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -305,5 +308,10 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mAlertDialogPostMessage.setCanceledOnTouchOutside(true);
         mAlertDialogPostMessage.show();
         mAlertDialogPostMessage.getWindow().setAttributes(lp);
+    }
+
+    public void initGuideSuggestStore() {
+        ShowcaseGuideUtil.singleShowcase(getActivity(), Constants.SHOWCASE_ID_SUGGEST_STORE, new
+            Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote)));
     }
 }

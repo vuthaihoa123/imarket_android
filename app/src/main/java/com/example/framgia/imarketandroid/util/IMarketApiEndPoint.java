@@ -2,6 +2,7 @@ package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.data.model.CategoryList;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.StoreTypeList;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 
 import retrofit2.Call;
@@ -29,6 +30,8 @@ public interface IMarketApiEndPoint {
     Call<UserModel> register(@Body UserModel user);
     @Headers("Content-Type: application/json")
     @PATCH("users/{iduser}")
-    Call<UserModel> updateUser(@Path(value =
-        "iduser", encoded = true) int iduser,@Body UserModel userModel);
+    Call<UserModel> updateUser(@Path(value = "iduser",encoded = true) int iduser
+        ,@Body UserModel userModel);
+    @GET("commerce/1/store_type_list")
+    Call<StoreTypeList> loadStoreType();
 }

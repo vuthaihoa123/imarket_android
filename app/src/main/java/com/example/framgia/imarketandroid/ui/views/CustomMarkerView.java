@@ -27,6 +27,12 @@ public class CustomMarkerView extends FrameLayout {
         }
     }
 
+    public void setInvisibleBackground() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mMarkerBackground.setVisibility(INVISIBLE);
+        }
+    }
+
     public int getConvertedNumber() {
         return mConvertedNumber;
     }

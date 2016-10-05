@@ -38,6 +38,7 @@ public class Migration implements RealmMigration {
          ************************************************/
         // Migrate from version 0 to version 1
         if (oldVersion == 0) {
+            oldVersion++;
         }
 
         /************************************************
@@ -70,6 +71,7 @@ public class Migration implements RealmMigration {
          ************************************************/
         // Migrate from version 2 to version 3
         if (oldVersion == 2) {
+            oldVersion++;
         }
     }
 }

@@ -6,9 +6,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 
+import com.example.framgia.imarketandroid.data.model.Migration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.NotificationUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -26,6 +31,14 @@ public class ImarketApplication extends Application {
         super.onCreate();
         printHashKey();
         notificationCount = 0;
+//        copyBundledRealmFile(this.getResources().openRawResource(R.raw.default1), "default1" +
+//            ".realm");
+//        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
+//            .name("default1.realm").migration(new Migration())
+//            .schemaVersion(0)
+//            .build();
+//        Realm.setDefaultConfiguration(realmConfiguration);
+
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
             .name(Realm.DEFAULT_REALM_NAME)
             .schemaVersion(0)
@@ -62,5 +75,22 @@ public class ImarketApplication extends Application {
         } catch (PackageManager.NameNotFoundException e) {
         } catch (NoSuchAlgorithmException e) {
         }
+    }
+
+    private String copyBundledRealmFile(InputStream inputStream, String outFileName) {
+        try {
+            File file = new File(this.getFilesDir(), outFileName);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buf)) > 0) {
+                outputStream.write(buf, 0, bytesRead);
+            }
+            outputStream.close();
+            return file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -42,7 +42,7 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
  * Created by toannguyen201194 on 06/09/2016.
  */
 public class HomeStoreActivity extends AppCompatActivity implements SearchView
-        .OnQueryTextListener, View.OnClickListener, NoConnectFragment.OnClickToLoadConnect {
+    .OnQueryTextListener, View.OnClickListener, NoConnectFragment.OnClickToLoadConnect {
     private final String NAMESTORE = "Apple Store";
     private TabLayout mTabLayout;
     private ViewPager mViewPagerStore;
@@ -67,7 +67,6 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.tab_home_store);
         mViewPagerStore = (ViewPager) findViewById(R.id.view_home_store);
-        mTabLayout.setupWithViewPager(mViewPagerStore);
         mFabFollow = (FloatingActionButton) findViewById(R.id.fab_follow);
         mFabMessage = (FloatingActionButton) findViewById(R.id.fab_message);
         mFabShare = (FloatingActionButton) findViewById(R.id.fab_share);
@@ -75,6 +74,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         mFabMessage.setOnClickListener(this);
         mFabShare.setOnClickListener(this);
         setupViewPager(mViewPagerStore);
+        mTabLayout.setupWithViewPager(mViewPagerStore);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(NAMESTORE);
@@ -84,14 +84,14 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         if (InternetUtil.isInternetConnected(HomeStoreActivity.this)) {
             mPagerAdapter.addFragment(new CategoryStallFragment(),
-                    getString(R.string.title_fragment_Category));
+                getString(R.string.title_fragment_Category));
             mPagerAdapter.addFragment(new SaleOffEventFragment(),
-                    getString(R.string.title_fragment_saleoffevent));
+                getString(R.string.title_fragment_saleoffevent));
             mSuggestStoreFragment = new SuggestStoreFragment();
             mPagerAdapter.addFragment(mSuggestStoreFragment, getString(R.string.title_fragment_rate));
             mShopDetailInterfaceFragment = new ShopDetailInterfaceFragment(mCallback);
             mPagerAdapter.addFragment(mShopDetailInterfaceFragment,
-                    getString(R.string.title_fragment_informationstore));
+                getString(R.string.title_fragment_informationstore));
             viewPager.setAdapter(mPagerAdapter);
         } else {
             if (RealmRemote.getCategorySize() > 0) {
@@ -101,19 +101,19 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 CategoryStallFragment categoryStallFragment = new CategoryStallFragment();
                 categoryStallFragment.setArguments(bundle);
                 mPagerAdapter.addFragment(categoryStallFragment,
-                        getString(R.string.title_fragment_Category));
+                    getString(R.string.title_fragment_Category));
                 mIsCached = false;
             } else {
-               long size=RealmRemote.getCategorySize();
+                long size=RealmRemote.getCategorySize();
                 mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                        getString(R.string.title_fragment_Category));
+                    getString(R.string.title_fragment_Category));
             }
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                    getString(R.string.title_fragment_saleoffevent));
+                getString(R.string.title_fragment_saleoffevent));
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                    getString(R.string.title_fragment_rate));
+                getString(R.string.title_fragment_rate));
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
-                    getString(R.string.title_fragment_informationstore));
+                getString(R.string.title_fragment_informationstore));
             viewPager.setAdapter(mPagerAdapter);
         }
     }
@@ -132,15 +132,15 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 ShowcaseConfig config = new ShowcaseConfig();
                 config.setDelay(Constants.TIME_DELAY_GUIDE);
                 MaterialShowcaseSequence sequence = new MaterialShowcaseSequence
-                        (HomeStoreActivity.this,
-                                Constants.SHOWCASE_ID_HOME);
+                    (HomeStoreActivity.this,
+                        Constants.SHOWCASE_ID_HOME);
                 sequence.setConfig(config);
                 sequence.addSequenceItem(searchView,
-                        getString(R.string.sequence_search),
-                        Constants.GOT_IT);
+                    getString(R.string.sequence_search),
+                    Constants.GOT_IT);
                 sequence.addSequenceItem(cartView,
-                        getString(R.string.sequence_cart),
-                        Constants.GOT_IT);
+                    getString(R.string.sequence_cart),
+                    Constants.GOT_IT);
                 sequence.start();
             }
         });

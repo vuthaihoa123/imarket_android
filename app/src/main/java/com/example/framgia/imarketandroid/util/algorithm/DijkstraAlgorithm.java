@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.util.algorithm;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Edge;
@@ -29,7 +30,6 @@ public class DijkstraAlgorithm {
     private Map<Point, Point> mPredecessors;
     private Map<Point, Float> mDistance;
     private Context context;
-    private RealmRemote realmRemote;
 
     public DijkstraAlgorithm(Graph graph, Context context) {
         mNodes = new ArrayList<Point>(graph.getVertexes());
@@ -67,8 +67,8 @@ public class DijkstraAlgorithm {
 
     private float getDistance(Point node, Point target) {
         for (Edge edge : mEdges) {
-            if (realmRemote.getObjectPointFromName(edge.getSource()).equals(node)
-                && realmRemote.getObjectPointFromName(edge.getDestination()).equals(target)) {
+            if (RealmRemote.getObjectPointFromName(edge.getSource()).equals(node)
+                && RealmRemote.getObjectPointFromName(edge.getDestination()).equals(target)) {
                 return edge.getWeigth();
             }
         }
@@ -78,9 +78,9 @@ public class DijkstraAlgorithm {
     private List<Point> getNeighbors(Point node) {
         List<Point> neighbors = new ArrayList<Point>();
         for (Edge edge : mEdges) {
-            if (realmRemote.getObjectPointFromName(edge.getSource()).equals(node)
-                && !isSettled(realmRemote.getObjectPointFromName(edge.getDestination()))) {
-                neighbors.add(realmRemote.getObjectPointFromName(edge.getDestination()));
+            if (RealmRemote.getObjectPointFromName(edge.getSource()).equals(node)
+                && !isSettled(RealmRemote.getObjectPointFromName(edge.getDestination()))) {
+                neighbors.add(RealmRemote.getObjectPointFromName(edge.getDestination()));
             }
         }
         return neighbors;
