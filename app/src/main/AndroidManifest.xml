@@ -52,12 +52,17 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <activity android:name=".ui.activity.ChooseMarketActivity" />
+            android:label="@string/app_name"/>
+        <activity android:name=".ui.activity.ChooseMarketActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.UpdateProfileActivity" />
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.UpdateProfileActivity"/>
+        <activity android:name=".ui.activity.MainActivity"/>
         <activity
             android:name=".ui.activity.FloorActivity"
             android:screenOrientation="portrait" />
@@ -74,10 +79,6 @@
         <activity android:name=".ui.activity.BookTableActivity" />
         <activity android:name=".ui.activity.DetailsProductActivity">
             <action android:name="android.intent.action.DIAL" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.activity.CartActivity" />
         <activity android:name=".ui.activity.OrderActivity" />
@@ -94,10 +95,6 @@
             android:name=".ui.activity.ChooseStoreTypeActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".ui.activity.IntroduceActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.activity.ReadmoreActivity" />
     </application>

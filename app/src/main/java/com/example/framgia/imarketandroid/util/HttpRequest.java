@@ -7,13 +7,16 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Header;
 
 /**
  * Created by yue on 22/07/2016.
@@ -32,6 +35,7 @@ public class HttpRequest {
     public static HttpRequest getInstance() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         mClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         if (sInstance == null) {
             synchronized (HttpRequest.class) {
@@ -50,6 +54,32 @@ public class HttpRequest {
     public void init() {
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
             addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
+
+    }
+    public void initAuthToken(final String  auth) {
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+        mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
+            addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
+        if (auth != null) {
+            httpClientBuilder.addInterceptor(new Interceptor() {
+                @Override
+                public okhttp3.Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+                    Request.Builder requestBuilder = original.newBuilder()
+                        .header("Content-Type", "application/json")
+                        .header("Authorization", auth)
+                        .method(original.method(), original.body());
+                    Request request = requestBuilder.build();
+                    return chain.proceed(request);
+
+
+                }
+            });
+        }
+
+         mRetrofit =  new Retrofit.Builder().baseUrl(BASE_URL).
+            addConverterFactory(GsonConverterFactory.create()).client(httpClientBuilder.build()).build();
+
     }
 
     public void loadCategories() {
@@ -74,17 +104,17 @@ public class HttpRequest {
 
     public void login(Session session) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<Session> call = mApi.login(session);
-        call.enqueue(new Callback<Session>() {
+        Call<UserModel> call = mApi.login(session);
+        call.enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Call<Session> call, Response<Session> response) {
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                 if (mListener != null) {
                     mListener.onLoadDataSuccess(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<Session> call, Throwable t) {
+            public void onFailure(Call<UserModel> call, Throwable t) {
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }

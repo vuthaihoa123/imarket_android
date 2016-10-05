@@ -26,8 +26,8 @@ public class Constants {
     public static final String PROFILE = "Profile";
     public static final String PREFS_NAME = "AOP_PREFS";
     public static final String NAMESERVICE = "NotificationService";
-    public static final String BASE_URL = "http://172.16.0.165:3000/api/";
     public static final String SECOND_CATEGORY_URL="https://imarket-api.herokuapp.com/api/";
+    public static final String BASE_URL = "https://imarketv1.herokuapp.com/api/";
     public static final String NO_PERCENT = "0%";
     public static final String MARKET_SUGGESTION = "marketName";
     public static final int COLS_LIST_PRODUCT = 2;
@@ -101,4 +101,5 @@ public class Constants {
     public static final String EXTRA_NAME_PRODUCT = "EXTRA_NAME_PRODUCT";
     public static final String EXTRA_INFOR_PRODUCT = "EXTRA_INFOR_PRODUCT";
     public static final String EXTRA_PRICE_PRODUCT = "EXTRA_PRICE_PRODUCT";
+    public static final String HEAD_URL = "https://imarketv1.herokuapp.com";
 }

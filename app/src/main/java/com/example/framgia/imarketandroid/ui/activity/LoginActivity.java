@@ -1,7 +1,9 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.framgia.imarketandroid.BuildConfig;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.adapter.ViewPagerAdapter;
 import com.example.framgia.imarketandroid.ui.fragments.SignInFragment;
 import com.example.framgia.imarketandroid.ui.fragments.SignUpFragment;
@@ -36,10 +39,10 @@ public class LoginActivity extends AppCompatActivity {
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
-        Session session = (Session) SharedPreferencesUtil.getInstance().getValue
+        UserModel session = (UserModel) SharedPreferencesUtil.getInstance().getValue
             (Constants.SESSION,
-                Session.class);
-        if (session != null) {
+                UserModel.class);
+        if (session != null && session.getSession() != null) {
             startActivity(new Intent(this, UpdateProfileActivity.class));
             finish();
         }

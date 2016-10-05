@@ -20,11 +20,11 @@ public class Session extends RealmObject {
     private String mPasswordConfirm;
     @SerializedName("auth_token")
     private String mAuthToken;
-    @SerializedName("url_image")
+    @SerializedName("avatar")
     private String mUrlImage;
-    @SerializedName("birthday")
+    @SerializedName("birth_day")
     private String mBrithday;
-    @SerializedName("number_phone")
+    @SerializedName("phone_number")
     private String mNumberPhone;
     @SerializedName("adress")
     private String mAdress;
