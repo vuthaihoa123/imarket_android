@@ -4,8 +4,11 @@ import com.example.framgia.imarketandroid.data.model.CategoryList;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
+import com.example.framgia.imarketandroid.data.model.ListItemProduct;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.Store;
 import com.example.framgia.imarketandroid.data.model.StoreTypeList;
+import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 
 import java.util.List;
@@ -19,6 +22,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by yue on 22/07/2016.
@@ -44,4 +48,7 @@ public interface IMarketApiEndPoint {
         @Path(value = "commerce_center_id", encoded = true) int commerce_center_id);
     @GET("commerce_centers")
     Call<CommerceList> getListCommerceCenter();
+    @GET("floors/{id_floor}/stores")
+    Call<Stores> getStoreByStoreType(@Path(value = "id_floor", encoded = true) int id_floor,
+                                     @Query("store_type_id") int store_type_id);
 }

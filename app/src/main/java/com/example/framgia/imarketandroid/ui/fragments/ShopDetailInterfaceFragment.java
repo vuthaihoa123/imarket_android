@@ -25,6 +25,7 @@ import com.example.framgia.imarketandroid.ui.adapter.ShopDetailInterfaceAdapter;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
+import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
 import com.facebook.CallbackManager;
 
 import java.util.ArrayList;
@@ -109,6 +110,7 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
             (android.R.layout.simple_list_item_single_choice);
         mSpinnerBranchShop.setAdapter(adapter);
         mButtonShare = (Button) mRootView.findViewById(R.id.button_share_info_shop_on_fb);
+
     }
 
     @Override

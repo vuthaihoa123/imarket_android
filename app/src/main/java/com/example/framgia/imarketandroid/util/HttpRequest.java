@@ -5,6 +5,8 @@ import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.Store;
+import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.google.gson.Gson;
 
@@ -39,7 +41,6 @@ public class HttpRequest {
     public static HttpRequest getInstance() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         mClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         if (sInstance == null) {
             synchronized (HttpRequest.class) {
@@ -58,9 +59,9 @@ public class HttpRequest {
     public void init() {
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
             addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
-
     }
-    public void initAuthToken(final String  auth) {
+
+    public void initAuthToken(final String auth) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
             addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
@@ -75,15 +76,12 @@ public class HttpRequest {
                         .method(original.method(), original.body());
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
-
-
                 }
             });
         }
-
-         mRetrofit =  new Retrofit.Builder().baseUrl(BASE_URL).
-            addConverterFactory(GsonConverterFactory.create()).client(httpClientBuilder.build()).build();
-
+        mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
+            addConverterFactory(GsonConverterFactory.create()).client(httpClientBuilder.build())
+            .build();
     }
 
     public void loadCategories() {
@@ -154,9 +152,10 @@ public class HttpRequest {
             }
         });
     }
-    public void updateUser(int iduser,UserModel userUpdate){
-        mApi=mRetrofit.create(IMarketApiEndPoint.class);
-        Call<UserModel> callUpdateUser=mApi.updateUser(iduser,userUpdate);
+
+    public void updateUser(int iduser, UserModel userUpdate) {
+        mApi = mRetrofit.create(IMarketApiEndPoint.class);
+        Call<UserModel> callUpdateUser = mApi.updateUser(iduser, userUpdate);
         callUpdateUser.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -208,7 +207,7 @@ public class HttpRequest {
         void onLoadDataFailure(String message);
     }
 
-    public void loadListFloor(int commerceId){
+    public void loadListFloor(int commerceId) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
         Call<ListFloor> request = mApi.getListFloorByCommerceId(commerceId);
         request.enqueue(new Callback<ListFloor>() {
@@ -228,7 +227,7 @@ public class HttpRequest {
         });
     }
 
-    public void loadListCommerce(){
+    public void loadListCommerce() {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
         Call<CommerceList> request = mApi.getListCommerceCenter();
         request.enqueue(new Callback<CommerceList>() {
@@ -241,6 +240,25 @@ public class HttpRequest {
 
             @Override
             public void onFailure(Call<CommerceList> call, Throwable t) {
+                if (mListener != null) {
+                    mListener.onLoadDataFailure(t.getMessage());
+                }
+            }
+        });
+    }
+    public void getStore(int id_floor, int storeTypeId) {
+        mApi = mRetrofit.create(IMarketApiEndPoint.class);
+        Call<Stores> repuestServer = mApi.getStoreByStoreType(id_floor, storeTypeId);
+        repuestServer.enqueue(new Callback<Stores>() {
+            @Override
+            public void onResponse(Call<Stores> call, Response<Stores> response) {
+                if (mListener != null) {
+                    mListener.onLoadDataSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Stores> call, Throwable t) {
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }

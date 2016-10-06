@@ -267,4 +267,6 @@
     <string name="enter_phonenumber">Nhập số điện thoại</string>
     <string name="data_success">Data success</string>
     <string name="not_data_in_object">Không có dữ liệu trong đối tượng trả về.</string>
+    <string name="store_null">Stores null</string>
+    <string name="store_success">Stores not null</string>
 </resources>

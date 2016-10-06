@@ -16,7 +16,6 @@ public class Flog {
             Log.i(TAG, content + "");
         }
     }
-
     public static void toast(Context context, int s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
