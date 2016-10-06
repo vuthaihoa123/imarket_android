@@ -60,4 +60,11 @@ public class SharedPreferencesUtil {
         mEditor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
         mEditor.commit();
     }
+    public void saveString(String key, String value) {
+        mEditor.putString(key,value);
+        mEditor.apply();
+    }
+    public String getString(String key) {
+        return mSettings.getString(key,Constants.NULL_DATA);
+    }
 }

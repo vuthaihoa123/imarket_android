@@ -60,7 +60,12 @@
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activity.UpdateProfileActivity"/>
         <activity android:name=".ui.activity.MainActivity"/>
         <activity
@@ -78,10 +83,7 @@
         </activity>
         <activity android:name=".ui.activity.BookTableActivity"/>
         <activity android:name=".ui.activity.DetailsProductActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
             <action android:name="android.intent.action.DIAL"/>
         </activity>
         <activity android:name=".ui.activity.CartActivity"/>
