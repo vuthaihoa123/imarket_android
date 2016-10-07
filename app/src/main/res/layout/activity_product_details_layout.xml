@@ -20,6 +20,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -52,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:layout_weight="1"
                 android:text="@string/readmore"
                 android:textColor="@android:color/holo_green_dark"
@@ -72,16 +73,31 @@
                 layout="@layout/rate_product_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_20dp"
                 android:layout_weight="3" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycleview_message_rate_product"
+                android:id="@+id/rv_preview_comments"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4" />
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tv_readall_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:text="@string/read_all_reviews"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="@dimen/text_small_size" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_message_rate_product"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/iv_show_preview"
@@ -89,5 +105,11 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:scaleType="fitCenter"
+        android:background="@color/white"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
         android:background="@color/white"/>
 </android.support.design.widget.CoordinatorLayout>

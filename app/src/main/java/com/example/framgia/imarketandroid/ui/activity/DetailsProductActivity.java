@@ -9,11 +9,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,11 +28,13 @@ import com.example.framgia.imarketandroid.data.model.ItemBooking;
 import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
 import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
+import com.example.framgia.imarketandroid.ui.adapter.CommentStoreAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.PreviewDetailsAdapter;
-import com.example.framgia.imarketandroid.ui.adapter.SuggestStoreAdapter;
+import com.example.framgia.imarketandroid.ui.adapter.ScreenSlidePagerAdapter;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
+import com.example.framgia.imarketandroid.util.SystemUtil;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
@@ -45,9 +48,9 @@ import java.util.List;
  * Created by hoavt on 22/07/2016.
  */
 public class DetailsProductActivity extends AppCompatActivity
-        implements BookProductAdapter.OnClickItemBarListenner, PreviewDetailsAdapter.OnClickShowPreviewDetail {
+        implements BookProductAdapter.OnClickItemBarListenner, PreviewDetailsAdapter.OnClickShowPreviewDetail, CommentStoreAdapter.OnPreviewCommentListener {
     private RecyclerView mRvPreviewProducts;
-    //    private RecyclerView mRvBookingProducts;
+    private RecyclerView mRvBookingProducts;
     private RecyclerView.Adapter mPreviewAdapter;
     private RecyclerView.Adapter mBookingAdapter;
     private RecyclerView.LayoutManager mPreviewLayoutManager;
@@ -56,8 +59,9 @@ public class DetailsProductActivity extends AppCompatActivity
     private TextView mTvPriceProduct;
     private TextView mTvInfoProduct;
     private List<MessageSuggestStore> mListRate = new ArrayList<>();
-    private SuggestStoreAdapter mSuggestStoreAdapter;
+    private List<MessageSuggestStore> mListComment = new ArrayList<>();
     private RecyclerView mRecyclerRateMessage;
+    private RecyclerView mRvPreviewComment;
     private MessageSuggestStore mMessage = new MessageSuggestStore();
     private EditText mEdContentMess, mEdTitleMess;
     private Button mButtonStar1, mButtonStar2, mButtonStar3, mButtonStar4, mButtonStar5;
@@ -70,6 +74,182 @@ public class DetailsProductActivity extends AppCompatActivity
     private TextView mTvAmountOfRates;
     private Toolbar mToolbar;
     private ImageView mIvShowPreview;
+    private TextView mTvReadAllReviews;
+    private TextView mTvPost;
+    private CommentStoreAdapter mStoreAdapter;
+    private CommentStoreAdapter mSuggestStoreAdapter;
+    private View.OnClickListener mOnClickListenner = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            switch (id) {
+                case R.id.button_start_vote_1:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.button_start_vote_2:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.button_start_vote_3:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.button_start_vote_4:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.button_start_vote_5:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_full);
+                    break;
+                case R.id.text_start_1:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.text_start_2:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.text_start_3:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.text_start_4:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_empty);
+                    break;
+                case R.id.text_start_5:
+                    mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
+                    mButtonStar5.setBackgroundResource(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar1(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar2(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar3(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar4(R.drawable.ic_star_full);
+                    mMessage.setImageViewStar5(R.drawable.ic_star_full);
+                    break;
+                case R.id.tv_product_info:
+                    Intent readmoreIntent = new Intent(DetailsProductActivity.this, ReadmoreActivity.class);
+                    readmoreIntent.putExtra(Constants.EXTRA_NAME_PRODUCT, mTvNameProduct.getText().toString());
+                    readmoreIntent.putExtra(Constants.EXTRA_PRICE_PRODUCT, mTvPriceProduct.getText().toString());
+                    readmoreIntent.putExtra(Constants.EXTRA_INFOR_PRODUCT, FakeContainer.getInfoProduct());
+                    startActivity(readmoreIntent);
+                    break;
+                case R.id.button_post_product:
+                    initAlertDiaLogPostMessage();
+                    break;
+                case R.id.tv_readall_reviews:
+                    mRecyclerRateMessage.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.button_post_message_rate:
+                    String title = mEdTitleMess.getText().toString();
+                    String content = mEdContentMess.getText().toString();
+                    MessageSuggestStore newMsm = new MessageSuggestStore(
+                            R.drawable.avatar,
+                            title,
+                            content,
+                            getString(R.string.name_user),
+                            SystemUtil.getCurDate(),
+                            R.drawable.ic_star_full,
+                            R.drawable.ic_star_full,
+                            R.drawable.ic_star_full,
+                            R.drawable.ic_star_half,
+                            R.drawable.ic_star_empty);
+                    mListRate.add(newMsm);
+                    mListComment.set(0, newMsm);
+                    mSuggestStoreAdapter.notifyDataSetChanged();
+                    mStoreAdapter.notifyDataSetChanged();
+                    mAlertDialogPostMessage.dismiss();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private ViewPager mPager;
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +264,18 @@ public class DetailsProductActivity extends AppCompatActivity
         initViews();
         fakeMessage();
         initRecycle();
+        initViewPager();
         ShowcaseGuideUtil.singleShowcase(DetailsProductActivity.this,
                 Constants.SHOWCASE_ID_DETAILS_PRODUCT,
                 new Showcase(mButtonPostProductMess, getString(R.string.sequence_write_vote)));
+    }
+
+    private void initViewPager() {
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), FakeContainer.initIdResList());
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setVisibility(View.GONE);
     }
 
     private void initViews() {
@@ -95,13 +284,11 @@ public class DetailsProductActivity extends AppCompatActivity
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
         mToolbar.setTitle(FakeContainer.getNameProduct());
         mToolbar.setTitleTextColor(Color.WHITE);
-//        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mRvPreviewProducts = (RecyclerView) findViewById(R.id.rv_product_preview);
 //        mRvBookingProducts = (RecyclerView) findViewById(R.id.rv_product_book_options);
         // use this setting to improve performance if you know that changes
@@ -124,27 +311,15 @@ public class DetailsProductActivity extends AppCompatActivity
         mTvNameProduct = (TextView) findViewById(R.id.tv_product_name);
         mTvPriceProduct = (TextView) findViewById(R.id.tv_product_price);
         mTvInfoProduct = (TextView) findViewById(R.id.tv_product_info);
-        mTvInfoProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent readmoreIntent = new Intent(DetailsProductActivity.this, ReadmoreActivity.class);
-                readmoreIntent.putExtra(Constants.EXTRA_NAME_PRODUCT, mTvNameProduct.getText().toString());
-                readmoreIntent.putExtra(Constants.EXTRA_PRICE_PRODUCT, mTvPriceProduct.getText().toString());
-                readmoreIntent.putExtra(Constants.EXTRA_INFOR_PRODUCT, FakeContainer.getInfoProduct());
-                startActivity(readmoreIntent);
-            }
-        });
+        mTvInfoProduct.setOnClickListener(mOnClickListenner);
         mTvGeneralRate = (TextView) findViewById(R.id.tv_general_rate);
         mTvAmountOfRates = (TextView) findViewById(R.id.tv_amount_of_rates);
+        mTvReadAllReviews = (TextView) findViewById(R.id.tv_readall_reviews);
         setTexts();
         mButtonPostProductMess = (ImageView) findViewById(R.id.button_post_product);
-        mButtonPostProductMess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initAlertDiaLogPostMessage();
-            }
-        });
+        mButtonPostProductMess.setOnClickListener(mOnClickListenner);
         mIvShowPreview = (ImageView) findViewById(R.id.iv_show_preview);
+        mTvReadAllReviews.setOnClickListener(mOnClickListenner);
     }
 
     private ArrayList<ItemBooking> initBookingProducts() {
@@ -165,11 +340,11 @@ public class DetailsProductActivity extends AppCompatActivity
     }
 
     private void initAlertDiaLogPostMessage() {
-        mMessage.setmImageViewStar1(R.drawable.ic_star_empty);
-        mMessage.setmImageViewStar2(R.drawable.ic_star_empty);
-        mMessage.setmImageViewStar3(R.drawable.ic_star_empty);
-        mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
-        mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
+        mMessage.setImageViewStar1(R.drawable.ic_star_empty);
+        mMessage.setImageViewStar2(R.drawable.ic_star_empty);
+        mMessage.setImageViewStar3(R.drawable.ic_star_empty);
+        mMessage.setImageViewStar4(R.drawable.ic_star_empty);
+        mMessage.setImageViewStar5(R.drawable.ic_star_empty);
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.dialog_post_message_rate, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -178,6 +353,8 @@ public class DetailsProductActivity extends AppCompatActivity
         textNameProduct.setText(mTvNameProduct.getText().toString());
         mEdTitleMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate_title);
         mEdContentMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate_comment);
+        mTvPost = (TextView) promptsView.findViewById(R.id.button_post_message_rate);
+        mTvPost.setOnClickListener(mOnClickListenner);
         mButtonStar1 = (Button) promptsView.findViewById(R.id.button_start_vote_1);
         mButtonStar2 = (Button) promptsView.findViewById(R.id.button_start_vote_2);
         mButtonStar3 = (Button) promptsView.findViewById(R.id.button_start_vote_3);
@@ -188,175 +365,16 @@ public class DetailsProductActivity extends AppCompatActivity
         mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_start_3);
         mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_start_4);
         mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_start_5);
-//        mButtonBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mAlertDialogPostMessage.dismiss();
-//            }
-//        });
-//        mButtonPost.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mMessage.setmImageViewAva(R.drawable.avatar);
-//                mMessage.setmNameUser(getString(R.string.name_user));
-//                mMessage.setmTextViewContent(mEditTextContentMess.getText().toString());
-//                mListRate.add(mMessage);
-//                Collections.reverse(mListRate);
-//                mSuggestStoreAdapter.notifyDataSetChanged();
-//                shareFacebook((mEditTextContentMess.getText().toString()));
-//                mAlertDialogPostMessage.dismiss();
-//            }
-//        });
-        mButtonStar1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_full);
-            }
-        });
-        mTextViewStar1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setmImageViewStar5(R.drawable.ic_star_full);
-            }
-        });
+        mButtonStar1.setOnClickListener(mOnClickListenner);
+        mButtonStar2.setOnClickListener(mOnClickListenner);
+        mButtonStar3.setOnClickListener(mOnClickListenner);
+        mButtonStar4.setOnClickListener(mOnClickListenner);
+        mButtonStar5.setOnClickListener(mOnClickListenner);
+        mTextViewStar1.setOnClickListener(mOnClickListenner);
+        mTextViewStar2.setOnClickListener(mOnClickListenner);
+        mTextViewStar3.setOnClickListener(mOnClickListenner);
+        mTextViewStar4.setOnClickListener(mOnClickListenner);
+        mTextViewStar5.setOnClickListener(mOnClickListenner);
         mAlertDialogPostMessage = alertDialogBuilder.create();
         mAlertDialogPostMessage.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mAlertDialogPostMessage.show();
@@ -365,8 +383,10 @@ public class DetailsProductActivity extends AppCompatActivity
     private void fakeMessage() {
         MessageSuggestStore msm = new MessageSuggestStore(
                 R.drawable.avatar,
+                getString(R.string.name),
                 getString(R.string.rate_product_message),
                 getString(R.string.name_user),
+                SystemUtil.getCurDate(),
                 R.drawable.ic_star_full,
                 R.drawable.ic_star_full,
                 R.drawable.ic_star_full,
@@ -376,13 +396,24 @@ public class DetailsProductActivity extends AppCompatActivity
         mListRate.add(msm);
         mListRate.add(msm);
         mListRate.add(msm);
+        mListRate.add(msm);
+        mListRate.add(msm);
+        mListComment.add(msm);
+        mListComment.add(msm);
     }
 
     private void initRecycle() {
-        mSuggestStoreAdapter = new SuggestStoreAdapter(this, mListRate);
-        mRecyclerRateMessage = (RecyclerView) findViewById(R.id.recycleview_message_rate_product);
+        mSuggestStoreAdapter = new CommentStoreAdapter(this, mListComment)
+                .setListener(this);
+        mRvPreviewComment = (RecyclerView) findViewById(R.id.rv_preview_comments);
+        mRvPreviewComment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRvPreviewComment.setAdapter(mSuggestStoreAdapter);
+
+        mStoreAdapter = new CommentStoreAdapter(this, mListRate);
+        mRecyclerRateMessage = (RecyclerView) findViewById(R.id.rv_message_rate_product);
         mRecyclerRateMessage.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mRecyclerRateMessage.setAdapter(mSuggestStoreAdapter);
+        mRecyclerRateMessage.setAdapter(mStoreAdapter);
+        mRecyclerRateMessage.setVisibility(View.GONE);
     }
 
     @Override
@@ -436,15 +467,23 @@ public class DetailsProductActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClickShowPreviewDetail(int idRes) {
-        mIvShowPreview.setImageResource(idRes);
-        mIvShowPreview.setVisibility(View.VISIBLE);
+    public void onClickShowPreviewDetail(int curItem) {
+        mPager.setCurrentItem(curItem, false);
+        mPager.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onBackPressed() {
-        if (mIvShowPreview.isShown()) {
+        if (mIvShowPreview.isShown())
             mIvShowPreview.setVisibility(View.GONE);
-        }
+        if (mRecyclerRateMessage.isShown())
+            mRecyclerRateMessage.setVisibility(View.GONE);
+        if (mPager.isShown())
+            mPager.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPreviewCommentClicked() {
+        mRecyclerRateMessage.setVisibility(View.VISIBLE);
     }
 }

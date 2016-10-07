@@ -105,7 +105,7 @@
     <dimen name="width_height_34">34dp</dimen>
     <dimen name="margin_40">40dp</dimen>
     <dimen name="width_height_50">50dp</dimen>
-    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_20dp">20dp</dimen>
     <dimen name="margin_pading_10">10dp</dimen>
     <dimen name="margin_35">35dp</dimen>
     <dimen name="width_height_101">101dp</dimen>

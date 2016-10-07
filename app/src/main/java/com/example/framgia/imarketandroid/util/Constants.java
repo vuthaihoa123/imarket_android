@@ -105,4 +105,7 @@ public class Constants {
     public static final String EXTRA_INFOR_PRODUCT = "EXTRA_INFOR_PRODUCT";
     public static final String EXTRA_PRICE_PRODUCT = "EXTRA_PRICE_PRODUCT";
     public static final String HEAD_URL = "https://imarketv1.herokuapp.com";
+    public static final String EXTRA_ID_RES_PREVIEW_DETAILS = "EXTRA_ID_RES_PREVIEW_DETAILS";
+    public static final java.lang.String FORMAT_MONEY = "###,###,###,###,###.##";
+    public static final java.lang.String FORMAT_DATE = "yyyy/MM/dd";
 }

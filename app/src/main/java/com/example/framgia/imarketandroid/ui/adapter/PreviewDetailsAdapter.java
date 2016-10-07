@@ -2,6 +2,7 @@ package com.example.framgia.imarketandroid.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class PreviewDetailsAdapter extends RecyclerView.Adapter<PreviewDetailsAd
     }
 
     @Override
-    public void onBindViewHolder(PreviewDetailsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(PreviewDetailsAdapter.ViewHolder holder, final int position) {
         final int idRes = mItems.get(position);
         ImageView previewProduct = holder.mIvPreviewProduct;
         // add libs:      compile 'com.github.bumptech.glide:glide:3.7.0'     to build.gradle
@@ -55,7 +56,7 @@ public class PreviewDetailsAdapter extends RecyclerView.Adapter<PreviewDetailsAd
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onClickShowPreviewDetail(idRes);
+                    mListener.onClickShowPreviewDetail(position);
                 }
             }
         });
