@@ -265,4 +265,5 @@
     <string name="timeout_dialog">Waring : Progress dialog time out !</string>
     <string name="read_all_reviews">READ ALL REVIEWS</string>
     <string name="enter_phonenumber">Nhập số điện thoại</string>
+    <string name="data_success">Data success</string>
 </resources>

@@ -1,11 +1,14 @@
 package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.data.model.CategoryList;
+import com.example.framgia.imarketandroid.data.model.Floor;
+import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -202,5 +205,25 @@ public class HttpRequest {
     public interface OnLoadDataListener {
         void onLoadDataSuccess(Object object);
         void onLoadDataFailure(String message);
+    }
+
+    public void loadListFloor(int commerceId){
+        mApi = mRetrofit.create(IMarketApiEndPoint.class);
+        Call<ListFloor> request = mApi.getListFloorByCommerceId(commerceId);
+        request.enqueue(new Callback<ListFloor>() {
+            @Override
+            public void onResponse(Call<ListFloor> call, Response<ListFloor> response) {
+                if (mListener != null) {
+                    mListener.onLoadDataSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListFloor> call, Throwable t) {
+                if (mListener != null) {
+                    mListener.onLoadDataFailure(t.getMessage());
+                }
+            }
+        });
     }
 }

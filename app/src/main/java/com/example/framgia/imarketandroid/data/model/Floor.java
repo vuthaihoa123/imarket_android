@@ -1,5 +1,7 @@
 package com.example.framgia.imarketandroid.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +9,14 @@ import java.util.List;
  * Created by toannguyen201194 on 19/07/2016.
  */
 public class Floor {
+    @SerializedName("id")
     private int mId;
+    @SerializedName("name")
     private String mName;
-    private List<Shop> mShopList;
+    @SerializedName("commerce_center_id")
+    private int mCommerceId;
 
-    public Floor(int idFloor, String nameFloor) {
-        mId = idFloor;
-        mName = nameFloor;
-        mShopList =new ArrayList<Shop>();
+    public Floor() {
     }
 
     public int getIdFloor() {
@@ -31,15 +33,6 @@ public class Floor {
 
     public void setNameFloor(String nameFloor) {
         mName = nameFloor;
-    }
-
-    public List<Shop> getShopList() {
-        return mShopList;
-    }
-
-    public void setShopList(List<Shop> shopList) {
-        mShopList.clear();
-        mShopList.addAll(shopList);
     }
 
     @Override
