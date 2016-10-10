@@ -61,8 +61,8 @@ public class CategoryStallFragment extends Fragment implements
         Bundle bundle = getArguments();
         if (bundle == null) {
             HttpRequest.getInstance().init();
-            HttpRequest.getInstance().setOnLoadDataListener(this);
             HttpRequest.getInstance().loadCategories();
+            HttpRequest.getInstance().setOnLoadDataListener(this);
         } else {
             sCategoryStallAdapter.addAll(RealmRemote.getListCategory());
         }

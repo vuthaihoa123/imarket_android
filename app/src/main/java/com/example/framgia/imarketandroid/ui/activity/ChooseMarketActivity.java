@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.media.TransportPerformer;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
@@ -33,8 +32,8 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.CartItem;
+import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
-import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.adapter.HistoryTimeAdapter;
@@ -42,18 +41,15 @@ import com.example.framgia.imarketandroid.ui.adapter.RecyclerDrawerAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
-import com.example.framgia.imarketandroid.util.ConvertImageToBase64Util;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
-import com.example.framgia.imarketandroid.util.HttpRequest;
-import com.example.framgia.imarketandroid.util.RequestPermissionUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
+import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
  * Created by yue on 20/07/2016.
@@ -65,7 +61,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private Toolbar mToolbar;
     private RecyclerView mRecyclerMarket;
     private RecyclerMarketAdapter mAdapter;
-    private List<Market> mMarkets = new ArrayList<>();
+    public static List<CommerceCanter> sMarkets = new ArrayList<>();
     private CursorAdapter mSearchSuggestionAdapter;
     private TextView mTextEmail;
     private ImageView mImageAvatar;
@@ -109,8 +105,14 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
-        mMarkets = FakeContainer.initMarkets();
-        mAdapter = new RecyclerMarketAdapter(mMarkets);
+        LoadDataUtils.init(this);
+        LoadDataUtils.loadCommerce();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        mAdapter = new RecyclerMarketAdapter(this , sMarkets);
         mRecyclerMarket.setAdapter(mAdapter);
         mAdapter.setOnRecyclerItemInteractListener(this);
     }
