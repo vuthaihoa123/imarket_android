@@ -108,4 +108,5 @@ public class Constants {
     public static final String EXTRA_ID_RES_PREVIEW_DETAILS = "EXTRA_ID_RES_PREVIEW_DETAILS";
     public static final java.lang.String FORMAT_MONEY = "###,###,###,###,###.##";
     public static final java.lang.String FORMAT_DATE = "yyyy/MM/dd";
+    public static final String NULL_DATA = "Null data";
 }

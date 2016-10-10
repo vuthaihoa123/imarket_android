@@ -22,7 +22,7 @@ import retrofit2.http.Header;
  * Created by yue on 22/07/2016.
  */
 public class HttpRequest {
-    private static final String BASE_URL = Constants.SECOND_CATEGORY_URL;
+    private static final String BASE_URL = Constants.BASE_URL;
     private static HttpRequest sInstance;
     private static OkHttpClient mClient;
     private Retrofit mRetrofit;

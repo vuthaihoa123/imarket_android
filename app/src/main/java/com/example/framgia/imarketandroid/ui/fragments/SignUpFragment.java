@@ -18,7 +18,11 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
+import com.example.framgia.imarketandroid.ui.activity.LoginActivity;
+import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
+import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
 /**
  * Created by toannguyen201194 on 22/07/2016.
@@ -29,6 +33,8 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
     private EditText mEditFullName, mEditMail, mEditPassword, mEditPasswordConfirm;
     private Button mButtonRegister;
     private ProgressDialog mProgressDialog;
+    private TextInputLayout mInputPhoneNumber;
+    private EditText mEditPhoneNumber;
 
     public SignUpFragment() {
         super();
@@ -72,6 +78,8 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
                 submitForm();
             }
         });
+        mInputPhoneNumber = (TextInputLayout) mView.findViewById(R.id.input_text_phone_number);
+        mEditPhoneNumber = (EditText) mView.findViewById(R.id.edit_text_phone_number);
     }
 
     private void submitForm() {
@@ -84,6 +92,9 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
         if (!validate(mEditPassword, mInputPassword, R.string.err_msg_password)) {
             return;
         }
+        if (!validate(mEditPhoneNumber, mInputPhoneNumber, R.string.enter_phonenumber)) {
+            return;
+        }
         if (!checkPasswordConfirm()) {
             return;
         } else {
@@ -91,28 +102,33 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
             mProgressDialog.setMessage(getString(R.string.progressdialog));
             mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
             mProgressDialog.show();
-            Session user = new Session(mEditFullName.getText().toString(), mEditMail.getText()
-                .toString(), mEditPassword.getText().toString(),
-                mEditPasswordConfirm.getText().toString());
+            Session user = new Session(
+                mEditFullName.getText().toString(),
+                mEditMail.getText().toString(),
+                mEditPassword.getText().toString(),
+                mEditPasswordConfirm.getText().toString(),
+                mEditPhoneNumber.getText().toString()
+            );
             final UserModel signupModel = new UserModel(user);
             HttpRequest.getInstance().register(signupModel);
             HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
                 @Override
                 public void onLoadDataSuccess(Object object) {
-                    UserModel signupModel1 = (UserModel) object;
+                    UserModel userModel = (UserModel) object;
                     mProgressDialog.dismiss();
-                    if (signupModel1.getmErrors().isEmpty()) {
-                        Intent intent = new Intent(getActivity(), ChooseMarketActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
+                    if (userModel != null && userModel.getSession() != null) {
+                        SharedPreferencesUtil.getInstance().init(getContext(), Constants.PREFS_NAME);
+                        SharedPreferencesUtil.getInstance().saveString(Constants.EMAIL, userModel
+                            .getSession().getUsername().toString());
+                        LoginActivity.mViewPagerLogin.setCurrentItem(0);
                     } else {
-                        Toast.makeText(getContext(), signupModel1.getmErrors(),
-                            Toast.LENGTH_SHORT).show();
+                        Flog.toastString(getContext(), userModel.getmErrors().toString());
                     }
                 }
 
                 @Override
                 public void onLoadDataFailure(String message) {
+                    mProgressDialog.dismiss();
                 }
             });
         }

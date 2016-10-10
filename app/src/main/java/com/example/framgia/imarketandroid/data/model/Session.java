@@ -43,6 +43,14 @@ public class Session extends RealmObject {
         mPassword = password;
         mPasswordConfirm = passwordConfirm;
     }
+    public Session(String fullname, String username, String password, String passwordConfirm,
+                   String phonenumber) {
+        mFullname = fullname;
+        mUsername = username;
+        mPassword = password;
+        mPasswordConfirm = passwordConfirm;
+        mNumberPhone = phonenumber;
+    }
 
     public String getUrlImage() {
         return mUrlImage;

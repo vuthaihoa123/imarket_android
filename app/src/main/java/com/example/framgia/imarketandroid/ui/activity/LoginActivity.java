@@ -28,7 +28,7 @@ import com.facebook.appevents.AppEventsLogger;
  */
 public class LoginActivity extends AppCompatActivity {
     private TabLayout mTabLayoutLogin;
-    private ViewPager mViewPagerLogin;
+    public static ViewPager mViewPagerLogin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,4 +65,5 @@ public class LoginActivity extends AppCompatActivity {
         adapter.addFragment(new SignUpFragment(), Constants.SIGNUP);
         viewPager.setAdapter(adapter);
     }
+
 }

@@ -9,7 +9,7 @@ public class UserModel {
     @SerializedName("user")
     private Session mSession;
     @SerializedName("errors")
-    private String  mErrors;
+    private Error  mErrors;
     public UserModel(Session session) {
         mSession = session;
     }
@@ -22,11 +22,11 @@ public class UserModel {
         mSession = session;
     }
 
-    public String getmErrors() {
+    public Error getmErrors() {
         return mErrors;
     }
 
-    public void setmErrors(String mErrors) {
+    public void setErrors(Error mErrors) {
         this.mErrors = mErrors;
     }
 }

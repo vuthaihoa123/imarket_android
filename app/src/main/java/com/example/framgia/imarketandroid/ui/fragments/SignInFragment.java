@@ -2,22 +2,18 @@ package com.example.framgia.imarketandroid.ui.fragments;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +28,7 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
-import com.example.framgia.imarketandroid.ui.activity.UpdateProfileActivity;
+import com.example.framgia.imarketandroid.ui.activity.LoginActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
@@ -81,8 +77,6 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     private int mSubLetter = 2;
     private ProgressDialog mProgressDialog;
     private ConnectionResult mConnectionResult;
-    private boolean flagPass = false;
-
     public SignInFragment() {
         super();
     }
@@ -121,6 +115,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         mFramLoginFacebook = (FrameLayout) mView.findViewById(R.id.frame_button_facebook);
         mFramLoginGmail = (FrameLayout) mView.findViewById(R.id.frame_button_gmail);
         mEditUsername = (EditText) mView.findViewById(R.id.edit_text_username);
+        getDataUsername();
         mEditPassword = (EditText) mView.findViewById(R.id.edit_text_password);
     }
 
@@ -208,9 +203,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
             HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
                 @Override
                 public void onLoadDataSuccess(Object object) {
-                    object.toString();
                     UserModel userModel = (UserModel) object;
-                    Session session1 = userModel.getSession();
                     mProgressDialog.dismiss();
                     if (userModel == null) {
                         Toast.makeText(getContext(), R.string.msg_login_invaild,
@@ -406,13 +399,19 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         }
     }
 
-    private void timerDelayRemoveDialog(long time, final Dialog d) {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                d.dismiss();
-            }
-        }, time);
-        Toast.makeText(getActivity(), R.string.timeout_dialog, Toast.LENGTH_SHORT)
-            .show();
+    private void getDataUsername() {
+        if (LoginActivity.mViewPagerLogin.getCurrentItem() == 0)
+        SharedPreferencesUtil.getInstance().init(getContext(), Constants.PREFS_NAME);
+        String username = SharedPreferencesUtil.getInstance().getString(Constants.EMAIL);
+        if (username != null && !username.equals(Constants.NULL_DATA)) {
+            mEditUsername.setText(username.toString());
+        }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDataUsername();
+    }
+
 }
