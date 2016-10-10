@@ -44,6 +44,7 @@ import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.ConvertImageToBase64Util;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.HttpRequest;
 import com.example.framgia.imarketandroid.util.RequestPermissionUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import com.example.framgia.imarketandroid.util.findpath.InternetUtil;

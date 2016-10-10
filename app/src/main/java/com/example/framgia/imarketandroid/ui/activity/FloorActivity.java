@@ -43,6 +43,7 @@ import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.Graph;
+import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.model.Shop;
 import com.example.framgia.imarketandroid.data.model.Store;
@@ -52,9 +53,11 @@ import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
 import com.example.framgia.imarketandroid.ui.views.CustomMarkerView;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.HttpRequest;
 import com.example.framgia.imarketandroid.util.MapUntils;
 import com.example.framgia.imarketandroid.util.OnSwipeTouchListener;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
+import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
 import com.google.android.gms.internal.zzng;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -106,7 +109,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private Switch mSwitchLocation;
     private List<Marker> mListMarker = new ArrayList<>();
     private List<Polyline> mListPolyline = new ArrayList<>();
-    private List<Floor> mFloorList = new ArrayList<>();
+    public static List<String> mFloorList = new ArrayList<>();
     private List<Edge> mEdges;
     private List<Point> mNodes = null;
     private LinkedList<Point> mPath;
@@ -148,7 +151,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         initMap();
         hideStatusBar();
         initViews();
+        getDataFloorFromServer();
     }
+
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -215,9 +220,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mLayoutFloor = (LinearLayout) findViewById(R.id.layout_list_floor);
         mListFloor = (ListView) findViewById(R.id.list_floor);
         ArrayAdapter adapter =
-            new ArrayAdapter<String>(this, R.layout.item_floor, R.id.floor_content,
-                FakeContainer
-                    .initFloor());
+            new ArrayAdapter<String>(this, R.layout.item_floor, R.id.floor_content, mFloorList);
         mListFloor.setAdapter(adapter);
         mListFloor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -797,5 +800,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     }
                 }
             });
+    }
+
+    private void getDataFloorFromServer() {
+        LoadDataUtils.init(this);
+        // Danh sách tầng load theo ib commerce. Default = 1
+        LoadDataUtils.loadFloor(1);
     }
 }
