@@ -126,11 +126,6 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setView(promptsView);
 
-        mButtonStar1 = (Button) promptsView.findViewById(R.id.button_start_vote_1);
-        mButtonStar2 = (Button) promptsView.findViewById(R.id.button_start_vote_2);
-        mButtonStar3 = (Button) promptsView.findViewById(R.id.button_start_vote_3);
-        mButtonStar4 = (Button) promptsView.findViewById(R.id.button_start_vote_4);
-        mButtonStar5 = (Button) promptsView.findViewById(R.id.button_start_vote_5);
         mTextViewStar1 = (TextView) promptsView.findViewById(R.id.text_start_1);
         mTextViewStar2 = (TextView) promptsView.findViewById(R.id.text_start_2);
         mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_start_3);
