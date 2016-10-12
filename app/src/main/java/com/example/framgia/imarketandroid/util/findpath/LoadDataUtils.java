@@ -8,6 +8,7 @@ import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
+import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 import com.example.framgia.imarketandroid.util.Flog;
@@ -84,4 +85,30 @@ public class LoadDataUtils {
             }
         });
     }
+
+    public static void getStoreByStoreType(int id_floor, int storeType) {
+        mProgressDialog.show();
+        HttpRequest.getInstance().getStore(id_floor, storeType);
+        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+            @Override
+            public void onLoadDataSuccess(Object object) {
+                // data store
+                Stores listStore = (Stores) object;
+                mProgressDialog.dismiss();
+                if (listStore != null) {
+                    Flog.toast(mContext, R.string.store_success);
+                } else {
+                    Flog.toast(mContext, R.string.store_null);
+                }
+            }
+
+            @Override
+            public void onLoadDataFailure(String message) {
+                mProgressDialog.dismiss();
+            }
+        });
+    }
+    //data store
+//    LoadDataUtils.init(getContext());
+//    LoadDataUtils.getStoreByStoreType(1,1);
 }
