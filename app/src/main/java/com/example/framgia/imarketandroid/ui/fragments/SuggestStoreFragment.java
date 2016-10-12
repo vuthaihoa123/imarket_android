@@ -11,13 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
+import com.example.framgia.imarketandroid.data.model.Comment;
 import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.ui.adapter.CommentStoreAdapter;
+import com.example.framgia.imarketandroid.ui.views.CustomStarView;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 import com.example.framgia.imarketandroid.util.SystemUtil;
@@ -25,24 +28,29 @@ import com.example.framgia.imarketandroid.util.SystemUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.framgia.imarketandroid.util.Constants.LIMIT_STAR;
+
 /**
  * Created by phongtran on 26/08/2016.
  */
-public class SuggestStoreFragment extends Fragment implements View.OnClickListener {
+public class SuggestStoreFragment extends Fragment implements View.OnClickListener, CustomStarView.onItemClickListener {
     private ImageView mImageViewAvaStore;
     private TextView mTextViewNameStore, mTextViewHastagStore;
     private TextView mTextViewProportionVote, mTextViewCountVote;
     private ImageView mImageViewStar1, mImageViewStar2, mImageViewStar3, mImageViewStar4,
             mImageViewStar5;
     private Button mButtonPostSuggestStore;
+    private TextView mButtonPostComment;
     private RecyclerView mRecyclerViewOldMessage;
-    private List<MessageSuggestStore> mMessageSuggestStoreList = new ArrayList<>();
+    private List<Comment> mMessageSuggestStoreList = new ArrayList<>();
+    private List<Comment> mListRate = new ArrayList<>();
     private CommentStoreAdapter mSuggestStoreAdapter;
     private AlertDialog mAlertDialogPostMessage;
-    private Button mButtonStar1, mButtonStar2, mButtonStar3, mButtonStar4, mButtonStar5;
     private TextView mTextViewStar1, mTextViewStar2, mTextViewStar3, mTextViewStar4, mTextViewStar5;
-    private MessageSuggestStore mMessage = new MessageSuggestStore();
     private View mView;
+    private List<CustomStarView> mListStar;
+    private EditText mTextTitle, mTextContent;
+    private LinearLayout mLayoutStar;
 
     @Nullable
     @Override
@@ -67,21 +75,16 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
     }
 
     private void fakeDataMessage() {
-        MessageSuggestStore msm = new MessageSuggestStore(
+        Comment msm = new Comment(
                 R.drawable.avatar,
                 getString(R.string.name),
                 getString(R.string.message_rate),
                 getString(R.string.name_user),
-                SystemUtil.getCurDate(),
-                R.drawable.ic_star_full,
-                R.drawable.ic_star_full,
-                R.drawable.ic_star_full,
-                R.drawable.ic_star_half,
-                R.drawable.ic_star_empty);
-        mMessageSuggestStoreList.add(msm);
-        mMessageSuggestStoreList.add(msm);
-        mMessageSuggestStoreList.add(msm);
-        mMessageSuggestStoreList.add(msm);
+                SystemUtil.getCurDate()
+        );
+        for (int i = 0; i < 4; i++) {
+            mMessageSuggestStoreList.add(msm);
+        }
     }
 
     private void findView() {
@@ -109,192 +112,46 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
             case R.id.button_post_store:
                 initAlertDiaLogPostMessage();
                 break;
+            case R.id.button_post_message_rate:
+                String title = mTextTitle.getText().toString();
+                String content = mTextContent.getText().toString();
+                Comment newMessage = new Comment(
+                        R.drawable.avatar,
+                        title,
+                        content,
+                        getString(R.string.name_user),
+                        SystemUtil.getCurDate()
+                );
+                newMessage.setImageStars(getTotalStar());
+                mMessageSuggestStoreList.set(0, newMessage);
+                mSuggestStoreAdapter.notifyDataSetChanged();
+                mAlertDialogPostMessage.dismiss();
+                break;
             default:
                 break;
         }
     }
 
     private void initAlertDiaLogPostMessage() {
-        mMessage.setImageViewStar1(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar2(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar3(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar5(R.drawable.ic_star_empty);
         LayoutInflater li = LayoutInflater.from(getContext());
         View promptsView = li.inflate(R.layout.dialog_post_message_rate,
                 (ViewGroup) getActivity().findViewById(R.id.view_group_details));
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setView(promptsView);
-
         mTextViewStar1 = (TextView) promptsView.findViewById(R.id.text_start_1);
         mTextViewStar2 = (TextView) promptsView.findViewById(R.id.text_start_2);
         mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_start_3);
         mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_start_4);
         mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_start_5);
-
-//        mButtonPost.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mMessage.setImageViewAva(R.drawable.avatar);
-//                mMessage.setNameUser(getString(R.string.name_user));
-//                mMessageSuggestStoreList.add(mMessage);
-//                Collections.reverse(mMessageSuggestStoreList);
-//                mSuggestStoreAdapter.notifyDataSetChanged();
-//                mAlertDialogPostMessage.dismiss();
-//            }
-//        });
-
-        mButtonStar1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mButtonStar5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_full);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setImageViewStar5(R.drawable.ic_star_full);
-            }
-        });
-        mTextViewStar1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_empty);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_empty);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setImageViewStar5(R.drawable.ic_star_empty);
-            }
-        });
-        mTextViewStar5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButtonStar1.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar2.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar3.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar4.setBackgroundResource(R.drawable.ic_star_full);
-                mButtonStar5.setBackgroundResource(R.drawable.ic_star_full);
-                mMessage.setImageViewStar1(R.drawable.ic_star_full);
-                mMessage.setImageViewStar2(R.drawable.ic_star_full);
-                mMessage.setImageViewStar3(R.drawable.ic_star_full);
-                mMessage.setImageViewStar4(R.drawable.ic_star_full);
-                mMessage.setImageViewStar5(R.drawable.ic_star_full);
-            }
-        });
         mAlertDialogPostMessage = alertDialogBuilder.create();
+        mButtonPostComment = (TextView) promptsView.findViewById(R.id.button_post_message_rate);
+        mTextTitle = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_title);
+        mTextContent = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_comment);
+        mLayoutStar = (LinearLayout) promptsView.findViewById(R.id.layout_stars);
+        mButtonPostComment.setOnClickListener(this);
+        mTextTitle.setOnClickListener(this);
+        mTextContent.setOnClickListener(this);
+        addStarList();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(mAlertDialogPostMessage.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -306,6 +163,44 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
 
     public void initGuideSuggestStore() {
         ShowcaseGuideUtil.singleShowcase(getActivity(), Constants.SHOWCASE_ID_SUGGEST_STORE, new
-            Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote)));
+                Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote)));
+    }
+
+    public int getTotalStar() {
+        int count = 0;
+        for (int i = 0; i < LIMIT_STAR; i++) {
+            if (mListStar.get(i).isChecked()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private void addStarList() {
+        mListStar = new ArrayList<>();
+        for (int i = 0; i < Constants.LIMIT_STAR; i++) {
+            CustomStarView customStarView = new CustomStarView(getActivity(), i);
+            mListStar.add(customStarView);
+            mListStar.get(i).setOnItemClickListener(this);
+            mListStar.get(i).getView().requestLayout();
+            mLayoutStar.addView(customStarView.getView());
+            mLayoutStar.invalidate();
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        setStars(position);
+    }
+
+    public void setStars(int position) {
+        for (int i = 0; i <= position; i++) {
+            mListStar.get(i).setChecked(true);
+            mListStar.get(i).setSelectedStar();
+        }
+        for (int i = position + 1; i < Constants.LIMIT_STAR; i++) {
+            mListStar.get(i).setChecked(false);
+            mListStar.get(i).setSelectedStar();
+        }
     }
 }

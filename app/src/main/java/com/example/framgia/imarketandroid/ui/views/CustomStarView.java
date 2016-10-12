@@ -35,6 +35,10 @@ public class CustomStarView implements View.OnClickListener {
 
     public void findView(View view) {
         mImageStar = (ImageView) view.findViewById(R.id.image_star);
+        if (mPosition == 0) {
+            mImageStar.setImageResource(R.drawable.ic_star_full);
+            setChecked(true);
+        }
         mImageStar.setOnClickListener(this);
     }
 
