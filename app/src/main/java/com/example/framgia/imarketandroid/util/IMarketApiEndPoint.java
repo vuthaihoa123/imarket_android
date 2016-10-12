@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.data.model.CategoryList;
+import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.Session;
@@ -41,4 +42,6 @@ public interface IMarketApiEndPoint {
     @GET("commerce_centers/{commerce_center_id}/floors")
     Call<ListFloor> getListFloorByCommerceId(
         @Path(value = "commerce_center_id", encoded = true) int commerce_center_id);
+    @GET("commerce_centers")
+    Call<CommerceList> getListCommerceCenter();
 }

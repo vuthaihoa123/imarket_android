@@ -266,4 +266,5 @@
     <string name="read_all_reviews">READ ALL REVIEWS</string>
     <string name="enter_phonenumber">Nhập số điện thoại</string>
     <string name="data_success">Data success</string>
+    <string name="not_data_in_object">Không có dữ liệu trong đối tượng trả về.</string>
 </resources>
