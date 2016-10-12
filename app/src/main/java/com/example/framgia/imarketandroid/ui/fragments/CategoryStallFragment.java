@@ -18,7 +18,9 @@ import com.example.framgia.imarketandroid.data.remote.RealmRemote;
 import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.ui.adapter.CategoryStallAdapter;
 import com.example.framgia.imarketandroid.ui.widget.GridItemDecoration;
+import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
+import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +86,9 @@ public class CategoryStallFragment extends Fragment implements
 
     @Override
     public void onItemClick(View view, int position) {
-        startActivity(new Intent(getContext(), ListProductsActivity.class));
+        Intent intent = new Intent(getContext(), ListProductsActivity.class);
+        intent.putExtra(Constants.CATEGORY_INTENT, sCategoryProducts.get(position));
+        startActivity(intent);
     }
 
 }

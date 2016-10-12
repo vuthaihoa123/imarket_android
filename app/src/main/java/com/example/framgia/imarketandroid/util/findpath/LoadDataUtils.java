@@ -7,10 +7,13 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
+import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
+import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
+import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 
@@ -29,7 +32,8 @@ public class LoadDataUtils {
         HttpRequest.getInstance().init();
     }
 
-    public static void loadFloor(int idCommerce) {
+    public static void loadFloor(Context context, int idCommerce) {
+        init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().loadListFloor(idCommerce);
         HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
@@ -52,12 +56,13 @@ public class LoadDataUtils {
             @Override
             public void onLoadDataFailure(String message) {
                 mProgressDialog.dismiss();
-                Flog.toast(mContext, R.string.no_data);
+                Flog.toast(mContext, message);
             }
         });
     }
 
-    public static void loadCommerce() {
+    public static void loadCommerce(Context context) {
+        init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().loadListCommerce();
         HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
@@ -81,18 +86,18 @@ public class LoadDataUtils {
             @Override
             public void onLoadDataFailure(String message) {
                 mProgressDialog.dismiss();
-                Flog.toast(mContext, R.string.no_data);
+                Flog.toast(mContext, message);
             }
         });
     }
 
-    public static void getStoreByStoreType(int id_floor, int storeType) {
+    public static void getStoreByStoreType(Context context, int id_floor, int storeType) {
+        init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().getStore(id_floor, storeType);
         HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
-                // data store
                 Stores listStore = (Stores) object;
                 mProgressDialog.dismiss();
                 if (listStore != null) {
@@ -105,10 +110,40 @@ public class LoadDataUtils {
             @Override
             public void onLoadDataFailure(String message) {
                 mProgressDialog.dismiss();
+                Flog.toast(mContext, message);
             }
         });
     }
     //data store
-//    LoadDataUtils.init(getContext());
-//    LoadDataUtils.getStoreByStoreType(1,1);
+//    LoadDataUtils.getStoreByStoreType(context,1,1);
+
+    public static void getProductInCategory(Context context,int id_cate) {
+        init(context);
+        mProgressDialog.show();
+        HttpRequest.getInstance().getProduct(id_cate);
+        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+            @Override
+            public void onLoadDataSuccess(Object object) {
+                ProductList productList = (ProductList) object;
+                mProgressDialog.dismiss();
+                if (productList != null) {
+                    Flog.toast(mContext, R.string.product_success);
+                    ListProductsActivity.sItemProducts.clear();
+                    for (int i = 0; i < productList.getItemProductList().size(); i++) {
+                        ItemProduct product = productList.getItemProductList().get(i);
+                        ListProductsActivity.sItemProducts.add(product);
+                    }
+                    ListProductsActivity.mAdapter.notifyDataSetChanged();
+                } else {
+                    Flog.toast(mContext, R.string.product_null);
+                }
+            }
+
+            @Override
+            public void onLoadDataFailure(String message) {
+                mProgressDialog.dismiss();
+                Flog.toast(mContext, message);
+            }
+        });
+    }
 }

@@ -19,7 +19,8 @@ public class Flog {
     public static void toast(Context context, int s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
-    public static void toastString(Context context, String s) {
+    public static void toast(Context context, String s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
 }
+

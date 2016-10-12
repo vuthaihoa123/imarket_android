@@ -17,22 +17,23 @@ import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hoavt on 20/07/2016.
  */
 public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapter.ViewHolder> {
     public static final String NO_PROMOTION = Constants.NO_PERCENT;
-    private ArrayList<ItemProduct> mItems = new ArrayList<>();
+    private List<ItemProduct> mItems = new ArrayList<>();
     private Context mContext;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ListProductsAdapter(Context context, ArrayList<ItemProduct> myItems) {
+    public ListProductsAdapter(Context context, List<ItemProduct> myItems) {
         mContext = context;
         mItems = myItems;
     }
 
-    public void setItems(ArrayList<ItemProduct> items) {
+    public void setItems(List<ItemProduct> items) {
         mItems = items;
     }
 

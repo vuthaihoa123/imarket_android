@@ -109,4 +109,6 @@ public class Constants {
     public static final java.lang.String FORMAT_MONEY = "###,###,###,###,###.##";
     public static final java.lang.String FORMAT_DATE = "yyyy/MM/dd";
     public static final String NULL_DATA = "Null data";
+    public static final String CATEGORY_INTENT = "category";
+    public static final String COMMERCE_INTENT = "commerce";
 }

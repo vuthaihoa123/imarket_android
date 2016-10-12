@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Floor;
@@ -151,7 +152,10 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         initMap();
         hideStatusBar();
         initViews();
-        getDataFloorFromServer();
+        Intent intent = getIntent();
+        CommerceCanter commerce = (CommerceCanter)intent
+            .getSerializableExtra(Constants.COMMERCE_INTENT);
+        LoadDataUtils.loadFloor(this, commerce.getId());
     }
 
 
@@ -800,11 +804,5 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     }
                 }
             });
-    }
-
-    private void getDataFloorFromServer() {
-        LoadDataUtils.init(this);
-        // Danh sách tầng load theo ib commerce. Default = 1
-        LoadDataUtils.loadFloor(1);
     }
 }

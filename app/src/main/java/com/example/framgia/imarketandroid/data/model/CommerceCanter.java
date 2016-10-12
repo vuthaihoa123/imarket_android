@@ -2,10 +2,12 @@ package com.example.framgia.imarketandroid.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by phongtran on 10/10/2016.
  */
-public class CommerceCanter {
+public class CommerceCanter implements Serializable{
     @SerializedName("id")
     private int mId;
     @SerializedName("name")

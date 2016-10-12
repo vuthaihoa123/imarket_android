@@ -1,7 +1,6 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -12,12 +11,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.UserModel;
-import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.ui.activity.LoginActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.Flog;
@@ -122,7 +119,7 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
                             .getSession().getUsername().toString());
                         LoginActivity.mViewPagerLogin.setCurrentItem(0);
                     } else {
-                        Flog.toastString(getContext(), userModel.getmErrors().toString());
+                        Flog.toast(getContext(), userModel.getmErrors().toString());
                     }
                 }
 
