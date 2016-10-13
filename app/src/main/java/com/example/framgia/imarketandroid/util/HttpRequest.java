@@ -4,6 +4,7 @@ import com.example.framgia.imarketandroid.data.model.CategoryList;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
+import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.Store;
 import com.example.framgia.imarketandroid.data.model.Stores;
@@ -259,6 +260,26 @@ public class HttpRequest {
 
             @Override
             public void onFailure(Call<Stores> call, Throwable t) {
+                if (mListener != null) {
+                    mListener.onLoadDataFailure(t.getMessage());
+                }
+            }
+        });
+    }
+
+    public void getProduct(int id_cate) {
+        mApi = mRetrofit.create(IMarketApiEndPoint.class);
+        Call<ProductList> repuestServer = mApi.getProductInCategory(id_cate);
+        repuestServer.enqueue(new Callback<ProductList>() {
+            @Override
+            public void onResponse(Call<ProductList> call, Response<ProductList> response) {
+                if (mListener != null) {
+                    mListener.onLoadDataSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductList> call, Throwable t) {
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }

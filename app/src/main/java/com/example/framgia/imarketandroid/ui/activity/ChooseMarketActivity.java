@@ -105,13 +105,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
-        LoadDataUtils.init(this);
-        LoadDataUtils.loadCommerce();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        LoadDataUtils.loadCommerce(this);
         mAdapter = new RecyclerMarketAdapter(this , sMarkets);
         mRecyclerMarket.setAdapter(mAdapter);
         mAdapter.setOnRecyclerItemInteractListener(this);
@@ -369,7 +363,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 break;
             case R.id.item_recycler_market:
                 mLinearMenu.setVisibility(View.GONE);
-                startActivity(new Intent(this, FloorActivity.class));
+                Intent intent = new Intent(this, FloorActivity.class);
+                intent.putExtra(Constants.COMMERCE_INTENT, sMarkets.get(position));
+                startActivity(intent);
                 break;
         }
     }

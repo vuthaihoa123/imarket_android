@@ -2,13 +2,15 @@ package com.example.framgia.imarketandroid.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by yue on 22/07/2016.
  */
-public class Category extends RealmObject {
+public class Category extends RealmObject implements Serializable{
 
     @PrimaryKey
     @SerializedName("id")

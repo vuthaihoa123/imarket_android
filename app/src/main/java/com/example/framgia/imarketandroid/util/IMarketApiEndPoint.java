@@ -5,11 +5,13 @@ import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.ListItemProduct;
+import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.Store;
 import com.example.framgia.imarketandroid.data.model.StoreTypeList;
 import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.data.model.UserModel;
+import com.google.android.gms.analytics.ecommerce.Product;
 
 import java.util.List;
 
@@ -51,4 +53,8 @@ public interface IMarketApiEndPoint {
     @GET("floors/{id_floor}/stores")
     Call<Stores> getStoreByStoreType(@Path(value = "id_floor", encoded = true) int id_floor,
                                      @Query("store_type_id") int store_type_id);
+    @GET("categories/{id_category}/products")
+    Call<ProductList> getProductInCategory(
+        @Path(value = "id_category", encoded = true) int id_category
+    );
 }
