@@ -81,6 +81,7 @@ public class LoadDataUtils {
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
+                ChooseMarketActivity.sAdapter.notifyDataSetChanged();
             }
 
             @Override
