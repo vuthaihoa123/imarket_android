@@ -60,7 +60,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerMarket;
-    private RecyclerMarketAdapter mAdapter;
+    public static RecyclerMarketAdapter sAdapter;
     public static List<CommerceCanter> sMarkets = new ArrayList<>();
     private CursorAdapter mSearchSuggestionAdapter;
     private TextView mTextEmail;
@@ -106,9 +106,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
         LoadDataUtils.loadCommerce(this);
-        mAdapter = new RecyclerMarketAdapter(this , sMarkets);
-        mRecyclerMarket.setAdapter(mAdapter);
-        mAdapter.setOnRecyclerItemInteractListener(this);
+        sAdapter = new RecyclerMarketAdapter(this , sMarkets);
+        mRecyclerMarket.setAdapter(sAdapter);
+        sAdapter.setOnRecyclerItemInteractListener(this);
     }
 
     private void supportActionBar() {
