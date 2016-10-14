@@ -17,6 +17,8 @@ import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 
+import java.util.List;
+
 /**
  * Created by phongtran on 07/10/2016.
  */
@@ -30,6 +32,17 @@ public class LoadDataUtils {
         mProgressDialog.setMessage(mContext.getString(R.string.progressdialog));
         mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
         HttpRequest.getInstance().init();
+    }
+
+    public interface OnLoadMarketsCallback {
+        public void onLoadMarketsDone(List<CommerceCanter> list);
+    }
+
+    private OnLoadMarketsCallback mLoadMarketsListenner;
+
+    public LoadDataUtils setLoadMarketsListenner(OnLoadMarketsCallback loadMarketsListenner) {
+        mLoadMarketsListenner = loadMarketsListenner;
+        return this;
     }
 
     public static void loadFloor(Context context, int idCommerce) {
@@ -61,27 +74,22 @@ public class LoadDataUtils {
         });
     }
 
-    public static void loadCommerce(Context context) {
+    public void loadCommerce(Context context) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().loadListCommerce();
         HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
-                CommerceList commerceList = (CommerceList) object;
                 mProgressDialog.dismiss();
+                CommerceList commerceList = (CommerceList) object;
                 if (commerceList != null) {
                     Flog.toast(mContext, R.string.data_success);
-                    ChooseMarketActivity.sMarkets.clear();
-                    int size = commerceList.getCenterList().size();
-                    for (int i = 0; i < size; i++) {
-                        CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
-                        ChooseMarketActivity.sMarkets.add(commerceCanter);
-                    }
+                    if (mLoadMarketsListenner!=null)
+                        mLoadMarketsListenner.onLoadMarketsDone(commerceList.getCenterList());
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
-                ChooseMarketActivity.sAdapter.notifyDataSetChanged();
             }
 
             @Override

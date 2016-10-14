@@ -9,20 +9,25 @@ import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +48,7 @@ import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
+import com.example.framgia.imarketandroid.util.SystemUtil;
 import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
 
@@ -52,19 +58,19 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by yue on 20/07/2016.
+ * Created by hoavt on 11/10/2016.
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
-    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener {
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+        SearchView.OnQueryTextListener, OnRecyclerItemInteractListener, LoadDataUtils.OnLoadMarketsCallback {
+    private RecyclerMarketAdapter mMarketAdapter;
+    private List<CommerceCanter> mMarkets = new ArrayList<>();
+    private List<CommerceCanter> mTraceMarkets = new ArrayList<>();
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private RecyclerView mRecyclerMarket;
-    public static RecyclerMarketAdapter sAdapter;
-    public static List<CommerceCanter> sMarkets = new ArrayList<>();
     private CursorAdapter mSearchSuggestionAdapter;
     private TextView mTextEmail;
-    private ImageView mImageAvatar;
     private List<DrawerItem> mDrawerItems = new ArrayList<>();
     private RecyclerView mRecyclerDrawer;
     private RecyclerDrawerAdapter mRecyclerDrawerAdapter;
@@ -77,6 +83,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private List<String> mHeaderNames = new ArrayList<>();
     private HistoryTimeAdapter mHistoryTimeAdapter;
     private RelativeLayout mReFavorite, mReBound, mReFollow;
+    private LinearLayoutCompat mAcibSearch;
+    private RadioButton mRbName, mRbLocation;
+    private AppCompatAutoCompleteTextView mAcactvSearchInput;
+    private AppCompatTextView mActvNamePreview, mActvLocationPreview;
+    private String[] mAutoCompleteList, mAutoCompleteNameList, mAutoCompleteLocationList;
+    private ArrayAdapter<String> mAutoCompleteAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,23 +111,25 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         setListeners();
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
-        LoadDataUtils.loadCommerce(this);
-        sAdapter = new RecyclerMarketAdapter(this , sMarkets);
-        mRecyclerMarket.setAdapter(sAdapter);
-        sAdapter.setOnRecyclerItemInteractListener(this);
+        LoadDataUtils loadDataUtils = new LoadDataUtils().setLoadMarketsListenner(this);
+        loadDataUtils.loadCommerce(this);
+        mMarketAdapter = new RecyclerMarketAdapter(this, mMarkets);
+        mTraceMarkets.addAll(mMarkets);
+        mRecyclerMarket.setAdapter(mMarketAdapter);
+        mMarketAdapter.setOnRecyclerItemInteractListener(this);
     }
 
     private void supportActionBar() {
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
@@ -124,22 +138,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-            android.R.layout.simple_list_item_1,
-            null,
-            columns,
-            displayViews,
-            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                android.R.layout.simple_list_item_1,
+                null,
+                columns,
+                displayViews,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         getInfo();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_choose_market, menu);
-        SearchView searchView = (SearchView)
-            MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
-        searchView.setOnQueryTextListener(this);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -172,7 +176,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                     mCartItems = FakeContainer.getListCartItem();
                     if (mHistoryTimeAdapter == null) {
                         mHistoryTimeAdapter =
-                            new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
+                                new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                         mRecyclerDrawer.setLayoutManager(linearLayoutManager);
                         mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
@@ -200,22 +204,22 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 case R.id.button_sign_out:
                     SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                     Session session = (Session) SharedPreferencesUtil
-                        .getInstance()
-                        .getValue(Constants.SESSION, Session.class);
+                            .getInstance()
+                            .getValue(Constants.SESSION, Session.class);
                     if (session != null) {
                         actionSignout();
                     } else {
                         DialogShareUtil
-                            .toastDialogMessage(getString(R.string.signout_fails_message),
-                                ChooseMarketActivity.this);
+                                .toastDialogMessage(getString(R.string.signout_fails_message),
+                                        ChooseMarketActivity.this);
                     }
                     mLinearMenu.setVisibility(View.GONE);
                     break;
                 case R.id.button_profile:
                     SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                     Session session2 = (Session) SharedPreferencesUtil
-                        .getInstance()
-                        .getValue(Constants.SESSION, Session.class);
+                            .getInstance()
+                            .getValue(Constants.SESSION, Session.class);
                     if (session2 != null)
                         startActivity(new Intent(this, UpdateProfileActivity.class));
                     else {
@@ -227,8 +231,56 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 case R.id.image_avatar:
                     mLinearMenu.setVisibility(View.GONE);
                     break;
+                case R.id.acib_search_action:
+                    filterList(!mActvNamePreview.equals(""), !mActvLocationPreview.equals(""));
+                    break;
+                case R.id.radio_name:
+                    mAcactvSearchInput.setText("");
+                    mAcactvSearchInput.setHint(getString(R.string.input_name));
+                    setAutoCompleteList(true);
+                    break;
+                case R.id.radio_location:
+                    mAcactvSearchInput.setText("");
+                    mAcactvSearchInput.setHint(getString(R.string.input_location));
+                    setAutoCompleteList(true);
+                    break;
+                default:
+                    break;
             }
         }
+    }
+
+    private void filterList(boolean byName, boolean byLocation) {
+        List<CommerceCanter> tempMarkets = new ArrayList<>();
+        if (byName && byLocation) {
+            for (int i = mTraceMarkets.size()-1; i >= 0; i--) {
+                if (SystemUtil.deAccent(mTraceMarkets.get(i).getName().trim().toLowerCase())
+                        .contains(SystemUtil.deAccent(mActvNamePreview.getText().toString().trim().toLowerCase()))
+                        && SystemUtil.deAccent(mTraceMarkets.get(i).getAddress().trim().toLowerCase())
+                        .contains(SystemUtil.deAccent(mActvLocationPreview.getText().toString().trim().toLowerCase()))) {
+                    tempMarkets.add(mTraceMarkets.get(i));
+                }
+            }
+        } else if (!byName && byLocation) {
+            for (int i = mTraceMarkets.size()-1; i >= 0; i--) {
+                if (SystemUtil.deAccent(mTraceMarkets.get(i).getAddress().trim().toLowerCase())
+                        .contains(SystemUtil.deAccent(mActvLocationPreview.getText().toString().trim().toLowerCase()))) {
+                    tempMarkets.add(mTraceMarkets.get(i));
+                }
+            }
+        } else if (byName && !byLocation){
+            for (int i = mTraceMarkets.size()-1; i >= 0; i--) {
+                if (SystemUtil.deAccent(mTraceMarkets.get(i).getName().trim().toLowerCase())
+                        .contains(SystemUtil.deAccent(mActvNamePreview.getText().toString().trim().toLowerCase()))) {
+                    tempMarkets.add(mTraceMarkets.get(i));
+                }
+            }
+        } else {
+            tempMarkets.addAll(mTraceMarkets);
+        }
+        mMarkets.clear();
+        mMarkets.addAll(tempMarkets);
+        mMarketAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -263,6 +315,43 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mReBound.setOnClickListener(this);
         mReFollow = (RelativeLayout) findViewById(R.id.button_follow);
         mReFollow.setOnClickListener(this);
+        mAcibSearch = (LinearLayoutCompat) findViewById(R.id.acib_search_action);
+        mAcibSearch.setOnClickListener(this);
+        mRbName = (RadioButton) findViewById(R.id.radio_name);
+        mRbName.setChecked(true);
+        mRbName.setOnClickListener(this);
+        mRbLocation = (RadioButton) findViewById(R.id.radio_location);
+        mRbLocation.setOnClickListener(this);
+        mAcactvSearchInput = (AppCompatAutoCompleteTextView) findViewById(R.id.actv_search_input);
+        mAcactvSearchInput.setHint(getString(R.string.input_name));
+
+        mActvNamePreview = (AppCompatTextView) findViewById(R.id.actv_preview_name_market);
+        mActvLocationPreview = (AppCompatTextView) findViewById(R.id.actv_preview_place_market);
+    }
+
+    private void initAutoCompleteList() {
+        int len = mMarkets.size();
+        mAutoCompleteList = new String[len];
+        mAutoCompleteNameList = new String[len];
+        mAutoCompleteLocationList = new String[len];
+        for (int i = 0; i < len; i++) {
+            CommerceCanter commerceCanter = mMarkets.get(i);
+            mAutoCompleteNameList[i] = commerceCanter.getName();
+            mAutoCompleteLocationList[i] = commerceCanter.getAddress();
+        }
+    }
+
+    private void setAutoCompleteList(boolean notifyChanged) {
+        if (mRbName.isChecked()) {
+            mAutoCompleteList = mAutoCompleteNameList;
+        } else {
+            mAutoCompleteList = mAutoCompleteLocationList;
+        }
+        int layoutItemId = android.R.layout.simple_dropdown_item_1line;
+        mAutoCompleteAdapter = new ArrayAdapter<>(this, layoutItemId, mAutoCompleteList);
+        mAcactvSearchInput.setAdapter(mAutoCompleteAdapter);
+        if (notifyChanged)
+            mAutoCompleteAdapter.notifyDataSetChanged();
     }
 
     private void setListeners() {
@@ -277,7 +366,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void populateSuggestionAdapter(String query) {
         final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID,
-            Constants.MARKET_SUGGESTION});
+                Constants.MARKET_SUGGESTION});
         int length = FakeContainer.SUGGESTIONS.length;
         for (int i = 0; i < length; i++) {
             if (FakeContainer.SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
@@ -289,8 +378,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void getInfo() {
         SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
         UserModel userModel = (UserModel) SharedPreferencesUtil
-            .getInstance()
-            .getValue(Constants.SESSION, UserModel.class);
+                .getInstance()
+                .getValue(Constants.SESSION, UserModel.class);
         if (userModel != null && userModel.getSession() != null) {
             if (userModel.getSession().getFullname() != null) {
                 mTextUsername.setText(userModel.getSession().getFullname().toString());
@@ -300,7 +389,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             }
             if (userModel.getSession().getUrlImage() != null) {
                 String url =
-                    Constants.HEAD_URL + userModel.getSession().getUrlImage();
+                        Constants.HEAD_URL + userModel.getSession().getUrlImage();
                 Glide.with(this).load(url).into(mCircleImageView);
             } else {
                 mCircleImageView.setImageResource(R.drawable.ic_framgia);
@@ -324,16 +413,16 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         builder.setTitle(R.string.noti);
         builder.setMessage(R.string.confirm_signout);
         builder
-            .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferencesUtil.getInstance().clearSharedPreference();
-                    dialog.dismiss();
-                    Toast.makeText(ChooseMarketActivity.this,
-                        getString(R.string.signout_done_message), Toast.LENGTH_SHORT).show();
-                    getInfo();
-                }
-            });
+                .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferencesUtil.getInstance().clearSharedPreference();
+                        dialog.dismiss();
+                        Toast.makeText(ChooseMarketActivity.this,
+                                getString(R.string.signout_done_message), Toast.LENGTH_SHORT).show();
+                        getInfo();
+                    }
+                });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -363,9 +452,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 break;
             case R.id.item_recycler_market:
                 mLinearMenu.setVisibility(View.GONE);
-                Intent intent = new Intent(this, FloorActivity.class);
-                intent.putExtra(Constants.COMMERCE_INTENT, sMarkets.get(position));
-                startActivity(intent);
+                startActivity(new Intent(this, FloorActivity.class));
                 break;
         }
     }
@@ -376,4 +463,44 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
     }
 
+    @Override
+    public void onLoadMarketsDone(List<CommerceCanter> commerceList) {
+        if (commerceList.size() <= 0)
+            return;
+        mMarkets.clear();
+        mTraceMarkets.clear();
+        int size = commerceList.size();
+        for (int i = 0; i < size; i++) {
+            CommerceCanter commerceCanter = commerceList.get(i);
+            mMarkets.add(commerceCanter);
+        }
+        mTraceMarkets.addAll(mMarkets);
+        mMarketAdapter.notifyDataSetChanged();
+
+        setCompleteEvent();
+    }
+
+    private void setCompleteEvent() {
+        initAutoCompleteList();
+        setAutoCompleteList(false);
+        mAcactvSearchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                setAutoCompleteList(true);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mRbName.isChecked()) {
+                    mActvNamePreview.setText(s);
+                } else {
+                    mActvLocationPreview.setText(s);
+                }
+            }
+        });
+    }
 }
