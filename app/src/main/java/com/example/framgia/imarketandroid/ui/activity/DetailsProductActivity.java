@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.ItemBooking;
-import com.example.framgia.imarketandroid.data.model.MessageSuggestStore;
+import com.example.framgia.imarketandroid.data.model.Comment;
 import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.CommentStoreAdapter;
@@ -53,7 +53,6 @@ public class DetailsProductActivity extends AppCompatActivity
         PreviewDetailsAdapter.OnClickShowPreviewDetail,
         CommentStoreAdapter.OnPreviewCommentListener,
         CustomStarView.onItemClickListener {
-    private static final int LIMIT_STAR = 5;
     private RecyclerView mRvPreviewProducts;
     private RecyclerView mRvBookingProducts;
     private RecyclerView.Adapter mPreviewAdapter;
@@ -63,11 +62,12 @@ public class DetailsProductActivity extends AppCompatActivity
     private TextView mTvNameProduct;
     private TextView mTvPriceProduct;
     private TextView mTvInfoProduct;
-    private List<MessageSuggestStore> mListRate = new ArrayList<>();
-    private List<MessageSuggestStore> mListComment = new ArrayList<>();
+    private List<Comment> mListRate = new ArrayList<>();
+    private List<Comment> mListComment = new ArrayList<>();
+    private List<CustomStarView> mListStar;
+
     private RecyclerView mRecyclerRateMessage;
     private RecyclerView mRvPreviewComment;
-    private MessageSuggestStore mMessage = new MessageSuggestStore();
     private EditText mEdContentMess, mEdTitleMess;
     private TextView mTextViewStar1, mTextViewStar2, mTextViewStar3, mTextViewStar4, mTextViewStar5;
     private AlertDialog mAlertDialogPostMessage;
@@ -82,7 +82,7 @@ public class DetailsProductActivity extends AppCompatActivity
     private TextView mTvPost;
     private CommentStoreAdapter mStoreAdapter;
     private CommentStoreAdapter mSuggestStoreAdapter;
-    private List<CustomStarView> mListStar;
+
     private LinearLayout mLayoutStar;
     private View.OnClickListener mOnClickListenner = new View.OnClickListener() {
         @Override
@@ -105,19 +105,15 @@ public class DetailsProductActivity extends AppCompatActivity
                 case R.id.button_post_message_rate:
                     String title = mEdTitleMess.getText().toString();
                     String content = mEdContentMess.getText().toString();
-                    MessageSuggestStore newMsm = new MessageSuggestStore(
+                    Comment newMessage = new Comment(
                             R.drawable.avatar,
                             title,
                             content,
                             getString(R.string.name_user),
-                            SystemUtil.getCurDate(),
-                            R.drawable.ic_star_full,
-                            R.drawable.ic_star_full,
-                            R.drawable.ic_star_full,
-                            R.drawable.ic_star_half,
-                            R.drawable.ic_star_empty);
-                    mListRate.add(newMsm);
-                    mListComment.set(0, newMsm);
+                            SystemUtil.getCurDate()
+                    );
+                    newMessage.setImageStars(getTotalStar());
+                    mListComment.set(0, newMessage);
                     mSuggestStoreAdapter.notifyDataSetChanged();
                     mStoreAdapter.notifyDataSetChanged();
                     mAlertDialogPostMessage.dismiss();
@@ -226,11 +222,6 @@ public class DetailsProductActivity extends AppCompatActivity
     }
 
     private void initAlertDiaLogPostMessage() {
-        mMessage.setImageViewStar1(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar2(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar3(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar4(R.drawable.ic_star_empty);
-        mMessage.setImageViewStar5(R.drawable.ic_star_empty);
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.dialog_post_message_rate, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -238,8 +229,8 @@ public class DetailsProductActivity extends AppCompatActivity
         mLayoutStar = (LinearLayout) promptsView.findViewById(R.id.layout_stars);
         TextView textNameProduct = (TextView) promptsView.findViewById(R.id.text_question);
         textNameProduct.setText(mTvNameProduct.getText().toString());
-        mEdTitleMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate_title);
-        mEdContentMess = (EditText) promptsView.findViewById(R.id.edittext_message_rate_comment);
+        mEdTitleMess = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_title);
+        mEdContentMess = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_comment);
         mTvPost = (TextView) promptsView.findViewById(R.id.button_post_message_rate);
         mTvPost.setOnClickListener(mOnClickListenner);
         mTextViewStar1 = (TextView) promptsView.findViewById(R.id.text_start_1);
@@ -259,25 +250,19 @@ public class DetailsProductActivity extends AppCompatActivity
     }
 
     private void fakeMessage() {
-        MessageSuggestStore msm = new MessageSuggestStore(
+        Comment newMessage = new Comment(
                 R.drawable.avatar,
                 getString(R.string.name),
                 getString(R.string.rate_product_message),
                 getString(R.string.name_user),
-                SystemUtil.getCurDate(),
-                R.drawable.ic_star_full,
-                R.drawable.ic_star_full,
-                R.drawable.ic_star_full,
-                R.drawable.ic_star_half,
-                R.drawable.ic_star_empty);
-        mListRate.add(msm);
-        mListRate.add(msm);
-        mListRate.add(msm);
-        mListRate.add(msm);
-        mListRate.add(msm);
-        mListRate.add(msm);
-        mListComment.add(msm);
-        mListComment.add(msm);
+                SystemUtil.getCurDate()
+        );
+        for (int i = 0; i < 5; i++) {
+            mListRate.add(newMessage);
+        }
+        for (int i = 0; i < 1; i++) {
+            mListComment.add(newMessage);
+        }
     }
 
     private void initRecycle() {
@@ -357,6 +342,7 @@ public class DetailsProductActivity extends AppCompatActivity
             mRecyclerRateMessage.setVisibility(View.GONE);
         if (mPager.isShown())
             mPager.setVisibility(View.GONE);
+        super.onBackPressed();
     }
 
     @Override
@@ -366,7 +352,7 @@ public class DetailsProductActivity extends AppCompatActivity
 
     private void addStarList() {
         mListStar = new ArrayList<>();
-        for (int i = 0; i < LIMIT_STAR; i++) {
+        for (int i = 0; i < Constants.LIMIT_STAR; i++) {
             CustomStarView customStarView = new CustomStarView(DetailsProductActivity.this, i);
             mListStar.add(customStarView);
             mListStar.get(i).setOnItemClickListener(this);
@@ -386,7 +372,7 @@ public class DetailsProductActivity extends AppCompatActivity
             mListStar.get(i).setChecked(true);
             mListStar.get(i).setSelectedStar();
         }
-        for (int i = position + 1; i < LIMIT_STAR; i++) {
+        for (int i = position + 1; i < Constants.LIMIT_STAR; i++) {
             mListStar.get(i).setChecked(false);
             mListStar.get(i).setSelectedStar();
         }
@@ -394,7 +380,7 @@ public class DetailsProductActivity extends AppCompatActivity
 
     public int getTotalStar() {
         int count = 0;
-        for (int i = 0; i < LIMIT_STAR; i++) {
+        for (int i = 0; i < Constants.LIMIT_STAR; i++) {
             if (mListStar.get(i).isChecked()) {
                 count++;
             }

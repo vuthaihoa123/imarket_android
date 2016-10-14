@@ -26,7 +26,7 @@ public class Constants {
     public static final String PROFILE = "Profile";
     public static final String PREFS_NAME = "AOP_PREFS";
     public static final String NAMESERVICE = "NotificationService";
-    public static final String SECOND_CATEGORY_URL="https://imarket-api.herokuapp.com/api/";
+    public static final String SECOND_CATEGORY_URL = "https://imarket-api.herokuapp.com/api/";
     public static final String BASE_URL = "https://imarketv1.herokuapp.com/api/";
     public static final String NO_PERCENT = "0%";
     public static final String MARKET_SUGGESTION = "marketName";
@@ -48,7 +48,7 @@ public class Constants {
     public static final String FIELD_NAME = "mName";
     public static final String FIELD_ID = "mId";
     public static final String LOCATION = "Vị trí";
-    public static final String STORE= "Cửa hàng";
+    public static final String STORE = "Cửa hàng";
     public static final String FLOOR = "Số tầng";
     public static final String FIELD_TYPE = "mType";
     public static final String STATEMENT_CALL = "tel:";
@@ -111,4 +111,6 @@ public class Constants {
     public static final String NULL_DATA = "Null data";
     public static final String CATEGORY_INTENT = "category";
     public static final String COMMERCE_INTENT = "commerce";
+    public static final int NUMBER_OF_STARS = 5;
+    public static final int LIMIT_STAR = 5;
 }
