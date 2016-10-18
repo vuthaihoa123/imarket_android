@@ -58,7 +58,6 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
             //use the query to search your data somehow
             updateListProducts(query);
         } else {
-//            sItemProducts = FakeContainer.getListProducts();
             Category category = (Category) intent.getSerializableExtra(Constants.CATEGORY_INTENT);
             if (category != null) {
                 LoadDataUtils.getProductInCategory(this, Integer.parseInt(category.getId()));

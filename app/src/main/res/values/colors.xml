@@ -86,4 +86,5 @@
     <color name="colorSecondPrimary">#128672</color>
     <color name="colorThirdPrimary">#67dfca</color>
     <color name="floor_list_bk">#80333333</color>
+    <color name="pink_500">#E91E63</color>
 </resources>

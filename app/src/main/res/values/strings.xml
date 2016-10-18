@@ -271,4 +271,9 @@
     <string name="store_success">Stores not null</string>
     <string name="product_null">Product null</string>
     <string name="product_success">Product not null</string>
+    <string name="tim_theo">Tìm theo:</string>
+    <string name="ten_cua_hang">Tên cửa hàng</string>
+    <string name="dia_diem_cua_hang">Địa điểm cửa hàng</string>
+    <string name="input_name">Nhập tên cửa hàng</string>
+    <string name="input_location">Nhập địa điểm cửa hàng</string>
 </resources>

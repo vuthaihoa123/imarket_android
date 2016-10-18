@@ -76,9 +76,9 @@ public class FakeContainer {
     public static List<Market> initMarkets() {
         List<Market> markets = new ArrayList<>();
         markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
-        markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
-        markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
-        markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
+        markets.add(new Market("M0002", "SuperMarket C", "Xuân Thủy, Cầu Giấy, Hà Nội"));
+        markets.add(new Market("M0003", "Market C", "Bãi Cháy, Hạ Long, Quảng Ninh"));
+        markets.add(new Market("M0004", "Big C", "Hồng Bàng, Hải Phòng"));
         return markets;
     }
 
