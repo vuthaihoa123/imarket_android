@@ -1,7 +1,15 @@
 package com.example.framgia.imarketandroid.util.findpath;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
@@ -14,6 +22,7 @@ import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
+import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 
@@ -25,6 +34,7 @@ import java.util.List;
 public class LoadDataUtils {
     private static Context mContext;
     private static ProgressDialog mProgressDialog;
+    public static BroadcastReceiver mReceiver = null;
 
     public static void init(Context context) {
         mContext = context;
@@ -45,7 +55,7 @@ public class LoadDataUtils {
         return this;
     }
 
-    public static void loadFloor(Context context, int idCommerce) {
+    public static void loadFloor(final Context context, final int idCommerce) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().loadListFloor(idCommerce);
@@ -69,12 +79,16 @@ public class LoadDataUtils {
             @Override
             public void onLoadDataFailure(String message) {
                 mProgressDialog.dismiss();
-                Flog.toast(mContext, message);
+                if (!InternetUtil.isInternetConnected(context)) {
+                    Flog.toast(context, R.string.no_internet);
+                    processBroadcastFloor(idCommerce);
+                }
             }
         });
     }
 
-    public void loadCommerce(Context context) {
+
+    public static void loadCommerce(final Context context) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().loadListCommerce();
@@ -85,8 +99,12 @@ public class LoadDataUtils {
                 CommerceList commerceList = (CommerceList) object;
                 if (commerceList != null) {
                     Flog.toast(mContext, R.string.data_success);
-                    if (mLoadMarketsListenner!=null)
-                        mLoadMarketsListenner.onLoadMarketsDone(commerceList.getCenterList());
+                    ChooseMarketActivity.sMarkets.clear();
+                    int size = commerceList.getCenterList().size();
+                    for (int i = 0; i < size; i++) {
+                        CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
+                        ChooseMarketActivity.sMarkets.add(commerceCanter);
+                    }
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
@@ -95,12 +113,15 @@ public class LoadDataUtils {
             @Override
             public void onLoadDataFailure(String message) {
                 mProgressDialog.dismiss();
-                Flog.toast(mContext, message);
+                if (!InternetUtil.isInternetConnected(context)) {
+                    Flog.toast(context, R.string.no_internet);
+                    processBroadcastCommerce(context);
+                }
             }
         });
     }
 
-    public static void getStoreByStoreType(Context context, int id_floor, int storeType) {
+    public static void getStoreByStoreType(final Context context, final int id_floor, final int storeType) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().getStore(id_floor, storeType);
@@ -119,14 +140,17 @@ public class LoadDataUtils {
             @Override
             public void onLoadDataFailure(String message) {
                 mProgressDialog.dismiss();
-                Flog.toast(mContext, message);
+                if (!InternetUtil.isInternetConnected(context)) {
+                    Flog.toast(context, R.string.no_internet);
+                    processBroadcastStore(id_floor,storeType);
+                }
             }
         });
     }
     //data store
 //    LoadDataUtils.getStoreByStoreType(context,1,1);
 
-    public static void getProductInCategory(Context context,int id_cate) {
+    public static void getProductInCategory(final Context context, final int id_cate) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().getProduct(id_cate);
@@ -151,8 +175,67 @@ public class LoadDataUtils {
             @Override
             public void onLoadDataFailure(String message) {
                 mProgressDialog.dismiss();
-                Flog.toast(mContext, message);
+                if (!InternetUtil.isInternetConnected(context)) {
+                    Flog.toast(context, R.string.no_internet);
+                    processBroadcastProduct(id_cate);
+                }
             }
         });
+    }
+
+    private static void processBroadcastProduct(final int id_cate) {
+        IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
+                if (InternetUtil.isInternetConnected(mContext)) {
+                    getProductInCategory(mContext,id_cate);
+                }
+            }
+        };
+        mContext.registerReceiver(mReceiver, filter);
+    }
+
+    private static void processBroadcastCommerce(final Context conText) {
+        IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
+                if (InternetUtil.isInternetConnected(conText)) {
+                    loadCommerce(conText);
+                }
+            }
+        };
+        mContext.registerReceiver(mReceiver, filter);
+    }
+
+    private static void processBroadcastStore(final int id_floor, final int storeType) {
+        IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
+                if (InternetUtil.isInternetConnected(mContext)) {
+                    getStoreByStoreType(mContext, id_floor, storeType);
+                }
+            }
+        };
+        mContext.registerReceiver(mReceiver, filter);
+    }
+
+    private static void processBroadcastFloor(final int commerce) {
+        IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
+                if (InternetUtil.isInternetConnected(mContext)) {
+                    loadFloor(mContext,commerce);
+                }
+            }
+        };
+        mContext.registerReceiver(mReceiver, filter);
     }
 }

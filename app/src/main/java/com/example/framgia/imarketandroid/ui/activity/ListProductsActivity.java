@@ -162,4 +162,10 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
 
     private void loadDataFromServer() {
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(LoadDataUtils.mReceiver);
+    }
 }

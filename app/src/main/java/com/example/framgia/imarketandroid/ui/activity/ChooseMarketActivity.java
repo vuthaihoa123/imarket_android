@@ -23,7 +23,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -47,6 +46,7 @@ import com.example.framgia.imarketandroid.ui.adapter.RecyclerMarketAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import com.example.framgia.imarketandroid.util.SystemUtil;
 import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
@@ -61,10 +61,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by hoavt on 11/10/2016.
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-        SearchView.OnQueryTextListener, OnRecyclerItemInteractListener, LoadDataUtils.OnLoadMarketsCallback {
+    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener,
+    LoadDataUtils.OnLoadMarketsCallback {
     private RecyclerMarketAdapter mMarketAdapter;
-    private List<CommerceCanter> mMarkets = new ArrayList<>();
+    public static List<CommerceCanter> sMarkets = new ArrayList<>();
     private List<CommerceCanter> mTraceMarkets = new ArrayList<>();
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
@@ -111,16 +112,15 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         setListeners();
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
+            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
-        LoadDataUtils loadDataUtils = new LoadDataUtils().setLoadMarketsListenner(this);
-        loadDataUtils.loadCommerce(this);
-        mMarketAdapter = new RecyclerMarketAdapter(this, mMarkets);
-        mTraceMarkets.addAll(mMarkets);
+        LoadDataUtils.loadCommerce(this);
+        mMarketAdapter = new RecyclerMarketAdapter(this, sMarkets);
+        mTraceMarkets.addAll(sMarkets);
         mRecyclerMarket.setAdapter(mMarketAdapter);
         mMarketAdapter.setOnRecyclerItemInteractListener(this);
     }
@@ -128,8 +128,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void supportActionBar() {
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
+            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
@@ -138,11 +138,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
-                null,
-                columns,
-                displayViews,
-                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+            android.R.layout.simple_list_item_1,
+            null,
+            columns,
+            displayViews,
+            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         getInfo();
     }
 
@@ -176,7 +176,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                     mCartItems = FakeContainer.getListCartItem();
                     if (mHistoryTimeAdapter == null) {
                         mHistoryTimeAdapter =
-                                new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
+                            new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                         mRecyclerDrawer.setLayoutManager(linearLayoutManager);
                         mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
@@ -204,22 +204,22 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 case R.id.button_sign_out:
                     SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                     Session session = (Session) SharedPreferencesUtil
-                            .getInstance()
-                            .getValue(Constants.SESSION, Session.class);
+                        .getInstance()
+                        .getValue(Constants.SESSION, Session.class);
                     if (session != null) {
                         actionSignout();
                     } else {
                         DialogShareUtil
-                                .toastDialogMessage(getString(R.string.signout_fails_message),
-                                        ChooseMarketActivity.this);
+                            .toastDialogMessage(getString(R.string.signout_fails_message),
+                                ChooseMarketActivity.this);
                     }
                     mLinearMenu.setVisibility(View.GONE);
                     break;
                 case R.id.button_profile:
                     SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                     Session session2 = (Session) SharedPreferencesUtil
-                            .getInstance()
-                            .getValue(Constants.SESSION, Session.class);
+                        .getInstance()
+                        .getValue(Constants.SESSION, Session.class);
                     if (session2 != null)
                         startActivity(new Intent(this, UpdateProfileActivity.class));
                     else {
@@ -247,39 +247,45 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 default:
                     break;
             }
+        } else {
+            Flog.toast(this, R.string.no_internet);
         }
     }
 
     private void filterList(boolean byName, boolean byLocation) {
         List<CommerceCanter> tempMarkets = new ArrayList<>();
         if (byName && byLocation) {
-            for (int i = mTraceMarkets.size()-1; i >= 0; i--) {
+            for (int i = mTraceMarkets.size() - 1; i >= 0; i--) {
                 if (SystemUtil.deAccent(mTraceMarkets.get(i).getName().trim().toLowerCase())
-                        .contains(SystemUtil.deAccent(mActvNamePreview.getText().toString().trim().toLowerCase()))
-                        && SystemUtil.deAccent(mTraceMarkets.get(i).getAddress().trim().toLowerCase())
-                        .contains(SystemUtil.deAccent(mActvLocationPreview.getText().toString().trim().toLowerCase()))) {
+                    .contains(SystemUtil
+                        .deAccent(mActvNamePreview.getText().toString().trim().toLowerCase()))
+                    && SystemUtil.deAccent(mTraceMarkets.get(i).getAddress().trim().toLowerCase())
+                    .contains(SystemUtil.deAccent(
+                        mActvLocationPreview.getText().toString().trim().toLowerCase()))) {
                     tempMarkets.add(mTraceMarkets.get(i));
                 }
             }
         } else if (!byName && byLocation) {
-            for (int i = mTraceMarkets.size()-1; i >= 0; i--) {
+            for (int i = mTraceMarkets.size() - 1; i >= 0; i--) {
                 if (SystemUtil.deAccent(mTraceMarkets.get(i).getAddress().trim().toLowerCase())
-                        .contains(SystemUtil.deAccent(mActvLocationPreview.getText().toString().trim().toLowerCase()))) {
+                    .contains(SystemUtil.deAccent(
+                        mActvLocationPreview.getText().toString().trim().toLowerCase()))) {
                     tempMarkets.add(mTraceMarkets.get(i));
                 }
             }
-        } else if (byName && !byLocation){
-            for (int i = mTraceMarkets.size()-1; i >= 0; i--) {
+        } else if (byName && !byLocation) {
+            for (int i = mTraceMarkets.size() - 1; i >= 0; i--) {
                 if (SystemUtil.deAccent(mTraceMarkets.get(i).getName().trim().toLowerCase())
-                        .contains(SystemUtil.deAccent(mActvNamePreview.getText().toString().trim().toLowerCase()))) {
+                    .contains(SystemUtil
+                        .deAccent(mActvNamePreview.getText().toString().trim().toLowerCase()))) {
                     tempMarkets.add(mTraceMarkets.get(i));
                 }
             }
         } else {
             tempMarkets.addAll(mTraceMarkets);
         }
-        mMarkets.clear();
-        mMarkets.addAll(tempMarkets);
+        sMarkets.clear();
+        sMarkets.addAll(tempMarkets);
         mMarketAdapter.notifyDataSetChanged();
     }
 
@@ -324,18 +330,17 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mRbLocation.setOnClickListener(this);
         mAcactvSearchInput = (AppCompatAutoCompleteTextView) findViewById(R.id.actv_search_input);
         mAcactvSearchInput.setHint(getString(R.string.input_name));
-
         mActvNamePreview = (AppCompatTextView) findViewById(R.id.actv_preview_name_market);
         mActvLocationPreview = (AppCompatTextView) findViewById(R.id.actv_preview_place_market);
     }
 
     private void initAutoCompleteList() {
-        int len = mMarkets.size();
+        int len = sMarkets.size();
         mAutoCompleteList = new String[len];
         mAutoCompleteNameList = new String[len];
         mAutoCompleteLocationList = new String[len];
         for (int i = 0; i < len; i++) {
-            CommerceCanter commerceCanter = mMarkets.get(i);
+            CommerceCanter commerceCanter = sMarkets.get(i);
             mAutoCompleteNameList[i] = commerceCanter.getName();
             mAutoCompleteLocationList[i] = commerceCanter.getAddress();
         }
@@ -366,7 +371,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void populateSuggestionAdapter(String query) {
         final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID,
-                Constants.MARKET_SUGGESTION});
+            Constants.MARKET_SUGGESTION});
         int length = FakeContainer.SUGGESTIONS.length;
         for (int i = 0; i < length; i++) {
             if (FakeContainer.SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
@@ -378,8 +383,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void getInfo() {
         SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
         UserModel userModel = (UserModel) SharedPreferencesUtil
-                .getInstance()
-                .getValue(Constants.SESSION, UserModel.class);
+            .getInstance()
+            .getValue(Constants.SESSION, UserModel.class);
         if (userModel != null && userModel.getSession() != null) {
             if (userModel.getSession().getFullname() != null) {
                 mTextUsername.setText(userModel.getSession().getFullname().toString());
@@ -389,7 +394,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             }
             if (userModel.getSession().getUrlImage() != null) {
                 String url =
-                        Constants.HEAD_URL + userModel.getSession().getUrlImage();
+                    Constants.HEAD_URL + userModel.getSession().getUrlImage();
                 Glide.with(this).load(url).into(mCircleImageView);
             } else {
                 mCircleImageView.setImageResource(R.drawable.ic_framgia);
@@ -413,16 +418,16 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         builder.setTitle(R.string.noti);
         builder.setMessage(R.string.confirm_signout);
         builder
-                .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferencesUtil.getInstance().clearSharedPreference();
-                        dialog.dismiss();
-                        Toast.makeText(ChooseMarketActivity.this,
-                                getString(R.string.signout_done_message), Toast.LENGTH_SHORT).show();
-                        getInfo();
-                    }
-                });
+            .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferencesUtil.getInstance().clearSharedPreference();
+                    dialog.dismiss();
+                    Toast.makeText(ChooseMarketActivity.this,
+                        getString(R.string.signout_done_message), Toast.LENGTH_SHORT).show();
+                    getInfo();
+                }
+            });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -467,16 +472,15 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     public void onLoadMarketsDone(List<CommerceCanter> commerceList) {
         if (commerceList.size() <= 0)
             return;
-        mMarkets.clear();
+        sMarkets.clear();
         mTraceMarkets.clear();
         int size = commerceList.size();
         for (int i = 0; i < size; i++) {
             CommerceCanter commerceCanter = commerceList.get(i);
-            mMarkets.add(commerceCanter);
+            sMarkets.add(commerceCanter);
         }
-        mTraceMarkets.addAll(mMarkets);
+        mTraceMarkets.addAll(sMarkets);
         mMarketAdapter.notifyDataSetChanged();
-
         setCompleteEvent();
     }
 
@@ -502,5 +506,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(LoadDataUtils.mReceiver);
     }
 }

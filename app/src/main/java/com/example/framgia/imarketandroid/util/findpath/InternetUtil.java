@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 
@@ -25,17 +26,8 @@ public class InternetUtil {
                 result = true;
             }
         }
-        if (!result)
-            new AlertDialog.Builder(context)
-                .setTitle(R.string.infor)
-                .setMessage(R.string.no_internet)
-                .setPositiveButton(context.getResources().getString(R.string.ok_dialog_success),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
+//        if (!result)
+//            Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT).show();
         return result;
     }
 }

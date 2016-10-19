@@ -27,6 +27,7 @@ import com.example.framgia.imarketandroid.ui.fragments.ShopDetailInterfaceFragme
 import com.example.framgia.imarketandroid.ui.fragments.SuggestStoreFragment;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 import com.facebook.CallbackManager;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -94,6 +95,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 getString(R.string.title_fragment_informationstore));
             viewPager.setAdapter(mPagerAdapter);
         } else {
+            Flog.toast(this, R.string.no_internet);
             if (RealmRemote.getCategorySize() > 0) {
                 mIsCached = true;
                 Bundle bundle = new Bundle();
