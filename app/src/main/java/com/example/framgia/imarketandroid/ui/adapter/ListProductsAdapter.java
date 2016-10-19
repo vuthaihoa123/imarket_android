@@ -10,10 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
-import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;
@@ -51,8 +51,12 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
     @Override
     public void onBindViewHolder(ListProductsAdapter.ViewHolder holder, int position) {
         ItemProduct itemProduct = mItems.get(position);
-        ImageView ivPresentIcon = holder.mIvPresentIcon;
-        ivPresentIcon.setImageResource(itemProduct.getPresentIcon());
+        String imageLink = itemProduct.getImageLists().get(1).getPhotoLink();
+        if (imageLink.isEmpty()) {
+            holder.mIvPresentIcon.setImageResource(R.drawable.ic_iphone5s);
+        } else {
+            Glide.with(mContext).load(imageLink).into(holder.mIvPresentIcon);
+        }
         TextView nameProduct = holder.mTvNameProduct;
         nameProduct.setText(itemProduct.getNameProduct());
         FrameLayout promotionView = holder.mPromotionView;
@@ -66,7 +70,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(mContext,DetailsProductActivity.class);
+                Intent intent = new Intent(mContext, DetailsProductActivity.class);
                 mContext.startActivity(intent);
             }
         });

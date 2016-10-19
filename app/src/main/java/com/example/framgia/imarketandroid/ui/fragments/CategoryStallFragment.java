@@ -20,7 +20,6 @@ import com.example.framgia.imarketandroid.ui.adapter.CategoryStallAdapter;
 import com.example.framgia.imarketandroid.ui.widget.GridItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.HttpRequest;
-import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 
 import java.util.ArrayList;
 import java.util.List;

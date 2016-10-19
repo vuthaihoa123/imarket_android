@@ -18,8 +18,8 @@ import android.view.MenuItem;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.Category;
-import com.example.framgia.imarketandroid.data.remote.DatabaseTable;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
+import com.example.framgia.imarketandroid.data.remote.DatabaseTable;
 import com.example.framgia.imarketandroid.ui.adapter.ListProductsAdapter;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
@@ -31,10 +31,10 @@ import java.util.List;
  * Created by hoavt on 19/07/2016.
  */
 public class ListProductsActivity extends AppCompatActivity implements SearchView
-    .OnQueryTextListener {
+        .OnQueryTextListener {
     private RecyclerView mRvListProducts;
     private static String NAMECATEGORY = "Apple";
-    public static RecyclerView.Adapter mAdapter;
+    public static RecyclerView.Adapter sAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static List<ItemProduct> sItemProducts = new ArrayList<>();
     private DatabaseTable mDataBase;
@@ -80,12 +80,12 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
             try {
                 while (!cursor.isAfterLast()) {
                     String nameProduct =
-                        cursor.getString(cursor.getColumnIndex(DatabaseTable.COL_NAME_PRODUCT));
+                            cursor.getString(cursor.getColumnIndex(DatabaseTable.COL_NAME_PRODUCT));
                     String percentSale =
-                        cursor.getString(cursor.getColumnIndex(DatabaseTable.COL_PERCENTPROMOTION));
+                            cursor.getString(cursor.getColumnIndex(DatabaseTable.COL_PERCENTPROMOTION));
                     int idRes = FakeContainer.getPresentIconProduct(nameProduct);
-                    ItemProduct itemProduct = new ItemProduct(nameProduct, percentSale, idRes);
-                    sItemProducts.add(itemProduct);
+                    //ItemProduct itemProduct = new ItemProduct(nameProduct, percentSale, idRes);
+                    //sItemProducts.add(itemProduct);
                     cursor.moveToNext();
                 }
             } finally {
@@ -94,8 +94,8 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         } else {
             sItemProducts.clear();
         }
-        ((ListProductsAdapter) mAdapter).setItems(sItemProducts);
-        mAdapter.notifyDataSetChanged();
+        ((ListProductsAdapter) sAdapter).setItems(sItemProducts);
+        sAdapter.notifyDataSetChanged();
     }
 
     private void initViews() {
@@ -107,8 +107,8 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         // use a gridview layout manager
         mLayoutManager = new GridLayoutManager(this, Constants.COLS_LIST_PRODUCT);
         mRvListProducts.setLayoutManager(mLayoutManager);
-        mAdapter = new ListProductsAdapter(this, sItemProducts);
-        mRvListProducts.setAdapter(mAdapter);
+        sAdapter = new ListProductsAdapter(this, sItemProducts);
+        mRvListProducts.setAdapter(sAdapter);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(NAMECATEGORY);
@@ -121,11 +121,11 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         // Associate searchable configuration with the SearchView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+                    (SearchManager) getSystemService(Context.SEARCH_SERVICE);
             SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
+                    (SearchView) menu.findItem(R.id.search).getActionView();
             searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+                    searchManager.getSearchableInfo(getComponentName()));
             searchView.setOnQueryTextListener(this);
         }
         return true;
@@ -141,9 +141,8 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
     public boolean onQueryTextChange(String newText) {
         // Here is where we are going to implement our filter logic
         if (newText.isEmpty()) {
-            sItemProducts = FakeContainer.getListProducts();
-            ((ListProductsAdapter) mAdapter).setItems(sItemProducts);
-            mAdapter.notifyDataSetChanged();
+            ((ListProductsAdapter) sAdapter).setItems(sItemProducts);
+            sAdapter.notifyDataSetChanged();
             return true;
         } else
             updateListProducts(newText);
