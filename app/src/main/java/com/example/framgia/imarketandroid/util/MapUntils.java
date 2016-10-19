@@ -62,8 +62,8 @@ public class MapUntils {
         LinkedList<Point> path = dijkstra.getPath(vertex1);
         if (path != null)
             for (int i = 0; i < path.size() - 1; i++) {
-                LatLng src = RealmRemote.getLocationFromName(path.get(i).getName());
-                LatLng dest = RealmRemote.getLocationFromName(path.get(i + 1).getName());
+                LatLng src = RealmRemote.getLocationFromName(path.get(i).getId());
+                LatLng dest = RealmRemote.getLocationFromName(path.get(i + 1).getId());
                 mline = mMap.addPolyline(
                     new PolylineOptions().add(
                         src, dest).width(2).color(Color.BLUE).geodesic(true)

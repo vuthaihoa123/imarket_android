@@ -12,15 +12,26 @@ public class CustomMarker implements ClusterItem {
     private double mLatitude;
     private double mLongitude;
     private double mNumber;
-    private Category mCategory;
+    private int mType;
+    private String mName;
 
-    public CustomMarker(int id, double latitude, double longitude, double number, Category category) {
+    public CustomMarker(int id, double latitude, double longitude, double number, int type,
+                        String name) {
         this.mId = id;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
         this.mNumber = number;
-        this.mCategory = category;
+        this.mName = name;
+        this.mType = type;
         mPosition = new LatLng(latitude, longitude);
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String Name) {
+        this.mName = Name;
     }
 
     public int getId() {
@@ -55,12 +66,12 @@ public class CustomMarker implements ClusterItem {
         this.mNumber = Number;
     }
 
-    public Category getCategory() {
-        return mCategory;
+    public int getType() {
+        return mType;
     }
 
-    public void setCategory(Category mCategory) {
-        this.mCategory = mCategory;
+    public void setType(int Type) {
+        this.mType = Type;
     }
 
     @Override

@@ -20,6 +20,7 @@ public class CustomMarkerView extends FrameLayout {
     private double mPercentValue;
     private int mConvertedNumber;
     private RelativeLayout mMarkerBackground;
+    private boolean mCheck;
 
     public void setBackground(Drawable drawable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -90,5 +91,13 @@ public class CustomMarkerView extends FrameLayout {
     public void findView() {
         mTextPromotion = (SkewTextView) findViewById(R.id.skew_text);
         mMarkerBackground = (RelativeLayout) findViewById(R.id.marker_background);
+    }
+
+    public boolean isCheck() {
+        return mCheck;
+    }
+
+    public void setCheck(boolean mCheck) {
+        this.mCheck = mCheck;
     }
 }

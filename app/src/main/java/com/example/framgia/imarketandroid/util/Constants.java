@@ -45,7 +45,7 @@ public class Constants {
     public static final String PATTERN_SEPARATION = "-";
     public static final String SEPARATOR = "/";
     public static final String COLON = ":";
-    public static final String FIELD_NAME = "mName";
+    public static final String FIELD_NAME = "mId";
     public static final String FIELD_ID = "mId";
     public static final String LOCATION = "Vị trí";
     public static final String STORE = "Cửa hàng";

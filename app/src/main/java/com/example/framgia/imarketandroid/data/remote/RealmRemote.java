@@ -78,7 +78,7 @@ public class RealmRemote {
         return results;
     }
 
-    public static LatLng getLocationFromName(String name) {
+    public static LatLng getLocationFromName(int name) {
         Point point = mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findFirst();
         LatLng latLng = new LatLng(point.getLat(), point.getLng());
         return latLng;
@@ -94,7 +94,7 @@ public class RealmRemote {
         return point;
     }
 
-    public static Point getObjectPointFromName(String name) {
+    public static Point getObjectPointFromName(int name) {
         Point point = mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findFirst();
         return point;
     }
@@ -150,12 +150,8 @@ public class RealmRemote {
     }
 
     public static CustomMarker createCustomMarkerFromPoint(Point point) {
-        Category category1 =
-                new Category(Integer.toString(point.getType()), point.getName(), 1);
-        // 1 là store id, tam fake
-        CustomMarker result = new CustomMarker(point.getId(), point.getLat(), point.getLng(),
-                Constants.DEMO_NUMBER,
-                category1);
+        CustomMarker result = new CustomMarker(0, point.getLat(), point.getLng(),
+                Constants.DEMO_NUMBER,point.getType(), point.getId()+"");
         return result;
     }
 

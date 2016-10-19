@@ -19,5 +19,5 @@
         android:layout_height="@dimen/common_size_70"
         android:layout_gravity="center"
         android:clickable="true"
-        android:src="@drawable/phone" />
+        android:background="@drawable/avatar"/>
 </LinearLayout>
