@@ -113,4 +113,5 @@ public class Constants {
     public static final String COMMERCE_INTENT = "commerce";
     public static final int NUMBER_OF_STARS = 5;
     public static final int LIMIT_STAR = 5;
+    public static final String INTERNET_FILTER = "android.net.conn.CONNECTIVITY_CHANGE";
 }
