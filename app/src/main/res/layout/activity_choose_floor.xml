@@ -19,11 +19,11 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/right_area">
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <fragment android:id="@+id/map"
+                      android:name="com.google.android.gms.maps.SupportMapFragment"
+                      xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -164,7 +164,7 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/wid_hei_200"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/layout_margin_comment"
                         android:orientation="horizontal">
@@ -212,7 +212,8 @@
                         <EditText
                             android:id="@+id/edt_delete"
                             android:layout_width="@dimen/size_50dp"
-                            android:layout_height="wrap_content" />
+                            android:focusable="false"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
