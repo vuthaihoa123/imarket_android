@@ -11,7 +11,8 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 
 public class DialogActivity extends AppCompatActivity {
-    public static String sFirstPoint, sSecondPoint;
+    public static int sFirstPoint;
+    public static String sSecondPoint;
     private EditText mFirstText, mSecondText;
     private Button mBtnAccept;
 
@@ -29,7 +30,7 @@ public class DialogActivity extends AppCompatActivity {
                 first = mFirstText.getText().toString();
                 second = mSecondText.getText().toString();
                 if (first.length() > 0 && second.length() > 0) {
-                    sFirstPoint = first;
+                    sFirstPoint = Integer.parseInt(first);
                     sSecondPoint = second;
                     finish();
                 } else {

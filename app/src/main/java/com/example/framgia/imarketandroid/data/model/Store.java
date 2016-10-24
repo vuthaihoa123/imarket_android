@@ -41,10 +41,6 @@ public class Store extends RealmObject {
         this.mLng = lng;
     }
 
-    public Point getPoint() {
-        return new Point(mId, mStoreTypeId, mLat, mLng, mName);
-    }
-
     public int getId() {
         return mId;
     }

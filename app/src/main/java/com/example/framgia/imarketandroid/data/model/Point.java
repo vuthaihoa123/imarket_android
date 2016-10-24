@@ -11,23 +11,23 @@ import io.realm.annotations.PrimaryKey;
  * Created by nguyenxuantung on 24/06/2016.
  */
 public class Point extends RealmObject {
-    //@SerializedName("id")
+    @SerializedName("id")
     private int mId;
-    //@SerializedName("type")
+    @SerializedName("type")
     private int mType;
-    //@SerializedName("lat")
+    @SerializedName("lat")
     private double mLat;
-    //@SerializedName("lng")
+    @SerializedName("lng")
     private double mLng;
-    // @SerializedName("name")
-    private String mName;
+    @SerializedName("id_store")
+    private int mIdStore;
 
-    public Point(int id, int type, double lat, double lng, String name) {
+    public Point(int id, int type, double lat, double lng, int IdStore) {
         this.mId = id;
         this.mLat = lat;
         this.mLng = lng;
         this.mType = type;
-        this.mName = name;
+        this.mIdStore = IdStore;
     }
 
     public Point() {
@@ -65,12 +65,12 @@ public class Point extends RealmObject {
         this.mType = type;
     }
 
-    public String getName() {
-        return mName;
+    public int getIdStore() {
+        return mIdStore;
     }
 
-    public void setName(String name) {
-        this.mName = name;
+    public void setIdStore(int IdStore) {
+        this.mIdStore = IdStore;
     }
 
     @Override

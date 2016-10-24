@@ -11,34 +11,34 @@ import io.realm.RealmObject;
  */
 public class Edge extends RealmObject {
     @SerializedName("name_start")
-    private String mNameStart;
+    private int mNameStart;
     @SerializedName("name_end")
-    private String mNameEnd;
+    private int mNameEnd;
     @SerializedName("length_edge")
     private float mLengthEdge;
 
     public Edge() {
     }
 
-    public Edge(String nameStart, String nameEnd, float edge) {
+    public Edge(int nameStart, int nameEnd, float edge) {
         this.mNameStart = nameStart;
         this.mNameEnd = nameEnd;
         this.mLengthEdge = edge;
     }
 
-    public String getNameStart() {
+    public int getNameStart() {
         return mNameStart;
     }
 
-    public void setIdStart(String nameStart) {
+    public void setIdStart(int nameStart) {
         this.mNameStart = nameStart;
     }
 
-    public String getNameEnd() {
+    public int getNameEnd() {
         return mNameEnd;
     }
 
-    public void setNameEnd(String nameEnd) {
+    public void setNameEnd(int nameEnd) {
         this.mNameEnd = nameEnd;
     }
 
@@ -50,11 +50,11 @@ public class Edge extends RealmObject {
         this.mLengthEdge = edge;
     }
 
-    public String getSource() {
+    public int getSource() {
         return mNameStart;
     }
 
-    public String getDestination() {
+    public int getDestination() {
         return mNameEnd;
     }
 

@@ -31,15 +31,15 @@ public class FakeContainer {
     };
     public static final long GIA_SP = 18600000;
     public static final long CHI_PHI_PHAT_SINH = 50000;
-    public static final String STORE_TYPE_0 = "0";
-    public static final String STORE_TYPE_1 = "1";
-    public static final String STORE_TYPE_2 = "2";
-    public static final String STORE_TYPE_3 = "3";
-    public static final String STORE_TYPE_4 = "4";
-    public static final String STORE_TYPE_5 = "5";
-    public static final String STORE_TYPE_6 = "6";
+    public static final int STORE_TYPE_0 = 0;
+    public static final int STORE_TYPE_1 = 1;
+    public static final int STORE_TYPE_2 = 2;
+    public static final int STORE_TYPE_3 = 3;
+    public static final int STORE_TYPE_4 = 4;
+    public static final int STORE_TYPE_5 = 5;
+    public static final int STORE_TYPE_6 = 6;
+    public static final int STORE_TYPE_7 = 7;
     public static final String URL_TEST = "9gag.com";
-    public static final String STORE_TYPE_7 = "7";
     public static LatLng sLatLng = new LatLng(21.007380, 105.793139);
     public static float sGroundFirstParameter = 116f;
     public static float sGroundSecondParameter = 150f;
@@ -76,9 +76,9 @@ public class FakeContainer {
     public static List<Market> initMarkets() {
         List<Market> markets = new ArrayList<>();
         markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
-        markets.add(new Market("M0002", "SuperMarket C", "Xuân Thủy, Cầu Giấy, Hà Nội"));
-        markets.add(new Market("M0003", "Market C", "Bãi Cháy, Hạ Long, Quảng Ninh"));
-        markets.add(new Market("M0004", "Big C", "Hồng Bàng, Hải Phòng"));
+        markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
+        markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
+        markets.add(new Market("M0001", "Big C", "Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội"));
         return markets;
     }
 
@@ -237,17 +237,6 @@ public class FakeContainer {
         list.add(new ItemProduct("Window Phone", "0%", R.drawable.ic_window_phone));
         list.add(new ItemProduct("Blackberry", "0%", R.drawable.ic_blackberry));
         list.add(new ItemProduct("Nokia", "15%", R.drawable.ic_nokia_n8));
-        return list;
-    }
-
-    public static List<CustomMarker> getCustomMarker() {
-        List<CustomMarker> list = new ArrayList<>();
-        Category category1 = new Category(STORE_TYPE_1, "Bakery Store",1);
-        Category category2 = new Category(STORE_TYPE_1, "Bakery Store",1);
-        Category category3 = new Category(STORE_TYPE_2, "Drug Store",1);
-        list.add(new CustomMarker(3, 21.007380, 105.793139, 5, category1));
-        list.add(new CustomMarker(4, 21.007480, 105.793139, 10, category2));
-        list.add(new CustomMarker(5, 21.007580, 105.793139, 15, category3));
         return list;
     }
 

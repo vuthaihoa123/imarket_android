@@ -31,7 +31,7 @@ public class ImarketApplication extends Application {
         super.onCreate();
         printHashKey();
         notificationCount = 0;
-//        copyBundledRealmFile(this.getResources().openRawResource(R.raw.default1), "default1" +
+//        copyBundledRealmFile(this.getResources().openRawResource(R.raw.default_data), "default1" +
 //            ".realm");
 //        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
 //            .name("default1.realm").migration(new Migration())
