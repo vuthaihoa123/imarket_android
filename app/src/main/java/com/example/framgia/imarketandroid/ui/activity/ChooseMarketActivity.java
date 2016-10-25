@@ -543,10 +543,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             mMarketAdapter = new RecyclerMarketAdapter(this, mListChooseCenter);
             mRecyclerMarket.setAdapter(mMarketAdapter);
             mMarketAdapter.notifyDataSetChanged();
+            mMarketAdapter.setOnRecyclerItemInteractListener(this);
         } else {
             mMarketAdapter = new RecyclerMarketAdapter(this, sMarkets);
             mRecyclerMarket.setAdapter(mMarketAdapter);
             mMarketAdapter.notifyDataSetChanged();
+            mMarketAdapter.setOnRecyclerItemInteractListener(this);
         }
     }
 }
