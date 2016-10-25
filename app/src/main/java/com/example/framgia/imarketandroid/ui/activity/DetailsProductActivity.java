@@ -24,8 +24,8 @@ import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
-import com.example.framgia.imarketandroid.data.model.ItemBooking;
 import com.example.framgia.imarketandroid.data.model.Comment;
+import com.example.framgia.imarketandroid.data.model.ItemBooking;
 import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.CommentStoreAdapter;
@@ -342,7 +342,8 @@ public class DetailsProductActivity extends AppCompatActivity
             mRecyclerRateMessage.setVisibility(View.GONE);
         if (mPager.isShown())
             mPager.setVisibility(View.GONE);
-        super.onBackPressed();
+        else
+            super.onBackPressed();
     }
 
     @Override

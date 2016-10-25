@@ -5,10 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
@@ -143,13 +139,11 @@ public class LoadDataUtils {
                 mProgressDialog.dismiss();
                 if (!InternetUtil.isInternetConnected(context)) {
                     Flog.toast(context, R.string.no_internet);
-                    processBroadcastStore(id_floor,storeType);
+                    processBroadcastStore(id_floor, storeType);
                 }
             }
         });
     }
-    //data store
-//    LoadDataUtils.getStoreByStoreType(context,1,1);
 
     public static void getProductInCategory(final Context context, final int id_cate) {
         init(context);
@@ -161,13 +155,13 @@ public class LoadDataUtils {
                 ProductList productList = (ProductList) object;
                 mProgressDialog.dismiss();
                 if (productList != null) {
-                    Flog.toast(mContext, R.string.product_success);
+
                     ListProductsActivity.sItemProducts.clear();
                     for (int i = 0; i < productList.getItemProductList().size(); i++) {
                         ItemProduct product = productList.getItemProductList().get(i);
                         ListProductsActivity.sItemProducts.add(product);
                     }
-                    ListProductsActivity.mAdapter.notifyDataSetChanged();
+                    ListProductsActivity.sAdapter.notifyDataSetChanged();
                 } else {
                     Flog.toast(mContext, R.string.product_null);
                 }
@@ -191,7 +185,7 @@ public class LoadDataUtils {
             public void onReceive(Context context, Intent intent) {
                 Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
                 if (InternetUtil.isInternetConnected(mContext)) {
-                    getProductInCategory(mContext,id_cate);
+                    getProductInCategory(mContext, id_cate);
                 }
             }
         };
@@ -233,7 +227,7 @@ public class LoadDataUtils {
             public void onReceive(Context context, Intent intent) {
                 Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
                 if (InternetUtil.isInternetConnected(mContext)) {
-                    loadFloor(mContext,commerce);
+                    loadFloor(mContext, commerce);
                 }
             }
         };

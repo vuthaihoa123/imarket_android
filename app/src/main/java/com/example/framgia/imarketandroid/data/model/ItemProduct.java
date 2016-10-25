@@ -2,26 +2,30 @@ package com.example.framgia.imarketandroid.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by hoavt on 20/07/2016.
  */
 public class ItemProduct {
-    @SerializedName("name_product")
+    @SerializedName("name")
     private String mNameProduct;
     @SerializedName("promotion_percent")
     private String mPromotionPercent;
-    @SerializedName("present_icon")
     private int mPresentIcon;
     @SerializedName("price_promotion")
     private String mPricePromotion;
     @SerializedName("price")
     private String mPrice;
-    @SerializedName("product_id")
+    @SerializedName("id")
     private int mProductId;
     @SerializedName("description")
     private String mDescription;
-    @SerializedName("category_id")
+    @SerializedName("quantity")
     private int mCategoryId;
+    @SerializedName("image_products")
+    private List<ImageList> mImageLists = new ArrayList<>();
 
     public ItemProduct(String nameProduct, String promotionPercent, int presentIcon,
                        String pricePromotion, String price) {
@@ -40,7 +44,7 @@ public class ItemProduct {
 
     public ItemProduct(String nameProduct, String promotionPercent, int presentIcon,
                        String pricePromotion, String price, int productId,
-                       String description, int categoryId) {
+                       String description, int categoryId, List<ImageList> imageLists) {
         this.mNameProduct = nameProduct;
         this.mPromotionPercent = promotionPercent;
         this.mPresentIcon = presentIcon;
@@ -49,6 +53,7 @@ public class ItemProduct {
         this.mProductId = productId;
         this.mDescription = description;
         this.mCategoryId = categoryId;
+        this.mImageLists = imageLists;
     }
 
     public String getPricePromotion() {
@@ -113,5 +118,13 @@ public class ItemProduct {
 
     public void setProductId(int productId) {
         this.mProductId = productId;
+    }
+
+    public List<ImageList> getImageLists() {
+        return mImageLists;
+    }
+
+    public void setImageLists(List<ImageList> imageLists) {
+        this.mImageLists = imageLists;
     }
 }

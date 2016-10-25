@@ -80,6 +80,11 @@ public class CategoryStallAdapter
         notifyDataSetChanged();
     }
 
+    public void clearList() {
+        mCategoryProducts.clear();
+        notifyDataSetChanged();
+    }
+
     private void applyAndAnimateRemovals(List<Category> categoryProducts) {
         int size = mCategoryProducts.size();
         for (int i = size - 1; i >= 0; i--) {
