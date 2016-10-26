@@ -51,6 +51,9 @@
     <dimen name="common_size_70">70dp</dimen>
     <dimen name="common_size_50">50dp</dimen>
     <dimen name="common_size_60">60dp</dimen>
+    <dimen name="common_size_600">600dp</dimen>
+    <dimen name="common_size_500">500dp</dimen>
+    <dimen name="common_size_400">400dp</dimen>
     <!--Common text size-->
     <dimen name="common_text_size_10">10sp</dimen>
     <dimen name="common_text_size_11">11sp</dimen>

@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.R;
+import com.google.common.io.Resources;
 
 /**
  * Created by VULAN on 7/19/2016.
@@ -78,16 +79,18 @@ public class Constants {
     public static final String MESSAGEDIGEST = "SHA";
     public static final String CLEAR_EDITTEXT = "";
     public static final int[] LIST_AVATAR_STORE =
-            {R.drawable.food_avatar, R.drawable.fashion, R.drawable.book_shop, R.drawable.cosmetic,
-                    R.drawable.stage, R.drawable.game_icon, R
-                    .drawable.smartphone, R
-                    .drawable.curret_location_icon};
+        {R.drawable.curret_location_icon, R.drawable.food_avatar, R.drawable.fashion, R
+            .drawable.book_shop, R.drawable.cosmetic,
+            R.drawable.stage, R.drawable.game_icon, R
+            .drawable.smartphone};
     public static final int[] LIST_CURRENT_AVATAR_STORE =
-            {R.drawable.current_restaurent, R.drawable.current_fashion, R.drawable.current_book_shop, R.drawable
-                    .current_cosmetic,
-                    R.drawable.current_stage, R.drawable.current_game_icon, R
-                    .drawable.current_smartphone, R
-                    .drawable.curret_location_icon};
+        {R.drawable.curret_location_icon, R.drawable.current_restaurent, R.drawable
+            .current_fashion, R.drawable.current_book_shop, R.drawable
+            .current_cosmetic,
+            R.drawable.current_stage, R.drawable.current_game_icon, R
+            .drawable.current_smartphone};
+    public static final String[] LIST_NAME_STORE = {"M", "Cửa hàng ăn uống", "Cửa hàng quần áo",
+        "Cửa hàng sách", "Cửa hàng mỹ phẩm", "Rạp chiếu phim", "Trung tâm giải trí", "Cửa hàng điện thoại"};
     public static final String SHOWCASE_ID_BOOK_TABLE = "BOOK TABLE";
     public static final String SHOWCASE_ID_DETAILS_SHOP = "DETAILS SHOP";
     public static final String SHOWCASE_ID_BOOK_PRODUCT = "BOOK PRODUCT";

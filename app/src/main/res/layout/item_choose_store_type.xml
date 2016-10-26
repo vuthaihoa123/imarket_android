@@ -20,9 +20,9 @@
 
         <ImageView
             android:id="@+id/avatar_store"
-            android:layout_width="@dimen/common_size_60"
-            android:layout_height="@dimen/common_size_60"
-            android:layout_margin="@dimen/common_size_10"
+            android:layout_width="@dimen/common_size_40"
+            android:layout_height="@dimen/common_size_40"
+            android:layout_margin="@dimen/common_size_5"
             android:scaleType="fitXY"
             android:src="@drawable/food_avatar"/>
 
@@ -31,8 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_20dp"
-            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/margin_10dp"
             android:paddingBottom="@dimen/common_size_5"
             android:text="@string/food_store"
             android:textColor="@color/white"

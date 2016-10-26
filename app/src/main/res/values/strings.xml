@@ -108,6 +108,7 @@
     <string name="warning_location">Không tìm thấy vị trí này trên sơ đồ</string>
     <string name="find_store">Tìm đường</string>
     <string name="check_store">Xem cửa hàng</string>
+    <string name="save_point_title">Lưu vị trí</string>
     <string name="current_location_warning">Không tìm được đường đến vị trí này</string>
     <string name="C">C</string>
     <string name="choose_floor">Lựa chọn tầng</string>
@@ -122,6 +123,7 @@
     <string name="warning_text">hay nhap day du cac o trong</string>
     <string name="warning_input">warning input</string>
     <string name="comma">,</string>
+
     <string name="name_commerce">AEON</string>
     <string name="login_befor">Thiết bị này đã được đăng nhập trước đó .</string>
     <string name="title_activity_maps">Map</string>
@@ -196,6 +198,9 @@
     <string name="item_cart">cart</string>
     <string name="text_share_title">Điều bạn muốn chia sẻ</string>
     <string name="error">Lỗi</string>
+    <string name="list_point_saved">Danh sách vị trí đã lưu</string>
+    <string name="done">Hoàn thành</string>
+    <string name="note">Ghi chú</string>
     <string name="success">Share done !</string>
     <string name="text_share_fake">Cửa hàng này rất tuyệt \nĐịa chỉ: Hà Đông -Hà Nội</string>
     <string name="share_with_facebook">Chia sẻ với Facebook</string>
@@ -204,10 +209,11 @@
     <string name="toast_follow">Follow Store</string>
     <string name="item_logout">Đăng Xuât</string>
     <string name="fashion_name">cửa hàng quần áo</string>
-    <string name="book_shop_name">cửa hàng sách</string>
-    <string name="cosmetic_name">cửa hàng mỹ phẩm</string>
+    <string name="book_shop_name">Cửa hàng sách</string>
+    <string name="cosmetic_name">Cửa hàng mỹ phẩm</string>
     <string name="movie_theater">Rạp chiếu phim</string>
     <string name="game_center_name">Trung tâm giải trí</string>
+    <string name="mobile_store">Cửa hàng điện thoại</string>
     <string name="confirm_signout">Bạn có muốn đăng xuất ?</string>
     <string name="cancel">Cancel</string>
     <string name="signout_done_message">Đăng xuất thành công !</string>

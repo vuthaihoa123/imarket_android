@@ -18,6 +18,7 @@ import com.example.framgia.imarketandroid.data.model.StoreType;
 import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
+import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
 import com.example.framgia.imarketandroid.util.Flog;
@@ -40,6 +41,7 @@ public class ChooseStoreTypeActivity extends AppCompatActivity implements OnRecy
         setContentView(R.layout.activity_choose_store_type);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_store_type);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.addItemDecoration(new LinearItemDecoration(this));
         mListStore = FakeContainer.initStore();
         mAdapter = new ChooseStoreTypeAdapter(this, mListStore);
         mAdapter.setOnRecyclerItemInteractListener(this);

@@ -5,5 +5,6 @@
         android:left="@dimen/common_size_5"
         android:right="@dimen/common_size_5"
         android:top="@dimen/common_size_5"/>
+
     <solid android:color="@color/white"/>
 </shape>
