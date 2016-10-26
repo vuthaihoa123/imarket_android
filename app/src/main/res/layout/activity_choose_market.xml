@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_primary"
         android:orientation="vertical">
 
         <include
@@ -25,13 +26,16 @@
                 android:id="@+id/cv_search_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_marginRight="@dimen/margin_5"
+                app:cardCornerRadius="@dimen/margin_5"
                 app:cardBackgroundColor="@color/white">
 
                 <RelativeLayout
                     android:id="@+id/rl_container_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_10dp"
+                    android:layout_margin="@dimen/width_height_1"
                     android:background="@color/white"
                     android:elevation="@dimen/common_size_2"
                     android:padding="@dimen/padding_10dp">
@@ -67,7 +71,7 @@
                                     android:id="@+id/img_button_search"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/places_ic_search" />
+                                    android:background="@drawable/ic_cached_black_24dp" />
                             </android.support.v7.widget.LinearLayoutCompat>
                         </LinearLayout>
 
@@ -85,7 +89,7 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="2"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -94,6 +98,7 @@
                                         android:elevation="@dimen/common_size_2"
                                         android:text="@string/ten_cua_hang"
                                         android:textSize="@dimen/text_small_size"
+                                        android:textStyle="italic"
                                         android:textColor="@color/pink_500"/>
 
                                     <TextView
@@ -111,13 +116,14 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="3"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:elevation="@dimen/common_size_2"
+                                        android:textStyle="italic"
                                         android:text="@string/dia_diem_cua_hang"
                                         android:textSize="@dimen/text_small_size"
                                         android:textColor="@color/pink_500"/>
@@ -150,22 +156,27 @@
                             android:layout_height="wrap_content"
                             android:text="@string/tim_theo"
                             android:textSize="@dimen/text_medium_size"
-                            android:textStyle="bold" />
+                            android:textStyle="bold|italic" />
 
                         <RadioGroup
                             android:layout_width="match_parent"
+                            android:orientation="horizontal"
                             android:layout_height="wrap_content">
 
                             <RadioButton
                                 android:id="@+id/radio_name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textStyle="italic"
                                 android:layout_height="wrap_content"
                                 android:text="@string/ten_cua_hang"
                                 android:textSize="@dimen/text_small_size" />
 
                             <RadioButton
                                 android:id="@+id/radio_location"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:textStyle="italic"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="@string/dia_diem_cua_hang"
                                 android:textSize="@dimen/text_small_size" />
@@ -176,6 +187,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_market"
+                android:layout_margin="@dimen/margin_15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cv_search_field" />
