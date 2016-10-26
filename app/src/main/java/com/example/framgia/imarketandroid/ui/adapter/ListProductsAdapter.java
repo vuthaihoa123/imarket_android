@@ -3,6 +3,7 @@ package com.example.framgia.imarketandroid.ui.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
     // Provide a suitable constructor (depends on the kind of dataset)
     public ListProductsAdapter(Context context, List<ItemProduct> myItems) {
         mContext = context;
-        mItems = myItems;
+        mItems = new ArrayList<>(myItems);
     }
 
     public void setItems(List<ItemProduct> items) {
@@ -52,7 +53,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
     public void onBindViewHolder(ListProductsAdapter.ViewHolder holder, int position) {
         ItemProduct itemProduct = mItems.get(position);
         String imageLink = itemProduct.getImageLists().get(1).getPhotoLink();
-        if (imageLink.isEmpty()) {
+        if (imageLink == null) {
             holder.mIvPresentIcon.setImageResource(R.drawable.ic_iphone5s);
         } else {
             Glide.with(mContext).load(imageLink).into(holder.mIvPresentIcon);
@@ -76,9 +77,74 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         });
     }
 
+    public ItemProduct removeItem(int position) {
+        final ItemProduct itemProduct = mItems.remove(position);
+        notifyItemRemoved(position);
+        return itemProduct;
+    }
+
+    public void addItem(int position, ItemProduct model) {
+        mItems.add(position, model);
+        notifyItemInserted(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        final ItemProduct itemProduct = mItems.remove(fromPosition);
+        mItems.add(toPosition, itemProduct);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void addAll(List<ItemProduct> list) {
+        mItems.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void clearList() {
+        mItems.clear();
+        notifyDataSetChanged();
+    }
+
+    private void applyAndAnimateRemovals(List<ItemProduct> itemProducts) {
+        int size = mItems.size();
+        for (int i = size - 1; i >= 0; i--) {
+            ItemProduct category = mItems.get(i);
+            if (!itemProducts.contains(category)) {
+                removeItem(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAddition(List<ItemProduct> itemProducts) {
+        int count = itemProducts.size();
+        for (int i = 0; i < count; i++) {
+            ItemProduct categoryProduct = itemProducts.get(i);
+            if (!mItems.contains(categoryProduct)) {
+                addItem(i, categoryProduct);
+            }
+        }
+    }
+
+    private void applyAndAnimateMoveItems(List<ItemProduct> itemProducts) {
+        int size = itemProducts.size();
+        for (int toPosition = size - 1; toPosition >= 0; toPosition--) {
+            ItemProduct category = itemProducts.get(toPosition);
+            int fromPosition = mItems.indexOf(category);
+            if (fromPosition != 0 && fromPosition != toPosition) {
+                moveItem(fromPosition, toPosition);
+            }
+        }
+    }
+
+    public void animateTo(List<ItemProduct> list) {
+        applyAndAnimateAddition(list);
+        applyAndAnimateMoveItems(list);
+        applyAndAnimateRemovals(list);
+    }
+
     @Override
     public int getItemCount() {
-        return mItems.size();
+        Log.e("", "number : " + mItems.size());
+        return mItems == null ? 1 : mItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
