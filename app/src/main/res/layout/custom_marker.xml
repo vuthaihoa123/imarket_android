@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/marker_background"
-    android:layout_width="@dimen/common_size_60"
-    android:layout_height="@dimen/common_size_60"
+    android:layout_width="@dimen/common_size_45"
+    android:layout_height="@dimen/common_size_45"
     android:layout_gravity="center">
 
     <RelativeLayout

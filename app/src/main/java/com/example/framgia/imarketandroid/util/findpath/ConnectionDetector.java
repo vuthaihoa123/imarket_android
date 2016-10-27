@@ -14,17 +14,9 @@ public class ConnectionDetector {
         this.context = context;
     }
     public boolean isConnectToInternet(){
-        ConnectivityManager connectivityManager= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager!=null){
-            NetworkInfo[] info= connectivityManager.getAllNetworkInfo();
-            if(info!=null)
-                for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
-                        return true;
-                    }
-        }
-        return false;
-    }
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context
+            .CONNECTIVITY_SERVICE);
 
+        return cm.getActiveNetworkInfo() != null;
+    }
 }

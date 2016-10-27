@@ -32,12 +32,12 @@ public class RealmRemote {
     private static final int SCHEMA_VERSION = 3;
 
     public static void openDatabaseRealm(Context context, InputStream inputStream, String
-            outFileName) {
+        outFileName) {
         copyBundledRealmFile(context, inputStream, outFileName);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context)
-                .name(outFileName)
-                .schemaVersion(SCHEMA_VERSION)
-                .build();
+            .name(outFileName)
+            .schemaVersion(SCHEMA_VERSION)
+            .build();
         try {
             Realm.migrateRealm(realmConfiguration, new Migration());
         } catch (FileNotFoundException e) {
@@ -61,9 +61,29 @@ public class RealmRemote {
     public static RealmList<Point> getListPointDisplay(int type) {
         RealmResults<Point> results = null;
         if (type == 0)
-            results = mRealm.where(Point.class).findAll();
+            results = mRealm.where(Point.class).greaterThan(Constants.FIELD_TYPE, type).findAll();
         else
             results = mRealm.where(Point.class).equalTo(Constants.FIELD_TYPE, type).findAll();
+        RealmList<Point> mLastResults = new RealmList<>();
+        for (Point point : results) {
+            mLastResults.add(point);
+        }
+        return mLastResults;
+    }
+
+    public static RealmList<Point> getListStore() {
+        RealmResults<Point> results = null;
+        results = mRealm.where(Point.class).greaterThan(Constants.FIELD_TYPE, 0).findAll();
+        RealmList<Point> mLastResults = new RealmList<>();
+        for (Point point : results) {
+            mLastResults.add(point);
+        }
+        return mLastResults;
+    }
+
+    public static RealmList<Point> getListInterSection() {
+        RealmResults<Point> results = null;
+        results = mRealm.where(Point.class).equalTo(Constants.FIELD_TYPE, 0).findAll();
         RealmList<Point> mLastResults = new RealmList<>();
         for (Point point : results) {
             mLastResults.add(point);
@@ -75,6 +95,11 @@ public class RealmRemote {
         RealmResults<Edge> results = null;
         results = mRealm.where(Edge.class).findAll();
         return results;
+    }
+
+    public static LatLng getLatLngFromPoint(Point point) {
+        LatLng result = new LatLng(point.getLat(), point.getLng());
+        return result;
     }
 
     public static LatLng getLocationFromName(int name) {
@@ -108,7 +133,7 @@ public class RealmRemote {
             @Override
             public void execute(Realm realm) {
                 RealmResults<Point> results =
-                        mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findAll();
+                    mRealm.where(Point.class).equalTo(Constants.FIELD_NAME, name).findAll();
                 results.deleteAllFromRealm();
             }
         });
@@ -163,7 +188,7 @@ public class RealmRemote {
     }
 
     private static String copyBundledRealmFile(Context context, InputStream inputStream, String
-            outFileName) {
+        outFileName) {
         try {
             File file = new File(context.getFilesDir(), outFileName);
             FileOutputStream outputStream = new FileOutputStream(file);

@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/layout_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dialog_point_size"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/margin_20dp"
     android:layout_gravity="center"
-    android:fitsSystemWindows="true">
+    android:layout_margin="@dimen/margin_20dp"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vitriduocluulai"
+            android:layout_centerVertical="true"
+            android:textColor="@color/red"/>
+
+        <Button
+            android:id="@+id/btn_done_save_point"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="X"
+            android:background="@color/background_slidding_visible"
+            android:textColor="@color/red"/>
+
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/input_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
@@ -16,24 +41,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/note" />
+            android:text="@string/note"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/edt_save_point"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <ImageButton
-            android:id="@+id/img_save_point"
+            android:id="@+id/img_btn_save_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/background_visible"
-            android:src="@drawable/done" />
+            android:src="@drawable/done"/>
     </LinearLayout>
 
     <TextView
+        android:id="@+id/title_save_point"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -41,26 +67,24 @@
         android:layout_marginTop="@dimen/margin_10dp"
         android:text="@string/list_point_saved"
         android:textColor="@color/grey"
-        android:textSize="@dimen/text_small_size" />
+        android:textSize="@dimen/text_small_size"
+        android:textStyle="bold"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list_point_saved"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
+
+    <Spinner
+        android:id="@+id/spinner_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
-
-        <Button
-            android:id="@+id/btn_done_save_point"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:text="@string/done"
-            android:textColor="@color/purple"
-            android:textSize="@dimen/text_xsmall_size" />
     </android.support.v7.widget.CardView>
 </LinearLayout>

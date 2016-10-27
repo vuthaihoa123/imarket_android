@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fab="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -65,7 +66,7 @@
                                     android:layout_marginLeft="@dimen/layout_margin_left"
                                     android:text="@string/save_point_title"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/common_text_size_16"/>
+                                    android:textSize="@dimen/common_text_size_12"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -74,34 +75,34 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="2"
-                                android:orientation="vertical"
-                                android:padding="@dimen/common_size_5">
+                                android:orientation="horizontal"
+                                android:padding="@dimen/common_size_3">
 
                                 <TextView
                                     android:id="@+id/mode"
                                     android:layout_width="@dimen/common_size_100"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="@dimen/layout_margin_left"
+                                    android:layout_weight="3"
                                     android:text="@string/check_store"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/common_text_size_16"/>
+                                    android:textSize="@dimen/common_text_size_14"/>
 
                                 <Switch
                                     android:id="@+id/switch1"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
                             </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/text_view_name_market"
+                            <Button
+                                android:id="@+id/btn_name_refresh"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/common_size_3"
                                 android:layout_weight="2"
                                 android:gravity="center"
-                                android:text="@string/market_name_text"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/common_text_size_18"
+                                android:text="@string/market_name_text"
                                 android:textStyle="bold"/>
 
                         </LinearLayout>
@@ -131,11 +132,37 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/footer"
                         android:layout_below="@id/header"
-                        android:layout_marginTop="@dimen/common_size_5"
                         android:layout_gravity="center|left"
+                        android:layout_marginTop="@dimen/common_size_5"
                         android:background="@color/white"
                         android:visibility="gone"/>
+                    <com.getbase.floatingactionbutton.FloatingActionsMenu
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/footer"
+                        android:layout_gravity="bottom|center"
+                        fab:fab_addButtonColorNormal="@color/color_primary"
+                        fab:fab_expandDirection="bottom"
+                        fab:layout_behavior="com.example.framgia.imarketandroid.ui.views.HideFloatingButton">
+
+                        <com.getbase.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/direction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@android:color/white"
+                            android:src="@drawable/direction"
+                            fab:fab_size="normal"/>
+
+                        <com.getbase.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/near_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@android:color/white"
+                            android:src="@drawable/near_point"
+                            fab:fab_size="normal"/>
+                    </com.getbase.floatingactionbutton.FloatingActionsMenu>
                 </RelativeLayout>
+
             </fragment>
 
         </FrameLayout>
@@ -159,6 +186,7 @@
                 android:layout_marginRight="@dimen/layout_margin_right"
                 android:layout_marginTop="@dimen/layout_margin_top"
                 android:background="@color/background_visible"
+                android:visibility="invisible"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -242,8 +270,8 @@
                         <EditText
                             android:id="@+id/edt_delete"
                             android:layout_width="@dimen/size_50dp"
-                            android:focusable="false"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:focusable="false"/>
                     </LinearLayout>
 
                     <LinearLayout

@@ -17,10 +17,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -56,32 +58,32 @@ public class DrawPathActivity extends FragmentActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_path);
         SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+            .findFragmentById(R.id.map);
         mConnectionDetector = new ConnectionDetector(getApplicationContext());
         isConnect = mConnectionDetector.isConnectToInternet();
         mAlertDialog = new AlertDialog.Builder(getApplicationContext()).create();
         fm.getMapAsync(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
+            PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
             return;
         }
         map.setMyLocationEnabled(true);
         map.setOnMyLocationChangeListener(this);
         LocationManager locationManager = (LocationManager) getSystemService(Context
-                .LOCATION_SERVICE);
+            .LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider
-                (criteria, false));
+            (criteria, false));
         LatLng source = new LatLng(location.getLatitude(), location.getLongitude());
         if (isConnect == true) {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location
-                        .getLatitude(), location.getLongitude()), 14));
+                    .getLatitude(), location.getLongitude()), 14));
                 CameraPosition cameraPosition =
-                        new CameraPosition.Builder().target(source).bearing(90).zoom(15).tilt(30)
-                                .build();
+                    new CameraPosition.Builder().target(source).bearing(90).zoom(15).tilt(30)
+                        .build();
                 map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 origin = source;
                 //crete option for origin
@@ -228,7 +230,7 @@ public class DrawPathActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     private class ParserTask
-            extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+        extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
             JSONObject jObject;

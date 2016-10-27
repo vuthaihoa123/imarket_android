@@ -9,7 +9,7 @@ import io.realm.RealmObject;
 /**
  * Created by phongtran on 10/10/2016.
  */
-public class CommerceCanter extends RealmObject implements Serializable{
+public class CommerceCanter extends RealmObject implements Serializable {
     @SerializedName("id")
     private int mId;
     @SerializedName("name")
@@ -25,6 +25,7 @@ public class CommerceCanter extends RealmObject implements Serializable{
         this.mAddress = address;
         this.mImage = image;
     }
+
     public CommerceCanter() {
     }
 

@@ -1,16 +1,25 @@
 package com.example.framgia.imarketandroid.util;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.location.Location;
+import android.net.Uri;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
@@ -31,8 +40,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import io.realm.RealmList;
 
@@ -126,5 +137,19 @@ public class MapUntils {
                     }
                 }
             });
+    }
+
+    public static float calculateDistance(LatLng origin, Point source) {
+        float distance[] = new float[1];
+        Location.distanceBetween(origin.latitude, origin.longitude, source.getLat(), source.getLng
+            (), distance);
+        return distance[0];
+    }
+
+    public static float calculateDistance(Point origin, Point source) {
+        float distance[] = new float[1];
+        Location.distanceBetween(origin.getLat(), origin.getLng(), source.getLat(), source.getLng
+            (), distance);
+        return distance[0];
     }
 }

@@ -5,7 +5,7 @@
     <dimen name="layout_margin_comment">10dp</dimen>
     <dimen name="layout_width_right_area">180dp</dimen>
     <dimen name="layout_height_spinner">40dp</dimen>
-    <dimen name="layout_margin_left">5dp</dimen>
+    <dimen name="layout_margin_left">3dp</dimen>
     <dimen name="layout_margin_right">5dp</dimen>
     <dimen name="padding">5dp</dimen>
     <dimen name="text_size_market_name">26sp</dimen>
@@ -19,6 +19,7 @@
     <dimen name="text_large_size">18sp</dimen>
     <dimen name="text_medium_size">16sp</dimen>
     <dimen name="strike_width">0.5dp</dimen>
+    <dimen name="common_size_45">45dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">200dp</dimen>
