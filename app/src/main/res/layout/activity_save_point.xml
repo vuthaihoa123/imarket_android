@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/wid_hei_400"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dialog_point_size"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.framgia.imarketandroid.ui.activity.SavePointActivity">
+    android:layout_margin="@dimen/margin_20dp"
+    android:layout_gravity="center"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/note"/>
+            android:text="@string/note" />
 
         <EditText
             android:id="@+id/edt_save_point"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="5"/>
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/img_save_point"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
             android:background="@color/background_visible"
-            android:src="@drawable/done"/>
+            android:src="@drawable/done" />
     </LinearLayout>
 
     <TextView
@@ -42,18 +39,28 @@
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/margin_10dp"
         android:layout_marginTop="@dimen/margin_10dp"
-        android:text="@string/list_point_saved"/>
+        android:text="@string/list_point_saved"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/text_small_size" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list_point_saved"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_size_400"
-        android:layout_below="@+id/btn_done_save_point"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/btn_done_save_point"
+    <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/done"/>
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/btn_done_save_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="@string/done"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/text_xsmall_size" />
+    </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -94,9 +94,8 @@
         <activity android:name=".ui.activity.ReadmoreActivity"/>
         <activity
             android:name=".ui.activity.SavePointActivity"
-            android:label="Vị trí được lưu lại"
-            android:theme="@style/Theme.AppCompat.Light.Dialog">
+            android:label="@string/vitriduocluulai"
+            android:theme="@style/CustomDialog">
         </activity>
     </application>
-
 </manifest>
