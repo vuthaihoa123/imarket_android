@@ -43,4 +43,12 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_large_size</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">@dimen/padding</item>
+    </style>
 </resources>
