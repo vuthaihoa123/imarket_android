@@ -107,6 +107,7 @@
     <string name="warning_location">Not found this location on the map</string>
     <string name="find_store">Find the way</string>
     <string name="check_store">Store</string>
+    <string name="save_point_title">Save location</string>
     <string name="current_location_warning">Not found this location on the map</string>
     <string name="C">C</string>
     <string name="choose_floor">Choose floor</string>
@@ -119,6 +120,7 @@
     <string name="warning_text">Please.not emty</string>
     <string name="warning_input">warning input</string>
     <string name="comma">,</string>
+    <string name="notify_save_point">This location is saved</string>
     <string name="name_commerce">AEON</string>
     <string name="login_befor">This device has been logged before.</string>
     <string name="title_activity_maps">Map</string>
@@ -191,6 +193,9 @@
     <string name="item_cart">cart</string>
     <string name="text_share_title">Share</string>
     <string name="error">Error</string>
+    <string name="note">Note</string>
+    <string name="list_point_saved">List of Locations saved</string>
+    <string name="done">Complete</string>
     <string name="success">Share done !</string>
     <string name="text_share_fake">Cửa hàng này rất tuyệt \nĐịa chỉ: Hà Đông -Hà Nội</string>
     <string name="share_with_facebook">Share with Facebook</string>
@@ -203,6 +208,7 @@
     <string name="cosmetic_name">Cosmetics store</string>
     <string name="movie_theater">Cinema</string>
     <string name="game_center_name">Entertainment center</string>
+    <string name="mobile_store">Mobile Store</string>
     <string name="confirm_signout">Are you LogOut?</string>
     <string name="cancel">Cancel</string>
     <string name="signout_done_message">LogOut Succsessly !</string>

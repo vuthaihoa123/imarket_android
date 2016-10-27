@@ -50,6 +50,7 @@ import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractLi
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
+import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.Graph;
 import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.model.StoreType;
@@ -57,6 +58,7 @@ import com.example.framgia.imarketandroid.data.remote.RealmRemote;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
 import com.example.framgia.imarketandroid.ui.views.CustomMarkerView;
+import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.MapUntils;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
@@ -129,10 +131,10 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private boolean mCheckZoom = false;
     private boolean mCheckSwitch = false;
     private boolean mCheckSlide = false;
-    public static boolean mCheckSlideStore = false;
-    public static boolean mCheckSlideFloor = false;
+    public static boolean sCheckSlideStore = false;
+    public static boolean sCheckSlideFloor = false;
     private boolean mCheckCurrentLocation = false;
-    private Point mCurrentLocation;
+    public static Point sCurrentLocation;
     private Point mTargetLocation;
     private int mFlagOne = 1;
     private int mFlagTWO = 2;
@@ -157,7 +159,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private float mBearing = FakeContainer.CAMERA_PARAMETER;
     private CustomMarkerView mIntersectionMK;
     private Marker mInteraker;
-    private float mDegree=0;
+    private float mDegree = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,9 +169,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         hideStatusBar();
         initViews();
         Intent intent = getIntent();
-        CommerceCanter commerce = (CommerceCanter) intent
-            .getSerializableExtra(Constants.COMMERCE_INTENT);
-        LoadDataUtils.loadFloor(this, commerce.getId());
+//        CommerceCanter commerce = (CommerceCanter) intent
+//            .getSerializableExtra(Constants.COMMERCE_INTENT);
+//        LoadDataUtils.loadFloor(this, commerce.getId());
     }
 
     private void initMap() {
@@ -191,10 +194,23 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private void initViews() {
         mMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
             .inflate(R.layout.item_marker, null);
-        mInterMarkerView=((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        mInterMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
             .inflate(R.layout.item_current_marker, null);
-        mIntersectionMK = (CustomMarkerView) mInterMarkerView.findViewById(R.id.current_custom_marker_view);
+        mIntersectionMK =
+            (CustomMarkerView) mInterMarkerView.findViewById(R.id.current_custom_marker_view);
         mImgSavePoint = (ImageButton) findViewById(R.id.img_save_point);
+        mImgSavePoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(sCurrentLocation!=null) {
+                    FloorActivity.sResumeValue = 4;
+                    startActivity(new Intent(FloorActivity.this, SavePointActivity.class));
+                }
+                else
+                    Toast.makeText(FloorActivity.this, R.string.input_current_location, Toast
+                        .LENGTH_LONG).show();
+            }
+        });
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         edtDelete = (EditText) findViewById(R.id.edt_delete);
         initListViewFloor();
@@ -256,6 +272,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private void initRvStore() {
         mRecyclerViewStore = (RecyclerView) findViewById(R.id.recycler_store_type);
         mRecyclerViewStore.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerViewStore.addItemDecoration(new LinearItemDecoration(this));
         mListStore = FakeContainer.initStore();
         mAdapter = new ChooseStoreTypeAdapter(this, mListStore);
         mAdapter.setOnRecyclerItemInteractListener(this);
@@ -317,7 +334,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mMap = googleMap;
         removeCamera();
         setListMarker();
-        //setListEdge();
+        setListEdge();
         setCustomMarkers(0);
         mMap.setOnInfoWindowClickListener(this);
         mMap.setInfoWindowAdapter(new MarkerInfoAdapter());
@@ -360,13 +377,13 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if (mCheckSlideStore) {
+                if (sCheckSlideStore) {
                     StoreAppear(false);
-                    mCheckSlideStore = false;
+                    sCheckSlideStore = false;
                 }
-                if (mCheckSlideFloor) {
+                if (sCheckSlideFloor) {
                     FloorAppear(false);
-                    mCheckSlideFloor = true;
+                    sCheckSlideFloor = true;
                 }
                 if (mCheckSlide) {
                     mCheckSlide = false;
@@ -404,13 +421,13 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private void setListMarker() {
         mNodesDisplay = RealmRemote.getListPointDisplay(0);
         for (Point point : mNodesDisplay) {
-          //  if (point.getType() != 0) {
-                MarkerOptions options = new MarkerOptions()
-                    .position(RealmRemote.getLocationFromName(point.getId()))
-                    .title(String.valueOf(point.getId()));
-                Marker marker = mMap.addMarker(options);
-                mListMarker.add(marker);
-         //   }
+            //  if (point.getType() != 0) {
+            MarkerOptions options = new MarkerOptions()
+                .position(RealmRemote.getLocationFromName(point.getId()))
+                .title(String.valueOf(point.getId()));
+            Marker marker = mMap.addMarker(options);
+            mListMarker.add(marker);
+            //   }
         }
     }
 
@@ -537,6 +554,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             drawMarker(RealmRemote.createCustomMarkerFromPoint(mPoint));
             FloorActivity.sResumeValue = 0;
         }
+        if (FloorActivity.sResumeValue == 4) {
+            if (SavePointActivity.mCheckpath != -1 && SavePointActivity
+                .mCheckpath != sCurrentLocation.getId()) {
+                mTargetLocation = RealmRemote.getObjectPointFromId(SavePointActivity.mCheckpath);
+                setDrawPath();
+            }
+            FloorActivity.sResumeValue = 0;
+        }
     }
 
     private void drawMarker(CustomMarker marker) {
@@ -565,25 +590,25 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 }
                 return;
             case FakeContainer.STORE_TYPE_1:
-                setBackground(customMarkerView, 0);
-                break;
-            case FakeContainer.STORE_TYPE_2:
                 setBackground(customMarkerView, 1);
                 break;
-            case FakeContainer.STORE_TYPE_3:
+            case FakeContainer.STORE_TYPE_2:
                 setBackground(customMarkerView, 2);
                 break;
-            case FakeContainer.STORE_TYPE_4:
+            case FakeContainer.STORE_TYPE_3:
                 setBackground(customMarkerView, 3);
                 break;
-            case FakeContainer.STORE_TYPE_5:
+            case FakeContainer.STORE_TYPE_4:
                 setBackground(customMarkerView, 4);
                 break;
-            case FakeContainer.STORE_TYPE_6:
+            case FakeContainer.STORE_TYPE_5:
                 setBackground(customMarkerView, 5);
                 break;
-            case FakeContainer.STORE_TYPE_7:
+            case FakeContainer.STORE_TYPE_6:
                 setBackground(customMarkerView, 6);
+                break;
+            case FakeContainer.STORE_TYPE_7:
+                setBackground(customMarkerView, 7);
                 break;
             default:
                 break;
@@ -648,18 +673,18 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     }
                     int mLocation = Integer.parseInt(edtLocation.getText().toString().trim());
                     mDialog.dismiss();
-                    mCurrentLocation = RealmRemote.getObjectPointFromName(mLocation);
-                    if (mCurrentLocation != null) {
+                    sCurrentLocation = RealmRemote.getObjectPointFromName(mLocation);
+                    if (sCurrentLocation != null) {
                         mCheckCurrentLocation = true;
                         mLocationCustomMarker = RealmRemote.createCustomMarkerFromPoint
-                            (mCurrentLocation);
+                            (sCurrentLocation);
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(RealmRemote
                             .getLocationFromName(mLocation)));
                         drawMarker(mLocationCustomMarker);
                     } else
                         Toast.makeText(FloorActivity.this, R.string.warning_location,
                             Toast.LENGTH_LONG).show();
-                 //   rotateMarker(mInteraker, 360);
+                    //   rotateMarker(mInteraker, 360);
                 }
                 break;
         }
@@ -679,29 +704,29 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 //scanQrCode();
                 break;
             case Constants.FLOOR:
-                if (mCheckSlideFloor == false) {
-                    if (mCheckSlideStore == true) {
+                if (sCheckSlideFloor == false) {
+                    if (sCheckSlideStore == true) {
                         StoreAppear(false);
-                        mCheckSlideStore = false;
+                        sCheckSlideStore = false;
                     }
                     FloorAppear(true);
-                    mCheckSlideFloor = true;
+                    sCheckSlideFloor = true;
                 } else {
                     FloorAppear(false);
-                    mCheckSlideFloor = false;
+                    sCheckSlideFloor = false;
                 }
                 break;
             case Constants.STORE:
-                if (mCheckSlideStore == false) {
-                    if (mCheckSlideFloor == true) {
+                if (sCheckSlideStore == false) {
+                    if (sCheckSlideFloor == true) {
                         FloorAppear(false);
-                        mCheckSlideFloor = false;
+                        sCheckSlideFloor = false;
                     }
                     StoreAppear(true);
-                    mCheckSlideStore = true;
+                    sCheckSlideStore = true;
                 } else {
                     StoreAppear(false);
-                    mCheckSlideStore = false;
+                    sCheckSlideStore = false;
                 }
         }
     }
@@ -752,32 +777,37 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 switch (customMarker.getType()) {
                     case FakeContainer.STORE_TYPE_1:
                         mTextStoreName =
-                            String.valueOf(getString(R.string.food_store)) + " " +
+                            Constants.LIST_NAME_STORE[1] + " " +
                                 customMarker.getId();
                         break;
                     case FakeContainer.STORE_TYPE_2:
                         mTextStoreName =
-                            String.valueOf(getString(R.string.fashion_name)) + " " + customMarker
+                            Constants.LIST_NAME_STORE[2] + " " + customMarker
                                 .getId();
                         break;
                     case FakeContainer.STORE_TYPE_3:
                         mTextStoreName =
-                            String.valueOf(getString(R.string.book_shop_name)) + " " + customMarker
+                            Constants.LIST_NAME_STORE[3] + " " + customMarker
                                 .getId();
                         break;
                     case FakeContainer.STORE_TYPE_4:
                         mTextStoreName =
-                            String.valueOf(getString(R.string.cosmetic_name)) + " " + customMarker
+                            Constants.LIST_NAME_STORE[4] + " " + customMarker
                                 .getId();
                         break;
                     case FakeContainer.STORE_TYPE_5:
                         mTextStoreName =
-                            String.valueOf(getString(R.string.movie_theater)) + " " + customMarker
+                            Constants.LIST_NAME_STORE[5] + " " + customMarker
                                 .getId();
                         break;
                     case FakeContainer.STORE_TYPE_6:
                         mTextStoreName =
-                            String.valueOf(getString(R.string.game_center_name)) + " " +
+                            Constants.LIST_NAME_STORE[6] + " " +
+                                customMarker.getId();
+                        break;
+                    case FakeContainer.STORE_TYPE_7:
+                        mTextStoreName =
+                            Constants.LIST_NAME_STORE[7] + " " +
                                 customMarker.getId();
                         break;
                 }
@@ -835,7 +865,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         }
         Graph graph = new Graph(mVertexesHoa, mEdgesHoa);
         DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph, this);
-        Point vertexF = mCurrentLocation;
+        Point vertexF = sCurrentLocation;
         dijkstra.execute(vertexF);
         Point vertex1 = mTargetLocation;
         if (mPath != null && mPath.size() > 0)
@@ -861,7 +891,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onSensorChanged(SensorEvent event) {
         float degree = Math.round(event.values[0]) + (mAngleMap);
-
 //        RotateAnimation ra = new RotateAnimation(
 //            currentDegree, degree,
 //            Animation.RELATIVE_TO_SELF, 0.5f,
@@ -880,19 +909,18 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 //                    .fromBitmap(MapUntils.createBitmapFromView(this, mInterMarkerView)))
 //                .anchor(0.5f, 0.5f));
 //        }
-
-        if(mInteraker!=null) {
+        if (mInteraker != null) {
             rotateMarker(mInteraker, degree);
         }
         currentDegree = degree;
     }
+
     public void rotateMarker(final Marker marker, final float toRotation) {
         final Handler handler = new Handler();
 //        final long start = SystemClock.uptimeMillis();
 //        final float startRotation = marker.getRotation();
 //        final long duration = 1000;
-
-      //  final Interpolator interpolator = new LinearInterpolator();
+        //  final Interpolator interpolator = new LinearInterpolator();
         final float[] rotation = {currentDegree};
         handler.post(new Runnable() {
             @Override
@@ -900,9 +928,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 //                long elapsed = SystemClock.uptimeMillis() - start;
 //                float t = interpolator.getInterpolation((float) elapsed / duration);
 //                float rot = t * toRotation + (1 -t) * startRotation;
-                rotation[0] +=0.5;
+                rotation[0] += 0.5;
                 marker.setRotation(rotation[0]);
-               // marker.setRotation(-rot > 180 ? rot/2 : rot);
+                // marker.setRotation(-rot > 180 ? rot/2 : rot);
                 if (rotation[0] < toRotation) {
                     // Post again 16ms later.
                     handler.postDelayed(this, 5);
@@ -910,10 +938,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             }
         });
     }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        if(mInteraker!=null) {
-          //  rotateMarker(mInteraker, 1000);
+        if (mInteraker != null) {
+            //  rotateMarker(mInteraker, 1000);
         }
     }
 
@@ -927,11 +956,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     drawMarker(mLocationCustomMarker);
                 }
                 int mLocation = Integer.parseInt(content);
-                mCurrentLocation = RealmRemote.getObjectPointFromName(mLocation);
-                if (mCurrentLocation != null) {
+                sCurrentLocation = RealmRemote.getObjectPointFromName(mLocation);
+                if (sCurrentLocation != null) {
                     mCheckCurrentLocation = true;
                     mLocationCustomMarker = RealmRemote.createCustomMarkerFromPoint
-                        (mCurrentLocation);
+                        (sCurrentLocation);
                     mCurrentlatLng = RealmRemote
                         .getLocationFromName(mLocation);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(mCurrentlatLng));
