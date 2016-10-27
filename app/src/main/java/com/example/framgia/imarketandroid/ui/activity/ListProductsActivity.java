@@ -31,12 +31,12 @@ import java.util.List;
  * Created by hoavt on 19/07/2016.
  */
 public class ListProductsActivity extends AppCompatActivity implements SearchView
-        .OnQueryTextListener {
+        .OnQueryTextListener, LoadDataUtils.OnListProductListener {
     private RecyclerView mRvListProducts;
     private static String NAMECATEGORY = "Apple";
-    public static ListProductsAdapter sAdapter;
+    public ListProductsAdapter sAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    public static List<ItemProduct> sItemProducts = new ArrayList<>();
+    public List<ItemProduct> sItemProducts = new ArrayList<>();
     private DatabaseTable mDataBase;
     private Toolbar mToolbar;
 
@@ -45,11 +45,11 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list_layout);
         mDataBase = new DatabaseTable(this);
+        initViews();
         Intent intent = getIntent();
         if (intent != null)
             handleIntent(intent);
         loadDataFromServer();
-        initViews();
     }
 
     private void handleIntent(Intent intent) {
@@ -60,7 +60,10 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         } else {
             Category category = (Category) intent.getSerializableExtra(Constants.CATEGORY_INTENT);
             if (category != null) {
-                LoadDataUtils.getProductInCategory(this, Integer.parseInt(category.getId()));
+                LoadDataUtils loadDataUtils = new LoadDataUtils();
+                loadDataUtils.init(this);
+                loadDataUtils.setOnListProductListener(this);
+                loadDataUtils.getProductInCategory(this, Integer.parseInt(category.getId()));
             }
         }
     }
@@ -176,5 +179,12 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         if (LoadDataUtils.mReceiver != null) {
             unregisterReceiver(LoadDataUtils.mReceiver);
         }
+    }
+
+    @Override
+    public void onListReceiver(List<ItemProduct> list) {
+        sAdapter.clearList();
+        sAdapter.addAll(list);
+        sAdapter.notifyDataSetChanged();
     }
 }

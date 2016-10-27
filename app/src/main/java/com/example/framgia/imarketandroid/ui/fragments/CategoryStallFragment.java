@@ -62,6 +62,7 @@ public class CategoryStallFragment extends Fragment implements
         Bundle bundle = getArguments();
         if (bundle == null) {
             HttpRequest.getInstance().init();
+            HttpRequest.getInstance().initProgressDialog(getActivity());
             HttpRequest.getInstance().loadCategories();
             HttpRequest.getInstance().setOnLoadDataListener(this);
         }

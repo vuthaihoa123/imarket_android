@@ -56,7 +56,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         if (imageLink == null) {
             holder.mIvPresentIcon.setImageResource(R.drawable.ic_iphone5s);
         } else {
-            Glide.with(mContext).load(imageLink).into(holder.mIvPresentIcon);
+           Glide.with(mContext).load(imageLink).into(holder.mIvPresentIcon);
         }
         TextView nameProduct = holder.mTvNameProduct;
         nameProduct.setText(itemProduct.getNameProduct());
