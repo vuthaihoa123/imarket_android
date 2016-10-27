@@ -169,9 +169,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         hideStatusBar();
         initViews();
         Intent intent = getIntent();
-//        CommerceCanter commerce = (CommerceCanter) intent
-//            .getSerializableExtra(Constants.COMMERCE_INTENT);
-//        LoadDataUtils.loadFloor(this, commerce.getId());
+        CommerceCanter commerce = (CommerceCanter) intent
+            .getSerializableExtra(Constants.COMMERCE_INTENT);
+        LoadDataUtils.loadFloor(this, commerce.getId());
     }
 
     private void initMap() {
@@ -202,11 +202,10 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mImgSavePoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sCurrentLocation!=null) {
+                if (sCurrentLocation != null) {
                     FloorActivity.sResumeValue = 4;
                     startActivity(new Intent(FloorActivity.this, SavePointActivity.class));
-                }
-                else
+                } else
                     Toast.makeText(FloorActivity.this, R.string.input_current_location, Toast
                             .LENGTH_LONG).show();
             }
@@ -333,8 +332,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         removeCamera();
-        setListMarker();
-        setListEdge();
+//        setListMarker();
+//        setListEdge();
         setCustomMarkers(0);
         mMap.setOnInfoWindowClickListener(this);
         mMap.setInfoWindowAdapter(new MarkerInfoAdapter());
@@ -387,35 +386,36 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 }
                 if (mCheckSlide) {
                     mCheckSlide = false;
-                } else {
-                    double lat = latLng.latitude;
-                    double lng = latLng.longitude;
-                    SharedPreferences preferences =
-                            getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    mIndexStore = preferences.getInt(getString(R.string.idPoint), 0);
-                    mIndexStore++;
-                    editor.putInt(getString(R.string.idPoint), mIndexStore);
-                    editor.commit();
-                    Point mPoint =
-                            new Point(mIndexStore, 0, lat, lng, 1);
-                    RealmRemote.savePoint(mPoint);
-                    Marker locationMarket = mMap.addMarker(
-                            new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude))
-                                    .title(String.valueOf(mPoint.getId())));
-                    locationMarket.showInfoWindow();
                 }
+//                else {
+//                    double lat = latLng.latitude;
+//                    double lng = latLng.longitude;
+//                    SharedPreferences preferences =
+//                            getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    mIndexStore = preferences.getInt(getString(R.string.idPoint), 0);
+//                    mIndexStore++;
+//                    editor.putInt(getString(R.string.idPoint), mIndexStore);
+//                    editor.commit();
+//                    Point mPoint =
+//                            new Point(mIndexStore, 0, lat, lng, 1);
+//                    RealmRemote.savePoint(mPoint);
+//                    Marker locationMarket = mMap.addMarker(
+//                            new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude))
+//                                    .title(String.valueOf(mPoint.getId())));
+//                    locationMarket.showInfoWindow();
+//                }
             }
         });
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                FloorActivity.sResumeValue = mFlagThree;
-                mTempLatLng = latLng;
-                Intent intent = new Intent(FloorActivity.this, ChooseStoreTypeActivity.class);
-                startActivity(intent);
-            }
-        });
+//        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+//            @Override
+//            public void onMapLongClick(LatLng latLng) {
+//                FloorActivity.sResumeValue = mFlagThree;
+//                mTempLatLng = latLng;
+//                Intent intent = new Intent(FloorActivity.this, ChooseStoreTypeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void setListMarker() {
@@ -890,25 +890,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float degree = Math.round(event.values[0]) + (mAngleMap);
-//        RotateAnimation ra = new RotateAnimation(
-//            currentDegree, degree,
-//            Animation.RELATIVE_TO_SELF, 0.5f,
-//            Animation.RELATIVE_TO_SELF, 0.5f);
-//        ra.setDuration(100);
-//        ra.setFillAfter(true);
-//        mImgCompass.startAnimation(ra);
-//        Thread t1= new Thread(new MyRunable());
-//        t1.run();
-//        if(mCurrentlatLng!=null) {
-//            if(mInteraker!=null)
-//                mInteraker.remove();
-//            mInteraker = mMap.addMarker(new MarkerOptions()
-//                .position(mCurrentlatLng)
-//                .icon(BitmapDescriptorFactory
-//                    .fromBitmap(MapUntils.createBitmapFromView(this, mInterMarkerView)))
-//                .anchor(0.5f, 0.5f));
-//        }
+        final float degree = Math.round(event.values[0]) + (mAngleMap);
         if (mInteraker != null) {
             rotateMarker(mInteraker, degree);
         }
@@ -917,22 +899,13 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     public void rotateMarker(final Marker marker, final float toRotation) {
         final Handler handler = new Handler();
-//        final long start = SystemClock.uptimeMillis();
-//        final float startRotation = marker.getRotation();
-//        final long duration = 1000;
-        //  final Interpolator interpolator = new LinearInterpolator();
         final float[] rotation = {currentDegree};
         handler.post(new Runnable() {
             @Override
             public void run() {
-//                long elapsed = SystemClock.uptimeMillis() - start;
-//                float t = interpolator.getInterpolation((float) elapsed / duration);
-//                float rot = t * toRotation + (1 -t) * startRotation;
                 rotation[0] += 0.5;
                 marker.setRotation(rotation[0]);
-                // marker.setRotation(-rot > 180 ? rot/2 : rot);
                 if (rotation[0] < toRotation) {
-                    // Post again 16ms later.
                     handler.postDelayed(this, 5);
                 }
             }
@@ -941,9 +914,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        if (mInteraker != null) {
-            //  rotateMarker(mInteraker, 1000);
-        }
     }
 
     @Override
