@@ -11,8 +11,8 @@
         android:gravity="bottom"
         sothree:umanoDragView="@+id/right_area"
         sothree:umanoOverlay="true"
-        sothree:umanoPanelHeight="@dimen/common_size_180"
-        sothree:umanoParalaxOffset="@dimen/common_size_200"
+        sothree:umanoPanelHeight="@dimen/common_size_80"
+        sothree:umanoParalaxOffset="@dimen/common_size_100"
         sothree:umanoShadowHeight="0dp">
 
         <FrameLayout
@@ -162,7 +162,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/background_visible"
                     android:orientation="vertical">
 
@@ -226,6 +226,7 @@
                         <EditText
                             android:id="@+id/edt_delete"
                             android:layout_width="@dimen/size_50dp"
+                            android:focusable="false"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
 

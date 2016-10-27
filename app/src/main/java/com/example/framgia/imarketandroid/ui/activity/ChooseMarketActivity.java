@@ -94,6 +94,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private List<CommerceCanter> mListChooseCenter = new ArrayList<>();
     private boolean mFlag = false;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

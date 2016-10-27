@@ -47,6 +47,7 @@ import android.widget.Toast;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
+import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
 import com.example.framgia.imarketandroid.data.model.Graph;
@@ -59,6 +60,7 @@ import com.example.framgia.imarketandroid.ui.views.CustomMarkerView;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.MapUntils;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
+import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -164,9 +166,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         hideStatusBar();
         initViews();
         Intent intent = getIntent();
-//        CommerceCanter commerce = (CommerceCanter) intent
-//            .getSerializableExtra(Constants.COMMERCE_INTENT);
-//        LoadDataUtils.loadFloor(this, commerce.getId());
+        CommerceCanter commerce = (CommerceCanter) intent
+            .getSerializableExtra(Constants.COMMERCE_INTENT);
+        LoadDataUtils.loadFloor(this, commerce.getId());
     }
 
     private void initMap() {
@@ -314,7 +316,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         removeCamera();
-        //setListMarker();
+        setListMarker();
         //setListEdge();
         setCustomMarkers(0);
         mMap.setOnInfoWindowClickListener(this);
