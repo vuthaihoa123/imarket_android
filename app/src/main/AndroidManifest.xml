@@ -63,9 +63,7 @@
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.UpdateProfileActivity"/>
         <activity android:name=".ui.activity.MainActivity"/>
-        <activity android:name=".ui.activity.FloorActivity">
-
-        </activity>
+        <activity android:name=".ui.activity.FloorActivity"/>
         <activity
             android:name=".ui.activity.ListProductsActivity"
             android:launchMode="singleTop">
