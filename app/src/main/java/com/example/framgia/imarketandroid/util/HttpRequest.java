@@ -1,18 +1,19 @@
 package com.example.framgia.imarketandroid.util;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+
+import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.CategoryList;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
-import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Session;
-import com.example.framgia.imarketandroid.data.model.Store;
 import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -23,7 +24,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Header;
 
 /**
  * Created by yue on 22/07/2016.
@@ -35,6 +35,7 @@ public class HttpRequest {
     private Retrofit mRetrofit;
     private IMarketApiEndPoint mApi;
     private OnLoadDataListener mListener;
+    private ProgressDialog mProgressDialog;
 
     private HttpRequest() {
     }
@@ -59,45 +60,55 @@ public class HttpRequest {
 
     public void init() {
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
-            addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
+                addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
+    }
+
+    public void initProgressDialog(Context context) {
+        mProgressDialog = new ProgressDialog(context);
+        mProgressDialog.setMessage(context.getString(R.string.progressdialog));
+        mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCanceledOnTouchOutside(false);
     }
 
     public void initAuthToken(final String auth) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
-            addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
+                addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
         if (auth != null) {
             httpClientBuilder.addInterceptor(new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
                     Request original = chain.request();
                     Request.Builder requestBuilder = original.newBuilder()
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", auth)
-                        .method(original.method(), original.body());
+                            .header("Content-Type", "application/json")
+                            .header("Authorization", auth)
+                            .method(original.method(), original.body());
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 }
             });
         }
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
-            addConverterFactory(GsonConverterFactory.create()).client(httpClientBuilder.build())
-            .build();
+                addConverterFactory(GsonConverterFactory.create()).client(httpClientBuilder.build())
+                .build();
     }
 
     public void loadCategories() {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
         Call<CategoryList> call = mApi.loadCategories();
+        mProgressDialog.show();
         call.enqueue(new Callback<CategoryList>() {
             @Override
             public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
                 if (mListener != null) {
                     mListener.onLoadDataSuccess(response.body().getList());
                 }
+                mProgressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<CategoryList> call, Throwable t) {
+                mProgressDialog.dismiss();
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }
@@ -137,7 +148,7 @@ public class HttpRequest {
                     UserModel signupModel = null;
                     try {
                         signupModel =
-                            new Gson().fromJson(response.errorBody().string(), UserModel.class);
+                                new Gson().fromJson(response.errorBody().string(), UserModel.class);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -166,7 +177,7 @@ public class HttpRequest {
                     UserModel userUpdate = null;
                     try {
                         userUpdate =
-                            new Gson().fromJson(response.errorBody().string(), UserModel.class);
+                                new Gson().fromJson(response.errorBody().string(), UserModel.class);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -205,6 +216,7 @@ public class HttpRequest {
 
     public interface OnLoadDataListener {
         void onLoadDataSuccess(Object object);
+
         void onLoadDataFailure(String message);
     }
 
@@ -247,6 +259,7 @@ public class HttpRequest {
             }
         });
     }
+
     public void getStore(int id_floor, int storeTypeId) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
         Call<Stores> repuestServer = mApi.getStoreByStoreType(id_floor, storeTypeId);

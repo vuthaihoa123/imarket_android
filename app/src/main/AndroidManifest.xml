@@ -90,8 +90,7 @@
             android:name=".ui.activity.ChooseStoreTypeActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity android:name=".ui.activity.IntroduceActivity"/>
-        <activity android:name=".ui.activity.HomeStoreActivity">
-        </activity>
+        <activity android:name=".ui.activity.HomeStoreActivity"/>
         <activity android:name=".ui.activity.ReadmoreActivity"/>
         <activity
             android:name=".ui.activity.SavePointActivity"

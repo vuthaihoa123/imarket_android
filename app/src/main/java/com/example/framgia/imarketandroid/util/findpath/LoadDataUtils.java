@@ -17,12 +17,10 @@ import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
-import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +36,7 @@ public class LoadDataUtils {
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setMessage(mContext.getString(R.string.progressdialog));
         mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         HttpRequest.getInstance().init();
     }
 
@@ -46,10 +45,15 @@ public class LoadDataUtils {
     }
 
     private OnLoadMarketsCallback mLoadMarketsListenner;
+    private OnListProductListener mOnListProductListener;
 
     public LoadDataUtils setLoadMarketsListenner(OnLoadMarketsCallback loadMarketsListenner) {
         mLoadMarketsListenner = loadMarketsListenner;
         return this;
+    }
+
+    public void setOnListProductListener(OnListProductListener mOnListProductListener) {
+        this.mOnListProductListener = mOnListProductListener;
     }
 
     public static void loadFloor(final Context context, final int idCommerce) {
@@ -146,32 +150,30 @@ public class LoadDataUtils {
         });
     }
 
-    public static void getProductInCategory(final Context context, final int id_cate) {
+    public void getProductInCategory(final Context context, final int id_cate) {
         init(context);
-        //mProgressDialog.show();
+        mProgressDialog.show();
         HttpRequest.getInstance().getProduct(id_cate);
         HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
                 ProductList productList = (ProductList) object;
-               // mProgressDialog.dismiss();
-                if (productList != null) {
-                    ListProductsActivity.sItemProducts.clear();
-                    for (int i = 0; i < productList.getItemProductList().size(); i++) {
-                        List<ItemProduct> products=new ArrayList<>();
-                        ItemProduct product = productList.getItemProductList().get(i);
-                        ListProductsActivity.sItemProducts.add(product);
-                        Flog.toast(mContext,""+ ListProductsActivity.sItemProducts);
+                if (mOnListProductListener != null) {
+                    if (productList != null) {
+                        mOnListProductListener.onListReceiver(productList.getItemProductList());
+                        if(productList.getItemProductList().size()==0){
+                            Flog.toast(mContext, R.string.product_null);
+                        }
+                    } else {
+                        Flog.toast(mContext, R.string.product_null);
                     }
-                    ListProductsActivity.sAdapter.notifyDataSetChanged();
-                } else {
-                    Flog.toast(mContext, R.string.product_null);
                 }
+                mProgressDialog.dismiss();
             }
 
             @Override
             public void onLoadDataFailure(String message) {
-                //mProgressDialog.dismiss();
+                mProgressDialog.dismiss();
                 if (!InternetUtil.isInternetConnected(context)) {
                     Flog.toast(context, R.string.no_internet);
                     processBroadcastProduct(id_cate);
@@ -180,7 +182,7 @@ public class LoadDataUtils {
         });
     }
 
-    private static void processBroadcastProduct(final int id_cate) {
+    private void processBroadcastProduct(final int id_cate) {
         IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
         mReceiver = new BroadcastReceiver() {
             @Override
@@ -234,5 +236,9 @@ public class LoadDataUtils {
             }
         };
         mContext.registerReceiver(mReceiver, filter);
+    }
+
+    public interface OnListProductListener {
+        void onListReceiver(List<ItemProduct> list);
     }
 }
