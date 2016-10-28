@@ -9,30 +9,25 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.ActionProvider;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,10 +65,14 @@ import io.realm.RealmResults;
  * Created by hoavt on 11/10/2016.
  */
 public class ChooseMarketActivity extends AppCompatActivity implements
-    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-    SearchView.OnQueryTextListener, OnRecyclerItemInteractListener, TextWatcher {
-    private RecyclerMarketAdapter mMarketAdapter;
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+        SearchView.OnQueryTextListener, OnRecyclerItemInteractListener, TextWatcher {
     public static List<CommerceCanter> sMarkets = new ArrayList<>();
+    public static List<String> sListAutoSearchName = new ArrayList<>();
+    public static List<String> sListAutoSearchLocation = new ArrayList<>();
+    public static boolean sFlagCacheCommerce = false;
+    static Realm myRealm;
+    private RecyclerMarketAdapter mMarketAdapter;
     private List<CommerceCanter> mTraceMarkets = new ArrayList<>();
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
@@ -92,20 +91,43 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private List<String> mHeaderNames = new ArrayList<>();
     private HistoryTimeAdapter mHistoryTimeAdapter;
     private RelativeLayout mReFavorite, mReBound, mReFollow;
-    private LinearLayoutCompat mAcibSearch;
     private RadioButton mRadiobuttonName, mRadiobuttonLocation;
     private AutoCompleteTextView mTextViewSearchInput;
-    private AppCompatTextView mTextViewNamePreview, mTextViewLocationPreview;
-    public static List<String> sListAutoSearchName = new ArrayList<>();
-    public static List<String> sListAutoSearchLocation = new ArrayList<>();
-    private Button mButtonSearch;
+    private TextView mTextViewNamePreview, mTextViewLocationPreview;
+    private LinearLayoutCompat mButtonSearch;
     private String mCurrentTextSearchName, mCurrentTextSearchLocation;
     private List<CommerceCanter> mListChooseCenter = new ArrayList<>();
     private boolean mFlag = false;
     private List<CommerceCanter> mListComAdap = new ArrayList<>();
-    private ShareActionProvider mActionProvider;
-    public static boolean sFlagCacheCommerce = false;
 
+    public static void initDataAutoCompleteTextView() {
+        sListAutoSearchName.clear();
+        sListAutoSearchLocation.clear();
+        if (sMarkets == null || sMarkets.size() == 0) {
+            sListAutoSearchName.add(Constants.COM_NAME);
+            sListAutoSearchLocation.add(Constants.COM_LOCATION);
+        } else {
+            for (CommerceCanter center : sMarkets) {
+                sListAutoSearchName.add(center.getName());
+                sListAutoSearchLocation.add(center.getAddress());
+            }
+        }
+    }
+
+    public static void cacheCommerce(Context context) {
+        myRealm = Realm.getInstance(
+                new RealmConfiguration.Builder(context)
+                        .name(Constants.COM_CACHE)
+                        .build());
+
+        myRealm.beginTransaction();
+        if (sMarkets != null) {
+            for (CommerceCanter center : sMarkets) {
+                myRealm.copyToRealm(center);
+            }
+        }
+        myRealm.commitTransaction();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,9 +138,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         supportActionBar();
         setSearchSuggestionAdapter();
         initRececlerView();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_choose_commerce);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initRececlerView() {
@@ -128,15 +147,14 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
         mRecyclerDrawerAdapter.setOnClick(this);
         setListeners();
-        setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
-        if(!sFlagCacheCommerce) {
+        if (!sFlagCacheCommerce) {
             LoadDataUtils.loadCommerce(this);
         } else {
             getCommerceFromCache();
@@ -150,21 +168,22 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void supportActionBar() {
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setSearchSuggestionAdapter() {
         final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
         final int[] displayViews = new int[]{android.R.id.text1};
         mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-            android.R.layout.simple_list_item_1,
-            null,
-            columns,
-            displayViews,
-            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                android.R.layout.simple_list_item_1,
+                null,
+                columns,
+                displayViews,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         getInfo();
     }
 
@@ -198,7 +217,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                     mCartItems = FakeContainer.getListCartItem();
                     if (mHistoryTimeAdapter == null) {
                         mHistoryTimeAdapter =
-                            new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
+                                new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                         mRecyclerDrawer.setLayoutManager(linearLayoutManager);
                         mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
@@ -226,22 +245,22 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 case R.id.button_sign_out:
                     SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                     Session session = (Session) SharedPreferencesUtil
-                        .getInstance()
-                        .getValue(Constants.SESSION, Session.class);
+                            .getInstance()
+                            .getValue(Constants.SESSION, Session.class);
                     if (session != null) {
                         actionSignout();
                     } else {
                         DialogShareUtil
-                            .toastDialogMessage(getString(R.string.signout_fails_message),
-                                ChooseMarketActivity.this);
+                                .toastDialogMessage(getString(R.string.signout_fails_message),
+                                        ChooseMarketActivity.this);
                     }
                     mLinearMenu.setVisibility(View.GONE);
                     break;
                 case R.id.button_profile:
                     SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
                     Session session2 = (Session) SharedPreferencesUtil
-                        .getInstance()
-                        .getValue(Constants.SESSION, Session.class);
+                            .getInstance()
+                            .getValue(Constants.SESSION, Session.class);
                     if (session2 != null)
                         startActivity(new Intent(this, UpdateProfileActivity.class));
                     else {
@@ -260,12 +279,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                         mTextViewSearchInput.setText("");
                     }
                     mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
-                        android.R.layout.simple_list_item_1,
-                        sListAutoSearchName));
-                    if (mCurrentTextSearchName != null && !mCurrentTextSearchName.equals("")) {
+                            android.R.layout.simple_list_item_1,
+                            sListAutoSearchName));
+                    if (mCurrentTextSearchName != null && !mCurrentTextSearchName.isEmpty()) {
                         mTextViewNamePreview.setText(mCurrentTextSearchName);
                     }
-                    if (mCurrentTextSearchLocation != null && !mCurrentTextSearchLocation.equals("")) {
+                    if (mCurrentTextSearchLocation != null && !mCurrentTextSearchLocation.isEmpty()) {
                         mTextViewLocationPreview.setText(mCurrentTextSearchLocation);
                         sListAutoSearchName.clear();
                         for (int i = 0; i < sMarkets.size(); i++) {
@@ -275,18 +294,18 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                             }
                             mTextViewSearchInput.setHint(getString(R.string.input_name));
                             mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
-                                android.R.layout.simple_list_item_1,
-                                sListAutoSearchName));
+                                    android.R.layout.simple_list_item_1,
+                                    sListAutoSearchName));
                         }
                     } else {
                         sListAutoSearchName.clear();
                         for (int i = 0; i < sMarkets.size(); i++) {
                             CommerceCanter center = sMarkets.get(i);
-                                sListAutoSearchName.add(center.getName());
-                            mTextViewSearchInput.setHint(getString(R.string.input_location));
+                            sListAutoSearchName.add(center.getName());
+                            mTextViewSearchInput.setHint(getString(R.string.input_name));
                             mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
-                                android.R.layout.simple_list_item_1,
-                                sListAutoSearchName));
+                                    android.R.layout.simple_list_item_1,
+                                    sListAutoSearchName));
                         }
                     }
                     break;
@@ -295,11 +314,14 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                         mCurrentTextSearchName = mTextViewSearchInput.getText().toString();
                         mTextViewSearchInput.setText("");
                     }
+                    mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
+                            android.R.layout.simple_list_item_1,
+                            sListAutoSearchLocation));
                     if (mCurrentTextSearchLocation != null &&
-                        !mCurrentTextSearchLocation.equals("")) {
+                            !mCurrentTextSearchLocation.isEmpty()) {
                         mTextViewLocationPreview.setText(mCurrentTextSearchLocation);
                     }
-                    if (mCurrentTextSearchName != null && !mCurrentTextSearchName.equals("")) {
+                    if (mCurrentTextSearchName != null && !mCurrentTextSearchName.isEmpty()) {
                         sListAutoSearchLocation.clear();
                         for (int i = 0; i < sMarkets.size(); i++) {
                             CommerceCanter center = sMarkets.get(i);
@@ -308,8 +330,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                             }
                             mTextViewSearchInput.setHint(getString(R.string.input_location));
                             mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
-                                android.R.layout.simple_list_item_1,
-                                sListAutoSearchLocation));
+                                    android.R.layout.simple_list_item_1,
+                                    sListAutoSearchLocation));
                         }
                         mTextViewNamePreview.setText(mCurrentTextSearchName);
                     } else {
@@ -321,19 +343,21 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                             }
                             mTextViewSearchInput.setHint(getString(R.string.input_location));
                             mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
-                                android.R.layout.simple_list_item_1,
-                                sListAutoSearchLocation));
+                                    android.R.layout.simple_list_item_1,
+                                    sListAutoSearchLocation));
                         }
                     }
                     break;
-                case R.id.img_button_search:
+                case R.id.acib_search_action:
                     clickSearch();
+                    hideKeyboard();
                     break;
                 case R.id.actv_search_input:
-                    mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
-                        android.R.layout.simple_list_item_1,
-                        sListAutoSearchName));
-                    initDataAutoCompleteTextView();
+//                    mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
+//                        android.R.layout.simple_list_item_1,
+//                        sListAutoSearchName));
+//                    initDataAutoCompleteTextView();
+//                    showKeyboard();
                     break;
                 default:
                     break;
@@ -341,6 +365,21 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         } else {
             Flog.toast(this, R.string.no_internet);
         }
+    }
+
+    private void showKeyboard() {
+        mTextViewSearchInput.setFocusable(true);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mTextViewSearchInput, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    private void hideKeyboard() {
+        // Check if no view has focus:
+        InputMethodManager inputManager =
+                (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(
+                this.getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override
@@ -356,7 +395,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void findViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_choose_commerce);
         mRecyclerMarket = (RecyclerView) findViewById(R.id.recycler_market);
         mRecyclerDrawer = (RecyclerView) findViewById(R.id.recycler_navigation_drawer);
         mStrokeLine1 = findViewById(R.id.nav_drawer_stroke_1);
@@ -375,8 +414,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mReBound.setOnClickListener(this);
         mReFollow = (RelativeLayout) findViewById(R.id.button_follow);
         mReFollow.setOnClickListener(this);
-        mAcibSearch = (LinearLayoutCompat) findViewById(R.id.acib_search_action);
-        mAcibSearch.setOnClickListener(this);
         mRadiobuttonName = (RadioButton) findViewById(R.id.radio_name);
         mRadiobuttonName.setChecked(true);
         mRadiobuttonName.setOnClickListener(this);
@@ -384,12 +421,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mRadiobuttonLocation.setOnClickListener(this);
         mTextViewSearchInput = (AutoCompleteTextView) findViewById(R.id.actv_search_input);
         mTextViewSearchInput.setHint(getString(R.string.input_name));
-        mTextViewNamePreview = (AppCompatTextView) findViewById(R.id.actv_preview_name_market);
-        mTextViewLocationPreview = (AppCompatTextView) findViewById(R.id.actv_preview_place_market);
+        mTextViewNamePreview = (TextView) findViewById(R.id.actv_preview_name_market);
+        mTextViewLocationPreview = (TextView) findViewById(R.id.actv_preview_place_market);
         mTextViewSearchInput.addTextChangedListener(this);
-        mButtonSearch = (Button) findViewById(R.id.img_button_search);
+        mButtonSearch = (LinearLayoutCompat) findViewById(R.id.acib_search_action);
         mButtonSearch.setOnClickListener(this);
-        mTextViewSearchInput.setOnClickListener(this);
     }
 
     private void setListeners() {
@@ -404,7 +440,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void populateSuggestionAdapter(String query) {
         final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID,
-            Constants.MARKET_SUGGESTION});
+                Constants.MARKET_SUGGESTION});
         int length = FakeContainer.SUGGESTIONS.length;
         for (int i = 0; i < length; i++) {
             if (FakeContainer.SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
@@ -416,8 +452,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void getInfo() {
         SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
         UserModel userModel = (UserModel) SharedPreferencesUtil
-            .getInstance()
-            .getValue(Constants.SESSION, UserModel.class);
+                .getInstance()
+                .getValue(Constants.SESSION, UserModel.class);
         if (userModel != null && userModel.getSession() != null) {
             if (userModel.getSession().getFullname() != null) {
                 mTextUsername.setText(userModel.getSession().getFullname().toString());
@@ -427,7 +463,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             }
             if (userModel.getSession().getUrlImage() != null) {
                 String url =
-                    Constants.HEAD_URL + userModel.getSession().getUrlImage();
+                        Constants.HEAD_URL + userModel.getSession().getUrlImage();
                 Glide.with(this).load(url).into(mCircleImageView);
             } else {
                 mCircleImageView.setImageResource(R.drawable.ic_framgia);
@@ -451,16 +487,16 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         builder.setTitle(R.string.noti);
         builder.setMessage(R.string.confirm_signout);
         builder
-            .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferencesUtil.getInstance().clearSharedPreference();
-                    dialog.dismiss();
-                    Toast.makeText(ChooseMarketActivity.this,
-                        getString(R.string.signout_done_message), Toast.LENGTH_SHORT).show();
-                    getInfo();
-                }
-            });
+                .setPositiveButton(R.string.ok_dialog_success, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferencesUtil.getInstance().clearSharedPreference();
+                        dialog.dismiss();
+                        Toast.makeText(ChooseMarketActivity.this,
+                                getString(R.string.signout_done_message), Toast.LENGTH_SHORT).show();
+                        getInfo();
+                    }
+                });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -511,26 +547,18 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         }
     }
 
-    public static void initDataAutoCompleteTextView() {
-        sListAutoSearchName.clear();
-        sListAutoSearchLocation.clear();
-        if (sMarkets == null || sMarkets.size() == 0) {
-            sListAutoSearchName.add(Constants.COM_NAME);
-            sListAutoSearchLocation.add(Constants.COM_LOCATION);
-        } else {
-            for (CommerceCanter center : sMarkets) {
-                sListAutoSearchName.add(center.getName());
-                sListAutoSearchLocation.add(center.getAddress());
-            }
-        }
-    }
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        if (!s.equals("") && !mFlag) {
-            mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                sListAutoSearchName));
+        if (!s.toString().isEmpty() && !mFlag) {
+            if (mRadiobuttonName.isChecked()) {
+                mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
+                        android.R.layout.simple_list_item_1,
+                        sListAutoSearchName));
+            } else {
+                mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
+                        android.R.layout.simple_list_item_1,
+                        sListAutoSearchLocation));
+            }
             initDataAutoCompleteTextView();
             mFlag = true;
         }
@@ -546,19 +574,35 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void clickSearch() {
         String textSearch = mTextViewSearchInput.getText().toString();
-        if (!textSearch.equals("")) {
-            if (mRadiobuttonName.isChecked()) {
-                mTextViewNamePreview.setText(textSearch);
-            } else {
-                mTextViewLocationPreview.setText(textSearch);
-            }
+        if (mRadiobuttonName.isChecked()) {
+            mTextViewNamePreview.setText(textSearch);
+        } else {
+            mTextViewLocationPreview.setText(textSearch);
+        }
+        if (!textSearch.isEmpty()) {
             mListChooseCenter.clear();
             String name = mTextViewNamePreview.getText().toString();
             String address = mTextViewLocationPreview.getText().toString();
-            for (CommerceCanter center : sMarkets) {
-                if (center.getName().equals(name) || center.getAddress().equals(address)) {
-                    mListChooseCenter.add(center);
+            if (!name.isEmpty() && address.isEmpty()) {
+                for (CommerceCanter center : sMarkets) {
+                    if (center.getName().equals(name)) {
+                        mListChooseCenter.add(center);
+                    }
                 }
+            } else if (name.isEmpty() && !address.isEmpty()) {
+                for (CommerceCanter center : sMarkets) {
+                    if (center.getAddress().equals(address)) {
+                        mListChooseCenter.add(center);
+                    }
+                }
+            } else if (name.isEmpty() && address.isEmpty()) {
+                for (CommerceCanter center : sMarkets) {
+                    if (center.getName().equals(name) && center.getAddress().equals(address)) {
+                        mListChooseCenter.add(center);
+                    }
+                }
+            } else {
+                // nothing.
             }
             mListComAdap.clear();
             mListComAdap.addAll(mListChooseCenter);
@@ -591,27 +635,10 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    static Realm myRealm ;
-    public static void cacheCommerce(Context context) {
-        myRealm =  Realm.getInstance(
-            new RealmConfiguration.Builder(context)
-                .name(Constants.COM_CACHE)
-                .build());
-
-        myRealm.beginTransaction();
-        if (sMarkets != null) {
-            for (CommerceCanter center : sMarkets) {
-                myRealm.copyToRealm(center);
-            }
-        }
-        myRealm.commitTransaction();
-    }
-
     private void getCommerceFromCache() {
         RealmResults<CommerceCanter> results1 =
-            myRealm.where(CommerceCanter.class).findAll();
+                myRealm.where(CommerceCanter.class).findAll();
         sMarkets.clear();
         sMarkets.addAll(results1);
     }
-
 }
