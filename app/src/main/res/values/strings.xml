@@ -286,4 +286,5 @@
     <string name="connect_change">Kết nối mạng thay đổi</string>
     <string name="info_enter_name_before">Nhập tên siêu thị trước khi chọn địa chỉ .</string>
     <string name="vitriduocluulai">Vị trí được lưu lại</string>
+    <string name="refresh_commerce">Synchronize</string>
 </resources>
