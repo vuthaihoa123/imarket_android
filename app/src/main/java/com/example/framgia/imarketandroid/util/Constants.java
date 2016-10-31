@@ -122,4 +122,5 @@ public class Constants {
     public static final String INTERNET_FILTER = "android.net.conn.CONNECTIVITY_CHANGE";
     public static final String COM_NAME = "Commerce center name .";
     public static final String COM_LOCATION = "Commerce center location .";
+    public static final String COM_CACHE = "myrRealmCommerce.realm";
 }

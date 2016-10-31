@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <include
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_choose_commerce"
             layout="@layout/toolbar" />
 
         <RelativeLayout

@@ -4,10 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+
 /**
  * Created by phongtran on 10/10/2016.
  */
-public class CommerceCanter implements Serializable{
+public class CommerceCanter extends RealmObject implements Serializable{
     @SerializedName("id")
     private int mId;
     @SerializedName("name")

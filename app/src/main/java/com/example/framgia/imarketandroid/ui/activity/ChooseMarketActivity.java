@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.MatrixCursor;
@@ -8,7 +9,9 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.ActionProvider;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -19,9 +22,12 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -56,6 +62,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by hoavt on 11/10/2016.
@@ -93,6 +102,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private String mCurrentTextSearchName, mCurrentTextSearchLocation;
     private List<CommerceCanter> mListChooseCenter = new ArrayList<>();
     private boolean mFlag = false;
+    private List<CommerceCanter> mListComAdap = new ArrayList<>();
+    private ShareActionProvider mActionProvider;
+    public static boolean sFlagCacheCommerce = false;
 
 
     @Override
@@ -104,6 +116,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         supportActionBar();
         setSearchSuggestionAdapter();
         initRececlerView();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_choose_commerce);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initRececlerView() {
@@ -121,7 +136,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
-        LoadDataUtils.loadCommerce(this);
+        if(!sFlagCacheCommerce) {
+            LoadDataUtils.loadCommerce(this);
+        } else {
+            getCommerceFromCache();
+        }
         mMarketAdapter = new RecyclerMarketAdapter(this, sMarkets);
         mTraceMarkets.addAll(sMarkets);
         mRecyclerMarket.setAdapter(mMarketAdapter);
@@ -254,7 +273,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                             if (center.getAddress().equalsIgnoreCase(mCurrentTextSearchLocation)) {
                                 sListAutoSearchName.add(center.getName());
                             }
-                            mTextViewSearchInput.setHint(getString(R.string.input_location));
+                            mTextViewSearchInput.setHint(getString(R.string.input_name));
                             mTextViewSearchInput.setAdapter(new ArrayAdapter<>(this,
                                 android.R.layout.simple_list_item_1,
                                 sListAutoSearchName));
@@ -472,7 +491,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             case R.id.item_recycler_market:
                 mLinearMenu.setVisibility(View.GONE);
                 Intent intent = new Intent(this, FloorActivity.class);
-                intent.putExtra(Constants.COMMERCE_INTENT, sMarkets.get(position));
+                intent.putExtra(Constants.COMMERCE_INTENT, mListComAdap.get(position));
                 startActivity(intent);
                 break;
         }
@@ -541,15 +560,58 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                     mListChooseCenter.add(center);
                 }
             }
-            mMarketAdapter = new RecyclerMarketAdapter(this, mListChooseCenter);
+            mListComAdap.clear();
+            mListComAdap.addAll(mListChooseCenter);
+            mMarketAdapter = new RecyclerMarketAdapter(this, mListComAdap);
             mRecyclerMarket.setAdapter(mMarketAdapter);
             mMarketAdapter.notifyDataSetChanged();
             mMarketAdapter.setOnRecyclerItemInteractListener(this);
         } else {
-            mMarketAdapter = new RecyclerMarketAdapter(this, sMarkets);
+            mListComAdap.clear();
+            mListComAdap.addAll(sMarkets);
+            mMarketAdapter = new RecyclerMarketAdapter(this, mListComAdap);
             mRecyclerMarket.setAdapter(mMarketAdapter);
             mMarketAdapter.notifyDataSetChanged();
             mMarketAdapter.setOnRecyclerItemInteractListener(this);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_choose_market, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.sync) {
+            sFlagCacheCommerce = false;
+            LoadDataUtils.loadCommerce(this);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    static Realm myRealm ;
+    public static void cacheCommerce(Context context) {
+        myRealm =  Realm.getInstance(
+            new RealmConfiguration.Builder(context)
+                .name(Constants.COM_CACHE)
+                .build());
+
+        myRealm.beginTransaction();
+        if (sMarkets != null) {
+            for (CommerceCanter center : sMarkets) {
+                myRealm.copyToRealm(center);
+            }
+        }
+        myRealm.commitTransaction();
+    }
+
+    private void getCommerceFromCache() {
+        RealmResults<CommerceCanter> results1 =
+            myRealm.where(CommerceCanter.class).findAll();
+        sMarkets.clear();
+        sMarkets.addAll(results1);
+    }
+
 }
