@@ -177,7 +177,11 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
     protected void onDestroy() {
         super.onDestroy();
         if (LoadDataUtils.mReceiver != null) {
-            unregisterReceiver(LoadDataUtils.mReceiver);
+            try {
+                unregisterReceiver(LoadDataUtils.mReceiver);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
     }
 

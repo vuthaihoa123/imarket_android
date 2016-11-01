@@ -18,6 +18,8 @@ import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by yue on 20/07/2016.
  */
@@ -46,7 +48,11 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
     public void onBindViewHolder(ItemHolder holder, final int position) {
         final CommerceCanter market = mMarkets.get(position);
         holder.mTextName.setText(market.getName());
+        holder.mTextName.setSelected(true);
+        holder.mTextName.setClickable(true);
         holder.mTextAddress.setText(market.getAddress());
+        holder.mTextAddress.setSelected(true);
+        holder.mTextAddress.setClickable(true);
         holder.mImage.setImageResource(R.drawable.logo_big_c);
         String url = Constants.HEAD_URL + market.getImage();
         new Thread(new Runnable() {
@@ -77,14 +83,14 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder {
-        public ImageView mImage;
+        public CircleImageView mImage;
         public TextView mTextName;
         public TextView mTextAddress;
         public View itemRecyclerMarket;
 
         public ItemHolder(View itemView) {
             super(itemView);
-            mImage = (ImageView) itemView.findViewById(R.id.image_market);
+            mImage = (CircleImageView) itemView.findViewById(R.id.image_market);
             mTextName = (TextView) itemView.findViewById(R.id.text_name);
             mTextAddress = (TextView) itemView.findViewById(R.id.text_address);
             itemRecyclerMarket = itemView.findViewById(R.id.item_recycler_market);

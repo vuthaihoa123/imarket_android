@@ -51,5 +51,4 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:padding">@dimen/padding</item>
     </style>
-
 </resources>
