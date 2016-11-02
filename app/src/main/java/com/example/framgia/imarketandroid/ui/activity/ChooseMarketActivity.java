@@ -98,7 +98,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private String mCurrentTextSearchName, mCurrentTextSearchLocation;
     private List<CommerceCanter> mListChooseCenter = new ArrayList<>();
     private boolean mFlag = false;
-    private List<CommerceCanter> mListComAdap = new ArrayList<>();
+    private static List<CommerceCanter> sListComAdap = new ArrayList<>();
 
     public static void initDataAutoCompleteTextView() {
         sListAutoSearchName.clear();
@@ -125,6 +125,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             for (CommerceCanter center : sMarkets) {
                 myRealm.copyToRealm(center);
             }
+            sListComAdap.clear();
+            sListComAdap.addAll(sMarkets);
         }
         myRealm.commitTransaction();
     }
@@ -527,7 +529,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             case R.id.item_recycler_market:
                 mLinearMenu.setVisibility(View.GONE);
                 Intent intent = new Intent(this, FloorActivity.class);
-                intent.putExtra(Constants.COMMERCE_INTENT, mListComAdap.get(position));
+                intent.putExtra(Constants.COMMERCE_INTENT, sListComAdap.get(position));
                 startActivity(intent);
                 break;
         }
@@ -574,10 +576,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void clickSearch() {
         String textSearch = mTextViewSearchInput.getText().toString();
-        if (mRadiobuttonName.isChecked()) {
+        if (mRadiobuttonName.isChecked() && !textSearch.isEmpty()) {
             mTextViewNamePreview.setText(textSearch);
-        } else {
+        } else if (mRadiobuttonLocation.isChecked() && !textSearch.isEmpty()){
             mTextViewLocationPreview.setText(textSearch);
+        } else {
+            //nothing
         }
         if (!textSearch.isEmpty()) {
             mListChooseCenter.clear();
@@ -595,7 +599,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                         mListChooseCenter.add(center);
                     }
                 }
-            } else if (name.isEmpty() && address.isEmpty()) {
+            } else if (!name.isEmpty() && !address.isEmpty()) {
                 for (CommerceCanter center : sMarkets) {
                     if (center.getName().equals(name) && center.getAddress().equals(address)) {
                         mListChooseCenter.add(center);
@@ -604,16 +608,16 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             } else {
                 // nothing.
             }
-            mListComAdap.clear();
-            mListComAdap.addAll(mListChooseCenter);
-            mMarketAdapter = new RecyclerMarketAdapter(this, mListComAdap);
+            sListComAdap.clear();
+            sListComAdap.addAll(mListChooseCenter);
+            mMarketAdapter = new RecyclerMarketAdapter(this, sListComAdap);
             mRecyclerMarket.setAdapter(mMarketAdapter);
             mMarketAdapter.notifyDataSetChanged();
             mMarketAdapter.setOnRecyclerItemInteractListener(this);
         } else {
-            mListComAdap.clear();
-            mListComAdap.addAll(sMarkets);
-            mMarketAdapter = new RecyclerMarketAdapter(this, mListComAdap);
+            sListComAdap.clear();
+            sListComAdap.addAll(sMarkets);
+            mMarketAdapter = new RecyclerMarketAdapter(this, sListComAdap);
             mRecyclerMarket.setAdapter(mMarketAdapter);
             mMarketAdapter.notifyDataSetChanged();
             mMarketAdapter.setOnRecyclerItemInteractListener(this);
@@ -640,5 +644,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 myRealm.where(CommerceCanter.class).findAll();
         sMarkets.clear();
         sMarkets.addAll(results1);
+        sListComAdap.clear();
+        sListComAdap.addAll(sMarkets);
     }
 }
