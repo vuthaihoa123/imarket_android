@@ -1,13 +1,14 @@
 package com.example.framgia.imarketandroid.ui.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
@@ -63,7 +64,6 @@ public class HistoryTimeAdapter extends RecyclerView.Adapter<HistoryTimeAdapter.
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         holder.recyclerView.setLayoutManager(linearLayoutManager);
-        holder.recyclerView.addItemDecoration(new LinearItemDecoration(mContext));
         holder.recyclerView.setAdapter(mHistoryOrderAdapter);
     }
 
@@ -79,14 +79,14 @@ public class HistoryTimeAdapter extends RecyclerView.Adapter<HistoryTimeAdapter.
 
     class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView dateText;
-        public LinearLayout layoutHeader;
+        public ViewGroup layoutHeader;
         public RecyclerView recyclerView;
         public ImageView imageArrow;
 
         public ItemHolder(View itemView) {
             super(itemView);
             dateText = (TextView) itemView.findViewById(R.id.text_header);
-            layoutHeader = (LinearLayout) itemView.findViewById(R.id.layout_header);
+            layoutHeader = (LinearLayoutCompat) itemView.findViewById(R.id.layout_header);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_history_time);
             imageArrow = (ImageView) itemView.findViewById(R.id.image_arrow);
             layoutHeader.setOnClickListener(this);
