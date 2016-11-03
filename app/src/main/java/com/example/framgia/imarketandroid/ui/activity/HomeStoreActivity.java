@@ -81,7 +81,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
     }
 
     public void setupViewPager(ViewPager viewPager) {
-        mPagerAdapter = new ViewPagerAdapter( getSupportFragmentManager());
+        mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         if (InternetUtil.isInternetConnected(HomeStoreActivity.this)) {
             mPagerAdapter.addFragment(new CategoryStallFragment(),
                     getString(R.string.title_fragment_Category));
@@ -94,9 +94,13 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                     getString(R.string.title_fragment_informationstore));
             viewPager.setAdapter(mPagerAdapter);
         } else {
-            Flog.toast(this, R.string.no_internet);
+            if (RealmRemote.getListCategory().size() > 0) {
+                mPagerAdapter.addFragment(new CategoryStallFragment(), getString(R.string.title_fragment_Category));
+            } else {
                 mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
                         getString(R.string.title_fragment_Category));
+            }
+            Flog.toast(this, R.string.no_internet);
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),
                     getString(R.string.title_fragment_saleoffevent));
             mPagerAdapter.addFragment(new NoConnectFragment(HomeStoreActivity.this),

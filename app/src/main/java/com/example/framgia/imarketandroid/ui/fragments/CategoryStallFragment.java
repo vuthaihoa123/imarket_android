@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.framgia.imarketandroid.ui.activity.ListProductsActivity;
 import com.example.framgia.imarketandroid.ui.adapter.CategoryStallAdapter;
 import com.example.framgia.imarketandroid.ui.widget.GridItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 
 import java.util.ArrayList;
@@ -50,7 +52,9 @@ public class CategoryStallFragment extends Fragment implements
 
     public void init() {
         sCategoryProducts = new ArrayList<>();
-        sCategoryStallAdapter = new CategoryStallAdapter(sCategoryProducts,getActivity());
+        sCategoryStallAdapter = new CategoryStallAdapter(sCategoryProducts, getActivity());
+        addItem(sCategoryProducts, RealmRemote.getListCategory());
+        sCategoryStallAdapter.addAll(RealmRemote.getListCategory());
         mRecyclerView.setAdapter(sCategoryStallAdapter);
         sCategoryStallAdapter.setOnRecyclerItemInteractListener(this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -68,24 +72,41 @@ public class CategoryStallFragment extends Fragment implements
         }
     }
 
+    private void addItem(List<Category> mainList, List<Category> subList) {
+        mainList.clear();
+        mainList.addAll(subList);
+    }
+
     @Override
     public void onLoadDataSuccess(Object object) {
         if (object != null) {
             sCategoryProducts = (List<Category>) object;
+            RealmRemote.saveCategories(sCategoryProducts);
             sCategoryStallAdapter.addAll(sCategoryProducts);
         }
     }
 
     @Override
     public void onLoadDataFailure(String message) {
+        List<Category> categories = RealmRemote.getListCategory();
+        if (categories != null && categories.size() != 0) {
+            sCategoryStallAdapter.addAll(categories);
+        }
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), ListProductsActivity.class);
-        intent.putExtra(Constants.CATEGORY_INTENT, sCategoryProducts.get(position));
-        startActivity(intent);
+        if (sCategoryProducts.size() != 0) {
+            Category category = sCategoryProducts.get(position);
+            int id=Integer.parseInt(category.getId());
+            if (category != null) {
+                Bundle bundle=new Bundle();
+                bundle.putInt(Constants.CATEGORY_INTENT, id);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        }
     }
-
 }

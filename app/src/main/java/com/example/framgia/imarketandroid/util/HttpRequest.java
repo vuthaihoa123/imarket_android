@@ -96,19 +96,16 @@ public class HttpRequest {
     public void loadCategories() {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
         Call<CategoryList> call = mApi.loadCategories();
-        mProgressDialog.show();
         call.enqueue(new Callback<CategoryList>() {
             @Override
             public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
                 if (mListener != null) {
                     mListener.onLoadDataSuccess(response.body().getList());
                 }
-                mProgressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<CategoryList> call, Throwable t) {
-                mProgressDialog.dismiss();
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }
