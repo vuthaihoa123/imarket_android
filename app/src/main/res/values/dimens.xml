@@ -167,4 +167,5 @@
     <dimen name="margin_90dp">90dp</dimen>
     <dimen name="avatar_xsize">54dp</dimen>
     <dimen name="button_size">36dp</dimen>
+    <dimen name="padding_20dp">20dp</dimen>
 </resources>

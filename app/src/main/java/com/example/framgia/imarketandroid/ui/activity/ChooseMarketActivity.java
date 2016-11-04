@@ -146,7 +146,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         // recyclerview navigation drawer
         mRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
         getRecycleFavorite();
-        mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
         mRecyclerDrawerAdapter.setOnClick(this);
         setListeners();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -222,7 +221,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                                 new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                         mRecyclerDrawer.setLayoutManager(linearLayoutManager);
-                        mRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
                         mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);
                     } else {
                         mRecyclerDrawer.setAdapter(mHistoryTimeAdapter);

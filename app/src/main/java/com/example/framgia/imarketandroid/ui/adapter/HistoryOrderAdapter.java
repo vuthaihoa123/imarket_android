@@ -2,6 +2,7 @@ package com.example.framgia.imarketandroid.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,14 +81,14 @@ public class HistoryOrderAdapter extends RecyclerView.Adapter<HistoryOrderAdapte
         public TextView textQuantity;
         public TextView textPrice;
         public LinearLayout layoutDetail;
-        public RelativeLayout layoutRemoving;
+        public ViewGroup layoutRemoving;
 
         public ItemHolder(View itemView) {
             super(itemView);
             textName = (TextView) itemView.findViewById(R.id.text_name);
             textPrice = (TextView) itemView.findViewById(R.id.text_price);
             textQuantity = (TextView) itemView.findViewById(R.id.text_quantity);
-            layoutRemoving = (RelativeLayout) itemView.findViewById(R.id.layout_remove);
+            layoutRemoving = (LinearLayoutCompat) itemView.findViewById(R.id.layout_remove);
             layoutDetail = (LinearLayout) itemView.findViewById(R.id.layout_detail);
         }
     }

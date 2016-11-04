@@ -2,81 +2,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    app:cardBackgroundColor="@color/gray"
-    app:cardCornerRadius="@dimen/cardview_default_radius">
+    app:cardBackgroundColor="@color/white"
+    android:layout_marginBottom="@dimen/margin_5dp">
 
     <LinearLayout
         android:id="@+id/layout_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="5">
+        android:paddingLeft="@dimen/padding_10dp"
+        android:paddingRight="@dimen/padding_10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image_detail"
             android:layout_width="@dimen/common_size_40"
             android:layout_height="@dimen/common_size_40"
-            android:layout_gravity="center"
-            android:src="@drawable/avatar" />
+            android:src="@drawable/avatar"
+            android:layout_marginTop="@dimen/padding_10dp"
+            android:layout_marginBottom="@dimen/padding_10dp"
+            android:layout_marginRight="@dimen/padding_10dp"/>
 
-        <ImageView
-            android:layout_width="@dimen/common_size_30"
+        <View
             android:layout_height="match_parent"
-            android:src="@drawable/vertical_line" />
+            android:layout_width="@dimen/common_size_1"
+            android:background="@color/gray"
+            android:layout_marginRight="@dimen/padding_10dp"
+            android:clickable="false"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:textColor="@color/black"
-                android:textSize="@dimen/common_text_size_14"
-                android:textStyle="bold" />
+                android:textColor="@color/grey"
+                android:textSize="@dimen/text_xsmall_size"
+                android:layout_marginBottom="@dimen/margin_5dp"/>
 
             <TextView
                 android:id="@+id/text_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/quantity"
-                android:textColor="@color/black"
-                android:textSize="@dimen/common_text_size_14"
-                android:textStyle="bold" />
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_xsmall_size" />
 
             <TextView
                 android:id="@+id/text_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/price"
-                android:textColor="@color/black"
-                android:textSize="@dimen/common_text_size_14"
-                android:textStyle="bold" />
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_xsmall_size" />
         </LinearLayout>
 
-        <RelativeLayout
+        <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/layout_remove"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground">
 
             <ImageView
-                android:id="@+id/image_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
                 android:src="@drawable/ic_remove" />
-        </RelativeLayout>
-
+        </android.support.v7.widget.LinearLayoutCompat>
     </LinearLayout>
-
 </android.support.v7.widget.CardView>
