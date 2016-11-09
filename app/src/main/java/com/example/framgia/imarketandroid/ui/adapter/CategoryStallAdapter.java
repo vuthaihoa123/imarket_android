@@ -25,6 +25,7 @@ public class CategoryStallAdapter
     private List<Category> mCategoryProducts;
     private OnRecyclerItemInteractListener mListener;
     Context mContext;
+    private boolean mIsCached;
 
     public CategoryStallAdapter(List<Category> mCategoryProducts, Context context) {
         this.mCategoryProducts = new ArrayList<>(mCategoryProducts);
@@ -43,15 +44,17 @@ public class CategoryStallAdapter
     }
 
     @Override
-    public void onBindViewHolder(CategoryHolder holder, final int position) {
+    public void onBindViewHolder(final CategoryHolder holder,int position) {
         Category categoryProduct = mCategoryProducts.get(position);
         holder.textView.setText(categoryProduct.getName());
-        Glide.with(mContext).load(categoryProduct.getImageLink()).into(holder.imageView);
+        if (!mIsCached) {
+            Glide.with(mContext).load(categoryProduct.getImageLink()).into(holder.imageView);
+        }
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.onItemClick(view, position);
+                    mListener.onItemClick(view, holder.getAdapterPosition());
                 }
             }
         });
@@ -80,6 +83,7 @@ public class CategoryStallAdapter
     }
 
     public void addAll(List<Category> list) {
+        clearList();
         mCategoryProducts.addAll(list);
         notifyDataSetChanged();
     }
@@ -123,6 +127,14 @@ public class CategoryStallAdapter
         applyAndAnimateAddition(list);
         applyAndAnimateMoveItems(list);
         applyAndAnimateRemovals(list);
+    }
+
+    public boolean isCached() {
+        return mIsCached;
+    }
+
+    public void setCached(boolean mIsCached) {
+        this.mIsCached = mIsCached;
     }
 
     class CategoryHolder extends RecyclerView.ViewHolder {

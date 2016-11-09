@@ -37,68 +37,29 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
     public ListProductsAdapter sAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public List<ItemProduct> sItemProducts = new ArrayList<>();
-    private DatabaseTable mDataBase;
     private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list_layout);
-        mDataBase = new DatabaseTable(this);
         initViews();
-        Intent intent = getIntent();
-        if (intent != null)
-            handleIntent(intent);
-        loadDataFromServer();
+        handleIntent();
     }
 
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search your data somehow
-            updateListProducts(query);
-        } else {
-            Category category = (Category) intent.getSerializableExtra(Constants.CATEGORY_INTENT);
-            if (category != null) {
-                LoadDataUtils loadDataUtils = new LoadDataUtils();
-                loadDataUtils.init(this);
-                loadDataUtils.setOnListProductListener(this);
-                loadDataUtils.getProductInCategory(this, Integer.parseInt(category.getId()));
-            }
+    private void handleIntent() {
+        if (getIntent() != null) {
+            Bundle bundle = getIntent().getExtras();
+            int id = bundle.getInt(Constants.CATEGORY_INTENT);
+            loadDatafromServer(id);
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
-    }
-
-    private void updateListProducts(String query) {
-        Cursor cursor = mDataBase.getProductMatches(query, null);
-        if (cursor != null) {
-            sItemProducts.clear();
-            //process Cursor and display results
-            cursor.moveToFirst();
-            try {
-                while (!cursor.isAfterLast()) {
-                    String nameProduct =
-                            cursor.getString(cursor.getColumnIndex(DatabaseTable.COL_NAME_PRODUCT));
-                    String percentSale =
-                            cursor.getString(cursor.getColumnIndex(DatabaseTable.COL_PERCENTPROMOTION));
-                    int idRes = FakeContainer.getPresentIconProduct(nameProduct);
-                    //ItemProduct itemProduct = new ItemProduct(nameProduct, percentSale, idRes);
-                    //sItemProducts.add(itemProduct);
-                    cursor.moveToNext();
-                }
-            } finally {
-                cursor.close();
-            }
-        } else {
-            sItemProducts.clear();
-        }
-        sAdapter.setItems(sItemProducts);
-        sAdapter.notifyDataSetChanged();
+    private void loadDatafromServer(int id) {
+        LoadDataUtils loadDataUtils = new LoadDataUtils();
+        loadDataUtils.init(this);
+        loadDataUtils.setOnListProductListener(this);
+        loadDataUtils.getProductInCategory(this, id);
     }
 
     private void initViews() {
@@ -168,9 +129,6 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void loadDataFromServer() {
     }
 
     @Override

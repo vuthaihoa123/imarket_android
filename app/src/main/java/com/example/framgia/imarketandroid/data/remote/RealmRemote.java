@@ -1,7 +1,6 @@
 package com.example.framgia.imarketandroid.data.remote;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
@@ -99,6 +98,11 @@ public class RealmRemote {
         return point;
     }
 
+    public static List<Category> getListCategory() {
+        List<Category> categories = mRealm.where(Category.class).findAll();
+        return categories;
+    }
+
     public static void deletePoint(final int name) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -109,17 +113,19 @@ public class RealmRemote {
             }
         });
     }
+
     public static void deleteEdge(final int name_start, final int name_end) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmResults<Edge> results =
-                    mRealm.where(Edge.class).equalTo(Constants.NAME_START, name_start).equalTo
-                        (Constants.NAME_END, name_end).findAll();
+                        mRealm.where(Edge.class).equalTo(Constants.NAME_START, name_start).equalTo
+                                (Constants.NAME_END, name_end).findAll();
                 results.deleteAllFromRealm();
             }
         });
     }
+
     public static void savePoint(Point point) {
         mRealm.beginTransaction();
         mRealm.copyToRealm(point);
@@ -129,6 +135,12 @@ public class RealmRemote {
     public static void saveObject(Object object) {
         mRealm.beginTransaction();
         mRealm.copyToRealm((RealmObject) object);
+        mRealm.commitTransaction();
+    }
+
+    public static void saveCategories(List<Category> categories) {
+        mRealm.beginTransaction();
+        mRealm.copyToRealmOrUpdate(categories);
         mRealm.commitTransaction();
     }
 
@@ -146,7 +158,7 @@ public class RealmRemote {
 
     public static CustomMarker createCustomMarkerFromPoint(Point point) {
         CustomMarker result = new CustomMarker(0, point.getLat(), point.getLng(),
-                Constants.DEMO_NUMBER,point.getType(), point.getId()+"");
+                Constants.DEMO_NUMBER, point.getType(), point.getId() + "");
         return result;
     }
 
