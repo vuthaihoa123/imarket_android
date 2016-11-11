@@ -1,8 +1,12 @@
 package com.example.framgia.imarketandroid.data.model;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -10,7 +14,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by nguyenxuantung on 24/06/2016.
  */
-public class Point extends RealmObject {
+public class Point extends RealmObject implements Serializable {
     @SerializedName("id")
     private int mId;
     @SerializedName("type")
@@ -31,6 +35,14 @@ public class Point extends RealmObject {
     }
 
     public Point() {
+    }
+
+    protected Point(Parcel in) {
+        mId = in.readInt();
+        mType = in.readInt();
+        mLat = in.readDouble();
+        mLng = in.readDouble();
+        mIdStore = in.readInt();
     }
 
     public Double getLng() {

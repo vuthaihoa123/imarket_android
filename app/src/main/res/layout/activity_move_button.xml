@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              xmlns:fab="http://schemas.android.com/tools">
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        fab:fab_addButtonColorNormal="@color/color_primary"
+        fab:fab_expandDirection="bottom"
+        fab:layout_behavior="com.example.framgia.imarketandroid.ui.views.HideFloatingButton">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/direction"
+            fab:fab_size="normal"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/near_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/near_point"
+            fab:fab_size="normal"/>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</LinearLayout>

@@ -35,7 +35,7 @@
             android:paddingBottom="@dimen/common_size_5"
             android:text="@string/food_store"
             android:textColor="@color/white"
-            android:textSize="@dimen/common_text_size_16"
+            android:textSize="@dimen/text_small_size"
             android:textStyle="bold"/>
 
     </LinearLayout>

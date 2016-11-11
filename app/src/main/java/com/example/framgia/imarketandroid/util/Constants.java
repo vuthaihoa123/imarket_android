@@ -8,6 +8,7 @@ import com.google.common.io.Resources;
  */
 public class Constants {
     public final static String BUNDLE_DATA = "data";
+    public final static String NAME_DATA_BASE = "default1.realm";
     public static final int CAMERA_REQUEST = 0;
     public static final int GALLERY_REQUEST = 1;
     public static final String SETTYPEDATA = "image/*";
@@ -54,6 +55,7 @@ public class Constants {
     public static final String NAME_START = "mNameStart";
     public static final String NAME_END = "mNameEnd";
     public static final String FIELD_TYPE = "mType";
+    public static final String SAVE_POINT_NAME = "vị trí được lưu";
     public static final String STATEMENT_CALL = "tel:";
     public static final String PHONE_NUMBER_DEMO = "0988652313";
     public static final int ALARM_START_HOUR = 9;
@@ -72,6 +74,7 @@ public class Constants {
     public static final int MIN_COUNT_PEOPLE = 1;
     public static final int MIN_COUNT_KID = 0;
     public static final int CHANGE_TIME_UP = 1;
+    public static final int SAVE_POINT_TYPE = -1;
     public static final int CHANGE_TIME_DOWN = -1;
     public static final float GROUND_BEARING = (float) 26.3248;
     public static final float MAP_ZOOM = (float) 19.5;
@@ -89,8 +92,11 @@ public class Constants {
             .current_cosmetic,
             R.drawable.current_stage, R.drawable.current_game_icon, R
             .drawable.current_smartphone};
-    public static final String[] LIST_NAME_STORE = {"M", "Cửa hàng ăn uống", "Cửa hàng quần áo",
-        "Cửa hàng sách", "Cửa hàng mỹ phẩm", "Rạp chiếu phim", "Trung tâm giải trí", "Cửa hàng điện thoại"};
+    public static final String[] LIST_NAME_STORE = {"Cột mốc", "Cửa hàng ăn uống", "Cửa hàng " +
+        "quần áo", "Cửa hàng sách", "Cửa hàng mỹ phẩm", "Rạp chiếu phim", "Trung tâm giải trí",
+        "Cửa hàng điện thoại"};
+    public static final String[] LIST_NAME_SUGGEST={"ăn ngon", "để xe", "đợi người", "xem phim",
+        "cảnh đẹp"};
     public static final String SHOWCASE_ID_BOOK_TABLE = "BOOK TABLE";
     public static final String SHOWCASE_ID_DETAILS_SHOP = "DETAILS SHOP";
     public static final String SHOWCASE_ID_BOOK_PRODUCT = "BOOK PRODUCT";
@@ -98,6 +104,7 @@ public class Constants {
     public static final String SHOWCASE_ID_DETAILS_PRODUCT = "DETAILS PRODUCT";
     public static final String SHOWCASE_ID_HOME = "HOME";
     public static final String GOT_IT = "SKIP";
+    public static final String BUNDLE_SAVE_POINT = "bundle_save_point";
     public static final int TIME_DELAY_GUIDE = 500;
     public static final String PREF_WELCOME = "WelcomeApp";
     //bottom navigation

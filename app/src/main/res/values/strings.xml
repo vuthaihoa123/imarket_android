@@ -104,10 +104,11 @@
     <string name="nam_sao">5 * Tôi rất thích nội dung này</string>
     <string name="share_point">id_point</string>
     <string name="idPoint">idPoint</string>
+    <string name="idSavePoint">idSavePoint</string>
     <string name="M">M</string>
     <string name="warning_location">Không tìm thấy vị trí này trên sơ đồ</string>
     <string name="find_store">Tìm đường</string>
-    <string name="check_store">Xem cửa hàng</string>
+    <string name="check_store">Cửa hàng</string>
     <string name="save_point_title">Lưu vị trí</string>
     <string name="current_location_warning">Không tìm được đường đến vị trí này</string>
     <string name="C">C</string>
@@ -123,6 +124,7 @@
     <string name="warning_text">hay nhap day du cac o trong</string>
     <string name="warning_input">warning input</string>
     <string name="comma">,</string>
+    <string name="title_save_point">Vị trí này cách </string>
 
     <string name="name_commerce">AEON</string>
     <string name="login_befor">Thiết bị này đã được đăng nhập trước đó .</string>
@@ -287,4 +289,12 @@
     <string name="info_enter_name_before">Nhập tên siêu thị trước khi chọn địa chỉ .</string>
     <string name="vitriduocluulai">Vị trí được lưu lại</string>
     <string name="refresh_commerce">Synchronize</string>
+    <string name="current_location">Vị trí hiện tại </string>
+    <string name="problem_net_work">Kết nối có vấn đề</string>
+    <string name="check_net_work">Hãy kiểm tra lại wifi hoặc dữ liệu mạng của bạn</string>
+    <string name="recommed_restart">Hãy bật và làm lại từ đầu</string>
+    <string name="start_point">điểm xuất phát</string>
+    <string name="your_location">vị trí của bạn</string>
+    <string name="target">Điểm đích</string>
+    <string name="title_activity_direction_to_market">Map</string>
 </resources>

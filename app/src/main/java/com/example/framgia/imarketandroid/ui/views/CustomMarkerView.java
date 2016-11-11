@@ -82,9 +82,9 @@ public class CustomMarkerView extends FrameLayout {
 
     public void setTextforMarker() {
         if (compareNumber()) {
-            mTextPromotion.setText("" + getConvertedNumber() + "%");
+            mTextPromotion.setText("" );//+ getConvertedNumber() + "%"
         } else {
-            mTextPromotion.setText("" + getPercentValue() + "%");
+            mTextPromotion.setText("" );//+ getPercentValue() + "%"
         }
     }
 

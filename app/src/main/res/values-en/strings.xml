@@ -120,6 +120,7 @@
     <string name="warning_text">Please.not emty</string>
     <string name="warning_input">warning input</string>
     <string name="comma">,</string>
+    <string name="title_save_point">This locstion is near by </string>
     <string name="notify_save_point">This location is saved</string>
     <string name="name_commerce">AEON</string>
     <string name="login_befor">This device has been logged before.</string>
@@ -258,5 +259,12 @@
     <string name="no_data">No Data</string>
     <string name="network_error">Network Error</string>
     <string name="try_again">Try Again</string>
+    <string name="current_location">Current Location</string>
+    <string name="problem_net_work">Connection get a trouble</string>
+    <string name="check_net_work">Check wifi or mobile data</string>
+    <string name="recommed_restart">Restart this activity</string>
+    <string name="start_point">Start Location</string>
+    <string name="your_location">Your location</string>
+    <string name="target">Target Location</string>
     <string name="detail_upper_case">Detail</string>
 </resources>

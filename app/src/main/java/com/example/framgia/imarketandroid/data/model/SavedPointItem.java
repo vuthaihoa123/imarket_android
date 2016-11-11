@@ -1,6 +1,8 @@
 package com.example.framgia.imarketandroid.data.model;
 
+import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
+import com.example.framgia.imarketandroid.util.Constants;
 
 import io.realm.RealmObject;
 
@@ -18,14 +20,19 @@ public class SavedPointItem extends RealmObject {
     public SavedPointItem() {
     }
 
-    public SavedPointItem(int mId, int mAvatar, String mNamePoint, String mNotePoint, boolean
-        mIsDeleted, int mImageDelete) {
-        this.mId=mId;
-        this.mAvatar = mAvatar;
-        this.mNamePoint = mNamePoint;
-        this.mNotePoint = mNotePoint;
-        this.mIsDeleted = mIsDeleted;
-        this.mImageDelete = mImageDelete;
+    public SavedPointItem(String notePoint, boolean
+        isDeleted, int imageDelete, Point point) {
+        this.mId = point.getId();
+        if (point.getType() == -1) {
+            this.mAvatar = R.drawable.ic_save_point;
+            this.mNamePoint = Constants.SAVE_POINT_NAME;
+        } else {
+            this.mAvatar = Constants.LIST_AVATAR_STORE[point.getType()];
+            this.mNamePoint = Constants.LIST_NAME_STORE[point.getType()];
+        }
+        this.mNotePoint = notePoint;
+        this.mIsDeleted = isDeleted;
+        this.mImageDelete = imageDelete;
     }
 
     public int getmId() {
@@ -34,6 +41,14 @@ public class SavedPointItem extends RealmObject {
 
     public void setmId(int mId) {
         this.mId = mId;
+    }
+
+    public boolean ismIsDeleted() {
+        return mIsDeleted;
+    }
+
+    public void setmIsDeleted(boolean mIsDeleted) {
+        this.mIsDeleted = mIsDeleted;
     }
 
     public int getmAvatar() {
