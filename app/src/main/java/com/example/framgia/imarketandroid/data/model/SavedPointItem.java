@@ -43,14 +43,6 @@ public class SavedPointItem extends RealmObject {
         this.mId = mId;
     }
 
-    public boolean ismIsDeleted() {
-        return mIsDeleted;
-    }
-
-    public void setmIsDeleted(boolean mIsDeleted) {
-        this.mIsDeleted = mIsDeleted;
-    }
-
     public int getmAvatar() {
         return mAvatar;
     }

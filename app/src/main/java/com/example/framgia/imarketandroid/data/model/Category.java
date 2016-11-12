@@ -12,7 +12,6 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Category extends RealmObject implements Serializable {
 
-    @PrimaryKey
     @SerializedName("id")
     private String mId;
     @SerializedName("name")

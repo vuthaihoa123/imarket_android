@@ -34,6 +34,15 @@ public class Migration implements RealmMigration {
          ************************************************/
         // Migrate from version 0 to version 1
         if (oldVersion == 0) {
+            schema.remove("Category");
+            RealmObjectSchema object= schema.create("Category");
+            object.addField("mId", String.class, FieldAttribute.REQUIRED);
+            object.addField("mName", String.class, FieldAttribute.REQUIRED);
+            object.addField("mImageLink", String.class, FieldAttribute.REQUIRED);
+            object.addField("mStoreId", Integer.class, FieldAttribute.REQUIRED);
+            object.setNullable("mId", true);
+            object.setNullable("mName", true);
+            object.setNullable("mImageLink", true);
             oldVersion++;
         }
         /************************************************
