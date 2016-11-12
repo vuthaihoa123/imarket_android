@@ -8,7 +8,7 @@ import com.google.common.io.Resources;
  */
 public class Constants {
     public final static String BUNDLE_DATA = "data";
-    public final static String NAME_DATA_BASE = "default1.realm";
+    public final static String NAME_DATA_BASE = "default_data.realm";
     public static final int CAMERA_REQUEST = 0;
     public static final int GALLERY_REQUEST = 1;
     public static final String SETTYPEDATA = "image/*";

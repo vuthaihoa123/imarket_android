@@ -186,9 +186,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         hideStatusBar();
         initViews();
         Intent intent = getIntent();
-        CommerceCanter commerce = (CommerceCanter) intent
-            .getSerializableExtra(Constants.COMMERCE_INTENT);
-        LoadDataUtils.loadFloor(this, commerce.getId());
+//        CommerceCanter commerce = (CommerceCanter) intent
+//            .getSerializableExtra(Constants.COMMERCE_INTENT);
+//        LoadDataUtils.loadFloor(this, commerce.getId());
     }
 
     private void initMap() {
@@ -367,7 +367,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if (mCheckSwitch == true) {
+                if (mCheckSwitch) {
                     if (mCheckCurrentLocation == true) {
                         mTargetLocation = RealmRemote.getObjectPointFromName(Integer.parseInt(marker
                             .getTitle()));

@@ -43,7 +43,7 @@
         <!-- <meta-data android:name="com.google.android.gms.version" /> -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDfK1mmcg9XDpAb25DL_ePEPYNQMg9wp6o"/>
+            android:value="@string/google_maps_key"/>
 
         <service android:name=".services.NotificationAlarmService"/>
         <service android:name=".services.MovableButtonService"/>
@@ -57,14 +57,16 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"/>
         <activity android:name=".ui.activity.ChooseMarketActivity">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".util.findpath.DrawPathActivity"/>
         <activity android:name=".ui.activity.UpdateProfileActivity"/>
         <activity android:name=".ui.activity.MainActivity"/>
-        <activity android:name=".ui.activity.FloorActivity">
-        </activity>
+        <activity android:name=".ui.activity.FloorActivity"/>
         <activity
             android:name=".ui.activity.ListProductsActivity"
             android:launchMode="singleTop">
@@ -90,21 +92,13 @@
             android:name=".ui.activity.ChooseStoreTypeActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity android:name=".ui.activity.IntroduceActivity"/>
-        <activity android:name=".ui.activity.HomeStoreActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.activity.HomeStoreActivity"/>
         <activity android:name=".ui.activity.ReadmoreActivity"/>
         <activity
             android:name="com.example.framgia.imarketandroid.ui.activity.DirectionToMarket"
-            android:label="@string/title_activity_direction_to_market">
-
-        </activity>
+            android:label="@string/title_activity_direction_to_market"/>
         <activity
             android:name=".ui.activity.SavePointActivity"
-            android:theme="@style/CustomDialog">
-        </activity>
+            android:theme="@style/CustomDialog"/>
     </application>
 </manifest>
