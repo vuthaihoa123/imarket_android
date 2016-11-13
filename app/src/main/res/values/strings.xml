@@ -10,6 +10,8 @@
     <!--Toolbar action-->
     <string name="action_search">Tìm Kiếm</string>
     <string name="search_title">Tìm Kiếm</string>
+    <string name="product_sale">sản phẩm khuyến mại</string>
+    <string name="vacancies">vị trí tuyển dụng</string>
     <string name="search_hint">Nhập một từ mà bạn muốn tìm kiếm</string>
     <string name="login_hint_username">Tài Khoản</string>
     <string name="show_logo_app">show logo app</string>

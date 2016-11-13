@@ -10,6 +10,8 @@
     <!--Toolbar action-->
     <string name="action_search">Search</string>
     <string name="search_title">Search</string>
+    <string name="product_sale">promotional products</string>
+    <string name="vacancies">vacancies</string>
     <string name="search_hint">Enter the key of product that you want to find</string>
     <string name="login_hint_username">Username</string>
     <string name="show_logo_app">show logo app</string>
