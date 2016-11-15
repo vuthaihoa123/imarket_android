@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.data.model;
 
 import java.lang.reflect.Field;
+import java.util.jar.Attributes;
 
 import io.realm.DynamicRealm;
 import io.realm.DynamicRealmObject;
@@ -13,6 +14,19 @@ import io.realm.RealmSchema;
  * Created by framgia on 21/09/2016.
  */
 public class Migration implements RealmMigration {
+    private final int MIGRATION_VERSION_0 = 0;
+    private final int MIGRATION_VERSION_1 = 1;
+    private final int MIGRATION_VERSION_2 = 2;
+
+    private final String CATEGORY_TABLE_NAME = "Category";
+    private final String COMMERCE_TABLE_NAME = "CommerceCanter";
+    private final String FIELD_ID = "id";
+    private final String FIELD_NAME = "name";
+    private final String FIELD_IMAGE_LINK = "imageLink";
+    private final String FIELD_STORE_ID = "storeId";
+
+    private final String FIELD_ADDRESS = "address";
+    private final String FIELD_IMG = "image";
     @Override
     public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {
         // During a migration, a DynamicRealm is exposed. A DynamicRealm is an untyped variant of a normal Realm, but
@@ -33,16 +47,16 @@ public class Migration implements RealmMigration {
          int age;
          ************************************************/
         // Migrate from version 0 to version 1
-        if (oldVersion == 0) {
-            schema.remove("Category");
-            RealmObjectSchema object= schema.create("Category");
-            object.addField("mId", String.class, FieldAttribute.REQUIRED);
-            object.addField("mName", String.class, FieldAttribute.REQUIRED);
-            object.addField("mImageLink", String.class, FieldAttribute.REQUIRED);
-            object.addField("mStoreId", Integer.class, FieldAttribute.REQUIRED);
-            object.setNullable("mId", true);
-            object.setNullable("mName", true);
-            object.setNullable("mImageLink", true);
+        if (oldVersion == MIGRATION_VERSION_0) {
+            schema.remove(CATEGORY_TABLE_NAME);
+            RealmObjectSchema object = schema.create(CATEGORY_TABLE_NAME);
+            object.addField(FIELD_ID, String.class, FieldAttribute.REQUIRED);
+            object.addField(FIELD_NAME, String.class, FieldAttribute.REQUIRED);
+            object.addField(FIELD_IMAGE_LINK, String.class, FieldAttribute.REQUIRED);
+            object.addField(FIELD_STORE_ID, Integer.class, FieldAttribute.REQUIRED);
+            object.setNullable(FIELD_ID, true);
+            object.setNullable(FIELD_NAME, true);
+            object.setNullable(FIELD_IMAGE_LINK, true);
             oldVersion++;
         }
         /************************************************
@@ -56,15 +70,15 @@ public class Migration implements RealmMigration {
          RealmList<Pet> pets;    // add an array property
          ************************************************/
         // Migrate from version 1 to version 2
-        if (oldVersion == 1) {
-            RealmObjectSchema CommerceSchema = schema.create("CommerceCanter")
-                .addField("mId", Integer.class, FieldAttribute.REQUIRED)
-                .addField("mName", String.class, FieldAttribute.REQUIRED)
-                .addField("mAddress", String.class, FieldAttribute.REQUIRED)
-                .addField("mImage", String.class, FieldAttribute.REQUIRED);
-            CommerceSchema.setNullable("mName", true);
-            CommerceSchema.setNullable("mAddress", true);
-            CommerceSchema.setNullable("mImage", true);
+        if (oldVersion == MIGRATION_VERSION_1) {
+            RealmObjectSchema CommerceSchema = schema.create(COMMERCE_TABLE_NAME)
+                .addField(FIELD_ID, Integer.class, FieldAttribute.REQUIRED)
+                .addField(FIELD_NAME, String.class, FieldAttribute.REQUIRED)
+                .addField(FIELD_ADDRESS, String.class, FieldAttribute.REQUIRED)
+                .addField(FIELD_IMG, String.class, FieldAttribute.REQUIRED);
+            CommerceSchema.setNullable(FIELD_NAME, true);
+            CommerceSchema.setNullable(FIELD_ADDRESS, true);
+            CommerceSchema.setNullable(FIELD_IMG, true);
             oldVersion++;
         }
         /************************************************
@@ -78,7 +92,9 @@ public class Migration implements RealmMigration {
          int age;
          ************************************************/
         // Migrate from version 2 to version 3
-        if (oldVersion == 2) {
+        if (oldVersion == MIGRATION_VERSION_2) {
+            RealmObjectSchema CommerceSchema = schema.get(COMMERCE_TABLE_NAME);
+            CommerceSchema.addPrimaryKey(FIELD_ID);
             oldVersion++;
         }
     }

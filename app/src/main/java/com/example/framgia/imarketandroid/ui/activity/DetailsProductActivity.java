@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -222,8 +223,9 @@ public class DetailsProductActivity extends AppCompatActivity
     }
 
     private void initAlertDiaLogPostMessage() {
-        LayoutInflater li = LayoutInflater.from(this);
-        View promptsView = li.inflate(R.layout.dialog_post_message_rate, null);
+        LayoutInflater li = LayoutInflater.from(getBaseContext());
+        View promptsView = li.inflate(R.layout.dialog_post_message_rate,
+            (ViewGroup) findViewById(R.id.view_group_details_frag));
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptsView);
         mLayoutStar = (LinearLayout) promptsView.findViewById(R.id.layout_stars);
