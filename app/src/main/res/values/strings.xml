@@ -297,4 +297,5 @@
     <string name="your_location">vị trí của bạn</string>
     <string name="target">Điểm đích</string>
     <string name="title_activity_direction_to_market">Map</string>
+    <string name="text_hint">Search category here</string>
 </resources>
