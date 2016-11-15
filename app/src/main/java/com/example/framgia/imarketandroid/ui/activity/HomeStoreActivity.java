@@ -116,6 +116,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem menuItem = menu.findItem(R.id.item_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setQueryHint(getString(R.string.text_hint));
         searchView.setOnQueryTextListener(this);
         new Handler().post(new Runnable() {
             @Override
@@ -146,6 +147,9 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
         switch (id) {
             case R.id.item_cart:
                 startActivity(new Intent(HomeStoreActivity.this, CartActivity.class));
+                break;
+            case android.R.id.home:
+               onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
