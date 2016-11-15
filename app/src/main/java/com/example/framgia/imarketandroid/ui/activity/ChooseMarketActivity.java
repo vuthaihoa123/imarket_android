@@ -22,6 +22,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -118,11 +119,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         myRealm = Realm.getInstance(
             new RealmConfiguration.Builder(context)
                 .name(Constants.COM_CACHE)
+                .deleteRealmIfMigrationNeeded()
                 .build());
         myRealm.beginTransaction();
         if (sMarkets != null) {
             for (CommerceCanter center : sMarkets) {
-                //  myRealm.copyToRealm(center);
+                  myRealm.copyToRealmOrUpdate(center);
             }
             sListComAdap.clear();
             sListComAdap.addAll(sMarkets);
@@ -642,8 +644,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         RealmResults<CommerceCanter> results1 =
             myRealm.where(CommerceCanter.class).findAll();
         sMarkets.clear();
-        sMarkets.addAll(results1);
         sListComAdap.clear();
-        sListComAdap.addAll(sMarkets);
+        sMarkets.addAll(results1);
+        sListComAdap.addAll(results1);
     }
+
 }
