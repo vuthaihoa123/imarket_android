@@ -6,15 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
-import com.example.framgia.imarketandroid.data.model.Store;
 import com.example.framgia.imarketandroid.data.model.StoreType;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by framgia on 06/09/2016.
@@ -68,10 +68,9 @@ public class ChooseStoreTypeAdapter
 
         public ItemHolderStore(View itemView) {
             super(itemView);
-            avatar = (ImageView) itemView.findViewById(R.id.avatar_store);
-            textName = (TextView) itemView.findViewById(R.id.name_store);
+            avatar = (ImageView) itemView.findViewById(R.id.iv_avatar_store);
+            textName = (TextView) itemView.findViewById(R.id.tv_name_store);
             itemRecyclerMarket = itemView.findViewById(R.id.item_recycler_market);
         }
-
     }
 }

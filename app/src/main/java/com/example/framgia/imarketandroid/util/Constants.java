@@ -130,4 +130,6 @@ public class Constants {
     public static final String COM_NAME = "Commerce center name .";
     public static final String COM_LOCATION = "Commerce center location .";
     public static final String COM_CACHE = "myrRealmCommerce.realm";
+    public static final String DIRECTION = "Đến đây";
+    public static final String NEAR_POINT = "Điểm đã lưu";
 }

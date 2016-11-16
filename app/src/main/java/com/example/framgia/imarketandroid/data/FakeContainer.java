@@ -84,6 +84,8 @@ public class FakeContainer {
         list.add(new ItemBooking(R.drawable.pin, Constants.LOCATION));
         list.add(new ItemBooking(R.drawable.shop, Constants.STORE));
         list.add(new ItemBooking(R.drawable.floor, Constants.FLOOR));
+        list.add(new ItemBooking(R.drawable.direction, Constants.DIRECTION));
+        list.add(new ItemBooking(R.drawable.near_point, Constants.NEAR_POINT));
         return list;
     }
 

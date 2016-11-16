@@ -16,6 +16,9 @@ import android.widget.TextView;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.ItemBooking;
 import com.example.framgia.imarketandroid.ui.activity.BookProductActivity;
+import com.example.framgia.imarketandroid.ui.activity.DirectionToMarket;
+import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
+import com.example.framgia.imarketandroid.ui.activity.SavePointActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.ArrayList;
@@ -52,7 +55,7 @@ public class BookProductAdapter extends RecyclerView.Adapter<BookProductAdapter.
                 .inflate(R.layout.item_book_product, parent, false);
         // set the view's size, margins, paddings and layout parameters
         int height = parent.getMeasuredHeight();
-        int width = parent.getMeasuredWidth()/3;
+        int width = parent.getMeasuredWidth()/5;
         v.setLayoutParams(new RecyclerView.LayoutParams(width, height));
         ViewHolder vh = new ViewHolder(v);
         return vh;

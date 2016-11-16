@@ -25,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/margin_5dp"
             android:text="@string/review_by"
-            android:textColor="@color/color_primary"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_small_size" />
     </RelativeLayout>
 
@@ -58,7 +58,7 @@
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:gravity="center"
                     android:text="@string/ques"
-                    android:textColor="@color/color_primary"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/common_text_size_18" />
 
                 <LinearLayout
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_3dp"
                         android:text="@string/mot_sao"
-                        android:textColor="@color/color_primary"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_small_size" />
 
                     <TextView
@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_3dp"
                         android:text="@string/hai_sao"
-                        android:textColor="@color/color_primary"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_small_size" />
 
                     <TextView
@@ -98,7 +98,7 @@
                         android:layout_height="@dimen/common_size_20"
                         android:layout_marginBottom="@dimen/margin_3dp"
                         android:text="@string/ba_sao"
-                        android:textColor="@color/color_primary"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_small_size" />
 
                     <TextView
@@ -107,7 +107,7 @@
                         android:layout_height="@dimen/common_size_20"
                         android:layout_marginBottom="@dimen/margin_3dp"
                         android:text="@string/bon_sao"
-                        android:textColor="@color/color_primary"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_small_size" />
 
                     <TextView
@@ -116,7 +116,7 @@
                         android:layout_height="@dimen/common_size_20"
                         android:layout_marginBottom="@dimen/margin_3dp"
                         android:text="@string/nam_sao"
-                        android:textColor="@color/color_primary"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_small_size" />
                 </LinearLayout>
 
@@ -155,7 +155,7 @@
                         android:layout_marginBottom="@dimen/margin_10dp"
                         android:layout_marginTop="@dimen/margin_35"
                         android:text="@string/post"
-                        android:textColor="@color/color_primary"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_small_size" />
                 </LinearLayout>
             </LinearLayout>

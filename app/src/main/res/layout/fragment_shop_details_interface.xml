@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_primary"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <FrameLayout
@@ -392,7 +392,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:background="@color/color_primary"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
                 <Button
