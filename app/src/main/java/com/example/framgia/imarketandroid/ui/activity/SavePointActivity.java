@@ -54,7 +54,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
     private RecyclerView.LayoutManager mPointSavedLayoutManager;
     public static ArrayList<SavedPointItem> sListPoint = new ArrayList<>();
     public static ArrayList<Point> sListPosition = new ArrayList<>();
-    private Button mDoneButton;
+    private ImageButton mDoneButton;
     public static int sCheckpath;
     private Intent mIntent;
     private Point mIntentPoint;
@@ -78,7 +78,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
         init();
         final RealmList<Point> listStore = RealmRemote.getListStore();
         ArrayList<Point> listPoint = new ArrayList<Point>();
-        mDoneButton = (Button) findViewById(R.id.btn_done_save_point);
+        mDoneButton = (ImageButton) findViewById(R.id.btn_done_save_point);
         mDoneButton.setOnClickListener(this);
         if (mControll == mFlagSpinner) {
             DecimalFormat mformat = new DecimalFormat("#.0");
@@ -207,13 +207,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
     public void onItemClick(View view, int position) {
         SavedPointItem item = sListPoint.get(position);
         sCheckpath = 2;
-//        if (item.getmId() == FloorActivity.sSaveLocation.getId())
-//            finish();
-//        else {
-//            sCheckpath = item.getmId();
-//            finish();
-//        }
-        FloorActivity.sResumeValue=mFlagCheckListSave;
+        FloorActivity.sResumeValue = mFlagCheckListSave;
         FloorActivity.sSavedLocation = RealmRemote.getObjectPointFromId(item.getmId());
         finish();
     }

@@ -20,13 +20,13 @@ public class Migration implements RealmMigration {
 
     private final String CATEGORY_TABLE_NAME = "Category";
     private final String COMMERCE_TABLE_NAME = "CommerceCanter";
-    private final String FIELD_ID = "id";
-    private final String FIELD_NAME = "name";
-    private final String FIELD_IMAGE_LINK = "imageLink";
-    private final String FIELD_STORE_ID = "storeId";
+    private final String FIELD_ID = "mId";
+    private final String FIELD_NAME = "mName";
+    private final String FIELD_IMAGE_LINK = "mImageLink";
+    private final String FIELD_STORE_ID = "mStoreId";
 
-    private final String FIELD_ADDRESS = "address";
-    private final String FIELD_IMG = "image";
+    private final String FIELD_ADDRESS = "mAddress";
+    private final String FIELD_IMG = "mImage";
     @Override
     public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {
         // During a migration, a DynamicRealm is exposed. A DynamicRealm is an untyped variant of a normal Realm, but

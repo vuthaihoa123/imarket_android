@@ -60,6 +60,7 @@ import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.MapUntils;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
 import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -111,6 +112,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private Button mBtnDelete, mBtnGetPath, mBtnDrawPath;
     private Button mBtnDoneLocation, mBtndeleteEdge;
     private Dialog mDialog;
+    private Dialog mDialogSavePoint;
     private LinearLayout mLayoutFloor;
     private SwitchCompat mSwitchLocation;
     private List<Marker> mListMarker = new ArrayList<>();
@@ -160,6 +162,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private Marker mInteraker;
     private Marker mSaveMarker;
     private LinearLayoutCompat mNameLoad;
+    private float mDegree = 0;
+    private FloatingActionButton mFABhire, mFABnewStore, mFABsaleOff;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -181,15 +185,13 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mNodes = RealmRemote.getAllPoint();
         mNodesDisplay = RealmRemote.getListPointDisplay(0);
         mEdges = RealmRemote.getListEdge();
-        mBtnDrawPath = (Button) findViewById(R.id.btn_show_dialog);
-        mBtnDrawPath.setOnClickListener(this);
-        mBtndeleteEdge = (Button) findViewById(R.id.btn_delete_edge);
-        mBtndeleteEdge.setOnClickListener(this);
-        mBtnDelete = (Button) findViewById(R.id.btn_delete_data);
-        mBtnDelete.setOnClickListener(this);
-        mBtnGetPath = (Button) findViewById(R.id.btn_demo_find_way);
-        mBtnGetPath.setOnClickListener(this);
         mNameLoad = (LinearLayoutCompat) findViewById(R.id.btn_name_refresh);
+        mFABhire = (FloatingActionButton) findViewById(R.id.hire);
+        mFABnewStore = (FloatingActionButton) findViewById(R.id.new_store);
+        mFABsaleOff = (FloatingActionButton) findViewById(R.id.sale_off);
+        mFABhire.setOnClickListener(this);
+        mFABnewStore.setOnClickListener(this);
+        mFABsaleOff.setOnClickListener(this);
         mNameLoad.setOnClickListener(this);
     }
 
@@ -217,7 +219,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             }
         });
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mEdtDelete = (EditText) findViewById(R.id.edt_delete);
+//        mEdtDelete = (EditText) findViewById(R.id.edt_delete);
         initListViewFloor();
         initRvStore();
         mSlideRightIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
@@ -231,18 +233,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mRvDiagramOption.setHasFixedSize(true);
         mAdapterDiagramOption = new BookProductAdapter(this, FakeContainer.initDiagramOption());
         mRvDiagramOption.setAdapter(mAdapterDiagramOption);
-        mSlidingLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        mSlidingLayout.setPanelSlideListener(onSlideListener());
-        mArrowImageButton = (ImageButton) findViewById(R.id.image_button_slide);
-        mArrowImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCheckSlide == false)
-                    mSlidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                else
-                    mSlidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            }
-        });
         mTextSwitch = (TextView) findViewById(R.id.iv_mode);
         mTextSwitch.setSelected(true);
         mSwitchLocation = (SwitchCompat) findViewById(R.id.switch_mode);
@@ -679,24 +669,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             case R.id.cancel_location:
                 mDialog.dismiss();
                 break;
-            case R.id.btn_find_path:
-                FloorActivity.sResumeValue = mFlagTWO;
-                startActivity(new Intent(FloorActivity.this, DialogActivity.class));
-                break;
-            case R.id.btn_show_dialog:
-                FloorActivity.sResumeValue = mFlagOne;
-                startActivity(new Intent(FloorActivity.this, DialogActivity.class));
-                break;
-            case R.id.btn_delete_edge:
-                String[] tempListPoint =
-                        mEdtDelete.getText().toString().split(getString(R.string.comma));
-                RealmRemote.deleteEdge(Integer.parseInt(tempListPoint[0]), Integer.parseInt
-                        (tempListPoint[1]));
-                RealmRemote.deleteEdge(Integer.parseInt(tempListPoint[1]), Integer.parseInt
-                        (tempListPoint[0]));
-                break;
-            case R.id.btn_delete_data:
-                RealmRemote.deletePoint(Integer.parseInt(mEdtDelete.getText().toString()));
             case R.id.done_location:
                 if (mEdtLocation.getText().length() > 0) {
                     if (mCheckCurrentLocation == true) {
@@ -803,35 +775,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             mCheckCurrentLocation = true;
             drawMarker(mLocationCustomMarker);
         } else setCustomMarkers(position);
-    }
-
-    private SlidingUpPanelLayout.PanelSlideListener onSlideListener() {
-        final LinearLayout temp = (LinearLayout) findViewById(R.id.layout_additional);
-        return new SlidingUpPanelLayout.PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View view, float v) {
-            }
-
-            @Override
-            public void onPanelCollapsed(View view) {
-                mArrowImageButton.setImageResource(R.drawable.up_arrow);
-                mCheckSlide = false;
-            }
-
-            @Override
-            public void onPanelExpanded(View view) {
-                mArrowImageButton.setImageResource(R.drawable.down_arrow);
-                mCheckSlide = true;
-            }
-
-            @Override
-            public void onPanelAnchored(View view) {
-            }
-
-            @Override
-            public void onPanelHidden(View view) {
-            }
-        };
     }
 
     public void setDrawPath() {
