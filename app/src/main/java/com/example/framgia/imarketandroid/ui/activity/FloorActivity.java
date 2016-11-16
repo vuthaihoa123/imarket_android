@@ -5,35 +5,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,7 +39,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,12 +48,10 @@ import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractLi
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
 import com.example.framgia.imarketandroid.data.model.Edge;
-import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.Graph;
 import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.model.StoreType;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
-import com.example.framgia.imarketandroid.services.MovableButtonService;
 import com.example.framgia.imarketandroid.ui.adapter.BookProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
 import com.example.framgia.imarketandroid.ui.views.CustomMarkerView;
@@ -67,7 +60,6 @@ import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.MapUntils;
 import com.example.framgia.imarketandroid.util.algorithm.DijkstraAlgorithm;
 import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -93,35 +85,36 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmResults;
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by toannguyen201194 on 19/07/2016.
  */
 public class FloorActivity extends AppCompatActivity implements AdapterView
-    .OnItemSelectedListener, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback, View
-    .OnClickListener, BookProductAdapter.OnClickItemBarListenner, OnRecyclerItemInteractListener,
-    SensorEventListener {
-    private SlidingUpPanelLayout mSlidingLayout;
-    private ZXingScannerView mScannerView;
+        .OnItemSelectedListener, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback, View
+        .OnClickListener, BookProductAdapter.OnClickItemBarListenner, OnRecyclerItemInteractListener,
+        SensorEventListener {
+    public final static int FLAG_CHECK_LIST_SAVE = 7;
     public static int sResumeValue = 0;
+    public static List<String> mFloorList = new ArrayList<>();
+    public static boolean sCheckSlideStore = false;
+    public static boolean sCheckSlideFloor = false;
+    public static Point sCurrentLocation;
+    public static Point sSavedLocation;
+    public static float currentDegree = FakeContainer.CAMERA_PARAMETER;
+    private SlidingUpPanelLayout mSlidingLayout;
     private GoogleMap mMap;
     private RecyclerView mRvDiagramOption;
     private RecyclerView.Adapter mAdapterDiagramOption;
-    private RecyclerView.LayoutManager mLayoutManagerDiagramOption;
     private ListView mListFloor;
-    private int sAvatar;
-    private ChooseStoreTypeAdapter mAdapterStore;
     private List<StoreType> mListStore = new ArrayList<>();
     private RecyclerView mRecyclerViewStore;
-    private Button mBtnDelete, mBtnGetPath, mBtnDrawPath, mBtnCurrentLocation;
-    private Button mBtnDoneLocation, mBtnCancelLocation, mBtndeleteEdge, mNameLoad;
+    private Button mBtnDelete, mBtnGetPath, mBtnDrawPath;
+    private Button mBtnDoneLocation, mBtndeleteEdge;
     private Dialog mDialog;
     private LinearLayout mLayoutFloor;
-    private Switch mSwitchLocation;
+    private SwitchCompat mSwitchLocation;
     private List<Marker> mListMarker = new ArrayList<>();
     private List<Polyline> mListPolyline = new ArrayList<>();
-    public static List<String> mFloorList = new ArrayList<>();
     private List<Edge> mEdges;
     private List<Point> mNodes = null;
     private LinkedList<Point> mPath;
@@ -131,28 +124,20 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private ChooseStoreTypeAdapter mAdapter;
     private EditText mEdtLocation;
     private Polyline mLine;
-    private Polyline mTemp;
     private TextView mTextSwitch;
-    private int mIndex, mIndexStore, mIndexSaveLocation;
+    private int mIndex, mIndexSaveLocation;
     private boolean mCheckZoom = false;
     private boolean mCheckSwitch = false;
     private boolean mCheckSlide = false;
-    public static boolean sCheckSlideStore = false;
-    public static boolean sCheckSlideFloor = false;
     private boolean mCheckCurrentLocation = false;
     private boolean mCheckSaveLocation = false;
-    public static Point sCurrentLocation;
-    public static Point sSavedLocation;
     private Point mTargetLocation;
     private int mFlagOne = 1;
     private int mFlagTWO = 2;
     private int mFlagThree = 3;
     private int mFlagSavePosition = 4;
     private int mFlagSpinner = 5;
-    private int mFlagSix = 6;
-    private int mFlagCheckListSave = 7;
     private LatLng mTempLatLng, mCurrentlatLng;
-    private List<CustomMarker> mCustomMarkers = new ArrayList<>();
     private HashMap<Marker, CustomMarker> mMarkerPointHashMap = new HashMap<>();
     private Collection<Marker> mListcustomMarker = new ArrayList<>();
     private LatLng mAeon = new LatLng(21.026975, 105.899302);
@@ -162,8 +147,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private String mTextStoreName = "";
     private Animation mSlideRightIn, mSlideRightOut, mSlideLeftIn, mSlideLeftOut;
     private EditText mEdtDelete;
-    private ImageButton mImgSavePoint;
-    public static float currentDegree = FakeContainer.CAMERA_PARAMETER;
+    private LinearLayoutCompat mImgSavePoint;
     private SensorManager mSensorManager;
     private View mMarkerView;
     private View mInterMarkerView;
@@ -175,8 +159,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private CustomMarkerView mSaveMK;
     private Marker mInteraker;
     private Marker mSaveMarker;
-    private float mDegree = 0;
-    private FloatingActionButton mIBNearPoint, mIBDirection;
+    private LinearLayoutCompat mNameLoad;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -186,14 +169,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         hideStatusBar();
         initViews();
         Intent intent = getIntent();
-//        CommerceCanter commerce = (CommerceCanter) intent
-//            .getSerializableExtra(Constants.COMMERCE_INTENT);
-//        LoadDataUtils.loadFloor(this, commerce.getId());
+        CommerceCanter commerce = (CommerceCanter) intent
+                .getSerializableExtra(Constants.COMMERCE_INTENT);
+        LoadDataUtils.loadFloor(this, commerce.getId());
     }
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-            .findFragmentById(R.id.map);
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mNodes = RealmRemote.getAllPoint();
         mNodesDisplay = RealmRemote.getListPointDisplay(0);
@@ -206,26 +189,22 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mBtnDelete.setOnClickListener(this);
         mBtnGetPath = (Button) findViewById(R.id.btn_demo_find_way);
         mBtnGetPath.setOnClickListener(this);
-        mIBNearPoint = (FloatingActionButton) findViewById(R.id.near_point);
-        mIBDirection = (FloatingActionButton) findViewById(R.id.direction);
-        mIBDirection.setOnClickListener(this);
-        mIBNearPoint.setOnClickListener(this);
-        mNameLoad=(Button)findViewById(R.id.btn_name_refresh);
+        mNameLoad = (LinearLayoutCompat) findViewById(R.id.btn_name_refresh);
         mNameLoad.setOnClickListener(this);
     }
 
     private void initViews() {
         mMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-            .inflate(R.layout.item_marker, null);
+                .inflate(R.layout.item_marker, null);
         mInterMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-            .inflate(R.layout.item_current_marker, null);
+                .inflate(R.layout.item_current_marker, null);
         mSaveView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-            .inflate(R.layout.item_current_marker, null);
+                .inflate(R.layout.item_current_marker, null);
         mIntersectionMK =
-            (CustomMarkerView) mInterMarkerView.findViewById(R.id.current_custom_marker_view);
+                (CustomMarkerView) mInterMarkerView.findViewById(R.id.current_custom_marker_view);
         mSaveMK =
-            (CustomMarkerView) mSaveView.findViewById(R.id.current_custom_marker_view);
-        mImgSavePoint = (ImageButton) findViewById(R.id.img_save_point);
+                (CustomMarkerView) mSaveView.findViewById(R.id.current_custom_marker_view);
+        mImgSavePoint = (LinearLayoutCompat) findViewById(R.id.img_save_point);
         mImgSavePoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -234,7 +213,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     startActivity(new Intent(FloorActivity.this, SavePointActivity.class));
                 } else
                     Toast.makeText(FloorActivity.this, R.string.input_current_location, Toast
-                        .LENGTH_LONG).show();
+                            .LENGTH_LONG).show();
             }
         });
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -248,12 +227,10 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         MapUntils.slideLayoutRight(mLayoutFloor, mSlideRightIn, mSlideRightOut);
         MapUntils.slideLayoutLeft(mRecyclerViewStore, mSlideLeftOut, mSlideLeftIn);
         mRvDiagramOption = (RecyclerView) findViewById(R.id.rv_diagram_option);
+        mRvDiagramOption.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRvDiagramOption.setHasFixedSize(true);
-        mLayoutManagerDiagramOption = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-            false);
         mAdapterDiagramOption = new BookProductAdapter(this, FakeContainer.initDiagramOption());
         mRvDiagramOption.setAdapter(mAdapterDiagramOption);
-        mRvDiagramOption.setLayoutManager(mLayoutManagerDiagramOption);
         mSlidingLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mSlidingLayout.setPanelSlideListener(onSlideListener());
         mArrowImageButton = (ImageButton) findViewById(R.id.image_button_slide);
@@ -266,8 +243,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     mSlidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
-        mTextSwitch = (TextView) findViewById(R.id.mode);
-        mSwitchLocation = (Switch) findViewById(R.id.switch1);
+        mTextSwitch = (TextView) findViewById(R.id.iv_mode);
+        mTextSwitch.setSelected(true);
+        mSwitchLocation = (SwitchCompat) findViewById(R.id.switch_mode);
         mSwitchLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -286,7 +264,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mLayoutFloor = (LinearLayout) findViewById(R.id.layout_list_floor);
         mListFloor = (ListView) findViewById(R.id.list_floor);
         ArrayAdapter adapter =
-            new ArrayAdapter<String>(this, R.layout.item_floor, R.id.floor_content, mFloorList);
+                new ArrayAdapter<String>(this, R.layout.item_floor, R.id.floor_content, mFloorList);
         mListFloor.setAdapter(adapter);
         mListFloor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -298,7 +276,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private void initRvStore() {
         mRecyclerViewStore = (RecyclerView) findViewById(R.id.recycler_store_type);
         mRecyclerViewStore.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mRecyclerViewStore.addItemDecoration(new LinearItemDecoration(this));
+        mRecyclerViewStore.addItemDecoration(new LinearItemDecoration(this, getResources().getDimensionPixelSize(R.dimen.common_size_1)));
         mListStore = FakeContainer.initStore();
         mAdapter = new ChooseStoreTypeAdapter(this, mListStore);
         mAdapter.setOnRecyclerItemInteractListener(this);
@@ -335,7 +313,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private void hideStatusBar() {
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -370,16 +348,16 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 if (mCheckSwitch) {
                     if (mCheckCurrentLocation == true) {
                         mTargetLocation = RealmRemote.getObjectPointFromName(Integer.parseInt(marker
-                            .getTitle()));
+                                .getTitle()));
                         setDrawPath();
                     } else
                         Toast.makeText(FloorActivity.this, R.string.input_current_location, Toast
-                            .LENGTH_LONG).show();
+                                .LENGTH_LONG).show();
                 } else {
                     LatLng temp = marker.getPosition();
                     CameraPosition cameraPosition =
-                        new CameraPosition.Builder().target(temp).zoom(mZoom).bearing(mBearing)
-                            .build();
+                            new CameraPosition.Builder().target(temp).zoom(mZoom).bearing(mBearing)
+                                    .build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     CustomMarker customMarker = mMarkerPointHashMap.get(marker);
                     if (customMarker != null && customMarker.getPosition() != null) {
@@ -393,7 +371,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 Point tempPoint = null;
                 if (marker.getTitle().length() > 4)
                     tempPoint = RealmRemote.getObjectPointFromName(Integer.parseInt(marker
-                        .getTitle()));
+                            .getTitle()));
                 if (tempPoint != null)
                     if (tempPoint.getType() != 0) {
                     }
@@ -421,15 +399,15 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onMapLongClick(LatLng latLng) {
                 SharedPreferences preferences =
-                    getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
+                        getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 mIndexSaveLocation = preferences.getInt(getString(R.string.idSavePoint), -1);
                 mIndexSaveLocation--;
                 editor.putInt(getString(R.string.idSavePoint), mIndexSaveLocation);
                 editor.commit();
                 Point point =
-                    new Point(mIndexSaveLocation, Constants.SAVE_POINT_TYPE, latLng.latitude, latLng
-                        .longitude, 1);
+                        new Point(mIndexSaveLocation, Constants.SAVE_POINT_TYPE, latLng.latitude, latLng
+                                .longitude, 1);
                 RealmRemote.savePoint(point);
                 FloorActivity.sResumeValue = mFlagSpinner;
                 Intent intent = new Intent(FloorActivity.this, SavePointActivity.class);
@@ -444,8 +422,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         for (Point point : mNodesDisplay) {
             //  if (point.getType() != 0) {
             MarkerOptions options = new MarkerOptions()
-                .position(RealmRemote.getLocationFromName(point.getId()))
-                .title(String.valueOf(point.getId()));
+                    .position(RealmRemote.getLocationFromName(point.getId()))
+                    .title(String.valueOf(point.getId()));
             Marker marker = mMap.addMarker(options);
             mListMarker.add(marker);
             //   }
@@ -466,24 +444,24 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     private void setGroundOverlay() {
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable
-            .picture_aeon);
+                .picture_aeon);
         LatLngBounds newarkBounds = new LatLngBounds(
-            new LatLng(21.025933, 105.896914),
-            new LatLng(21.028660, 105.901372));
+                new LatLng(21.025933, 105.896914),
+                new LatLng(21.028660, 105.901372));
         GroundOverlayOptions goo =
-            new GroundOverlayOptions().image(bitmapDescriptor).positionFromBounds(newarkBounds)
-                .bearing(Constants.GROUND_BEARING);
+                new GroundOverlayOptions().image(bitmapDescriptor).positionFromBounds(newarkBounds)
+                        .bearing(Constants.GROUND_BEARING);
         GroundOverlay imageOverlay = mMap.addGroundOverlay(goo);
         mMap.addMarker(
-            new MarkerOptions().position(mAeon).title(getString(R.string.name_commerce)));
+                new MarkerOptions().position(mAeon).title(getString(R.string.name_commerce)));
     }
 
     private void removeCamera() {
         setGroundOverlay();
         CameraPosition cameraPosition =
-            new CameraPosition.Builder().target(mAeon).zoom((Constants.MAP_ZOOM))
-                .bearing((float) FakeContainer.CAMERA_PARAMETER)
-                .build();
+                new CameraPosition.Builder().target(mAeon).zoom((Constants.MAP_ZOOM))
+                        .bearing((float) FakeContainer.CAMERA_PARAMETER)
+                        .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mAeon));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
@@ -514,8 +492,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         RealmResults<Edge> edges = RealmRemote.getListEdgeDisplay();
         for (Edge edge : edges) {
             mMap.addPolyline(new PolylineOptions()
-                .add(RealmRemote.getLocationFromName(edge.getNameStart()),
-                    RealmRemote.getLocationFromName(edge.getNameEnd())).width(4));
+                    .add(RealmRemote.getLocationFromName(edge.getNameStart()),
+                            RealmRemote.getLocationFromName(edge.getNameEnd())).width(4));
         }
     }
 
@@ -529,30 +507,30 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     protected void onResume() {
         super.onResume();
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor
-            .TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME);
+                .TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME);
         if (FloorActivity.sResumeValue == mFlagOne) {
             if (DialogActivity.sFirstPoint > 0 &&
-                DialogActivity.sSecondPoint.length() > 0) {
+                    DialogActivity.sSecondPoint.length() > 0) {
                 LatLng first =
-                    RealmRemote.getLocationFromName(DialogActivity.sFirstPoint);
+                        RealmRemote.getLocationFromName(DialogActivity.sFirstPoint);
                 LatLng second;
                 float results[] = new float[1];
                 String[] tempListPoint =
-                    DialogActivity.sSecondPoint.split(getString(R.string.comma));
+                        DialogActivity.sSecondPoint.split(getString(R.string.comma));
                 for (String tempPoint : tempListPoint) {
                     second = RealmRemote.getLocationFromName(Integer.parseInt(tempPoint.trim()));
                     Location
-                        .distanceBetween(first.latitude, first.longitude, second.latitude,
-                            second.longitude,
-                            results);
+                            .distanceBetween(first.latitude, first.longitude, second.latitude,
+                                    second.longitude,
+                                    results);
                     RealmRemote.saveEdge(
-                        new Edge(DialogActivity.sFirstPoint, Integer.parseInt(tempPoint),
-                            results[0]));
+                            new Edge(DialogActivity.sFirstPoint, Integer.parseInt(tempPoint),
+                                    results[0]));
                     RealmRemote.saveEdge(
-                        new Edge(Integer.parseInt(tempPoint), DialogActivity.sFirstPoint,
-                            results[0]));
+                            new Edge(Integer.parseInt(tempPoint), DialogActivity.sFirstPoint,
+                                    results[0]));
                     Polyline polyline =
-                        mMap.addPolyline(new PolylineOptions().add(first, second).width(4));
+                            mMap.addPolyline(new PolylineOptions().add(first, second).width(4));
                     FloorActivity.sResumeValue = 0;
                 }
             }
@@ -563,27 +541,27 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         }
         if (FloorActivity.sResumeValue == mFlagThree) {
             SharedPreferences preferences =
-                getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
+                    getSharedPreferences(getString(R.string.share_point), MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             mIndex = preferences.getInt(getString(R.string.idPoint), 0);
             mIndex++;
             editor.putInt(getString(R.string.idPoint), mIndex);
             editor.commit();
             Point mPoint = new Point(mIndex, ChooseStoreTypeActivity
-                .sAvatar, mTempLatLng.latitude, mTempLatLng.longitude, 1);
+                    .sAvatar, mTempLatLng.latitude, mTempLatLng.longitude, 1);
             RealmRemote.savePoint(mPoint);
             drawMarker(RealmRemote.createCustomMarkerFromPoint(mPoint));
             FloorActivity.sResumeValue = 0;
         }
         if (FloorActivity.sResumeValue == mFlagSavePosition) {
             if (SavePointActivity.sCheckpath != -1 && SavePointActivity
-                .sCheckpath != sCurrentLocation.getId()) {
+                    .sCheckpath != sCurrentLocation.getId()) {
                 mTargetLocation = RealmRemote.getObjectPointFromId(SavePointActivity.sCheckpath);
                 setDrawPath();
             }
             FloorActivity.sResumeValue = 0;
         }
-        if (FloorActivity.sResumeValue == mFlagCheckListSave) {
+        if (FloorActivity.sResumeValue == FLAG_CHECK_LIST_SAVE) {
             if (sSavedLocation != null && SavePointActivity.sCheckpath == 2) {
                 if (mCheckSaveLocation == true) {
                     mCheckSaveLocation = false;
@@ -610,14 +588,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             case Constants.SAVE_POINT_TYPE:
                 if (mCheckSaveLocation == true) {
                     mSaveMK
-                        .setBackground(getResources().getDrawable(R.drawable.ic_save_point));
+                            .setBackground(getResources().getDrawable(R.drawable.ic_save_point));
                     LatLng newLatLng = new LatLng(marker.getLatitude(), marker.getLongitude());
                     mSaveMarker = mMap.addMarker(new MarkerOptions()
-                        .position(newLatLng)
-                        .title(marker.getName())
-                        .icon(BitmapDescriptorFactory
-                            .fromBitmap(MapUntils.createBitmapFromView(this, mSaveView)))
-                        .anchor(0.5f, 0.5f));
+                            .position(newLatLng)
+                            .title(marker.getName())
+                            .icon(BitmapDescriptorFactory
+                                    .fromBitmap(MapUntils.createBitmapFromView(this, mSaveView)))
+                            .anchor(0.5f, 0.5f));
                 } else {
                     if (mSaveMarker != null)
                         mSaveMarker.remove();
@@ -626,14 +604,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             case FakeContainer.STORE_TYPE_0:
                 if (mCheckCurrentLocation == true) {
                     mIntersectionMK
-                        .setBackground(getResources().getDrawable(R.drawable.compass));
+                            .setBackground(getResources().getDrawable(R.drawable.compass));
                     LatLng newLatLng = new LatLng(marker.getLatitude(), marker.getLongitude());
                     mInteraker = mMap.addMarker(new MarkerOptions()
-                        .position(newLatLng)
-                        .title(marker.getName())
-                        .icon(BitmapDescriptorFactory
-                            .fromBitmap(MapUntils.createBitmapFromView(this, mInterMarkerView)))
-                        .anchor(0.5f, 0.5f));
+                            .position(newLatLng)
+                            .title(marker.getName())
+                            .icon(BitmapDescriptorFactory
+                                    .fromBitmap(MapUntils.createBitmapFromView(this, mInterMarkerView)))
+                            .anchor(0.5f, 0.5f));
                 } else {
                     if (mInteraker != null)
                         mInteraker.remove();
@@ -666,11 +644,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         customMarkerView.setOnClickListener(this);
         LatLng newLatLng = new LatLng(marker.getLatitude(), marker.getLongitude());
         final Marker currentMarker = mMap.addMarker(new MarkerOptions()
-            .position(newLatLng)
-            .title(marker.getName())
-            .icon(BitmapDescriptorFactory
-                .fromBitmap(MapUntils.createBitmapFromView(this, mMarkerView)))
-            .anchor(0.5f, 0.5f));
+                .position(newLatLng)
+                .title(marker.getName())
+                .icon(BitmapDescriptorFactory
+                        .fromBitmap(MapUntils.createBitmapFromView(this, mMarkerView)))
+                .anchor(0.5f, 0.5f));
         mMarkerPointHashMap.put(currentMarker, marker);
     }
 
@@ -678,25 +656,18 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         customMarkerView.setVisible(true);
         if (mCheckCurrentLocation == false)
             customMarkerView.setBackground(
-                ResourcesCompat.getDrawable(getResources(), Constants.LIST_AVATAR_STORE[position],
-                    null));
+                    ResourcesCompat.getDrawable(getResources(), Constants.LIST_AVATAR_STORE[position],
+                            null));
         else
             customMarkerView.setBackground(
-                ResourcesCompat
-                    .getDrawable(getResources(), Constants.LIST_CURRENT_AVATAR_STORE[position],
-                        null));
+                    ResourcesCompat
+                            .getDrawable(getResources(), Constants.LIST_CURRENT_AVATAR_STORE[position],
+                                    null));
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.near_point:
-                FloorActivity.sResumeValue = mFlagCheckListSave;
-                startActivity(new Intent(FloorActivity.this, SavePointActivity.class));
-                break;
-            case R.id.direction:
-                startActivity(new Intent(FloorActivity.this, DirectionToMarket.class));
-                break;
             case R.id.btn_name_refresh:
                 finish();
                 startActivity(getIntent());
@@ -718,11 +689,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 break;
             case R.id.btn_delete_edge:
                 String[] tempListPoint =
-                    mEdtDelete.getText().toString().split(getString(R.string.comma));
+                        mEdtDelete.getText().toString().split(getString(R.string.comma));
                 RealmRemote.deleteEdge(Integer.parseInt(tempListPoint[0]), Integer.parseInt
-                    (tempListPoint[1]));
+                        (tempListPoint[1]));
                 RealmRemote.deleteEdge(Integer.parseInt(tempListPoint[1]), Integer.parseInt
-                    (tempListPoint[0]));
+                        (tempListPoint[0]));
                 break;
             case R.id.btn_delete_data:
                 RealmRemote.deletePoint(Integer.parseInt(mEdtDelete.getText().toString()));
@@ -738,13 +709,13 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     if (sCurrentLocation != null) {
                         mCheckCurrentLocation = true;
                         mLocationCustomMarker = RealmRemote.createCustomMarkerFromPoint
-                            (sCurrentLocation);
+                                (sCurrentLocation);
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(RealmRemote
-                            .getLocationFromName(mLocation)));
+                                .getLocationFromName(mLocation)));
                         drawMarker(mLocationCustomMarker);
                     } else
                         Toast.makeText(FloorActivity.this, R.string.warning_location,
-                            Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_LONG).show();
                     //   rotateMarker(mInteraker, 360);
                 }
                 if (mListPolyline.size() > 0) {
@@ -765,7 +736,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     public void onClickItemBar(String textNameItem, int position) {
         switch (textNameItem) {
             case Constants.LOCATION:
-               // setDiaLogLocation();
+                // setDiaLogLocation();
                 scanQrCode();
                 break;
             case Constants.FLOOR:
@@ -793,6 +764,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                     StoreAppear(false);
                     sCheckSlideStore = false;
                 }
+                break;
+            case Constants.DIRECTION:
+                startActivity(new Intent(FloorActivity.this, DirectionToMarket.class));
+                break;
+            case Constants.NEAR_POINT:
+                FloorActivity.sResumeValue = FLAG_CHECK_LIST_SAVE;
+                startActivity(new Intent(FloorActivity.this, SavePointActivity.class));
+                break;
         }
     }
 
@@ -818,72 +797,12 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(View view, int position) {
-        sAvatar = position;
         if (mCheckCurrentLocation) {
             mCheckCurrentLocation = false;
             setCustomMarkers(position);
             mCheckCurrentLocation = true;
             drawMarker(mLocationCustomMarker);
         } else setCustomMarkers(position);
-    }
-
-    public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
-        @Override
-        public View getInfoWindow(Marker marker) {
-            return null;
-        }
-
-        @Override
-        public View getInfoContents(Marker marker) {
-            View v = getLayoutInflater().inflate(R.layout.item_marker_information, null);
-            TextView textView = (TextView) v.findViewById(R.id.text_marker);
-            CustomMarker customMarker = mMarkerPointHashMap.get(marker);
-            if (customMarker != null)
-                switch (customMarker.getType()) {
-                    case FakeContainer.STORE_TYPE_1:
-                        mTextStoreName =
-                            Constants.LIST_NAME_STORE[1] + " " +
-                                customMarker.getId();
-                        break;
-                    case FakeContainer.STORE_TYPE_2:
-                        mTextStoreName =
-                            Constants.LIST_NAME_STORE[2] + " " + customMarker
-                                .getId();
-                        break;
-                    case FakeContainer.STORE_TYPE_3:
-                        mTextStoreName =
-                            Constants.LIST_NAME_STORE[3] + " " + customMarker
-                                .getId();
-                        break;
-                    case FakeContainer.STORE_TYPE_4:
-                        mTextStoreName =
-                            Constants.LIST_NAME_STORE[4] + " " + customMarker
-                                .getId();
-                        break;
-                    case FakeContainer.STORE_TYPE_5:
-                        mTextStoreName =
-                            Constants.LIST_NAME_STORE[5] + " " + customMarker
-                                .getId();
-                        break;
-                    case FakeContainer.STORE_TYPE_6:
-                        mTextStoreName =
-                            Constants.LIST_NAME_STORE[6] + " " +
-                                customMarker.getId();
-                        break;
-                    case FakeContainer.STORE_TYPE_7:
-                        mTextStoreName =
-                            Constants.LIST_NAME_STORE[7] + " " +
-                                customMarker.getId();
-                        break;
-                }
-            else {
-                ImageView image = (ImageView) v.findViewById(R.id.image_marker);
-                ((ViewGroup) v).removeView(image);
-                mTextStoreName = marker.getTitle();
-            }
-            textView.setText(mTextStoreName);
-            return v;
-        }
     }
 
     private SlidingUpPanelLayout.PanelSlideListener onSlideListener() {
@@ -941,14 +860,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 LatLng src = RealmRemote.getLocationFromName(mPath.get(i).getId());
                 LatLng dest = RealmRemote.getLocationFromName(mPath.get(i + 1).getId());
                 mLine = mMap.addPolyline(
-                    new PolylineOptions().add(
-                        src, dest).width(4).color(Color.RED));
+                        new PolylineOptions().add(
+                                src, dest).width(4).color(Color.RED));
                 mListPolyline.add(mLine);
             }
         } else {
             Toast
-                .makeText(FloorActivity.this, R.string.current_location_warning, Toast.LENGTH_LONG)
-                .show();
+                    .makeText(FloorActivity.this, R.string.current_location_warning, Toast.LENGTH_LONG)
+                    .show();
         }
         FloorActivity.sResumeValue = 0;
     }
@@ -995,16 +914,17 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 if (sCurrentLocation != null) {
                     mCheckCurrentLocation = true;
                     mLocationCustomMarker = RealmRemote.createCustomMarkerFromPoint
-                        (sCurrentLocation);
+                            (sCurrentLocation);
                     mCurrentlatLng = RealmRemote
-                        .getLocationFromName(mLocation);
+                            .getLocationFromName(mLocation);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(mCurrentlatLng));
                     drawMarker(mLocationCustomMarker);
                 } else
                     Toast.makeText(FloorActivity.this, R.string.warning_location,
-                        Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();
             }
     }
+
     public void scanQrCode() {
         try {
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
@@ -1014,6 +934,65 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
             Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
             startActivity(marketIntent);
+        }
+    }
+
+    public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
+        @Override
+        public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            View v = getLayoutInflater().inflate(R.layout.item_marker_information, null);
+            TextView textView = (TextView) v.findViewById(R.id.text_marker);
+            CustomMarker customMarker = mMarkerPointHashMap.get(marker);
+            if (customMarker != null)
+                switch (customMarker.getType()) {
+                    case FakeContainer.STORE_TYPE_1:
+                        mTextStoreName =
+                                Constants.LIST_NAME_STORE[1] + " " +
+                                        customMarker.getId();
+                        break;
+                    case FakeContainer.STORE_TYPE_2:
+                        mTextStoreName =
+                                Constants.LIST_NAME_STORE[2] + " " + customMarker
+                                        .getId();
+                        break;
+                    case FakeContainer.STORE_TYPE_3:
+                        mTextStoreName =
+                                Constants.LIST_NAME_STORE[3] + " " + customMarker
+                                        .getId();
+                        break;
+                    case FakeContainer.STORE_TYPE_4:
+                        mTextStoreName =
+                                Constants.LIST_NAME_STORE[4] + " " + customMarker
+                                        .getId();
+                        break;
+                    case FakeContainer.STORE_TYPE_5:
+                        mTextStoreName =
+                                Constants.LIST_NAME_STORE[5] + " " + customMarker
+                                        .getId();
+                        break;
+                    case FakeContainer.STORE_TYPE_6:
+                        mTextStoreName =
+                                Constants.LIST_NAME_STORE[6] + " " +
+                                        customMarker.getId();
+                        break;
+                    case FakeContainer.STORE_TYPE_7:
+                        mTextStoreName =
+                                Constants.LIST_NAME_STORE[7] + " " +
+                                        customMarker.getId();
+                        break;
+                }
+            else {
+                ImageView image = (ImageView) v.findViewById(R.id.image_marker);
+                ((ViewGroup) v).removeView(image);
+                mTextStoreName = marker.getTitle();
+            }
+            textView.setText(mTextStoreName);
+            return v;
         }
     }
 }

@@ -48,11 +48,7 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
     public void onBindViewHolder(ItemHolder holder, final int position) {
         final CommerceCanter market = mMarkets.get(position);
         holder.mTextName.setText(market.getName());
-        holder.mTextName.setSelected(true);
-        holder.mTextName.setClickable(true);
         holder.mTextAddress.setText(market.getAddress());
-        holder.mTextAddress.setSelected(true);
-        holder.mTextAddress.setClickable(true);
         holder.mImage.setImageResource(R.drawable.logo_big_c);
         String url = Constants.HEAD_URL + market.getImage();
         new Thread(new Runnable() {

@@ -46,7 +46,6 @@
             android:value="@string/google_maps_key"/>
 
         <service android:name=".services.NotificationAlarmService"/>
-        <service android:name=".services.MovableButtonService"/>
 
         <provider
             android:name="com.facebook.FacebookContentProvider"

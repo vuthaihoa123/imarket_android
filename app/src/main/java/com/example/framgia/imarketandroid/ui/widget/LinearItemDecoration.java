@@ -21,6 +21,11 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
         mDivider = context.getResources().getDrawable(R.drawable.line_divider);
     }
 
+    public LinearItemDecoration(Context context, int space) {
+        mSpace = space;
+        mDivider = context.getResources().getDrawable(R.drawable.line_divider);
+    }
+
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
                                RecyclerView.State state) {
