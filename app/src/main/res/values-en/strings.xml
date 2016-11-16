@@ -261,7 +261,8 @@
     <string name="try_again">Try Again</string>
     <string name="current_location">Current Location</string>
     <string name="problem_net_work">Connection get a trouble</string>
-    <string name="check_net_work">Check wifi or mobile data</string>
+    <string name="problem_gps">check your gps</string>
+    <string name="check_net_work_connect">Check wifi or mobile data</string>
     <string name="recommed_restart">Restart this activity</string>
     <string name="start_point">Start Location</string>
     <string name="your_location">Your location</string>

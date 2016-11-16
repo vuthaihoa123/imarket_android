@@ -20,14 +20,12 @@
             android:layout_centerVertical="true"
             android:textColor="@color/red"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_done_save_point"
-            android:layout_width="20dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="X"
-            android:background="@color/background_slidding_visible"
-            android:textColor="@color/red"/>
+            android:src="@drawable/close_button"/>
 
     </RelativeLayout>
 

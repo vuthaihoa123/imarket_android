@@ -291,7 +291,8 @@
     <string name="refresh_commerce">Synchronize</string>
     <string name="current_location">Vị trí hiện tại </string>
     <string name="problem_net_work">Kết nối có vấn đề</string>
-    <string name="check_net_work">Hãy kiểm tra lại wifi hoặc dữ liệu mạng của bạn</string>
+    <string name="problem_gps">Hãy kiểm tra GPS</string>
+    <string name="check_net_work_connect">Hãy kiểm tra lại wifi hoặc dữ liệu mạng của bạn</string>
     <string name="recommed_restart">Hãy bật và làm lại từ đầu</string>
     <string name="start_point">điểm xuất phát</string>
     <string name="your_location">vị trí của bạn</string>

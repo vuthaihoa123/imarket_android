@@ -62,10 +62,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.LoginActivity"/>
-        <activity android:name=".util.findpath.DrawPathActivity"/>
+        <activity android:name=".util.findpath.DrawPathActivity">
+
+        </activity>
         <activity android:name=".ui.activity.UpdateProfileActivity"/>
         <activity android:name=".ui.activity.MainActivity"/>
-        <activity android:name=".ui.activity.FloorActivity"/>
+        <activity android:name=".ui.activity.FloorActivity">
+
+        </activity>
         <activity
             android:name=".ui.activity.ListProductsActivity"
             android:launchMode="singleTop">
@@ -95,7 +99,9 @@
         <activity android:name=".ui.activity.ReadmoreActivity"/>
         <activity
             android:name="com.example.framgia.imarketandroid.ui.activity.DirectionToMarket"
-            android:label="@string/title_activity_direction_to_market"/>
+            android:label="@string/title_activity_direction_to_market">
+
+        </activity>
         <activity
             android:name=".ui.activity.SavePointActivity"
             android:theme="@style/CustomDialog"/>

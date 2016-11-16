@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class FakeContainer {
     public static final String[] SUGGESTIONS = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain", "Viet Name"
+        "Belgium", "France", "Italy", "Germany", "Spain", "Viet Name"
     };
     public static final long GIA_SP = 18600000;
     public static final long CHI_PHI_PHAT_SINH = 50000;
@@ -154,18 +154,18 @@ public class FakeContainer {
 
     public static String getInfoProduct() {
         return "    Màn hình:Super LCD 3, 5\", Full HD\n" +
-                "    Hệ điều hành:Android 5.0 (Lollipop)\n" +
-                "    Camera sau:13 MP\n" +
-                "    Camera trước:5 MP\n" +
-                "    CPU:Qualcomm Snapdragon 801 4 nhân 32-bit, 2.3 GHz\n" +
-                "    RAM:2 GB\n" +
-                "    Bộ nhớ trong:16 GB\n" +
-                "    Hỗ trợ thẻ nhớ:MicroSD, 128 GB\n" +
-                "    Thẻ SIM:1 Sim, Nano SIM\n" +
-                "    Kết nối:WiFi, 3G, 4G LTE Cat 4\n" +
-                "    Dung lượng pin:2600 mAh\n" +
-                "    Thiết kế:Nguyên khối\n" +
-                "    Chức năng đặc biệt:HTC BoomSound";
+            "    Hệ điều hành:Android 5.0 (Lollipop)\n" +
+            "    Camera sau:13 MP\n" +
+            "    Camera trước:5 MP\n" +
+            "    CPU:Qualcomm Snapdragon 801 4 nhân 32-bit, 2.3 GHz\n" +
+            "    RAM:2 GB\n" +
+            "    Bộ nhớ trong:16 GB\n" +
+            "    Hỗ trợ thẻ nhớ:MicroSD, 128 GB\n" +
+            "    Thẻ SIM:1 Sim, Nano SIM\n" +
+            "    Kết nối:WiFi, 3G, 4G LTE Cat 4\n" +
+            "    Dung lượng pin:2600 mAh\n" +
+            "    Thiết kế:Nguyên khối\n" +
+            "    Chức năng đặc biệt:HTC BoomSound";
     }
 
     public static final int NUM_FAKE_PREVIEWS = 7;
@@ -211,6 +211,7 @@ public class FakeContainer {
         }
         return idRes;
     }
+
     public static ArrayList<ItemProduct> getListProducts() {
         // Fake data
         ArrayList<ItemProduct> list = new ArrayList<>();
@@ -224,6 +225,7 @@ public class FakeContainer {
         list.add(new ItemProduct("Nokia", "15%", R.drawable.ic_nokia_n8));
         return list;
     }
+
     public static List<AlbumShop> fakeDataAlbum() {
         List<AlbumShop> list = new ArrayList<>();
         list.add(new AlbumShop(R.drawable.ic_iphone7, "Iphone 7"));
@@ -236,58 +238,58 @@ public class FakeContainer {
     }
 
     public static String arr[] = {
-            "Chi nhanh 1",
-            "Chi nhanh 2",
-            "Chi nhanh 3",
-            "Chi nhanh 4",
-            "Chi nhanh 5",
-            "Chi nhanh 6"};
+        "Chi nhanh 1",
+        "Chi nhanh 2",
+        "Chi nhanh 3",
+        "Chi nhanh 4",
+        "Chi nhanh 5",
+        "Chi nhanh 6"};
 
     public static List<Object> getSampleArrayList() {
         List<Object> items = new ArrayList<>();
         List<ItemProduct> itemProductList = new ArrayList<>();
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         itemProductList.add(new ItemProduct("Điện Thoại Iphone 5s giá ngon rẻ bất ngờ (Hàng Hot " +
-                "trên thị trường",
-                "25%", R
-                .drawable
-                .ic_iphone5s,
-                "1000000 VND",
-                "1100000  VND"));
+            "trên thị trường",
+            "25%", R
+            .drawable
+            .ic_iphone5s,
+            "1000000 VND",
+            "1100000  VND"));
         items.add(new ImageEvent1(R.drawable.banner1));
         items.add(new ImageEvent2(R.drawable.banner2, R.drawable.banner3));
         items.add(new ImageEvent2(R.drawable.banner2, R.drawable.banner3));
