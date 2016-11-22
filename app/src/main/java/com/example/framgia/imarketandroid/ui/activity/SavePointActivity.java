@@ -209,6 +209,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
         sCheckpath = 2;
         FloorActivity.sResumeValue = mFlagCheckListSave;
         FloorActivity.sSavedLocation = RealmRemote.getObjectPointFromId(item.getmId());
+        FloorActivity.sSavedNote= item.getmNotePoint();
         finish();
     }
 }

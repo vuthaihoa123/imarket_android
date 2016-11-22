@@ -25,7 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/close_button"/>
+            android:background="@color/background_slidding_visible"
+            android:src="@drawable/close_button"
+            android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 

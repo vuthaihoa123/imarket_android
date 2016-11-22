@@ -8,6 +8,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="grey">#9E9E9E</color>
+    <color name="text_solid">#A31B00</color>
     <color name="grey_darker">#AA000000</color>
     <color name="default_button_highlight_color">#3c7c7b7b</color>
     <color name="default_background_color">#dcdada</color>
@@ -43,6 +44,7 @@
     <color name="background_shop_hint">#3f3f4949</color>
     <color name="background_shop_color_name">#ea831c</color>
     <color name="orange">#ff5722</color>
+    <color name="red_text">#F53000</color>
     <color name="orange_background_solid">#90ff5722</color>
     <color name="orange_background">#80ff5722</color>
     <color name="background_slidding">#95FFFFFF</color>
