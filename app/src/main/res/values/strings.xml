@@ -283,9 +283,9 @@
     <string name="product_null">Product null</string>
     <string name="product_success">Product not null</string>
     <string name="tim_theo">Tìm theo:</string>
-    <string name="ten_cua_hang">Tên siêu thị</string>
+    <string name="ten_cua_hang">Siêu thị gần nhất</string>
     <string name="dia_diem_cua_hang">Địa điểm siêu thị</string>
-    <string name="input_name">Nhập tên siêu thị</string>
+    <string name="input_name">Nhập tên hoặc địa chỉ siêu thị</string>
     <string name="input_location">Nhập địa điểm siêu thị</string>
     <string name="connect_change">Kết nối mạng thay đổi</string>
     <string name="info_enter_name_before">Nhập tên siêu thị trước khi chọn địa chỉ .</string>

@@ -27,11 +27,11 @@ import java.util.List;
  * Created by phongtran on 07/10/2016.
  */
 public class LoadDataUtils {
-    private static Context mContext;
-    private static ProgressDialog mProgressDialog;
-    public static BroadcastReceiver mReceiver = null;
+    private  Context mContext;
+    private  ProgressDialog mProgressDialog;
+    public  BroadcastReceiver mReceiver;
 
-    public static void init(Context context) {
+    public void init(Context context) {
         mContext = context;
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setMessage(mContext.getString(R.string.progressdialog));
@@ -41,7 +41,7 @@ public class LoadDataUtils {
     }
 
     public interface OnLoadMarketsCallback {
-        public void onLoadMarketsDone(List<CommerceCanter> list);
+        void onLoadMarketsDone(List<CommerceCanter> list);
     }
 
     private OnLoadMarketsCallback mLoadMarketsListenner;
@@ -56,7 +56,7 @@ public class LoadDataUtils {
         this.mOnListProductListener = mOnListProductListener;
     }
 
-    public static void loadFloor(final Context context, final int idCommerce) {
+    public  void loadFloor(final Context context, final int idCommerce) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().loadListFloor(idCommerce);
@@ -89,7 +89,7 @@ public class LoadDataUtils {
     }
 
 
-    public static void loadCommerce(final Context context) {
+    public void loadCommerce(final Context context, final List<CommerceCanter> list) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().loadListCommerce();
@@ -99,16 +99,12 @@ public class LoadDataUtils {
                 mProgressDialog.dismiss();
                 CommerceList commerceList = (CommerceList) object;
                 if (commerceList != null) {
-//                    Flog.toast(mContext, R.string.data_success);
-                    ChooseMarketActivity.sMarkets.clear();
+                    list.clear();
                     int size = commerceList.getCenterList().size();
                     for (int i = 0; i < size; i++) {
                         CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
-                        ChooseMarketActivity.sMarkets.add(commerceCanter);
+                        list.add(commerceCanter);
                     }
-                    ChooseMarketActivity.initDataAutoCompleteTextView();
-                    ChooseMarketActivity.cacheCommerce(context);
-                    ChooseMarketActivity.sFlagCacheCommerce = true;
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
@@ -119,13 +115,13 @@ public class LoadDataUtils {
                 mProgressDialog.dismiss();
                 if (!InternetUtil.isInternetConnected(context)) {
                     Flog.toast(context, R.string.no_internet);
-                    processBroadcastCommerce(context);
+                    processBroadcastCommerce(context, list);
                 }
             }
         });
     }
 
-    public static void getStoreByStoreType(final Context context, final int id_floor, final int storeType) {
+    public void getStoreByStoreType(final Context context, final int id_floor, final int storeType) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance().getStore(id_floor, storeType);
@@ -198,21 +194,21 @@ public class LoadDataUtils {
         mContext.registerReceiver(mReceiver, filter);
     }
 
-    private static void processBroadcastCommerce(final Context conText) {
+    private void processBroadcastCommerce(final Context conText,final List<CommerceCanter> list) {
         IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
                 if (InternetUtil.isInternetConnected(conText)) {
-                    loadCommerce(conText);
+                    loadCommerce(conText, list);
                 }
             }
         };
         mContext.registerReceiver(mReceiver, filter);
     }
 
-    private static void processBroadcastStore(final int id_floor, final int storeType) {
+    private void processBroadcastStore(final int id_floor, final int storeType) {
         IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
         mReceiver = new BroadcastReceiver() {
             @Override
@@ -226,7 +222,7 @@ public class LoadDataUtils {
         mContext.registerReceiver(mReceiver, filter);
     }
 
-    private static void processBroadcastFloor(final int commerce) {
+    private void processBroadcastFloor(final int commerce) {
         IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
         mReceiver = new BroadcastReceiver() {
             @Override

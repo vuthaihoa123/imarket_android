@@ -1,7 +1,11 @@
 package com.example.framgia.imarketandroid.util;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.google.common.io.Resources;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by VULAN on 7/19/2016.
@@ -127,8 +131,7 @@ public class Constants {
     public static final int NUMBER_OF_STARS = 5;
     public static final int LIMIT_STAR = 5;
     public static final String INTERNET_FILTER = "android.net.conn.CONNECTIVITY_CHANGE";
-    public static final String COM_NAME = "Commerce center name .";
-    public static final String COM_LOCATION = "Commerce center location .";
+    public static final String COMMERCE_CENTER = "Commerce center";
     public static final String COM_CACHE = "myrRealmCommerce.realm";
     public static final String DIRECTION = "Đến đây";
     public static final String NEAR_POINT = "Điểm đã lưu";

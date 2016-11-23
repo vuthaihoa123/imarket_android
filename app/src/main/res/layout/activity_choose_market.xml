@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -15,7 +17,7 @@
 
         <include
             android:id="@+id/toolbar_choose_commerce"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +27,7 @@
                 android:id="@+id/rl_container_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/bg_radio_color"
                 android:padding="@dimen/padding_10dp">
 
                 <LinearLayout
@@ -44,16 +46,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/margin_10dp"
+                            android:layout_marginRight="@dimen/margin_10dp"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
-                            android:orientation="vertical"
-                            android:layout_marginRight="@dimen/margin_10dp"
-                            android:layout_marginLeft="@dimen/margin_10dp">
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/ic_search_24dp" />
+                                android:background="@drawable/ic_search_24dp"/>
                         </android.support.v7.widget.LinearLayoutCompat>
 
                         <AutoCompleteTextView
@@ -61,116 +63,49 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:completionThreshold="1" />
+                            android:completionThreshold="1"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"/>
+
+                        <Button
+                            android:id="@+id/button_clear_input"
+                            android:layout_width="@dimen/wid_hei_24"
+                            android:layout_height="@dimen/wid_hei_24"
+                            android:background="@drawable/ic_close"/>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_15dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ten_cua_hang"
-                                android:textColor="@color/pink_500"
-                                android:textSize="@dimen/text_small_size" />
-
-                            <TextView
-                                android:id="@+id/actv_preview_name_market"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/margin_20dp"
-                                android:layout_marginRight="@dimen/margin_20dp"
-                                android:layout_marginTop="@dimen/margin_10dp"
-                                android:elevation="@dimen/common_size_2"
-                                android:singleLine="true"
-                                android:textSize="@dimen/text_medium_size"
-                                android:textColor="@color/black"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/dia_diem_cua_hang"
-                                android:textColor="@color/pink_500"
-                                android:textSize="@dimen/text_small_size" />
-
-                            <TextView
-                                android:id="@+id/actv_preview_place_market"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/margin_20dp"
-                                android:layout_marginRight="@dimen/margin_20dp"
-                                android:layout_marginTop="@dimen/margin_10dp"
-                                android:elevation="@dimen/common_size_2"
-                                android:singleLine="true"
-                                android:textSize="@dimen/text_medium_size"
-                                android:textColor="@color/black"/>
-                        </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_search_flexibleshow"
+                <CheckBox
+                    android:id="@+id/checkbox_near_market"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_search_alwayshow"
-                    android:layout_marginTop="@dimen/margin_15dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tim_theo"
-                        android:textSize="@dimen/text_xsmall_size"
-                        android:textColor="@color/grey_darker"/>
-
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radio_name"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/ten_cua_hang"
-                            android:textSize="@dimen/text_small_size"
-                            android:textColor="@color/grey_darker"/>
-
-                        <RadioButton
-                            android:id="@+id/radio_location"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/dia_diem_cua_hang"
-                            android:textSize="@dimen/text_small_size"
-                            android:textColor="@color/grey_darker"/>
-                    </RadioGroup>
-                </LinearLayout>
+                    android:layout_below="@id/ll_search_alwayshow"
+                    android:layout_marginLeft="@dimen/margin_40"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="@string/ten_cua_hang"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small_size"/>
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_market"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_container_search" />
+                android:layout_below="@+id/rl_container_search"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_synchronize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_synchronize"
+                app:fabSize="normal"/>
+
         </RelativeLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -181,12 +116,12 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <include layout="@layout/nav_header" />
+        <include layout="@layout/nav_header"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_navigation_drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_10dp" />
+            android:layout_marginTop="@dimen/margin_10dp"/>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

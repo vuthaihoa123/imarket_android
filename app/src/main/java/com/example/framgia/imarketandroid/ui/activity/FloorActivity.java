@@ -166,6 +166,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private LinearLayoutCompat mNameLoad;
     private float mDegree = 0;
     private FloatingActionButton mFABhire, mFABnewStore, mFABsaleOff;
+    private LoadDataUtils mDataUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -177,7 +178,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         Intent intent = getIntent();
         CommerceCanter commerce = (CommerceCanter) intent
             .getSerializableExtra(Constants.COMMERCE_INTENT);
-        LoadDataUtils.loadFloor(this, commerce.getId());
+        mDataUtils = new LoadDataUtils();
+        mDataUtils.init(this);
+        mDataUtils.loadFloor(this, commerce.getId());
     }
 
     private void initMap() {

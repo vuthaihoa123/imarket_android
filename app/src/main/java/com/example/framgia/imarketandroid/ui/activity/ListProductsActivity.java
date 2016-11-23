@@ -2,8 +2,6 @@ package com.example.framgia.imarketandroid.ui.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.framgia.imarketandroid.R;
-import com.example.framgia.imarketandroid.data.FakeContainer;
-import com.example.framgia.imarketandroid.data.model.Category;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
-import com.example.framgia.imarketandroid.data.remote.DatabaseTable;
 import com.example.framgia.imarketandroid.ui.adapter.ListProductsAdapter;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
@@ -36,8 +31,9 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
     private static String NAMECATEGORY = "Apple";
     public ListProductsAdapter sAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    public List<ItemProduct> sItemProducts = new ArrayList<>();
+    public List<ItemProduct> mItemProducts = new ArrayList<>();
     private Toolbar mToolbar;
+    private LoadDataUtils mDataUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +67,13 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         // use a gridview layout manager
         mLayoutManager = new GridLayoutManager(this, Constants.COLS_LIST_PRODUCT);
         mRvListProducts.setLayoutManager(mLayoutManager);
-        sAdapter = new ListProductsAdapter(this, sItemProducts);
+        sAdapter = new ListProductsAdapter(this, mItemProducts);
         mRvListProducts.setAdapter(sAdapter);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(NAMECATEGORY);
+        mDataUtils = new LoadDataUtils();
+//        mDataUtils.init(this);
     }
 
     @Override
@@ -102,7 +100,7 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        List<ItemProduct> list = filter(sItemProducts, newText);
+        List<ItemProduct> list = filter(mItemProducts, newText);
         sAdapter.animateTo(list);
         return true;
     }
@@ -134,9 +132,9 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (LoadDataUtils.mReceiver != null) {
+        if (mDataUtils.mReceiver != null) {
             try {
-                unregisterReceiver(LoadDataUtils.mReceiver);
+                unregisterReceiver(mDataUtils.mReceiver);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
