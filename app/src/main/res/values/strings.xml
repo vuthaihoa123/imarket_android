@@ -301,4 +301,6 @@
     <string name="target">Điểm đích</string>
     <string name="title_activity_direction_to_market">Map</string>
     <string name="text_hint">Search category here</string>
+    <string name="enable_gps">Bạn cần bật chức năng định vị để sử dụng tính năng này !</string>
+    <string name="wait_minute">Vui lòng đợi trong giây lát !</string>
 </resources>

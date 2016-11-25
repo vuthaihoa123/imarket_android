@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.BaseColumns;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -47,6 +48,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
+import com.example.framgia.imarketandroid.data.listener.OnFinishLoadDataListener;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.CartItem;
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
@@ -87,7 +89,7 @@ import io.realm.RealmResults;
 public class ChooseMarketActivity extends AppCompatActivity implements
     NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
     SearchView.OnQueryTextListener, OnRecyclerItemInteractListener, TextWatcher,
-    LocationListener {
+    LocationListener, OnFinishLoadDataListener {
     static Realm myRealm;
     private RecyclerMarketAdapter mMarketAdapter;
     private List<CommerceCanter> mTraceMarkets = new ArrayList<>();
@@ -356,6 +358,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mButtonClearInput = (Button) findViewById(R.id.button_clear_input);
         mFABSynchronizeMarket = (FloatingActionButton) findViewById(R.id.fab_synchronize);
         mDataUtils = new LoadDataUtils();
+        mDataUtils.setLoadDataListener(ChooseMarketActivity.this);
     }
 
     private void setListeners() {
@@ -554,38 +557,45 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 LocationManager.NETWORK_PROVIDER,
                 Constants.MIN_TIME_BW_UPDATES,
                 Constants.MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-            Location myLocation = null;
-            if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Location myLocation;
+            if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                Flog.toast(this, getString(R.string.enable_gps));
+            } else {
                 // vị trí hiện tại
                 myLocation =
                     mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }
-            mNearMarketList.clear();
-            for (CommerceCanter center : mMarkets) {
-                mNearMarketList.add(new NearMarket(center, MapUntils.calculateDistance(
-                    new Point(myLocation.getLatitude(), myLocation.getLongitude()),
-                    new Point(center.getLatitude(), center.getLongitude()))));
-            }
-            Collections.sort(mNearMarketList, new Comparator<NearMarket>() {
-                @Override
-                public int compare(NearMarket market1, NearMarket market2) {
-                    if (market1.getDistance() < market2.getDistance()) {
-                        return -1;
-                    } else {
-                        if (market1.getDistance() == market2.getDistance()) {
-                            return 0;
-                        } else {
-                            return 1;
-                        }
+                if (myLocation == null) {
+                    Flog.toast(this, getString(R.string.wait_minute));
+                    mCheckBoxNearMarket.setChecked(false);
+                } else {
+                    mNearMarketList.clear();
+                    for (CommerceCanter center : mMarkets) {
+                        mNearMarketList.add(new NearMarket(center, MapUntils.calculateDistance(
+                            new Point(myLocation.getLatitude(), myLocation.getLongitude()),
+                            new Point(center.getLatitude(), center.getLongitude()))));
                     }
+                    Collections.sort(mNearMarketList, new Comparator<NearMarket>() {
+                        @Override
+                        public int compare(NearMarket market1, NearMarket market2) {
+                            if (market1.getDistance() < market2.getDistance()) {
+                                return -1;
+                            } else {
+                                if (market1.getDistance() == market2.getDistance()) {
+                                    return 0;
+                                } else {
+                                    return 1;
+                                }
+                            }
+                        }
+                    });
+                    mListComAdap.clear();
+                    for (int i = 0; i < mMarkets.size(); i++) {
+                        mListComAdap.add(mNearMarketList.get(i).getCenter());
+                    }
+                    mMarketAdapter.notifyDataSetChanged();
+                    mMarketAdapter.setOnRecyclerItemInteractListener(this);
                 }
-            });
-            mListComAdap.clear();
-            for (int i = 0; i < mMarkets.size(); i++) {
-                mListComAdap.add(mNearMarketList.get(i).getCenter());
             }
-            mMarketAdapter.notifyDataSetChanged();
-            mMarketAdapter.setOnRecyclerItemInteractListener(this);
         }
     }
 
@@ -619,5 +629,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onProviderDisabled(String provider) {
+    }
+
+    @Override
+    public void onFinish(boolean flag) {
+        if(flag) {
+            synChronizeData();
+        }
     }
 }
