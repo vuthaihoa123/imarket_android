@@ -135,4 +135,6 @@ public class Constants {
     public static final String COM_CACHE = "myrRealmCommerce.realm";
     public static final String DIRECTION = "Đến đây";
     public static final String NEAR_POINT = "Điểm đã lưu";
+    public static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+    public static final long MIN_TIME_BW_UPDATES = 60000;
 }

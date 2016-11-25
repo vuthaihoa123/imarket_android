@@ -20,6 +20,10 @@ public class CommerceCanter extends RealmObject implements Serializable {
     private String mAddress;
     @SerializedName("image")
     private String mImage;
+    @SerializedName("latitude")
+    private double mLat;
+    @SerializedName("longtitude")
+    private double mLng;
 
     public CommerceCanter(int id, String name, String address, String image) {
         this.mId = id;
@@ -61,5 +65,21 @@ public class CommerceCanter extends RealmObject implements Serializable {
 
     public void setAddress(String address) {
         this.mAddress = address;
+    }
+
+    public double getLatitude() {
+        return mLat;
+    }
+
+    public void setLatitude(double lat) {
+        mLat = lat;
+    }
+
+    public double getLongitude() {
+        return mLng;
+    }
+
+    public void setLongitude(double lng) {
+        mLng = lng;
     }
 }

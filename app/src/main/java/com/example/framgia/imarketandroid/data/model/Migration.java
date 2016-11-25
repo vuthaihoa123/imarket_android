@@ -17,6 +17,7 @@ public class Migration implements RealmMigration {
     private final int MIGRATION_VERSION_0 = 0;
     private final int MIGRATION_VERSION_1 = 1;
     private final int MIGRATION_VERSION_2 = 2;
+    private final int MIGRATION_VERSION_3 = 3;
 
     private final String CATEGORY_TABLE_NAME = "Category";
     private final String COMMERCE_TABLE_NAME = "CommerceCanter";
@@ -27,6 +28,9 @@ public class Migration implements RealmMigration {
 
     private final String FIELD_ADDRESS = "mAddress";
     private final String FIELD_IMG = "mImage";
+
+    private final String FIELD_LAT = "mLat";
+    private final String FIELD_LNG = "mLng";
     @Override
     public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {
         // During a migration, a DynamicRealm is exposed. A DynamicRealm is an untyped variant of a normal Realm, but
@@ -95,6 +99,16 @@ public class Migration implements RealmMigration {
         if (oldVersion == MIGRATION_VERSION_2) {
             RealmObjectSchema CommerceSchema = schema.get(COMMERCE_TABLE_NAME);
             CommerceSchema.addPrimaryKey(FIELD_ID);
+            oldVersion++;
+        }
+
+        // Migrate from version 3 to version 4
+        if (oldVersion == MIGRATION_VERSION_3) {
+            RealmObjectSchema CommerceSchema = schema.get(COMMERCE_TABLE_NAME);
+            CommerceSchema.addField(FIELD_LAT, Double.class, FieldAttribute.REQUIRED);
+            CommerceSchema.addField(FIELD_LNG, Double.class, FieldAttribute.REQUIRED);
+//            CommerceSchema.setNullable(FIELD_LAT, true);
+//            CommerceSchema.setNullable(FIELD_LNG, true);
             oldVersion++;
         }
     }

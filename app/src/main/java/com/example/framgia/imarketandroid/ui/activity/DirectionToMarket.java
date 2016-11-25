@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.findpath.DirectionsJSONParser;
 import com.example.framgia.imarketandroid.util.findpath.InternetUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -69,8 +70,6 @@ public class DirectionToMarket extends FragmentActivity
     private static final String mSensor = "sensor=false";
     private String mHeadJson = "https://maps.googleapis.com/maps/api/directions/";
     private String mOutput = "json";
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +97,8 @@ public class DirectionToMarket extends FragmentActivity
             checkPermission();
             mLocationManager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER,
-                MIN_TIME_BW_UPDATES,
-                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                Constants.MIN_TIME_BW_UPDATES,
+                Constants.MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
             if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Location currentLocation =
                     mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
