@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.listener.OnFinishLoadDataListener;
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
 import com.example.framgia.imarketandroid.data.model.Floor;
@@ -30,6 +31,7 @@ public class LoadDataUtils {
     private  Context mContext;
     private  ProgressDialog mProgressDialog;
     public  BroadcastReceiver mReceiver;
+    private OnFinishLoadDataListener mFinishLoadDataListener;
 
     public void init(Context context) {
         mContext = context;
@@ -105,6 +107,7 @@ public class LoadDataUtils {
                         CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
                         list.add(commerceCanter);
                     }
+                    mFinishLoadDataListener.onFinish(true);
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
@@ -119,6 +122,10 @@ public class LoadDataUtils {
                 }
             }
         });
+    }
+
+    public void setLoadDataListener(OnFinishLoadDataListener listener) {
+        mFinishLoadDataListener = listener;
     }
 
     public void getStoreByStoreType(final Context context, final int id_floor, final int storeType) {
