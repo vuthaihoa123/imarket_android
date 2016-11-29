@@ -304,4 +304,5 @@
     <string name="enable_gps">Bạn cần bật chức năng định vị để sử dụng tính năng này !</string>
     <string name="wait_minute">Vui lòng đợi trong giây lát !</string>
     <string name="only_one">Only One</string>
+    <string name="distance">distance</string>
 </resources>

@@ -24,6 +24,7 @@ public class CommerceCanter extends RealmObject implements Serializable {
     private double mLat;
     @SerializedName("longtitude")
     private double mLng;
+    private float mDistance;
 
     public CommerceCanter(int id, String name, String address, String image) {
         this.mId = id;
@@ -81,5 +82,13 @@ public class CommerceCanter extends RealmObject implements Serializable {
 
     public void setLongitude(double lng) {
         mLng = lng;
+    }
+
+    public float getDistance() {
+        return mDistance;
+    }
+
+    public void setDistance(float distance) {
+        mDistance = distance;
     }
 }
