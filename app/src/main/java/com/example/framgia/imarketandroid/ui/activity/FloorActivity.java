@@ -720,8 +720,9 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 scanQrCode();
                 break;
             case Constants.FLOOR:
-                if (sCheckSlideFloor == false) {
-                    if (sCheckSlideStore == true) {
+                if (mFloorList.size() == 0) mFloorList.add(getString(R.string.only_one));
+                if (!sCheckSlideFloor) {
+                    if (sCheckSlideStore) {
                         StoreAppear(false);
                         sCheckSlideStore = false;
                     }
@@ -733,8 +734,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 }
                 break;
             case Constants.STORE:
-                if (sCheckSlideStore == false) {
-                    if (sCheckSlideFloor == true) {
+                if (!sCheckSlideStore) {
+                    if (sCheckSlideFloor) {
                         FloorAppear(false);
                         sCheckSlideFloor = false;
                     }
@@ -756,7 +757,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     }
 
     private void FloorAppear(boolean appear) {
-        if (appear == true) {
+        if (appear) {
             mLayoutFloor.startAnimation(mSlideRightIn);
             mLayoutFloor.setVisibility(View.VISIBLE);
         } else {
@@ -766,7 +767,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     }
 
     private void StoreAppear(boolean appear) {
-        if (appear == true) {
+        if (appear) {
             mRecyclerViewStore.startAnimation(mSlideLeftIn);
             mRecyclerViewStore.setVisibility(View.VISIBLE);
         } else {
