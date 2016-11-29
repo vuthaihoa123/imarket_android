@@ -159,7 +159,7 @@
     <dimen name="wid_hei_60">60dp</dimen>
     <dimen name="margin_15dp">15dp</dimen>
     <dimen name="margin_5">5dp</dimen>
-    <dimen name="height_image_preview">220dp</dimen>
+    <dimen name="height_image_preview">200dp</dimen>
     <dimen name="avatar_size">46dp</dimen>
     <dimen name="height_text">75dp</dimen>
     <dimen name="margin_23dp">23dp</dimen>

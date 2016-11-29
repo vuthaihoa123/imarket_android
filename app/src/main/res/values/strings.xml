@@ -92,7 +92,7 @@
         rất hài lòng và thích thú.</string>
     <string name="ques">Big C Thăng Long như thế nào ?</string>
     <string name="comment_here">Bình luận</string>
-    <string name="post">POST</string>
+    <string name="post">GỬI</string>
     <string name="ok">Hoàn thành</string>
     <string name="cancle">Thoát</string>
     <string name="count_vote">500 đánh giá</string>
@@ -274,7 +274,7 @@
     <string name="review_by">Review by</string>
     <string name="enter_title">Tiêu đề</string>
     <string name="timeout_dialog">Waring : Progress dialog time out !</string>
-    <string name="read_all_reviews">READ ALL REVIEWS</string>
+    <string name="read_all_reviews">ALL REVIEWS</string>
     <string name="enter_phonenumber">Nhập số điện thoại</string>
     <string name="data_success">Data success</string>
     <string name="not_data_in_object">Không có dữ liệu trong đối tượng trả về.</string>
@@ -303,4 +303,8 @@
     <string name="text_hint">Search category here</string>
     <string name="enable_gps">Bạn cần bật chức năng định vị để sử dụng tính năng này !</string>
     <string name="wait_minute">Vui lòng đợi trong giây lát !</string>
+    <string name="justnow">Vừa xong</string>
+    <string name="min_ago">phút trước</string>
+    <string name="hour_ago">giờ trước</string>
+    <string name="day_ago">ngày trước</string>
 </resources>

@@ -104,17 +104,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     public static Point sSavedLocation;
     public static String sSavedNote;
     public static float currentDegree = FakeContainer.CAMERA_PARAMETER;
-    private SlidingUpPanelLayout mSlidingLayout;
     private GoogleMap mMap;
     private RecyclerView mRvDiagramOption;
     private RecyclerView.Adapter mAdapterDiagramOption;
     private ListView mListFloor;
     private List<StoreType> mListStore = new ArrayList<>();
     private RecyclerView mRecyclerViewStore;
-    private Button mBtnDelete, mBtnGetPath, mBtnDrawPath;
-    private Button mBtnDoneLocation, mBtndeleteEdge;
+    private Button mBtnDoneLocation;
     private Dialog mDialog;
-    private Dialog mDialogSavePoint;
     private LinearLayout mLayoutFloor;
     private SwitchCompat mSwitchLocation;
     private List<Marker> mListMarker = new ArrayList<>();
@@ -147,10 +144,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private LatLng mAeon = new LatLng(21.026975, 105.899302);
     private CustomMarker mLocationCustomMarker;
     private CustomMarker mSaveCustomarker;
-    private ImageButton mArrowImageButton;
     private String mTextStoreName = "";
     private Animation mSlideRightIn, mSlideRightOut, mSlideLeftIn, mSlideLeftOut;
-    private EditText mEdtDelete;
     private LinearLayoutCompat mImgSavePoint;
     private SensorManager mSensorManager;
     private View mMarkerView;
@@ -164,7 +159,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private Marker mInteraker;
     private Marker mSaveMarker;
     private LinearLayoutCompat mNameLoad;
-    private float mDegree = 0;
     private FloatingActionButton mFABhire, mFABnewStore, mFABsaleOff;
     private LoadDataUtils mDataUtils;
 

@@ -124,7 +124,7 @@ public class Constants {
     public static final String HEAD_URL2 = "https://imarketv1.herokuapp.com";
     public static final String EXTRA_ID_RES_PREVIEW_DETAILS = "EXTRA_ID_RES_PREVIEW_DETAILS";
     public static final java.lang.String FORMAT_MONEY = "###,###,###,###,###.##";
-    public static final java.lang.String FORMAT_DATE = "yyyy/MM/dd";
+    public static final java.lang.String FORMAT_DATE = "dd/MM/yyyy hh:mm:ss";
     public static final String NULL_DATA = "Null data";
     public static final String CATEGORY_INTENT = "category";
     public static final String COMMERCE_INTENT = "commerce";
@@ -137,4 +137,10 @@ public class Constants {
     public static final String NEAR_POINT = "Điểm đã lưu";
     public static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     public static final long MIN_TIME_BW_UPDATES = 60000;
+    public static final long SECOND = 1000;
+    public static final long MINUTE = 60;
+    public static final long HOUR = 3600;
+    public static final long DAY = 86400;
+    public static final String VND_CURRENCY_UNIT = "đ";
+    public static final long TIME_UPDATE_AGO = MINUTE * SECOND;
 }

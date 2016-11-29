@@ -12,6 +12,8 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Comment;
 import com.example.framgia.imarketandroid.ui.views.CustomStarView;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.Flog;
+import com.example.framgia.imarketandroid.util.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,8 @@ public class CommentStoreAdapter extends RecyclerView.Adapter<CommentStoreAdapte
         holder.mTextViewContentMessage.setText(messageSuggestStore.getTextViewContent());
         holder.mTextViewTitleMessage.setText(messageSuggestStore.getTextViewTitle());
         holder.mTextViewNameUser.setText(messageSuggestStore.getNameUser());
-        holder.mTextViewCurDate.setText(messageSuggestStore.getCurDate());
+        holder.mTextViewCurDate.setText(SystemUtil.formatTimeNow(mContext,
+                (System.currentTimeMillis() - messageSuggestStore.getTimeNow()) / Constants.SECOND));
         int totalFullStar = messageSuggestStore.getTotalStar();
         for (int i = 0; i < totalFullStar; i++) {
             holder.mStarList.get(i).setChecked(true);

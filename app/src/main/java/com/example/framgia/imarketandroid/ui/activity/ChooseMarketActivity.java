@@ -467,7 +467,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 break;
             case R.id.item_recycler_market:
                 mLinearMenu.setVisibility(View.GONE);
-                Intent intent = new Intent(this, FloorActivity.class);
+//                Intent intent = new Intent(this, FloorActivity.class);
+                Intent intent = new Intent(this, DetailsProductActivity.class);
                 intent.putExtra(Constants.COMMERCE_INTENT, mListComAdap.get(position));
                 startActivity(intent);
                 break;

@@ -1,13 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/image_star"
-        android:layout_width="@dimen/common_size_40"
-        android:layout_height="@dimen/common_size_40"
-        android:src="@drawable/ic_star_empty" />
-</LinearLayout>
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_star"
+    android:layout_width="@dimen/icon_size_standard"
+    android:layout_height="@dimen/icon_size_standard"
+    android:src="@drawable/ic_star_empty"
+    android:scaleType="fitCenter"
+    android:tint="@android:color/holo_green_dark"/>
