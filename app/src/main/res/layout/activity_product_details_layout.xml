@@ -48,16 +48,22 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_medium_size" />
 
-            <TextView
+            <android.support.v7.widget.LinearLayoutCompat
                 android:id="@+id/tv_product_info"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:layout_weight="1"
-                android:text="@string/readmore"
-                android:textColor="@android:color/holo_green_dark"
-                android:textSize="@dimen/text_small_size" />
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/readmore"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="@dimen/text_small_size" />
+            </android.support.v7.widget.LinearLayoutCompat>
 
             <FrameLayout
                 android:id="@+id/fl_readmore"
@@ -73,22 +79,48 @@
                 layout="@layout/rate_product_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:layout_weight="3" />
+                android:layout_marginBottom="@dimen/margin_5dp"
+                android:layout_weight="2.4" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commen_size_1"
+                android:layout_marginLeft="@dimen/margin_15dp"
+                android:layout_marginRight="@dimen/margin_15dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:background="@color/default_background_color"
+                android:clickable="false"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_preview_comments"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <TextView
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commen_size_1"
+                android:layout_marginLeft="@dimen/margin_15dp"
+                android:layout_marginRight="@dimen/margin_15dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:background="@color/default_background_color"
+                android:clickable="false"/>
+
+            <android.support.v7.widget.LinearLayoutCompat
                 android:id="@+id/tv_readall_reviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginBottom="@dimen/margin_20dp"
-                android:text="@string/read_all_reviews"
-                android:textColor="@android:color/holo_green_dark"
-                android:textSize="@dimen/text_small_size" />
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/read_all_reviews"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="@dimen/text_small_size" />
+            </android.support.v7.widget.LinearLayoutCompat>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -97,19 +129,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/iv_show_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:background="@color/white"
         android:scaleType="fitCenter"
-        android:background="@color/white"/>
+        android:visibility="gone" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        android:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>
