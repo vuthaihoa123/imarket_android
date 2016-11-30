@@ -570,9 +570,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 } else {
                     mNearMarketList.clear();
                     for (CommerceCanter center : mMarkets) {
-                        mNearMarketList.add(new NearMarket(center, MapUntils.calculateDistance(
+                        float distence = MapUntils.calculateDistance(
                             new Point(myLocation.getLatitude(), myLocation.getLongitude()),
-                            new Point(center.getLatitude(), center.getLongitude()))));
+                            new Point(center.getLatitude(), center.getLongitude()));
+                        mNearMarketList.add(new NearMarket(center, distence));
+                        center.setDistance(distence);
                     }
                     Collections.sort(mNearMarketList, new Comparator<NearMarket>() {
                         @Override

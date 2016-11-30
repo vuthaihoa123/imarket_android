@@ -49,6 +49,11 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
         final CommerceCanter market = mMarkets.get(position);
         holder.mTextName.setText(market.getName());
         holder.mTextAddress.setText(market.getAddress());
+        if (market.getDistance() != 0.0) {
+            holder.mTextDistance.setText((int)market.getDistance()+Constants.METTERS);
+        } else {
+            holder.mTextDistance.setText(R.string.distance);
+        }
         holder.mImage.setImageResource(R.drawable.logo_big_c);
         String url = Constants.HEAD_URL + market.getImage();
         new Thread(new Runnable() {
@@ -82,6 +87,7 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
         public CircleImageView mImage;
         public TextView mTextName;
         public TextView mTextAddress;
+        public TextView mTextDistance;
         public View itemRecyclerMarket;
 
         public ItemHolder(View itemView) {
@@ -89,6 +95,7 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
             mImage = (CircleImageView) itemView.findViewById(R.id.image_market);
             mTextName = (TextView) itemView.findViewById(R.id.text_name);
             mTextAddress = (TextView) itemView.findViewById(R.id.text_address);
+            mTextDistance = (TextView) itemView.findViewById(R.id.text_distance);
             itemRecyclerMarket = itemView.findViewById(R.id.item_recycler_market);
         }
     }
