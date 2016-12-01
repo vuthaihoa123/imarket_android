@@ -305,4 +305,8 @@
     <string name="wait_minute">Vui lòng đợi trong giây lát !</string>
     <string name="only_one">Only One</string>
     <string name="distance">distance</string>
+    <string name="mat_khau_toi_thieu">Mật khẩu tối thiểu 6 kí tự.</string>
+    <string name="sai_sdt">Số điện thoại không tồn tại.</string>
+    <string name="duplicate_email">Email này đã tồn tại !</string>
+    <string name="login_fail">Login fails !</string>
 </resources>

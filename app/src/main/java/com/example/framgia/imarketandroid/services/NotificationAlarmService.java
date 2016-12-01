@@ -35,28 +35,29 @@ public class NotificationAlarmService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         ImarketApplication imarketApplication = (ImarketApplication) getApplication();
-        imarketApplication. incrementCount();
-        HttpRequest.getInstance().init();
+        imarketApplication.incrementCount();
+        HttpRequest.getInstance(getBaseContext()).init();
         Context context = this.getApplicationContext();
         notificationManager =
             (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent mIntent = new Intent(this, ChooseMarketActivity.class);
         pendingIntent =
             PendingIntent.getActivity(context, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        HttpRequest.getInstance().requestEventNocation();
-        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-            @Override
-            public void onLoadDataSuccess(Object object) {
-                Session event = (Session) object;
-                RealmRemote.saveObject(event);
-                showToastNotification();
-            }
+        HttpRequest.getInstance(getBaseContext()).requestEventNocation();
+        HttpRequest.getInstance(getBaseContext())
+            .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    Session event = (Session) object;
+                    RealmRemote.saveObject(event);
+                    showToastNotification();
+                }
 
-            @Override
-            public void onLoadDataFailure(String message) {
-                showToastNotification();
-            }
-        });
+                @Override
+                public void onLoadDataFailure(String message) {
+                    showToastNotification();
+                }
+            });
         // TODO: 29/08/2016  add badge for app when have notification
         ShortcutBadger.applyCount(context, imarketApplication.getNotificationCount());
     }

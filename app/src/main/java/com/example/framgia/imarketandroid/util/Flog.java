@@ -22,5 +22,12 @@ public class Flog {
     public static void toast(Context context, String s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
+
+    public static void toastLong(Context context, int s) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+    }
+    public static void toastLong(Context context, String s) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+    }
 }
 

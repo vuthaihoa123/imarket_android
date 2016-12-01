@@ -32,6 +32,7 @@ import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.ConvertImageToBase64Util;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 
@@ -86,7 +87,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             if (userModel.getSession().getmAuthToken() != null) {
                 mAuthToken = userModel.getSession().getmAuthToken();
             }
-            HttpRequest.getInstance().initAuthToken(mAuthToken);
+            HttpRequest.getInstance(getBaseContext()).initAuthToken(mAuthToken);
         }
         showProfile();
         showEnableEditText(false);
@@ -184,41 +185,40 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         mProgressDialog.setMessage(getString(R.string.progressdialog));
         mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.show();
-        HttpRequest.getInstance().updateUser(mId, new UserModel(mSession));
-        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-            @Override
-            public void onLoadDataSuccess(Object object) {
-                UserModel userModel1 = (UserModel) object;
-                mProgressDialog.dismiss();
-                if (userModel1.getSession() != null) {
-                    Toast.makeText(getBaseContext(), R.string.toast_save_successfully,
-                        Toast.LENGTH_SHORT).show();
-                    SharedPreferencesUtil.getInstance().clearSharedPreference();
-                    SharedPreferencesUtil.getInstance().save(Constants.SESSION, userModel1);
-                    String url = Constants.HEAD_URL + userModel1.getSession().getUrlImage();
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Glide.get(UpdateProfileActivity.this).clearDiskCache();
-                        }
-                    }).start();
-                    Glide.get(UpdateProfileActivity.this).clearMemory();
-                    Glide.with(getBaseContext()).load(url)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(false)
-                        .centerCrop()
-                        .into(mImageAvatar);
-                } else {
-                    Toast.makeText(getBaseContext(), userModel1.getmErrors().toString(),
-                        Toast.LENGTH_SHORT).show();
+        HttpRequest.getInstance(getBaseContext()).updateUser(mId, new UserModel(mSession));
+        HttpRequest.getInstance(getBaseContext())
+            .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    UserModel userModel1 = (UserModel) object;
+                    mProgressDialog.dismiss();
+                    if (userModel1.getSession() != null) {
+                        Flog.toast(getBaseContext(),R.string.toast_save_successfully);
+                        SharedPreferencesUtil.getInstance().clearSharedPreference();
+                        SharedPreferencesUtil.getInstance().save(Constants.SESSION, userModel1);
+                        String url = Constants.HEAD_URL + userModel1.getSession().getUrlImage();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Glide.get(UpdateProfileActivity.this).clearDiskCache();
+                            }
+                        }).start();
+                        Glide.get(UpdateProfileActivity.this).clearMemory();
+                        Glide.with(getBaseContext()).load(url)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(false)
+                            .centerCrop()
+                            .into(mImageAvatar);
+                    } else {
+                        Flog.toast(getBaseContext(), userModel1.getmErrors().toString());
+                    }
                 }
-            }
 
-            @Override
-            public void onLoadDataFailure(String message) {
-                mProgressDialog.dismiss();
-            }
-        });
+                @Override
+                public void onLoadDataFailure(String message) {
+                    mProgressDialog.dismiss();
+                }
+            });
     }
 
     @Override
@@ -245,7 +245,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             case R.id.action_cancel:
                 showProfile();
                 showEnableEditText(false);
-                Toast.makeText(this, R.string.toast_cancel_profile, Toast.LENGTH_SHORT).show();
+                Flog.toast(this, R.string.toast_cancel_profile);
                 break;
             case R.id.action_logout:
                 SharedPreferencesUtil.getInstance().clearSharedPreference();
@@ -337,12 +337,10 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.cancelled,
-                        Toast.LENGTH_SHORT).show();
+                    Flog.toast(this, R.string.cancelled);
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(getApplicationContext(), R.string.cancelled,
-                    Toast.LENGTH_SHORT).show();
+                Flog.toast(this, R.string.cancelled);
             }
         } else if (requestCode == Constants.CAMERA_REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -352,16 +350,13 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                     mSession.setUrlImage(imAvater);
                     mImageAvatar.setImageBitmap(ConvertImageToBase64Util.decodeBase64(imAvater));
                 } else if (data.getExtras() == null) {
-                    Toast.makeText(getApplicationContext(),
-                        R.string.toast_camerarequest, Toast.LENGTH_SHORT)
-                        .show();
+                    Flog.toast(this, R.string.toast_camerarequest);
                     BitmapDrawable thumbnail = new BitmapDrawable(
                         getResources(), data.getData().getPath());
                     mImageAvatar.setImageDrawable(thumbnail);
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(getApplicationContext(), R.string.cancelled,
-                    Toast.LENGTH_SHORT).show();
+                Flog.toast(this, R.string.cancelled);
             }
         }
     }
