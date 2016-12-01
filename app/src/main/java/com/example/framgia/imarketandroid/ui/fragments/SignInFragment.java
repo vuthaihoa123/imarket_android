@@ -3,8 +3,10 @@ package com.example.framgia.imarketandroid.ui.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.example.framgia.imarketandroid.ui.activity.DetailsProductActivity;
 import com.example.framgia.imarketandroid.ui.activity.LoginActivity;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.HttpRequest;
 import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import com.facebook.AccessToken;
@@ -77,6 +80,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     private int mSubLetter = 2;
     private ProgressDialog mProgressDialog;
     private ConnectionResult mConnectionResult;
+
     public SignInFragment() {
         super();
     }
@@ -98,7 +102,6 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         AppEventsLogger.activateApp(getContext());
         mCallbackManager = CallbackManager.Factory.create();
         createBuilderGoogleApi();
-        SharedPreferencesUtil.getInstance().init(getActivity(), Constants.PREFS_NAME);
         return mView;
     }
 
@@ -115,7 +118,6 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
         mFramLoginFacebook = (FrameLayout) mView.findViewById(R.id.frame_button_facebook);
         mFramLoginGmail = (FrameLayout) mView.findViewById(R.id.frame_button_gmail);
         mEditUsername = (EditText) mView.findViewById(R.id.edit_text_username);
-        getDataUsername();
         mEditPassword = (EditText) mView.findViewById(R.id.edit_text_password);
     }
 
@@ -190,8 +192,7 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
     public void eventClickButtonLogin() {
         if (mEditUsername.getText().toString().isEmpty() || mEditPassword.getText().toString()
             .trim().isEmpty()) {
-            Toast.makeText(getContext(), R.string.notification_user_pass, Toast.LENGTH_SHORT)
-                .show();
+            Flog.toast(getContext(), R.string.notification_user_pass);
         } else {
             final Session session = new Session(mEditUsername.getText().toString(), mEditPassword
                 .getText().toString());
@@ -199,27 +200,27 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
             mProgressDialog.setMessage(getString(R.string.progressdialog));
             mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
             mProgressDialog.show();
-            HttpRequest.getInstance().login(session);
-            HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-                @Override
-                public void onLoadDataSuccess(Object object) {
-                    UserModel userModel = (UserModel) object;
-                    mProgressDialog.dismiss();
-                    if (userModel == null) {
-                        Toast.makeText(getContext(), R.string.msg_login_invaild,
-                            Toast.LENGTH_SHORT).show();
-                    } else {
-                        SharedPreferencesUtil.getInstance().save(Constants.SESSION, userModel);
-                        getActivity().onBackPressed();
+            HttpRequest.getInstance(getActivity().getBaseContext()).login(session);
+            HttpRequest.getInstance(getActivity().getBaseContext())
+                .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                    @Override
+                    public void onLoadDataSuccess(Object object) {
+                        UserModel userModel = (UserModel) object;
+                        mProgressDialog.dismiss();
+                        if (userModel == null) {
+                            Flog.toast(getContext(), R.string.msg_login_invaild);
+                        } else {
+                            SharedPreferencesUtil.getInstance().save(Constants.SESSION, userModel);
+                            getActivity().onBackPressed();
+                        }
                     }
-                }
 
-                @Override
-                public void onLoadDataFailure(String message) {
-                    mProgressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Login fails !", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onLoadDataFailure(String message) {
+                        mProgressDialog.dismiss();
+                        Flog.toast(getContext(), R.string.login_fail);
+                    }
+                });
         }
     }
 
@@ -398,20 +399,4 @@ public class SignInFragment extends android.support.v4.app.Fragment implements
             mEditPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         }
     }
-
-    private void getDataUsername() {
-        if (LoginActivity.mViewPagerLogin.getCurrentItem() == 0)
-        SharedPreferencesUtil.getInstance().init(getContext(), Constants.PREFS_NAME);
-        String username = SharedPreferencesUtil.getInstance().getString(Constants.EMAIL);
-        if (username != null && !username.equals(Constants.NULL_DATA)) {
-            mEditUsername.setText(username.toString());
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDataUsername();
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.example.framgia.imarketandroid.util;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 
@@ -12,8 +13,10 @@ import com.example.framgia.imarketandroid.data.model.Session;
 import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
+import java.util.IllegalFormatException;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -36,11 +39,13 @@ public class HttpRequest {
     private IMarketApiEndPoint mApi;
     private OnLoadDataListener mListener;
     private ProgressDialog mProgressDialog;
+    private static Context mActivity;
 
     private HttpRequest() {
     }
 
-    public static HttpRequest getInstance() {
+    public static HttpRequest getInstance(Context activity) {
+        mActivity = activity;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         mClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -60,7 +65,7 @@ public class HttpRequest {
 
     public void init() {
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
-                addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
+            addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
     }
 
     public void initProgressDialog(Context context) {
@@ -73,24 +78,24 @@ public class HttpRequest {
     public void initAuthToken(final String auth) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
-                addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
+            addConverterFactory(GsonConverterFactory.create()).client(mClient).build();
         if (auth != null) {
             httpClientBuilder.addInterceptor(new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
                     Request original = chain.request();
                     Request.Builder requestBuilder = original.newBuilder()
-                            .header("Content-Type", "application/json")
-                            .header("Authorization", auth)
-                            .method(original.method(), original.body());
+                        .header("Content-Type", "application/json")
+                        .header("Authorization", auth)
+                        .method(original.method(), original.body());
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 }
             });
         }
         mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).
-                addConverterFactory(GsonConverterFactory.create()).client(httpClientBuilder.build())
-                .build();
+            addConverterFactory(GsonConverterFactory.create()).client(httpClientBuilder.build())
+            .build();
     }
 
     public void loadCategories() {
@@ -145,11 +150,16 @@ public class HttpRequest {
                     UserModel signupModel = null;
                     try {
                         signupModel =
-                                new Gson().fromJson(response.errorBody().string(), UserModel.class);
+                            new Gson().fromJson(response.errorBody().string(), UserModel.class);
+                        mListener.onLoadDataSuccess(signupModel);
+                    } catch (JsonSyntaxException exception) {
+                        mListener.onLoadDataFailure(mActivity.getString(R.string.duplicate_email));
+                        Flog.toastLong(mActivity,R.string.duplicate_email);
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    mListener.onLoadDataSuccess(signupModel);
                 }
             }
 
@@ -174,7 +184,7 @@ public class HttpRequest {
                     UserModel userUpdate = null;
                     try {
                         userUpdate =
-                                new Gson().fromJson(response.errorBody().string(), UserModel.class);
+                            new Gson().fromJson(response.errorBody().string(), UserModel.class);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -213,7 +223,6 @@ public class HttpRequest {
 
     public interface OnLoadDataListener {
         void onLoadDataSuccess(Object object);
-
         void onLoadDataFailure(String message);
     }
 

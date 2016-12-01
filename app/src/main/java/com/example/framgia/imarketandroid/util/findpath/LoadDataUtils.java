@@ -39,7 +39,7 @@ public class LoadDataUtils {
         mProgressDialog.setMessage(mContext.getString(R.string.progressdialog));
         mProgressDialog.setProgress(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCanceledOnTouchOutside(false);
-        HttpRequest.getInstance().init();
+        HttpRequest.getInstance(context).init();
     }
 
     public interface OnLoadMarketsCallback {
@@ -61,8 +61,8 @@ public class LoadDataUtils {
     public  void loadFloor(final Context context, final int idCommerce) {
         init(context);
         mProgressDialog.show();
-        HttpRequest.getInstance().loadListFloor(idCommerce);
-        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+        HttpRequest.getInstance(context).loadListFloor(idCommerce);
+        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
                 ListFloor floors = (ListFloor) object;
@@ -94,8 +94,8 @@ public class LoadDataUtils {
     public void loadCommerce(final Context context, final List<CommerceCanter> list) {
         init(context);
         mProgressDialog.show();
-        HttpRequest.getInstance().loadListCommerce();
-        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+        HttpRequest.getInstance(context).loadListCommerce();
+        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
                 mProgressDialog.dismiss();
@@ -131,8 +131,8 @@ public class LoadDataUtils {
     public void getStoreByStoreType(final Context context, final int id_floor, final int storeType) {
         init(context);
         mProgressDialog.show();
-        HttpRequest.getInstance().getStore(id_floor, storeType);
-        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+        HttpRequest.getInstance(context).getStore(id_floor, storeType);
+        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
                 Stores listStore = (Stores) object;
@@ -158,8 +158,8 @@ public class LoadDataUtils {
     public void getProductInCategory(final Context context, final int id_cate) {
         init(context);
         mProgressDialog.show();
-        HttpRequest.getInstance().getProduct(id_cate);
-        HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+        HttpRequest.getInstance(context).getProduct(id_cate);
+        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
                 ProductList productList = (ProductList) object;

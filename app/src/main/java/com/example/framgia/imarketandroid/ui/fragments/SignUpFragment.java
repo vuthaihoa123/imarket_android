@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -25,6 +26,8 @@ import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
  * Created by toannguyen201194 on 22/07/2016.
  */
 public class SignUpFragment extends android.support.v4.app.Fragment {
+    private final int MIN_PASS = 6;
+    private final int MIN_PHONE = 10;
     private View mView;
     private TextInputLayout mInputFullName, mInputPassword, mInputConfirmPass, mInputmail;
     private EditText mEditFullName, mEditMail, mEditPassword, mEditPasswordConfirm;
@@ -107,21 +110,19 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
                 mEditPhoneNumber.getText().toString()
             );
             final UserModel signupModel = new UserModel(user);
-            HttpRequest.getInstance().register(signupModel);
-            HttpRequest.getInstance().setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-                @Override
-                public void onLoadDataSuccess(Object object) {
-                    UserModel userModel = (UserModel) object;
-                    mProgressDialog.dismiss();
-                    if (userModel != null && userModel.getSession() != null) {
-                        SharedPreferencesUtil.getInstance().init(getContext(), Constants.PREFS_NAME);
-                        SharedPreferencesUtil.getInstance().saveString(Constants.EMAIL, userModel
-                            .getSession().getUsername().toString());
-                        LoginActivity.mViewPagerLogin.setCurrentItem(0);
-                    } else {
-                        Flog.toast(getContext(), userModel.getmErrors().toString());
+            HttpRequest.getInstance(getActivity().getBaseContext()).register(signupModel);
+            HttpRequest.getInstance(getActivity().getBaseContext())
+                .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                    @Override
+                    public void onLoadDataSuccess(Object object) {
+                        UserModel userModel = (UserModel) object;
+                        mProgressDialog.dismiss();
+                        if (userModel != null && userModel.getSession() != null) {
+                            LoginActivity.mViewPagerLogin.setCurrentItem(0);
+                        } else {
+                            Flog.toast(getContext(), userModel.getmErrors().toString());
+                        }
                     }
-                }
 
                 @Override
                 public void onLoadDataFailure(String message) {
@@ -151,8 +152,18 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
         } else if (mEditPasswordConfirm.getText().toString().trim().isEmpty()) {
             mInputConfirmPass.setError(getString(R.string.err_msg_password_confirm));
             return false;
+        } else if (password.length() < MIN_PASS) {
+            mInputPassword.setError(getString(R.string.mat_khau_toi_thieu));
+            requestFocus(mInputPassword);
+            return false;
         } else {
             mInputConfirmPass.setErrorEnabled(false);
+        }
+        String phonenumber = mEditPhoneNumber.getText().toString().trim();
+        if (phonenumber.length() < MIN_PHONE) {
+            mInputPhoneNumber.setError(getString(R.string.sai_sdt));
+            requestFocus(mInputPhoneNumber);
+            return false;
         }
         return true;
     }
