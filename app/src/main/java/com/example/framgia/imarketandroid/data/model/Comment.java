@@ -10,6 +10,7 @@ public class Comment {
     private String mTextViewTitle;
     private String mNameUser;
     private String mCurDate;
+    private long mTimeNow = 0;
     private int mTotalStar;
 
     public Comment() {
@@ -20,11 +21,24 @@ public class Comment {
                    String content,
                    String nameUser,
                    String curDate) {
-        this.mCurDate = curDate;
-        this.mTextViewTitle = title;
-        this.mImageViewAva = avatar;
-        this.mTextViewContent = content;
-        this.mNameUser = nameUser;
+        mCurDate = curDate;
+        mTextViewTitle = title;
+        mImageViewAva = avatar;
+        mTextViewContent = content;
+        mNameUser = nameUser;
+        init();
+    }
+
+    public Comment(int avatar,
+                   String title,
+                   String content,
+                   String nameUser,
+                   long timeNow) {
+        mTimeNow = timeNow;
+        mTextViewTitle = title;
+        mImageViewAva = avatar;
+        mTextViewContent = content;
+        mNameUser = nameUser;
         init();
     }
 
@@ -69,5 +83,9 @@ public class Comment {
 
     public String getCurDate() {
         return mCurDate;
+    }
+
+    public long getTimeNow() {
+        return mTimeNow;
     }
 }
