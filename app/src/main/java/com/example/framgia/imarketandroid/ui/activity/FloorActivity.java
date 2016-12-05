@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -932,7 +933,6 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                         ((ViewGroup) v).removeView(layoutHire);
                         ((ViewGroup) v).removeView(layoutSale);
                         mTextStoreName=FloorActivity.sSavedNote;
-                        Log.i("======", sSavedNote);
                         break;
                 }
             else
@@ -944,6 +944,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 mTextStoreName = Constants.LIST_NAME_STORE[0] + " " + marker.getTitle();
             }
             textView.setText(mTextStoreName);
+            textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             return v;
         }
     }

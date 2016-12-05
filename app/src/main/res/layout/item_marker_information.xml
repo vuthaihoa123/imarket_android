@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:clickable="true"
-              android:orientation="vertical"
-              android:paddingLeft="@dimen/common_size_5"
-              android:paddingTop="@dimen/common_size_5">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_5">
 
     <TextView
         android:id="@+id/text_marker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/text_solid"
-        android:textSize="@dimen/common_size_20"
-        android:textStyle="bold"/>
+        android:textColor="@color/black"
+        android:textSize="@dimen/common_text_size_15"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/layout_hire"
+        android:layout_marginTop="@dimen/margin_5"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image_hire"
-            android:layout_width="@dimen/common_size_30"
-            android:layout_height="@dimen/common_size_30"
+            android:layout_width="@dimen/common_size_20"
+            android:layout_height="@dimen/common_size_20"
             android:layout_gravity="center"
             android:background="@drawable/job_search"
             android:clickable="true"/>
@@ -35,23 +35,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="3 vị trí tuyển dụng"
-            android:layout_marginLeft="@dimen/common_size_10"
-            android:textColor="@color/red_text"
-            android:textStyle="bold"/>
+            android:text="@string/fake_recruitment"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:textSize="@dimen/common_text_size_10"
+            android:textStyle="italic"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_10"
+        android:layout_marginTop="@dimen/margin_5"
         android:id="@+id/layout_sale"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image_sale"
-            android:layout_width="@dimen/common_size_30"
-            android:layout_height="@dimen/common_size_30"
+            android:layout_width="@dimen/common_size_20"
+            android:layout_height="@dimen/common_size_20"
             android:layout_gravity="center"
             android:background="@drawable/sales"
             android:clickable="true"/>
@@ -61,10 +62,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="5 sản phẩm khuyến mãi"
-            android:layout_marginLeft="@dimen/common_size_10"
-            android:textColor="@color/red_text"
-            android:textStyle="bold"/>
+            android:text="@string/fake_promotion"
+            android:textStyle="italic"
+            android:textSize="@dimen/common_text_size_10"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
 </LinearLayout>
