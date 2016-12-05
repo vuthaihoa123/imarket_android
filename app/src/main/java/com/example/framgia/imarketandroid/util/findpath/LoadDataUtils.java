@@ -162,6 +162,9 @@ public class LoadDataUtils {
         HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
             @Override
             public void onLoadDataSuccess(Object object) {
+                if (!(object instanceof ProductList)) {
+                    return;
+                }
                 ProductList productList = (ProductList) object;
                 if (mOnListProductListener != null) {
                     if (productList != null) {

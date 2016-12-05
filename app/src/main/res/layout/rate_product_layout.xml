@@ -38,30 +38,35 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/image_start_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="center"
                     android:src="@drawable/ic_star_full" />
 
                 <ImageView
+                    android:id="@+id/image_start_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="center"
                     android:src="@drawable/ic_star_full" />
 
                 <ImageView
+                    android:id="@+id/image_start_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="center"
                     android:src="@drawable/ic_star_full" />
 
                 <ImageView
+                    android:id="@+id/image_start_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="center"
                     android:src="@drawable/ic_star_full" />
 
                 <ImageView
+                    android:id="@+id/image_start_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="center"
