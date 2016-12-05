@@ -12,10 +12,7 @@
         android:orderInCategory="2"
         android:id="@+id/item_cart"
         android:title="@string/item_cart"
-        app:actionViewClass="android.support.v7.widget.ImageView"
         android:icon="@drawable/ic_shopping_cart"
         app:showAsAction="always">
-
     </item>
-
 </menu>

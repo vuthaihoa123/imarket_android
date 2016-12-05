@@ -91,7 +91,7 @@
         rất hài lòng và thích thú.</string>
     <string name="ques">Big C Thăng Long như thế nào ?</string>
     <string name="comment_here">Comment ...</string>
-    <string name="post">Post</string>
+    <string name="post">POST</string>
     <string name="ok">complete</string>
     <string name="cancle">Exit</string>
     <string name="count_vote">500 rate</string>
@@ -270,4 +270,8 @@
     <string name="your_location">Your location</string>
     <string name="target">Target Location</string>
     <string name="detail_upper_case">Detail</string>
+    <string name="justnow">Just now</string>
+    <string name="min_ago">min ago</string>
+    <string name="hour_ago">hour ago</string>
+    <string name="day_ago">day ago</string>
 </resources>

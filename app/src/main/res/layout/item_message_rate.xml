@@ -25,11 +25,10 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_medium_size" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/layout_stars"
@@ -41,16 +40,16 @@
                 android:id="@+id/tv_rated_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_save"
                 android:textColor="@color/grey_darker"
-                android:textSize="@dimen/text_small_size" />
-        </LinearLayout>
+                android:textSize="@dimen/text_small_size"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/margin_20dp"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_title_item_message_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_small_size"
             android:textStyle="bold" />

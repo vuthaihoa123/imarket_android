@@ -8,10 +8,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +37,7 @@ import com.example.framgia.imarketandroid.ui.adapter.ScreenSlidePagerAdapter;
 import com.example.framgia.imarketandroid.ui.views.CustomStarView;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.ShowcaseGuideUtil;
 import com.example.framgia.imarketandroid.util.SystemUtil;
 import com.facebook.CallbackManager;
@@ -62,7 +65,7 @@ public class DetailsProductActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mBookingLayoutManager;
     private TextView mTvNameProduct;
     private TextView mTvPriceProduct;
-    private TextView mTvInfoProduct;
+    private LinearLayoutCompat mTvInfoProduct;
     private List<Comment> mListRate = new ArrayList<>();
     private List<Comment> mListComment = new ArrayList<>();
     private List<CustomStarView> mListStar;
@@ -72,15 +75,15 @@ public class DetailsProductActivity extends AppCompatActivity
     private EditText mEdContentMess, mEdTitleMess;
     private TextView mTextViewStar1, mTextViewStar2, mTextViewStar3, mTextViewStar4, mTextViewStar5;
     private AlertDialog mAlertDialogPostMessage;
-    private ImageView mButtonPostProductMess;
+    private LinearLayoutCompat mButtonPostProductMess;
     private CallbackManager mCallbackManager;
     private ShareDialog mShareDialog;
     private TextView mTvGeneralRate;
     private TextView mTvAmountOfRates;
     private Toolbar mToolbar;
     private ImageView mIvShowPreview;
-    private TextView mTvReadAllReviews;
-    private TextView mTvPost;
+    private LinearLayoutCompat mTvReadAllReviews;
+    private LinearLayoutCompat mTvPost;
     private CommentStoreAdapter mStoreAdapter;
     private CommentStoreAdapter mSuggestStoreAdapter;
 
@@ -111,7 +114,7 @@ public class DetailsProductActivity extends AppCompatActivity
                             title,
                             content,
                             getString(R.string.name_user),
-                            SystemUtil.getCurDate()
+                            System.currentTimeMillis()
                     );
                     newMessage.setImageStars(getTotalStar());
                     mListComment.set(0, newMessage);
@@ -151,6 +154,21 @@ public class DetailsProductActivity extends AppCompatActivity
         ShowcaseGuideUtil.singleShowcase(DetailsProductActivity.this,
                 Constants.SHOWCASE_ID_DETAILS_PRODUCT,
                 new Showcase(mButtonPostProductMess, getString(R.string.sequence_write_vote)));
+        upTime();
+    }
+
+    private void upTime() {
+        final Handler handler = new Handler();
+        handler.post( new Runnable() {
+
+            @Override
+            public void run() {
+                if (mSuggestStoreAdapter != null) {
+                    mSuggestStoreAdapter.notifyDataSetChanged();
+                }
+                handler.postDelayed(this, Constants.SECOND);
+            }
+        });
     }
 
     private void initViewPager() {
@@ -193,13 +211,13 @@ public class DetailsProductActivity extends AppCompatActivity
         // init textviews
         mTvNameProduct = (TextView) findViewById(R.id.tv_product_name);
         mTvPriceProduct = (TextView) findViewById(R.id.tv_product_price);
-        mTvInfoProduct = (TextView) findViewById(R.id.tv_product_info);
+        mTvInfoProduct = (LinearLayoutCompat) findViewById(R.id.tv_product_info);
         mTvInfoProduct.setOnClickListener(mOnClickListenner);
         mTvGeneralRate = (TextView) findViewById(R.id.tv_general_rate);
         mTvAmountOfRates = (TextView) findViewById(R.id.tv_amount_of_rates);
-        mTvReadAllReviews = (TextView) findViewById(R.id.tv_readall_reviews);
+        mTvReadAllReviews = (LinearLayoutCompat) findViewById(R.id.tv_readall_reviews);
         setTexts();
-        mButtonPostProductMess = (ImageView) findViewById(R.id.button_post_product);
+        mButtonPostProductMess = (LinearLayoutCompat) findViewById(R.id.button_post_product);
         mButtonPostProductMess.setOnClickListener(mOnClickListenner);
         mIvShowPreview = (ImageView) findViewById(R.id.iv_show_preview);
         mTvReadAllReviews.setOnClickListener(mOnClickListenner);
@@ -233,7 +251,7 @@ public class DetailsProductActivity extends AppCompatActivity
         textNameProduct.setText(mTvNameProduct.getText().toString());
         mEdTitleMess = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_title);
         mEdContentMess = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_comment);
-        mTvPost = (TextView) promptsView.findViewById(R.id.button_post_message_rate);
+        mTvPost = (LinearLayoutCompat) promptsView.findViewById(R.id.button_post_message_rate);
         mTvPost.setOnClickListener(mOnClickListenner);
         mTextViewStar1 = (TextView) promptsView.findViewById(R.id.text_start_1);
         mTextViewStar2 = (TextView) promptsView.findViewById(R.id.text_start_2);
@@ -257,12 +275,12 @@ public class DetailsProductActivity extends AppCompatActivity
                 getString(R.string.name),
                 getString(R.string.rate_product_message),
                 getString(R.string.name_user),
-                SystemUtil.getCurDate()
+                System.currentTimeMillis()
         );
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Constants.MESSAGE_LIST_SIZE; i++) {
             mListRate.add(newMessage);
         }
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < Constants.COMMENT_LIST_SIZE; i++) {
             mListComment.add(newMessage);
         }
     }
