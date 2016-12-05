@@ -313,4 +313,6 @@
     <string name="min_ago">phút trước</string>
     <string name="hour_ago">giờ trước</string>
     <string name="day_ago">ngày trước</string>
+    <string name="fake_recruitment">Tuyển dụng(mới)</string>
+    <string name="fake_promotion">Khuyến mãi(giảm 30%)</string>
 </resources>
