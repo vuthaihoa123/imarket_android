@@ -1,9 +1,11 @@
 package com.example.framgia.imarketandroid.ui.fragments;
 
 import android.app.AlertDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.framgia.imarketandroid.R;
+import com.example.framgia.imarketandroid.data.FakeContainer;
 import com.example.framgia.imarketandroid.data.model.Comment;
 import com.example.framgia.imarketandroid.data.model.Showcase;
 import com.example.framgia.imarketandroid.ui.adapter.CommentStoreAdapter;
@@ -39,8 +42,8 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
     private TextView mTextViewProportionVote, mTextViewCountVote;
     private ImageView mImageViewStar1, mImageViewStar2, mImageViewStar3, mImageViewStar4,
             mImageViewStar5;
-    private Button mButtonPostSuggestStore;
-    private TextView mButtonPostComment;
+    private LinearLayoutCompat mButtonPostSuggestStore;
+    private LinearLayoutCompat mButtonPostComment;
     private RecyclerView mRecyclerViewOldMessage;
     private List<Comment> mMessageSuggestStoreList = new ArrayList<>();
     private List<Comment> mListRate = new ArrayList<>();
@@ -75,6 +78,7 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
     }
 
     private void fakeDataMessage() {
+        setTexts();
         Comment msm = new Comment(
                 R.drawable.avatar,
                 getString(R.string.name),
@@ -82,7 +86,7 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
                 getString(R.string.name_user),
                 SystemUtil.getCurDate()
         );
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < Constants.COMMENT_LIST_SIZE; i++) {
             mMessageSuggestStoreList.add(msm);
         }
     }
@@ -91,15 +95,21 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mImageViewAvaStore = (ImageView) mView.findViewById(R.id.image_ava_store);
         mTextViewNameStore = (TextView) mView.findViewById(R.id.text_name_store);
         mTextViewHastagStore = (TextView) mView.findViewById(R.id.text_hastag_store);
-        mTextViewProportionVote = (TextView) mView.findViewById(R.id.text_proportion_rate);
-        mTextViewCountVote = (TextView) mView.findViewById(R.id.text_count_rate);
+        mTextViewProportionVote = (TextView) mView.findViewById(R.id.tv_general_rate);
+        mTextViewCountVote = (TextView) mView.findViewById(R.id.tv_amount_of_rates);
         mImageViewStar1 = (ImageView) mView.findViewById(R.id.image_start_1);
         mImageViewStar2 = (ImageView) mView.findViewById(R.id.image_start_2);
         mImageViewStar3 = (ImageView) mView.findViewById(R.id.image_start_3);
         mImageViewStar4 = (ImageView) mView.findViewById(R.id.image_start_4);
         mImageViewStar5 = (ImageView) mView.findViewById(R.id.image_start_5);
-        mButtonPostSuggestStore = (Button) mView.findViewById(R.id.button_post_store);
+        mButtonPostSuggestStore = (LinearLayoutCompat) mView.findViewById(R.id.button_post_product);
         mRecyclerViewOldMessage = (RecyclerView) mView.findViewById(R.id.recycleview_message_rate);
+    }
+
+    private void setTexts() {
+        mTextViewNameStore.setText(FakeContainer.getNameProduct());
+        mTextViewProportionVote.setText(FakeContainer.getGeneralRate());
+        mTextViewCountVote.setText(FakeContainer.getAmountOfRates());
     }
 
     private void event() {
@@ -109,7 +119,7 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_post_store:
+            case R.id.button_post_product:
                 initAlertDiaLogPostMessage();
                 break;
             case R.id.button_post_message_rate:
@@ -143,22 +153,17 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
         mTextViewStar3 = (TextView) promptsView.findViewById(R.id.text_start_3);
         mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_start_4);
         mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_start_5);
-        mAlertDialogPostMessage = alertDialogBuilder.create();
-        mButtonPostComment = (TextView) promptsView.findViewById(R.id.button_post_message_rate);
+        mButtonPostComment = (LinearLayoutCompat) promptsView.findViewById(R.id.button_post_message_rate);
         mTextTitle = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_title);
         mTextContent = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_comment);
         mLayoutStar = (LinearLayout) promptsView.findViewById(R.id.layout_stars);
         mButtonPostComment.setOnClickListener(this);
         mTextTitle.setOnClickListener(this);
         mTextContent.setOnClickListener(this);
-        addStarList();
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(mAlertDialogPostMessage.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        mAlertDialogPostMessage.setCanceledOnTouchOutside(true);
+        mAlertDialogPostMessage = alertDialogBuilder.create();
+        mAlertDialogPostMessage.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mAlertDialogPostMessage.show();
-        mAlertDialogPostMessage.getWindow().setAttributes(lp);
+        addStarList();
     }
 
     public void initGuideSuggestStore() {

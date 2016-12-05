@@ -328,7 +328,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        removeCamera();
+        moveCamera();
 //        setListMarker();
 //        setListEdge();
         setCustomMarkers(0);
@@ -448,7 +448,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             new MarkerOptions().position(mAeon).title(getString(R.string.name_commerce)));
     }
 
-    private void removeCamera() {
+    private void moveCamera() {
         setGroundOverlay();
         CameraPosition cameraPosition =
             new CameraPosition.Builder().target(mAeon).zoom((Constants.MAP_ZOOM))
