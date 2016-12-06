@@ -5,31 +5,19 @@
     android:layout_width="@dimen/dialog_point_size"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/margin_20dp"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:baselineAligned="false">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vitriduocluulai"
+            android:layout_gravity="center"
             android:layout_centerVertical="true"
-            android:textColor="@color/red"/>
-
-        <ImageButton
-            android:id="@+id/btn_done_save_point"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@color/background_slidding_visible"
-            android:src="@drawable/close_button"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
+            android:textSize="@dimen/common_text_size_18"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
     <LinearLayout
         android:id="@+id/input_layout"
@@ -41,7 +29,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/note"/>
+            android:text="@string/note"
+            android:textSize="@dimen/common_text_size_15"
+            android:textColor="@color/black"/>
 
         <AutoCompleteTextView
             android:id="@+id/edt_save_point"
@@ -49,13 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <ImageButton
-            android:id="@+id/img_btn_save_point"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/background_visible"
-            android:src="@drawable/done"/>
     </LinearLayout>
 
     <TextView
@@ -63,12 +46,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/margin_10dp"
-        android:layout_marginTop="@dimen/margin_10dp"
         android:text="@string/list_point_saved"
-        android:textColor="@color/grey"
-        android:textSize="@dimen/text_small_size"
-        android:textStyle="bold"/>
+        android:textSize="@dimen/common_text_size_15"
+        android:textColor="@color/black" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list_point_saved"
@@ -82,9 +62,34 @@
         android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants"/>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-    </android.support.v7.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/btn_done_save_point"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:gravity="right"
+            android:textSize="@dimen/common_text_size_15"
+            android:text="@string/cacel"/>
+
+        <TextView
+            android:id="@+id/img_btn_save_point"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dot_dark_screen3"
+            android:gravity="center"
+            android:textSize="@dimen/common_text_size_15"
+            android:text="@string/save"/>
+    </LinearLayout>
 </LinearLayout>

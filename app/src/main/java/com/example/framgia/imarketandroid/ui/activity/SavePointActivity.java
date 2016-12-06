@@ -1,6 +1,7 @@
 package com.example.framgia.imarketandroid.ui.activity;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -47,14 +48,14 @@ import io.realm.RealmList;
 public class SavePointActivity extends AppCompatActivity implements View.OnClickListener,
     OnRecyclerItemInteractListener {
     private AutoCompleteTextView mEdtSavePoint;
-    private ImageButton mImageButtonSavePoint;
+    private TextView mImageButtonSavePoint;
     private RecyclerView mRvPointSaved;
     private SavePointAdapter mPointSavedAdapter;
     private SaveLocationAdapter mLocationAdapter;
     private RecyclerView.LayoutManager mPointSavedLayoutManager;
     public static ArrayList<SavedPointItem> sListPoint = new ArrayList<>();
     public static ArrayList<Point> sListPosition = new ArrayList<>();
-    private ImageButton mDoneButton;
+    private TextView mDoneButton;
     public static int sCheckpath;
     private Intent mIntent;
     private Point mIntentPoint;
@@ -78,7 +79,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
         init();
         final RealmList<Point> listStore = RealmRemote.getListStore();
         ArrayList<Point> listPoint = new ArrayList<Point>();
-        mDoneButton = (ImageButton) findViewById(R.id.btn_done_save_point);
+        mDoneButton = (TextView) findViewById(R.id.btn_done_save_point);
         mDoneButton.setOnClickListener(this);
         if (mControll == mFlagSpinner) {
             DecimalFormat mformat = new DecimalFormat("#.0");
@@ -116,6 +117,8 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
         mLayoutMain = (LinearLayout) findViewById(R.id.layout_main);
         mLayoutInput = (LinearLayout) findViewById(R.id.input_layout);
         mSpinner = (Spinner) findViewById(R.id.spinner_store);
+        mSpinner.getBackground().setColorFilter(getResources().getColor(R.color.blue),
+                PorterDuff.Mode.SRC_ATOP);
         mIntent = getIntent();
         mIntentPoint = (Point) mIntent.getSerializableExtra(Constants.BUNDLE_SAVE_POINT);
         mTitleSavePoint = (TextView) findViewById(R.id.title_save_point);
@@ -130,14 +133,14 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
         if (mControll == mFlagSpinner) {
             mLayoutMain.removeView(mRvPointSaved);
             setAutoCompleteTextView();
-            mImageButtonSavePoint = (ImageButton) findViewById(R.id.img_btn_save_point);
+            mImageButtonSavePoint = (TextView) findViewById(R.id.img_btn_save_point);
             mImageButtonSavePoint.setOnClickListener(this);
         }
         if (mControll == mFlagSavePosition) {
             mLayoutMain.removeView(mSpinner);
             setAutoCompleteTextView();
             setRecyclerView();
-            mImageButtonSavePoint = (ImageButton) findViewById(R.id.img_btn_save_point);
+            mImageButtonSavePoint = (TextView) findViewById(R.id.img_btn_save_point);
             mImageButtonSavePoint.setOnClickListener(this);
         }
     }

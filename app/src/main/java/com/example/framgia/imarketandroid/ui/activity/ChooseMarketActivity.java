@@ -560,6 +560,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             Location myLocation;
             if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Flog.toast(this, getString(R.string.enable_gps));
+                mCheckBoxNearMarket.setChecked(false);
             } else {
                 // vị trí hiện tại
                 myLocation =
