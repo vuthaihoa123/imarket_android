@@ -86,6 +86,7 @@
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:text="@string/ten_cua_hang"
                     android:textColor="@color/white"
+                    android:theme="@style/MyCheckBox"
                     android:textSize="@dimen/text_small_size"/>
             </RelativeLayout>
 

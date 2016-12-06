@@ -204,7 +204,7 @@
     <string name="error">Lỗi</string>
     <string name="list_point_saved">Danh sách vị trí đã lưu</string>
     <string name="done">Hoàn thành</string>
-    <string name="note">Ghi chú</string>
+    <string name="note">Ghi chú :</string>
     <string name="success">Share done !</string>
     <string name="text_share_fake">Cửa hàng này rất tuyệt \nĐịa chỉ: Hà Đông -Hà Nội</string>
     <string name="share_with_facebook">Chia sẻ với Facebook</string>
@@ -315,4 +315,6 @@
     <string name="day_ago">ngày trước</string>
     <string name="fake_recruitment">Tuyển dụng(mới)</string>
     <string name="fake_promotion">Khuyến mãi(giảm 30%)</string>
+    <string name="save">LƯU</string>
+    <string name="cacel">HỦY</string>
 </resources>
