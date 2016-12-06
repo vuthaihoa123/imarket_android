@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.FakeContainer;
+import com.example.framgia.imarketandroid.data.listener.OnFinishLoadDataListener;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CustomMarker;
@@ -95,7 +96,7 @@ import io.realm.RealmResults;
 public class FloorActivity extends AppCompatActivity implements AdapterView
     .OnItemSelectedListener, GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback, View
     .OnClickListener, BookProductAdapter.OnClickItemBarListenner, OnRecyclerItemInteractListener,
-    SensorEventListener {
+    SensorEventListener, OnFinishLoadDataListener {
     public final static int FLAG_CHECK_LIST_SAVE = 7;
     public static int sResumeValue = 0;
     public static List<String> mFloorList = new ArrayList<>();
@@ -162,6 +163,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     private LinearLayoutCompat mNameLoad;
     private FloatingActionButton mFABhire, mFABnewStore, mFABsaleOff;
     private LoadDataUtils mDataUtils;
+    private TextView mTextViewNameCenter;
+    private CommerceCanter mCommerce;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,11 +174,12 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         hideStatusBar();
         initViews();
         Intent intent = getIntent();
-        CommerceCanter commerce = (CommerceCanter) intent
+        mCommerce = (CommerceCanter) intent
             .getSerializableExtra(Constants.COMMERCE_INTENT);
         mDataUtils = new LoadDataUtils();
         mDataUtils.init(this);
-        mDataUtils.loadFloor(this, commerce.getId());
+        mDataUtils.loadFloor(this, mCommerce.getId());
+        mDataUtils.setLoadDataListener(FloorActivity.this);
     }
 
     private void initMap() {
@@ -249,6 +253,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 }
             }
         });
+        mTextViewNameCenter = (TextView)findViewById(R.id.txt_name_center);
     }
 
     private void initListViewFloor() {
@@ -882,6 +887,11 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
             Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
             startActivity(marketIntent);
         }
+    }
+
+    @Override
+    public void onFinish(boolean flag) {
+        if(flag) mTextViewNameCenter.setText(mCommerce.getName());
     }
 
     public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
