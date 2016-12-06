@@ -68,12 +68,12 @@ public class LoadDataUtils {
                 ListFloor floors = (ListFloor) object;
                 mProgressDialog.dismiss();
                 if (floors != null) {
-                    Flog.toast(mContext, R.string.data_success);
                     FloorActivity.mFloorList.clear();
                     for (int i = 0; i < floors.getFloorList().size(); i++) {
                         Floor floor = floors.getFloorList().get(i);
                         FloorActivity.mFloorList.add(floor.getNameFloor().toString());
                     }
+                    mFinishLoadDataListener.onFinish(true);
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }

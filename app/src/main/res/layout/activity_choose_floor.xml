@@ -106,6 +106,7 @@
                         card_view:cardElevation="@dimen/elevation_popup">
 
                         <TextView
+                            android:id="@+id/txt_name_center"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"

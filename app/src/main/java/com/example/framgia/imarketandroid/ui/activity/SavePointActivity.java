@@ -35,6 +35,7 @@ import com.example.framgia.imarketandroid.ui.adapter.SaveLocationAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.SavePointAdapter;
 import com.example.framgia.imarketandroid.ui.widget.LinearItemDecoration;
 import com.example.framgia.imarketandroid.util.Constants;
+import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.MapUntils;
 import com.example.framgia.imarketandroid.util.SystemUtil;
 import com.google.android.gms.maps.model.LatLng;
@@ -103,6 +104,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position,
                                            long id) {
+                    mEdtSavePoint.setText(mListStore.get(position).getName());
                 }
 
                 @Override
