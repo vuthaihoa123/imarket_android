@@ -29,7 +29,6 @@ import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.model.SavedPointItem;
 import com.example.framgia.imarketandroid.data.model.StoreType;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
-import com.example.framgia.imarketandroid.ui.adapter.CartProductAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.ChooseStoreTypeAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.SaveLocationAdapter;
 import com.example.framgia.imarketandroid.ui.adapter.SavePointAdapter;
@@ -51,7 +50,6 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
     private AutoCompleteTextView mEdtSavePoint;
     private TextView mImageButtonSavePoint;
     private RecyclerView mRvPointSaved;
-    private SavePointAdapter mPointSavedAdapter;
     private SaveLocationAdapter mLocationAdapter;
     private RecyclerView.LayoutManager mPointSavedLayoutManager;
     public static ArrayList<SavedPointItem> sListPoint = new ArrayList<>();
@@ -64,63 +62,30 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
     private int mControll = FloorActivity.sResumeValue;
     private TextView mTitleSavePoint;
     private LinearLayout mLayoutMain, mLayoutInput;
-    private Spinner mSpinner;
+    private ChooseStoreTypeAdapter mSaveAdapter;
     private int mFlagSavePosition = 4;
     private int mFlagSpinner = 5;
     private int mFlagCheckListSave = 7;
+    private final int MAX_DISTANCE= 25;
     private ArrayAdapter<String> mAdapter;
-    private boolean mCheckSelected;
-    private static Point sSaveLocaiton;
+    private RealmList<Point> listStore;
+    ArrayList<Point> listPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_save_point);
+        listStore = RealmRemote.getListStore();
+        listPoint = new ArrayList<Point>();
         init();
-        final RealmList<Point> listStore = RealmRemote.getListStore();
-        ArrayList<Point> listPoint = new ArrayList<Point>();
         mDoneButton = (TextView) findViewById(R.id.btn_done_save_point);
         mDoneButton.setOnClickListener(this);
-        if (mControll == mFlagSpinner) {
-            DecimalFormat mformat = new DecimalFormat("#.0");
-            mTitleSavePoint.setText(R.string.title_save_point);
-            for (Point point : listStore) {
-                float distance = MapUntils.calculateDistance(new LatLng(mIntentPoint.getLat(),
-                    mIntentPoint.getLng()), point);
-                if (distance < 25) {
-                    listPoint.add(point);
-                    StoreType store = new StoreType(0, Constants.LIST_NAME_STORE[point
-                        .getType()] + ": \n" + mformat.format(distance) + "m",
-                        Constants.LIST_AVATAR_STORE[point.getType()],
-                        0);
-                    mListStore.add(store);
-                }
-            }
-            mPointSavedAdapter = new SavePointAdapter(this, R.layout.item_choose_store_type,
-                mListStore);
-            mSpinner.setAdapter(mPointSavedAdapter);
-            mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position,
-                                           long id) {
-                    mEdtSavePoint.setText(mListStore.get(position).getName());
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-        } else {
-        }
     }
 
     private void init() {
         mLayoutMain = (LinearLayout) findViewById(R.id.layout_main);
         mLayoutInput = (LinearLayout) findViewById(R.id.input_layout);
-        mSpinner = (Spinner) findViewById(R.id.spinner_store);
-        mSpinner.getBackground().setColorFilter(getResources().getColor(R.color.blue),
-                PorterDuff.Mode.SRC_ATOP);
         mIntent = getIntent();
         mIntentPoint = (Point) mIntent.getSerializableExtra(Constants.BUNDLE_SAVE_POINT);
         mTitleSavePoint = (TextView) findViewById(R.id.title_save_point);
@@ -129,17 +94,32 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
         mRvPointSaved.setHasFixedSize(true);
         if (mControll == mFlagCheckListSave) {
             mLayoutMain.removeView(mLayoutInput);
-            mLayoutMain.removeView(mSpinner);
             setRecyclerView();
         }
         if (mControll == mFlagSpinner) {
-            mLayoutMain.removeView(mRvPointSaved);
             setAutoCompleteTextView();
             mImageButtonSavePoint = (TextView) findViewById(R.id.img_btn_save_point);
             mImageButtonSavePoint.setOnClickListener(this);
+            DecimalFormat mformat = new DecimalFormat("#.0");
+            mTitleSavePoint.setText(R.string.title_save_point);
+            for (Point point : listStore) {
+                float distance = MapUntils.calculateDistance(new LatLng(mIntentPoint.getLat(),
+                    mIntentPoint.getLng()), point);
+                if (distance < MAX_DISTANCE) {
+                    listPoint.add(point);
+                    StoreType store = new StoreType(0, Constants.LIST_NAME_STORE[point
+                        .getType()] + ": " + mformat.format(distance) + Constants.METTERS,
+                        Constants.LIST_AVATAR_STORE[point.getType()], 0);
+                    mListStore.add(store);
+                }
+            }
+            mPointSavedLayoutManager = new LinearLayoutManager(this);
+            mRvPointSaved.setLayoutManager(mPointSavedLayoutManager);
+            mSaveAdapter = new ChooseStoreTypeAdapter(this, mListStore);
+            mSaveAdapter.setOnRecyclerItemInteractListener(this);
+            mRvPointSaved.setAdapter(mSaveAdapter);
         }
         if (mControll == mFlagSavePosition) {
-            mLayoutMain.removeView(mSpinner);
             setAutoCompleteTextView();
             setRecyclerView();
             mImageButtonSavePoint = (TextView) findViewById(R.id.img_btn_save_point);
@@ -174,7 +154,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
                     if (point != null) {
                         if (sListPoint.size() == 0) {
                             SavedPointItem item =
-                                new SavedPointItem(tempNote, false, R.drawable.delete, point);
+                                new SavedPointItem(tempNote, false, R.drawable.trash, point);
                             sListPoint.add(item);
                             mLocationAdapter.notifyDataSetChanged();
                         } else {
@@ -184,7 +164,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
                             }
                             if (i == sListPoint.size()) {
                                 SavedPointItem item =
-                                    new SavedPointItem(tempNote, false, R.drawable.delete, point);
+                                    new SavedPointItem(tempNote, false, R.drawable.trash, point);
                                 sListPoint.add(item);
                                 mLocationAdapter.notifyDataSetChanged();
                             } else
@@ -197,7 +177,7 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
                 } else {
                     String tempNote = mEdtSavePoint.getText().toString();
                     SavedPointItem item =
-                        new SavedPointItem(tempNote, false, R.drawable.delete, mIntentPoint);
+                        new SavedPointItem(tempNote, false, R.drawable.trash, mIntentPoint);
                     sListPoint.add(item);
                     sListPosition.add(mIntentPoint);
                     finish();
@@ -210,11 +190,15 @@ public class SavePointActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onItemClick(View view, int position) {
-        SavedPointItem item = sListPoint.get(position);
-        sCheckpath = 2;
-        FloorActivity.sResumeValue = mFlagCheckListSave;
-        FloorActivity.sSavedLocation = RealmRemote.getObjectPointFromId(item.getmId());
-        FloorActivity.sSavedNote= item.getmNotePoint();
-        finish();
+        if (mControll == mFlagSpinner) {
+            mEdtSavePoint.setText(mListStore.get(position).getName());
+        } else {
+            SavedPointItem item = sListPoint.get(position);
+            sCheckpath = 2;
+            FloorActivity.sResumeValue = mFlagCheckListSave;
+            FloorActivity.sSavedLocation = RealmRemote.getObjectPointFromId(item.getmId());
+            FloorActivity.sSavedNote = item.getmNotePoint();
+            finish();
+        }
     }
 }

@@ -56,12 +56,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <Spinner
-        android:id="@+id/spinner_store"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="blocksDescendants"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
