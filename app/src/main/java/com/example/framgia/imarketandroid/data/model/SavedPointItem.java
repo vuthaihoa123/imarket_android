@@ -1,4 +1,4 @@
-package com.example.framgia.imarketandroid.data.model;
+                                                                                                                                                                                                                                                                                            package com.example.framgia.imarketandroid.data.model;
 
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.remote.RealmRemote;
