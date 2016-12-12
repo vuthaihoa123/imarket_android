@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.example.framgia.imarketandroid.ImarketApplication;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.CategoryList;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
+import com.example.framgia.imarketandroid.data.model.EventList;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Session;
@@ -98,9 +100,9 @@ public class HttpRequest {
             .build();
     }
 
-    public void loadCategories() {
+    public void loadCategories(int storeId) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<CategoryList> call = mApi.loadCategories();
+        Call<CategoryList> call = mApi.loadCategories(storeId);
         call.enqueue(new Callback<CategoryList>() {
             @Override
             public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
@@ -299,6 +301,26 @@ public class HttpRequest {
 
             @Override
             public void onFailure(Call<ProductList> call, Throwable t) {
+                if (mListener != null) {
+                    mListener.onLoadDataFailure(t.getMessage());
+                }
+            }
+        });
+    }
+
+    public void getEvents(int id_store) {
+        mApi = mRetrofit.create(IMarketApiEndPoint.class);
+        Call<EventList> requesServer = mApi.getEventInStore(id_store);
+        requesServer.enqueue(new Callback<EventList>() {
+            @Override
+            public void onResponse(Call<EventList> call, Response<EventList> response) {
+                if (mListener != null) {
+                    mListener.onLoadDataSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EventList> call, Throwable t) {
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }

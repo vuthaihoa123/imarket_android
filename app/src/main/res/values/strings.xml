@@ -317,4 +317,6 @@
     <string name="fake_promotion">Khuyến mãi(giảm 30%)</string>
     <string name="save">LƯU</string>
     <string name="cacel">HỦY</string>
+    <string name="new_event_noti">Bạn có thông báo mới ....</string>
+    <string name="ticker">This is a ticker</string>
 </resources>

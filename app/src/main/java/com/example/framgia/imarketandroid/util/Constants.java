@@ -146,4 +146,29 @@ public class Constants {
     public static final long TIME_UPDATE_AGO = MINUTE * SECOND;
     public static final int MESSAGE_LIST_SIZE = 5;
     public static final int COMMENT_LIST_SIZE = 3;
+    public static final int LOAD_DATA_FINISH = 1;
+    public static final int LOAD_EVENT_FINISH = 2;
+
+    public static final String CONTENT_TYPE = "Content-Type: application/json";
+    // param
+    public static final String GET_STORES_PATH = "floors/{idFloor}/stores";
+    public static final String PARAM_CATEGORIES = "categories";
+    public static final String LOGIN_PATH = "sessions";
+    public static final String PARAM_COMMERCE = "commerce";
+    public static final String PARAM_STORE_TYPE_LIST = "store_type_list";
+    public static final String GET_COMMERCE_CENTERS_PATH = "commerce_centers";
+    public static final String GET_FLOORS_PATH = "commerce_centers/{commerceCenterId}/floors";
+    public static final String PARAM_FLOORS = "floors";
+    public static final String GET_PRODUCTS_PATH = "categories/{idCategory}/products";
+    public static final String GET_EVENTS_PATH = "stores/{storeId}/events";
+    public static final String UPDATE_USERS_PATH = "users/{idUser}";
+    public static final String REGISTER_PATH = "users";
+    //param_id
+    public static final String USER_ID = "idUser";
+    public static final String FLOOR_ID = "idFloor";
+    public static final String STORE_ID = "storeId";
+    public static final String CATEGORY_ID = "idCategory";
+    public static final String STORE_TYPE_ID = "storeTypeId";
+    public static final String COMMERCE_CENTER_ID = "commerceCenterId";
+
 }

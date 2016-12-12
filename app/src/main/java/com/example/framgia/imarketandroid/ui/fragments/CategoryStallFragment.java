@@ -32,6 +32,7 @@ public class CategoryStallFragment extends Fragment implements
     public static List<Category> sCategoryProducts;
     private RecyclerView mRecyclerView;
     private View mView;
+    private int mStoreId = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -67,7 +68,7 @@ public class CategoryStallFragment extends Fragment implements
         if (bundle == null) {
             HttpRequest.getInstance(getActivity().getBaseContext()).init();
             HttpRequest.getInstance(getActivity().getBaseContext()).initProgressDialog(getActivity());
-            HttpRequest.getInstance(getActivity().getBaseContext()).loadCategories();
+            HttpRequest.getInstance(getActivity().getBaseContext()).loadCategories(mStoreId);
             HttpRequest.getInstance(getActivity().getBaseContext()).setOnLoadDataListener(this);
         }
     }

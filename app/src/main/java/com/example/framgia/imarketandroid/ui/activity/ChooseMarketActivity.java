@@ -2,11 +2,16 @@ package com.example.framgia.imarketandroid.ui.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.MatrixCursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -26,6 +31,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +59,7 @@ import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractLi
 import com.example.framgia.imarketandroid.data.model.CartItem;
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.DrawerItem;
+import com.example.framgia.imarketandroid.data.model.Event;
 import com.example.framgia.imarketandroid.data.model.NearMarket;
 import com.example.framgia.imarketandroid.data.model.Point;
 import com.example.framgia.imarketandroid.data.model.Session;
@@ -91,6 +98,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     SearchView.OnQueryTextListener, OnRecyclerItemInteractListener, TextWatcher,
     LocationListener, OnFinishLoadDataListener {
     static Realm myRealm;
+    private int mIdStore = 1;
     private RecyclerMarketAdapter mMarketAdapter;
     private List<CommerceCanter> mTraceMarkets = new ArrayList<>();
     private DrawerLayout mDrawerLayout;
@@ -125,6 +133,10 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private LocationManager mLocationManager;
     private boolean mIsConnect;
     private List<NearMarket> mNearMarketList = new ArrayList<>();
+    private List<Event> mEventList = new ArrayList<>();
+    private NotificationCompat.Builder notBuilder;
+    private static final int MY_NOTIFICATION_ID = 12345;
+    private static final int MY_REQUEST_CODE = 100;
 
     public void initDataAutoCompleteTextView() {
         mListAutoSearch.clear();
@@ -635,9 +647,49 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFinish(boolean flag) {
-        if(flag) {
-            synChronizeData();
+    public void onFinish(int result) {
+        switch (result) {
+            case Constants.LOAD_DATA_FINISH:
+                synChronizeData();
+                mDataUtils.getEvents(this, mIdStore, mEventList);
+                break;
+            case Constants.LOAD_EVENT_FINISH:
+                pushNotification();
+                break;
+        }
+    }
+
+    private void pushNotification() {
+        notBuilder = new NotificationCompat.Builder(this);
+        notBuilder.setAutoCancel(true);
+        notBuilder.setSmallIcon(R.drawable.ic_logo_i);
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo_i);
+        notBuilder.setLargeIcon(largeIcon);
+        notBuilder.setTicker(getString(R.string.ticker));
+
+        for (Event event : mEventList) {
+            // Sét đặt thời điểm sự kiện xẩy ra.
+            // Các thông báo trên Panel được sắp xếp bởi thời gian này.
+            notBuilder.setWhen(System.currentTimeMillis());
+            notBuilder.setContentTitle(event.getName());
+            notBuilder.setContentText(event.getContent());
+
+            // Tạo một Intent
+            Intent intent = new Intent(this, HomeStoreActivity.class);
+            // PendingIntent.getActivity(..) sẽ start mới một Activity và trả về
+            // đối tượng PendingIntent.
+            // Nó cũng tương đương với gọi Context.startActivity(Intent).
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, MY_REQUEST_CODE,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            this.notBuilder.setContentIntent(pendingIntent);
+            // Lấy ra dịch vụ thông báo (Một dịch vụ có sẵn của hệ thống).
+            NotificationManager notificationService  =
+                (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            // Xây dựng thông báo và gửi nó lên hệ thống.
+
+            Notification notification =  notBuilder.build();
+            notificationService.notify(MY_NOTIFICATION_ID, notification);
         }
     }
 }
