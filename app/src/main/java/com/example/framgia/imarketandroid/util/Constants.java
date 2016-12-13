@@ -81,7 +81,7 @@ public class Constants {
     public static final int SAVE_POINT_TYPE = -1;
     public static final int CHANGE_TIME_DOWN = -1;
     public static final float GROUND_BEARING = (float) 26.3248;
-    public static final float MAP_ZOOM = (float) 19.5;
+    public static final float MAP_ZOOM = (float) 17;
     public static final String PERMISSTION_SHARE = "publish_actions";
     public static final String MESSAGEDIGEST = "SHA";
     public static final String CLEAR_EDITTEXT = "";
