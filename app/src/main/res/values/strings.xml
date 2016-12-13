@@ -319,4 +319,6 @@
     <string name="cacel">HỦY</string>
     <string name="new_event_noti">Bạn có thông báo mới ....</string>
     <string name="ticker">This is a ticker</string>
+    <string name="colon">:</string>
+    <string name="text_share_hint">Nhập nội dung tại đây.</string>
 </resources>

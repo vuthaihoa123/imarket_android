@@ -1,39 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/wid_hei_300"
-    android:layout_height="@dimen/wid_hei_400"
-    android:background="@color/color_fb"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
     android:padding="@dimen/margin_5dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/wid_hei_30">
+        android:layout_height="@dimen/common_size_40"
+        android:gravity="center_vertical">
 
-        <Button
+        <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/button_cancel_share_dialog"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/color_fb"
-            android:drawableLeft="@drawable/ic_close_white"
-            android:paddingLeft="@dimen/margin_10dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_close_white"
+                android:tint="@color/com_facebook_blue"
+                android:scaleType="fitCenter"/>
+        </android.support.v7.widget.LinearLayoutCompat>
 
-        <Button
-            android:id="@+id/button_success_share_dialog"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/share_with_facebook"
-            android:gravity="center_vertical"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:background="@color/color_fb"
-            android:drawableRight="@drawable/ic_done"
-            android:paddingRight="@dimen/margin_10dp"/>
-    </LinearLayout>
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_large_size"
+            android:layout_centerHorizontal="true"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/button_success_share_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_done"
+                android:tint="@color/com_facebook_blue"
+                android:scaleType="fitCenter"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/image_share"
@@ -42,29 +55,29 @@
         android:layout_marginTop="@dimen/margin_5dp"
         android:layout_marginBottom="@dimen/margin_5dp"
         android:background="@color/white"
-        android:src="@drawable/ic_iphone5s"/>
+        android:src="@drawable/ic_iphone5s"
+        android:scaleType="fitCenter"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/wid_hei_30"
+        android:layout_height="@dimen/common_size_45"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/margin_10dp"
         android:text="@string/text_share_title"
         android:textColor="@color/black"
-        android:textSize="@dimen/common_text_size_15"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/width_height_1"/>
+        android:textSize="@dimen/text_large_size" />
 
     <EditText
         android:id="@+id/edittext_share"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/width_height_70"
-        android:background="@color/white"
-        android:gravity="center"
-        android:text="@string/text_share_fake"
-        android:textSize="@dimen/common_text_size_15"/>
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_10dp"
+        android:background="@color/com_facebook_blue"
+        android:hint="@string/text_share_hint"
+        android:textStyle="italic"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/text_medium_size"
+        android:layout_marginTop="@dimen/commen_size_1"/>
 </LinearLayout>
+

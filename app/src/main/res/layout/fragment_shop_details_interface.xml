@@ -1,62 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         android:orientation="vertical">
 
-        <FrameLayout
+        <RelativeLayout
+            android:id="@+id/relative_cover_shop"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/wid_hei_200">
+            android:layout_height="@dimen/width_height_170"
+            android:background="@drawable/ic_cover_nt"
+            android:padding="@dimen/padding_10dp">
 
-            <ImageView
-                android:id="@+id/image_cover_shop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_cover_nt"/>
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/linear_share_info_shop_on_fb"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground">
 
-            <Button
-                android:id="@+id/button_share_info_shop_on_fb"
-                android:layout_gravity="right"
-                android:backgroundTint="@color/color_bg_tint"
-                android:background="@drawable/ic_share_black"
-                android:layout_marginRight="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:layout_width="@dimen/wid_hei_30"
-                android:layout_height="@dimen/wid_hei_30"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_share_black"
+                    android:tint="@android:color/holo_green_dark" />
+            </android.support.v7.widget.LinearLayoutCompat>
 
             <LinearLayout
+                android:id="@+id/linear_infor_supply"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/width_height_40"
-                android:layout_marginTop="@dimen/margin_160"
-                android:background="@color/background_shop_hint">
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/common_size_60"
+                android:background="@color/grey_darker">
 
                 <TextView
                     android:id="@+id/text_count_heart"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_80"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/count_heart_shop"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/common_text_size_16"/>
+                    android:textSize="@dimen/text_medium_size" />
 
                 <TextView
                     android:layout_width="@dimen/width_height_1"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/margin_10dp"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:background="@color/white"/>
+                    android:background="@color/white" />
 
                 <TextView
                     android:id="@+id/text_count_follow"
@@ -66,47 +62,77 @@
                     android:gravity="center"
                     android:text="@string/count_follow_shop"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/common_text_size_16"/>
+                    android:textSize="@dimen/text_medium_size" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/image_avatar"
-                android:layout_width="@dimen/width_height_70"
-                android:layout_height="@dimen/width_height_70"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_110"
-                android:src="@drawable/avatar"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circle_image_avatar"
+                android:layout_width="@dimen/icon_size_large"
+                android:layout_height="@dimen/icon_size_large"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/margin_10dp"
+                android:src="@drawable/avatar" />
 
-            <TextView
-                android:id="@+id/name_shop"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_90"
-                android:layout_marginTop="@dimen/margin_110"
-                android:text="@string/name_shop"
-                android:textColor="@color/background_shop_color_name"
-                android:textSize="@dimen/common_text_size_24"
-                android:textStyle="bold"/>
+                android:layout_above="@+id/linear_infor_supply"
+                android:layout_toRightOf="@+id/circle_image_avatar"
+                android:orientation="vertical"
+                android:background="@color/grey_darker"
+                android:paddingRight="@dimen/padding_10dp"
+                android:paddingLeft="@dimen/padding_10dp">
+
+                <TextView
+                    android:id="@+id/text_name_shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/text_voting"
+                    android:text="@string/name_shop"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_xlarge_size" />
+
+                <TextView
+                    android:id="@+id/text_voting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:text="@string/vote_text_shop"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_large_size" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/vote_shop"
-                android:layout_width="wrap_content"
+                android:id="@+id/button_album_shop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_text_size_30"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_20dp"
+                android:text="@string/album_shop"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_medium_size" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_album_shop"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_90"
-                android:layout_marginTop="@dimen/margin_135"
-                android:text="@string/vote_text_shop"
-                android:textColor="@color/background_shop_color_name"
-                android:textSize="@dimen/common_text_size_20"
-                android:textStyle="normal"/>
-
-
-        </FrameLayout>
-
+                android:background="@color/white" />
+        </LinearLayout>
+        
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
-            app:cardCornerRadius="@dimen/cardview_radius_3">
+            android:layout_marginTop="@dimen/margin_5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,90 +140,106 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/button_info_shop"
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:id="@+id/linear_compat_info_shop"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/width_height_40"
-                    android:background="@color/white"
-                    android:drawableRight="@drawable/ic_drop_down"
+                    android:layout_height="@dimen/width_height_70"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/margin_20dp"
-                    android:text="@string/info_shop"
-                    android:textColor="@color/black"/>
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/padding_10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/info_shop"
+                        android:textColor="@android:color/holo_green_dark"
+                        android:textSize="@dimen/text_medium_size" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_drop_down" />
+                </android.support.v7.widget.LinearLayoutCompat>
 
                 <LinearLayout
                     android:id="@+id/linear_info_shop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/padding_10dp"
+                    android:paddingRight="@dimen/padding_10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/wid_hei_25"
-                        android:layout_marginLeft="@dimen/size_50dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:text="@string/branch_text"
                             android:textColor="@color/black"
-                            android:textStyle="italic"/>
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
-                            android:layout_width="@dimen/width_height_1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/black"/>
+                            android:layout_weight="1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_xsmall_size" />
 
-                        <Spinner
+                        <android.support.v7.widget.AppCompatSpinner
                             android:id="@+id/spinner_branch_shop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:background="@color/grey"
-                            android:paddingLeft="@dimen/margin_10dp"
-                            android:textColor="@color/black"/>
+                            android:layout_weight="7"
+                            android:background="@drawable/background_spinner"
+                            android:textColor="@android:color/holo_green_dark" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/size_50dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:text="@string/address_shop"
                             android:textColor="@color/black"
-                            android:textStyle="italic"/>
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
-                            android:layout_width="@dimen/width_height_1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-
+                            android:layout_weight="1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
                             android:id="@+id/text_address_shop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:paddingLeft="@dimen/margin_10dp"
+                            android:layout_weight="7"
                             android:text="@string/address_text"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/size_50dp"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -205,30 +247,32 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:text="@string/phonenumbershop"
                             android:textColor="@color/black"
-                            android:textStyle="italic"/>
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
-                            android:layout_width="@dimen/width_height_1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/black"/>
+                            android:layout_weight="1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
                             android:id="@+id/text_phonenumber_shop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:paddingLeft="@dimen/margin_10dp"
+                            android:layout_weight="7"
                             android:text="@string/hint_number"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/size_50dp"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -236,56 +280,61 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:text="@string/website_shop"
                             android:textColor="@color/black"
-                            android:textStyle="italic"/>
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
-                            android:layout_width="@dimen/width_height_1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/black"/>
+                            android:layout_weight="1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
                             android:id="@+id/text_website_shop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:paddingLeft="@dimen/margin_10dp"
+                            android:layout_weight="7"
                             android:text="@string/text_web_fake"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_10dp"
-                        android:layout_marginLeft="@dimen/size_50dp"
                         android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginBottom="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:text="@string/facebook_shop"
                             android:textColor="@color/black"
-                            android:textStyle="italic"/>
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
-                            android:layout_width="@dimen/width_height_1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/black"/>
+                            android:layout_weight="1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
                             android:id="@+id/text_facebook_shop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:paddingLeft="@dimen/margin_10dp"
+                            android:layout_weight="7"
                             android:text="@string/text_facebook_fake"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -294,8 +343,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
-            app:cardCornerRadius="@dimen/cardview_radius_3">
+            android:layout_marginTop="@dimen/margin_5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -303,114 +351,107 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/button_recruitment_introduction_shop"
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:id="@+id/linear_compat_recruitment_introduction_shop"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/width_height_40"
-                    android:background="@color/white"
-                    android:drawableRight="@drawable/ic_drop_down"
+                    android:layout_height="@dimen/width_height_70"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/margin_20dp"
-                    android:text="@string/recruitment_introduction"
-                    android:textColor="@color/black"/>
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/padding_10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/recruitment_introduction"
+                        android:textColor="@android:color/holo_green_dark"
+                        android:textSize="@dimen/text_medium_size" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_drop_down" />
+                </android.support.v7.widget.LinearLayoutCompat>
 
                 <LinearLayout
                     android:id="@+id/linear_recruitment_introduction_shop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/padding_10dp"
+                    android:paddingRight="@dimen/padding_10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/size_50dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:text="@string/requip_shop"
                             android:textColor="@color/black"
-                            android:textStyle="italic"/>
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
-                            android:layout_width="@dimen/width_height_1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-
+                            android:layout_weight="1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
                             android:id="@+id/text_introduction_shop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:paddingLeft="@dimen/margin_10dp"
+                            android:layout_weight="9"
                             android:text="@string/intro_shop"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_10dp"
-                        android:layout_marginLeft="@dimen/size_50dp"
                         android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginBottom="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:text="@string/introo_shop"
                             android:textColor="@color/black"
-                            android:textStyle="italic"/>
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
-                            android:layout_width="@dimen/width_height_1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@color/black"/>
+                            android:layout_weight="1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_xsmall_size" />
 
                         <TextView
                             android:id="@+id/text_requipment_shop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:paddingLeft="@dimen/margin_10dp"
+                            android:layout_weight="9                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "
                             android:text="@string/requip"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
-
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:background="@color/colorPrimary"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/button_album_shop"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/width_height_40"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/margin_20dp"
-                    android:text="@string/album_shop"
-                    android:textColor="@color/black"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycle_album_shop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_bg_recyle"/>
-            </LinearLayout>
     </LinearLayout>
-
 </ScrollView>
+

@@ -1,6 +1,10 @@
 package com.example.framgia.imarketandroid.util;
 
 import android.content.Context;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
 import com.example.framgia.imarketandroid.R;
 
@@ -44,5 +48,10 @@ public class SystemUtil {
         String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(nfdNormalizedString).replaceAll("");
+    }
+
+    public static void slideUpView(Context context, View view) {
+        view.startAnimation(AnimationUtils.loadAnimation(context,
+                R.anim.slide_up));
     }
 }

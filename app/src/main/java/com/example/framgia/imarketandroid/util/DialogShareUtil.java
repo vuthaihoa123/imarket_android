@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -53,8 +54,8 @@ public class DialogShareUtil {
         alertDialogBuilder.setView(promptsView);
         final EditText editTextShare = (EditText) promptsView.findViewById(R.id.edittext_share);
         ImageView imgShare = (ImageView) promptsView.findViewById(R.id.image_share);
-        Button buttonCancel = (Button) promptsView.findViewById(R.id.button_cancel_share_dialog);
-        Button buttonSuccess = (Button) promptsView.findViewById(R.id.button_success_share_dialog);
+        LinearLayoutCompat buttonCancel = (LinearLayoutCompat) promptsView.findViewById(R.id.button_cancel_share_dialog);
+        LinearLayoutCompat buttonSuccess = (LinearLayoutCompat) promptsView.findViewById(R.id.button_success_share_dialog);
         imgShare.setImageResource(idImageView);
         alertDialogBuilder
             .setCancelable(false);
