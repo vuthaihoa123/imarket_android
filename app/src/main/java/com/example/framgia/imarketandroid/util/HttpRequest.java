@@ -174,9 +174,9 @@ public class HttpRequest {
         });
     }
 
-    public void updateUser(int iduser, UserModel userUpdate) {
+    public void updateUser(int idUser, UserModel userUpdate) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<UserModel> callUpdateUser = mApi.updateUser(iduser, userUpdate);
+        Call<UserModel> callUpdateUser = mApi.updateUser(idUser, userUpdate);
         callUpdateUser.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -268,9 +268,9 @@ public class HttpRequest {
         });
     }
 
-    public void getStore(int id_floor, int storeTypeId) {
+    public void getStore(int idFloor, int storeTypeId) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<Stores> repuestServer = mApi.getStoreByStoreType(id_floor, storeTypeId);
+        Call<Stores> repuestServer = mApi.getStoreByStoreType(idFloor, storeTypeId);
         repuestServer.enqueue(new Callback<Stores>() {
             @Override
             public void onResponse(Call<Stores> call, Response<Stores> response) {
@@ -288,9 +288,9 @@ public class HttpRequest {
         });
     }
 
-    public void getProduct(int id_cate) {
+    public void getProduct(int idCategory) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<ProductList> repuestServer = mApi.getProductInCategory(id_cate);
+        Call<ProductList> repuestServer = mApi.getProductInCategory(idCategory);
         repuestServer.enqueue(new Callback<ProductList>() {
             @Override
             public void onResponse(Call<ProductList> call, Response<ProductList> response) {
@@ -308,9 +308,9 @@ public class HttpRequest {
         });
     }
 
-    public void getEvents(int id_store) {
+    public void getEvents(int idStore) {
         mApi = mRetrofit.create(IMarketApiEndPoint.class);
-        Call<EventList> requesServer = mApi.getEventInStore(id_store);
+        Call<EventList> requesServer = mApi.getEventInStore(idStore);
         requesServer.enqueue(new Callback<EventList>() {
             @Override
             public void onResponse(Call<EventList> call, Response<EventList> response) {

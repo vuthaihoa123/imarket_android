@@ -348,7 +348,10 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
         List<Showcase> showList = new ArrayList<>();
         showList.add(new Showcase(mButtonCallCenter, getString(R.string.sequence_call_canter)));
         showList.add(new Showcase(mButtonLeftContinue, getString(R.string.click_continue_book_table)));
-        ShowcaseGuideUtil.mutilShowcase(BookTableActivity.this, Constants
-            .SHOWCASE_ID_BOOK_TABLE, showList);
+        ShowcaseGuideUtil.mutilShowcase(
+            BookTableActivity.this,
+            Constants.Instruction.SHOWCASE_ID_BOOK_TABLE,
+            showList
+        );
     }
 }

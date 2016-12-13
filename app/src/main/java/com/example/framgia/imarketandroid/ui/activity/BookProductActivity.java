@@ -227,7 +227,7 @@ public class BookProductActivity extends Activity implements View.OnClickListene
         showList.add(new Showcase(mRadioButtonOnline, getString(R.string.sequence_radio_online)));
         showList.add(new Showcase(mRadioButtonOffline, getString(R.string.sequence_radio_offline)));
         showList.add(new Showcase(mButtonContinue, getString(R.string.click_continue_book_table)));
-        ShowcaseGuideUtil.mutilShowcase(BookProductActivity.this, Constants
-            .SHOWCASE_ID_BOOK_PRODUCT, showList);
+        ShowcaseGuideUtil.mutilShowcase(BookProductActivity.this,
+            Constants.Instruction.SHOWCASE_ID_BOOK_PRODUCT, showList);
     }
 }

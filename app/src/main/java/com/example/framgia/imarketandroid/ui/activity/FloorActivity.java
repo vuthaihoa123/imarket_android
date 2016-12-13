@@ -733,12 +733,14 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         customMarkerView.setVisible(true);
         if (mCheckCurrentLocation == false)
             customMarkerView.setBackground(
-                    ResourcesCompat.getDrawable(getResources(), Constants.LIST_AVATAR_STORE[position],
+                    ResourcesCompat.getDrawable(getResources(),
+                        Constants.DataList.LIST_AVATAR_STORE[position],
                             null));
         else
             customMarkerView.setBackground(
                     ResourcesCompat
-                            .getDrawable(getResources(), Constants.LIST_CURRENT_AVATAR_STORE[position],
+                            .getDrawable(getResources(),
+                                Constants.DataList.LIST_CURRENT_AVATAR_STORE[position],
                                     null));
     }
 
@@ -970,7 +972,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onFinish(int result) {
-        if(result == Constants.LOAD_DATA_FINISH) mTextViewNameCenter.setText(mCommerce.getName());
+        if(result == Constants.ResultFinishLoadData.LOAD_DATA_FINISH)
+            mTextViewNameCenter.setText(mCommerce.getName());
     }
 
     public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
@@ -990,31 +993,31 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 switch (customMarker.getType()) {
                     case FakeContainer.STORE_TYPE_1:
                         mTextStoreName =
-                                Constants.LIST_NAME_STORE[1];
+                                Constants.DataList.LIST_NAME_STORE[1];
                         break;
                     case FakeContainer.STORE_TYPE_2:
                         mTextStoreName =
-                                Constants.LIST_NAME_STORE[2];
+                                Constants.DataList.LIST_NAME_STORE[2];
                         break;
                     case FakeContainer.STORE_TYPE_3:
                         mTextStoreName =
-                                Constants.LIST_NAME_STORE[3];
+                                Constants.DataList.LIST_NAME_STORE[3];
                         break;
                     case FakeContainer.STORE_TYPE_4:
                         mTextStoreName =
-                                Constants.LIST_NAME_STORE[4];
+                                Constants.DataList.LIST_NAME_STORE[4];
                         break;
                     case FakeContainer.STORE_TYPE_5:
                         mTextStoreName =
-                                Constants.LIST_NAME_STORE[5];
+                                Constants.DataList.LIST_NAME_STORE[5];
                         break;
                     case FakeContainer.STORE_TYPE_6:
                         mTextStoreName =
-                                Constants.LIST_NAME_STORE[6];
+                                Constants.DataList.LIST_NAME_STORE[6];
                         break;
                     case FakeContainer.STORE_TYPE_7:
                         mTextStoreName =
-                                Constants.LIST_NAME_STORE[7];
+                                Constants.DataList.LIST_NAME_STORE[7];
                         break;
                     case Constants.SAVE_POINT_TYPE:
                         LinearLayout layoutHire = (LinearLayout) v.findViewById(R.id.layout_hire);
@@ -1029,7 +1032,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 LinearLayout layoutSale = (LinearLayout) v.findViewById(R.id.layout_sale);
                 ((ViewGroup) v).removeView(layoutHire);
                 ((ViewGroup) v).removeView(layoutSale);
-                mTextStoreName = Constants.LIST_NAME_STORE[0] + " " + marker.getTitle();
+                mTextStoreName = Constants.DataList.LIST_NAME_STORE[0] + " " + marker.getTitle();
             }
             textView.setText(mTextStoreName);
             textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);

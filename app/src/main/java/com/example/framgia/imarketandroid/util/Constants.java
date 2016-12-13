@@ -85,29 +85,6 @@ public class Constants {
     public static final String PERMISSTION_SHARE = "publish_actions";
     public static final String MESSAGEDIGEST = "SHA";
     public static final String CLEAR_EDITTEXT = "";
-    public static final int[] LIST_AVATAR_STORE =
-        {R.drawable.curret_location_icon, R.drawable.food_avatar, R.drawable.fashion, R
-            .drawable.book_shop, R.drawable.cosmetic,
-            R.drawable.stage, R.drawable.game_icon, R
-            .drawable.smartphone};
-    public static final int[] LIST_CURRENT_AVATAR_STORE =
-        {R.drawable.curret_location_icon, R.drawable.current_restaurent, R.drawable
-            .current_fashion, R.drawable.current_book_shop, R.drawable
-            .current_cosmetic,
-            R.drawable.current_stage, R.drawable.current_game_icon, R
-            .drawable.current_smartphone};
-    public static final String[] LIST_NAME_STORE = {"Cột mốc", "Cửa hàng ăn uống", "Cửa hàng " +
-        "quần áo", "Cửa hàng sách", "Cửa hàng mỹ phẩm", "Rạp chiếu phim", "Trung tâm giải trí",
-        "Cửa hàng điện thoại"};
-    public static final String[] LIST_NAME_SUGGEST={"ăn ngon", "để xe", "đợi người", "xem phim",
-        "cảnh đẹp"};
-    public static final String SHOWCASE_ID_BOOK_TABLE = "BOOK TABLE";
-    public static final String SHOWCASE_ID_DETAILS_SHOP = "DETAILS SHOP";
-    public static final String SHOWCASE_ID_BOOK_PRODUCT = "BOOK PRODUCT";
-    public static final String SHOWCASE_ID_SUGGEST_STORE = "SUGGEST STORE";
-    public static final String SHOWCASE_ID_DETAILS_PRODUCT = "DETAILS PRODUCT";
-    public static final String SHOWCASE_ID_HOME = "HOME";
-    public static final String GOT_IT = "SKIP";
     public static final String BUNDLE_SAVE_POINT = "bundle_save_point";
     public static final int TIME_DELAY_GUIDE = 500;
     public static final String PREF_WELCOME = "WelcomeApp";
@@ -146,29 +123,64 @@ public class Constants {
     public static final long TIME_UPDATE_AGO = MINUTE * SECOND;
     public static final int MESSAGE_LIST_SIZE = 5;
     public static final int COMMENT_LIST_SIZE = 3;
-    public static final int LOAD_DATA_FINISH = 1;
-    public static final int LOAD_EVENT_FINISH = 2;
 
-    public static final String CONTENT_TYPE = "Content-Type: application/json";
-    // param
-    public static final String GET_STORES_PATH = "floors/{idFloor}/stores";
-    public static final String PARAM_CATEGORIES = "categories";
-    public static final String LOGIN_PATH = "sessions";
-    public static final String PARAM_COMMERCE = "commerce";
-    public static final String PARAM_STORE_TYPE_LIST = "store_type_list";
-    public static final String GET_COMMERCE_CENTERS_PATH = "commerce_centers";
-    public static final String GET_FLOORS_PATH = "commerce_centers/{commerceCenterId}/floors";
-    public static final String PARAM_FLOORS = "floors";
-    public static final String GET_PRODUCTS_PATH = "categories/{idCategory}/products";
-    public static final String GET_EVENTS_PATH = "stores/{storeId}/events";
-    public static final String UPDATE_USERS_PATH = "users/{idUser}";
-    public static final String REGISTER_PATH = "users";
-    //param_id
-    public static final String USER_ID = "idUser";
-    public static final String FLOOR_ID = "idFloor";
-    public static final String STORE_ID = "storeId";
-    public static final String CATEGORY_ID = "idCategory";
-    public static final String STORE_TYPE_ID = "storeTypeId";
-    public static final String COMMERCE_CENTER_ID = "commerceCenterId";
+    public class ResultFinishLoadData {
+        public static final int LOAD_DATA_FINISH = 1;
+        public static final int LOAD_EVENT_FINISH = 2;
+    }
+
+    public class ParamAPI {
+        public static final String USER_ID = "idUser";
+        public static final String FLOOR_ID = "idFloor";
+        public static final String STORE_ID = "storeId";
+        public static final String CATEGORY_ID = "idCategory";
+        public static final String STORE_TYPE_ID = "storeTypeId";
+        public static final String COMMERCE_CENTER_ID = "commerceCenterId";
+    }
+
+    public class PathAPI {
+        public static final String CONTENT_TYPE = "Content-Type: application/json";
+        public static final String GET_STORES_PATH = "floors/{idFloor}/stores";
+        public static final String LOAD_CATEGORIES_PATH = "stores/{storeId}/categories";
+        public static final String LOGIN_PATH = "sessions";
+        public static final String PARAM_COMMERCE = "commerce";
+        public static final String PARAM_STORE_TYPE_LIST = "store_type_list";
+        public static final String GET_COMMERCE_CENTERS_PATH = "commerce_centers";
+        public static final String GET_FLOORS_PATH = "commerce_centers/{commerceCenterId}/floors";
+        public static final String PARAM_FLOORS = "floors";
+        public static final String GET_PRODUCTS_PATH = "categories/{idCategory}/products";
+        public static final String GET_EVENTS_PATH = "stores/{storeId}/events";
+        public static final String UPDATE_USERS_PATH = "users/{idUser}";
+        public static final String REGISTER_PATH = "users";
+    }
+
+    public static class DataList {
+        public static final int[] LIST_AVATAR_STORE =
+            {R.drawable.curret_location_icon, R.drawable.food_avatar, R.drawable.fashion, R
+                .drawable.book_shop, R.drawable.cosmetic,
+                R.drawable.stage, R.drawable.game_icon, R
+                .drawable.smartphone};
+        public static final int[] LIST_CURRENT_AVATAR_STORE =
+            {R.drawable.curret_location_icon, R.drawable.current_restaurent, R.drawable
+                .current_fashion, R.drawable.current_book_shop, R.drawable
+                .current_cosmetic,
+                R.drawable.current_stage, R.drawable.current_game_icon, R
+                .drawable.current_smartphone};
+        public static final String[] LIST_NAME_STORE = {"Cột mốc", "Cửa hàng ăn uống", "Cửa hàng " +
+            "quần áo", "Cửa hàng sách", "Cửa hàng mỹ phẩm", "Rạp chiếu phim", "Trung tâm giải trí",
+            "Cửa hàng điện thoại"};
+        public static final String[] LIST_NAME_SUGGEST={"ăn ngon", "để xe", "đợi người", "xem phim",
+            "cảnh đẹp"};
+    }
+
+    public static class Instruction {
+        public static final String SHOWCASE_ID_BOOK_TABLE = "BOOK TABLE";
+        public static final String SHOWCASE_ID_DETAILS_SHOP = "DETAILS SHOP";
+        public static final String SHOWCASE_ID_BOOK_PRODUCT = "BOOK PRODUCT";
+        public static final String SHOWCASE_ID_SUGGEST_STORE = "SUGGEST STORE";
+        public static final String SHOWCASE_ID_DETAILS_PRODUCT = "DETAILS PRODUCT";
+        public static final String SHOWCASE_ID_HOME = "HOME";
+        public static final String GOT_IT = "SKIP";
+    }
 
 }

@@ -167,8 +167,11 @@ public class SuggestStoreFragment extends Fragment implements View.OnClickListen
     }
 
     public void initGuideSuggestStore() {
-        ShowcaseGuideUtil.singleShowcase(getActivity(), Constants.SHOWCASE_ID_SUGGEST_STORE, new
-                Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote)));
+        ShowcaseGuideUtil.singleShowcase(
+            getActivity(),
+            Constants.Instruction.SHOWCASE_ID_SUGGEST_STORE,
+            new Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote))
+        );
     }
 
     public int getTotalStar() {

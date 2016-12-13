@@ -127,14 +127,14 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                 config.setDelay(Constants.TIME_DELAY_GUIDE);
                 MaterialShowcaseSequence sequence = new MaterialShowcaseSequence
                         (HomeStoreActivity.this,
-                                Constants.SHOWCASE_ID_HOME);
+                                Constants.Instruction.SHOWCASE_ID_HOME);
                 sequence.setConfig(config);
                 sequence.addSequenceItem(searchView,
                         getString(R.string.sequence_search),
-                        Constants.GOT_IT);
+                        Constants.Instruction.GOT_IT);
                 sequence.addSequenceItem(cartView,
                         getString(R.string.sequence_cart),
-                        Constants.GOT_IT);
+                        Constants.Instruction.GOT_IT);
                 sequence.start();
             }
         });

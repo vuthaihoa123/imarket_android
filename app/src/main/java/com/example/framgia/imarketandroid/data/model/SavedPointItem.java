@@ -27,8 +27,8 @@ public class SavedPointItem extends RealmObject {
             this.mAvatar = R.drawable.ic_save_point;
             this.mNamePoint = Constants.SAVE_POINT_NAME;
         } else {
-            this.mAvatar = Constants.LIST_AVATAR_STORE[point.getType()];
-            this.mNamePoint = Constants.LIST_NAME_STORE[point.getType()];
+            this.mAvatar = Constants.DataList.LIST_AVATAR_STORE[point.getType()];
+            this.mNamePoint = Constants.DataList.LIST_NAME_STORE[point.getType()];
         }
         this.mNotePoint = notePoint;
         this.mIsDeleted = isDeleted;
