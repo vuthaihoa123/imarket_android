@@ -11,6 +11,8 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.listener.OnFinishLoadDataListener;
 import com.example.framgia.imarketandroid.data.model.CommerceCanter;
 import com.example.framgia.imarketandroid.data.model.CommerceList;
+import com.example.framgia.imarketandroid.data.model.Event;
+import com.example.framgia.imarketandroid.data.model.EventList;
 import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
@@ -73,7 +75,7 @@ public class LoadDataUtils {
                         Floor floor = floors.getFloorList().get(i);
                         FloorActivity.mFloorList.add(floor.getNameFloor().toString());
                     }
-                    mFinishLoadDataListener.onFinish(true);
+                    mFinishLoadDataListener.onFinish(Constants.LOAD_DATA_FINISH);
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
@@ -107,7 +109,7 @@ public class LoadDataUtils {
                         CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
                         list.add(commerceCanter);
                     }
-                    mFinishLoadDataListener.onFinish(true);
+                    mFinishLoadDataListener.onFinish(Constants.LOAD_DATA_FINISH);
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
@@ -188,6 +190,31 @@ public class LoadDataUtils {
                 }
             }
         });
+    }
+
+    public void getEvents (final Context context, final int id_store, final List<Event> lists) {
+        init(context);
+        HttpRequest.getInstance(context).getEvents(id_store);
+        HttpRequest.getInstance(context).setOnLoadDataListener(
+            new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    if (!(object instanceof EventList)) return;
+                    EventList eventList = (EventList) object;
+                    lists.clear();
+                    if (eventList != null) {
+                        for (int i = 0; i < eventList.getEventList().size(); i++) {
+                            Event event = eventList.getEventList().get(i);
+                            lists.add(event);
+                        }
+                        mFinishLoadDataListener.onFinish(Constants.LOAD_EVENT_FINISH);
+                    }
+                }
+
+                @Override
+                public void onLoadDataFailure(String message) {
+                }
+            });
     }
 
     private void processBroadcastProduct(final int id_cate) {

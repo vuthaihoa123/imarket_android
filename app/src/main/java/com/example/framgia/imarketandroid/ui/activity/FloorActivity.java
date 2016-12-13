@@ -969,8 +969,8 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
     }
 
     @Override
-    public void onFinish(boolean flag) {
-        if (flag) mTextViewNameCenter.setText(mCommerce.getName());
+    public void onFinish(int result) {
+        if(result == Constants.LOAD_DATA_FINISH) mTextViewNameCenter.setText(mCommerce.getName());
     }
 
     public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
