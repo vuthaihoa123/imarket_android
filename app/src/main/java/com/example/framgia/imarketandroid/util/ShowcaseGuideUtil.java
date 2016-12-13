@@ -19,7 +19,7 @@ public class ShowcaseGuideUtil {
     public static void singleShowcase(Activity context, String id_showcase, Showcase showcase) {
         new MaterialShowcaseView.Builder(context)
             .setTarget(showcase.getViewShowcase())
-            .setDismissText(Constants.GOT_IT)
+            .setDismissText(Constants.Instruction.GOT_IT)
             .setContentText(showcase.getTextShowcase())
             .setDelay(Constants.TIME_DELAY_GUIDE)
             .singleUse(id_showcase)
@@ -33,7 +33,7 @@ public class ShowcaseGuideUtil {
         sequence.setConfig(config);
         for (int i = 0; i < list.size(); i++) {
             sequence.addSequenceItem(list.get(i).getViewShowcase(), list.get(i).getTextShowcase(),
-                Constants.GOT_IT);
+                Constants.Instruction.GOT_IT);
         }
 //        sequence.addSequenceItem(mRadioButtonOnline, getString(R.string.sequence_radio_online),
 //            Constants.GOT_IT);

@@ -17,7 +17,7 @@ public class ShowCaseUtil {
         showcaseId) {
         new MaterialShowcaseView.Builder(context)
             .setTarget(view)
-            .setDismissText(Constants.GOT_IT)
+            .setDismissText(Constants.Instruction.GOT_IT)
             .setContentText(contentText)
             .setDelay(Constants.TIME_DELAY_GUIDE)
             .singleUse(showcaseId)

@@ -75,7 +75,7 @@ public class LoadDataUtils {
                         Floor floor = floors.getFloorList().get(i);
                         FloorActivity.mFloorList.add(floor.getNameFloor().toString());
                     }
-                    mFinishLoadDataListener.onFinish(Constants.LOAD_DATA_FINISH);
+                    mFinishLoadDataListener.onFinish(Constants.ResultFinishLoadData.LOAD_DATA_FINISH);
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
@@ -109,7 +109,7 @@ public class LoadDataUtils {
                         CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
                         list.add(commerceCanter);
                     }
-                    mFinishLoadDataListener.onFinish(Constants.LOAD_DATA_FINISH);
+                    mFinishLoadDataListener.onFinish(Constants.ResultFinishLoadData.LOAD_DATA_FINISH);
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
                 }
@@ -207,7 +207,8 @@ public class LoadDataUtils {
                             Event event = eventList.getEventList().get(i);
                             lists.add(event);
                         }
-                        mFinishLoadDataListener.onFinish(Constants.LOAD_EVENT_FINISH);
+                        mFinishLoadDataListener.onFinish(
+                            Constants.ResultFinishLoadData.LOAD_EVENT_FINISH);
                     }
                 }
 

@@ -12,16 +12,11 @@ import android.content.pm.PackageManager;
 import android.database.MatrixCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.BaseColumns;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -39,10 +34,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -78,12 +71,10 @@ import com.example.framgia.imarketandroid.util.findpath.KeyboadUtil;
 import com.example.framgia.imarketandroid.util.findpath.LoadDataUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
@@ -97,46 +88,46 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
     SearchView.OnQueryTextListener, OnRecyclerItemInteractListener, TextWatcher,
     LocationListener, OnFinishLoadDataListener {
-    static Realm myRealm;
-    private int mIdStore = 1;
+    static Realm mMyRealm;
+    private static final int NOTI_EVENT_ID = 12345;
+    private static final int NOTI_EVENT_REQUEST = 100;
     private RecyclerMarketAdapter mMarketAdapter;
+    private List<CommerceCanter> mListChooseCenter = new ArrayList<>();
     private List<CommerceCanter> mTraceMarkets = new ArrayList<>();
+    private List<CommerceCanter> mListComAdap = new ArrayList<>();
+    private List<NearMarket> mNearMarketList = new ArrayList<>();
+    private List<CommerceCanter> mMarkets = new ArrayList<>();
+    private List<DrawerItem> mDrawerItems = new ArrayList<>();
+    private List<String> mListAutoSearch = new ArrayList<>();
+    private List<CartItem> mCartItems = new ArrayList<>();
+    private List<String> mHeaderNames = new ArrayList<>();
+    private List<Event> mEventList = new ArrayList<>();
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
-    private RecyclerView mRecyclerMarket;
+    private LoadDataUtils mDataUtils;
+    private LocationManager mLocationManager;
+    private NotificationCompat.Builder notBuilder;
     private CursorAdapter mSearchSuggestionAdapter;
-    private TextView mTextEmail;
-    private List<DrawerItem> mDrawerItems = new ArrayList<>();
+    private RecyclerView mRecyclerMarket;
     private RecyclerView mRecyclerDrawer;
     private RecyclerDrawerAdapter mRecyclerDrawerAdapter;
+    private HistoryTimeAdapter mHistoryTimeAdapter;
+    private LinearLayoutCompat mButtonSearch;
+    private RelativeLayout mReFavorite, mReBound, mReFollow;
     private View mStrokeLine1, mStrokeLine2, mStrokeLine3;
     private View mLinearMenu;
+    private AutoCompleteTextView mTextViewSearchInput;
+    private TextView mTextEmail;
     private TextView mTextSignIn, mTextSignOut, mTextProfile;
     private TextView mTextUsername;
     private CircleImageView mCircleImageView;
-    private List<CartItem> mCartItems = new ArrayList<>();
-    private List<String> mHeaderNames = new ArrayList<>();
-    private HistoryTimeAdapter mHistoryTimeAdapter;
-    private RelativeLayout mReFavorite, mReBound, mReFollow;
-    private AutoCompleteTextView mTextViewSearchInput;
-    private LinearLayoutCompat mButtonSearch;
-    private List<CommerceCanter> mListChooseCenter = new ArrayList<>();
-    private boolean mFlag;
     private CheckBox mCheckBoxNearMarket;
     private Button mButtonClearInput;
     private FloatingActionButton mFABSynchronizeMarket;
-    private LoadDataUtils mDataUtils;
-    private List<CommerceCanter> mMarkets = new ArrayList<>();
-    private List<String> mListAutoSearch = new ArrayList<>();
     private boolean mFlagCacheCommerce;
-    private List<CommerceCanter> mListComAdap = new ArrayList<>();
-    private LocationManager mLocationManager;
     private boolean mIsConnect;
-    private List<NearMarket> mNearMarketList = new ArrayList<>();
-    private List<Event> mEventList = new ArrayList<>();
-    private NotificationCompat.Builder notBuilder;
-    private static final int MY_NOTIFICATION_ID = 12345;
-    private static final int MY_REQUEST_CODE = 100;
+    private boolean mFlag;
+    private int mIdStore = 1;
 
     public void initDataAutoCompleteTextView() {
         mListAutoSearch.clear();
@@ -151,20 +142,20 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     public void cacheCommerce(Context context) {
-        myRealm = Realm.getInstance(
+        mMyRealm = Realm.getInstance(
             new RealmConfiguration.Builder(context)
                 .name(Constants.COM_CACHE)
                 .deleteRealmIfMigrationNeeded()
                 .build());
-        myRealm.beginTransaction();
+        mMyRealm.beginTransaction();
         if (mMarkets != null) {
             for (CommerceCanter center : mMarkets) {
-                myRealm.copyToRealmOrUpdate(center);
+                mMyRealm.copyToRealmOrUpdate(center);
             }
             mListComAdap.clear();
             mListComAdap.addAll(mMarkets);
         }
-        myRealm.commitTransaction();
+        mMyRealm.commitTransaction();
     }
 
     @Override
@@ -542,7 +533,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     private void getCommerceFromCache() {
         RealmResults<CommerceCanter> resultsCache =
-            myRealm.where(CommerceCanter.class).findAll();
+            mMyRealm.where(CommerceCanter.class).findAll();
         mMarkets.clear();
         mListComAdap.clear();
         mMarkets.addAll(resultsCache);
@@ -649,11 +640,11 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     @Override
     public void onFinish(int result) {
         switch (result) {
-            case Constants.LOAD_DATA_FINISH:
+            case Constants.ResultFinishLoadData.LOAD_DATA_FINISH:
                 synChronizeData();
                 mDataUtils.getEvents(this, mIdStore, mEventList);
                 break;
-            case Constants.LOAD_EVENT_FINISH:
+            case Constants.ResultFinishLoadData.LOAD_EVENT_FINISH:
                 pushNotification();
                 break;
         }
@@ -679,7 +670,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             // PendingIntent.getActivity(..) sẽ start mới một Activity và trả về
             // đối tượng PendingIntent.
             // Nó cũng tương đương với gọi Context.startActivity(Intent).
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, MY_REQUEST_CODE,
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTI_EVENT_REQUEST,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
             this.notBuilder.setContentIntent(pendingIntent);
             // Lấy ra dịch vụ thông báo (Một dịch vụ có sẵn của hệ thống).
@@ -689,7 +680,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             // Xây dựng thông báo và gửi nó lên hệ thống.
 
             Notification notification =  notBuilder.build();
-            notificationService.notify(MY_NOTIFICATION_ID, notification);
+            notificationService.notify(NOTI_EVENT_ID, notification);
         }
     }
 }

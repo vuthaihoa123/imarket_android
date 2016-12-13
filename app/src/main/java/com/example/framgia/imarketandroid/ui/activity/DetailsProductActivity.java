@@ -152,7 +152,7 @@ public class DetailsProductActivity extends AppCompatActivity
         initRecycle();
         initViewPager();
         ShowcaseGuideUtil.singleShowcase(DetailsProductActivity.this,
-                Constants.SHOWCASE_ID_DETAILS_PRODUCT,
+                Constants.Instruction.SHOWCASE_ID_DETAILS_PRODUCT,
                 new Showcase(mButtonPostProductMess, getString(R.string.sequence_write_vote)));
         upTime();
     }
