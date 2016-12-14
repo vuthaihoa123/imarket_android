@@ -81,8 +81,11 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
     }
 
     public void setupViewPager(ViewPager viewPager) {
+        // khởi tạo ViewPagerAdapter
         mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         if (InternetUtil.isInternetConnected(HomeStoreActivity.this)) {
+            // kiểm tra mạng
+            // có mạng thì add các Fragment
             mPagerAdapter.addFragment(new CategoryStallFragment(),
                     getString(R.string.title_fragment_Category));
             mPagerAdapter.addFragment(new SaleOffEventFragment(),
@@ -94,6 +97,8 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
                     getString(R.string.title_fragment_informationstore));
             viewPager.setAdapter(mPagerAdapter);
         } else {
+            // không có mạng
+            // kiểm tra dữ liệu cache trước đó
             if (RealmRemote.getListCategory().size() > 0) {
                 mPagerAdapter.addFragment(new CategoryStallFragment(), getString(R.string.title_fragment_Category));
             } else {
@@ -204,6 +209,7 @@ public class HomeStoreActivity extends AppCompatActivity implements SearchView
 
     @Override
     public void onClickLoadConnect() {
+        // load lại viewpager
         finish();
         startActivity(getIntent());
     }

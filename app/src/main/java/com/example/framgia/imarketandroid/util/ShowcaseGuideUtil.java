@@ -35,12 +35,6 @@ public class ShowcaseGuideUtil {
             sequence.addSequenceItem(list.get(i).getViewShowcase(), list.get(i).getTextShowcase(),
                 Constants.Instruction.GOT_IT);
         }
-//        sequence.addSequenceItem(mRadioButtonOnline, getString(R.string.sequence_radio_online),
-//            Constants.GOT_IT);
-//        sequence.addSequenceItem(mRadioButtonOffline, getString(R.string.sequence_radio_offline),
-//            Constants.GOT_IT);
-//        sequence.addSequenceItem(mButtonContinue, getString(R.string.click_continue_book_table),
-//            Constants.GOT_IT);
         sequence.start();
     }
 }
