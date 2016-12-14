@@ -107,7 +107,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private LoadDataUtils mDataUtils;
     private LocationManager mLocationManager;
     private NotificationCompat.Builder notBuilder;
-    private CursorAdapter mSearchSuggestionAdapter;
     private RecyclerView mRecyclerMarket;
     private RecyclerView mRecyclerDrawer;
     private RecyclerDrawerAdapter mRecyclerDrawerAdapter;
@@ -130,10 +129,13 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private int mIdStore = 1;
 
     public void initDataAutoCompleteTextView() {
+        // tạo dữ liệu cho auto search
         mListAutoSearch.clear();
         if (mMarkets == null || mMarkets.size() == 0) {
             mListAutoSearch.add(Constants.COMMERCE_CENTER);
         } else {
+            // add cả địa chỉ và tên siêu thị
+            // người dùng có thể search cả 2 trường thông tin này
             for (CommerceCanter center : mMarkets) {
                 mListAutoSearch.add(center.getName());
                 mListAutoSearch.add(center.getAddress());
@@ -142,6 +144,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     public void cacheCommerce(Context context) {
+        // lưu lại danh sách siêu thị đã tải được
         mMyRealm = Realm.getInstance(
             new RealmConfiguration.Builder(context)
                 .name(Constants.COM_CACHE)
@@ -165,13 +168,14 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         findViews();
         setListeners();
         supportActionBar();
-        setSearchSuggestionAdapter();
+        getInfo();
         initRececlerView();
     }
 
+    // recyclerview navigation drawer
     private void initRececlerView() {
-        // recyclerview navigation drawer
         mRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
+        // load trước danh sách yêu thích
         getRecycleFavorite();
         mRecyclerDrawerAdapter.setOnClick(this);
         setListeners();
@@ -182,9 +186,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         toggle.syncState();
         mRecyclerMarket.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMarket.addItemDecoration(new LinearItemDecoration(this));
+        // kiểm tra cache
         if (!mFlagCacheCommerce) {
+            // Không có dũ liệu thì không request lên server nữa
             mDataUtils.loadCommerce(ChooseMarketActivity.this, mMarkets);
         } else {
+            //Có dũ liệu thì sử dụng dữ liệu đã cache từ trước
             getCommerceFromCache();
         }
         mListComAdap.clear();
@@ -193,7 +200,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mTraceMarkets.addAll(mMarkets);
         mRecyclerMarket.setAdapter(mMarketAdapter);
         mMarketAdapter.setOnRecyclerItemInteractListener(this);
-
         mHistoryTimeAdapter =
             new HistoryTimeAdapter(mHeaderNames, mCartItems, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -205,18 +211,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private void supportActionBar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void setSearchSuggestionAdapter() {
-        final String[] columns = new String[]{Constants.MARKET_SUGGESTION};
-        final int[] displayViews = new int[]{android.R.id.text1};
-        mSearchSuggestionAdapter = new SimpleCursorAdapter(this,
-            android.R.layout.simple_list_item_1,
-            null,
-            columns,
-            displayViews,
-            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        getInfo();
     }
 
     @Override
@@ -235,7 +229,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View view) {
-        if (InternetUtil.isInternetConnected(ChooseMarketActivity.this)) {
+        if (InternetUtil.isInternetConnected(ChooseMarketActivity.this)) { // kiểm tra mạng
             switch (view.getId()) {
                 case R.id.button_favorite:
                     getRecycleFavorite();
@@ -332,7 +326,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        populateSuggestionAdapter(newText);
         return false;
     }
 
@@ -382,18 +375,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mFABSynchronizeMarket.setOnClickListener(this);
     }
 
-    private void populateSuggestionAdapter(String query) {
-        final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID,
-            Constants.MARKET_SUGGESTION});
-        int length = FakeContainer.SUGGESTIONS.length;
-        for (int i = 0; i < length; i++) {
-            if (FakeContainer.SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
-                c.addRow(new Object[]{i, FakeContainer.SUGGESTIONS[i]});
-            mSearchSuggestionAdapter.changeCursor(c);
-        }
-    }
-
     private void getInfo() {
+        // lấy thông tin tải khoản từ Pref để hiển thị
         SharedPreferencesUtil.getInstance().init(this, Constants.PREFS_NAME);
         UserModel userModel = (UserModel) SharedPreferencesUtil
             .getInstance()
@@ -478,6 +461,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void getRecycleFavorite() {
+        // fake dữ liệu danh sách yêu thíc
         mDrawerItems = FakeContainer.initDrawerItems();
         mRecyclerDrawerAdapter = new RecyclerDrawerAdapter(this, mDrawerItems);
         mRecyclerDrawer.setAdapter(mRecyclerDrawerAdapter);
@@ -509,9 +493,12 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     public void afterTextChanged(Editable s) {
     }
 
+    // click imageButton search
     private void clickSearch() {
+        //lấy dữ liệu trên thanh input
         String textSearch = mTextViewSearchInput.getText().toString();
         if (!textSearch.isEmpty()) {
+            // hiển thị danh sách siêu thị theo nội dung được tìm kiếm
             mListChooseCenter.clear();
             for (CommerceCanter center : mMarkets) {
                 if (center.getName().equalsIgnoreCase(textSearch) ||
@@ -524,6 +511,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             mMarketAdapter.notifyDataSetChanged();
             mMarketAdapter.setOnRecyclerItemInteractListener(this);
         } else {
+            // hiển thị đầy đủ danh sách siêu thị như ban đầu
             mListComAdap.clear();
             mListComAdap.addAll(mMarkets);
             mMarketAdapter.notifyDataSetChanged();
@@ -532,6 +520,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void getCommerceFromCache() {
+        // lấy dữ liệu về danh sách siêu thị đã lưu lại từ lần load khi mở app lần đầu.
         RealmResults<CommerceCanter> resultsCache =
             mMyRealm.where(CommerceCanter.class).findAll();
         mMarkets.clear();
@@ -541,6 +530,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void synChronizeData() {
+        //request lại lên server, làm mới danh sách siêu thị
         initDataAutoCompleteTextView();
         cacheCommerce(ChooseMarketActivity.this);
         mFlagCacheCommerce = true;
@@ -551,8 +541,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void getDataByLocation() {
-        mLocationManager = (LocationManager) getSystemService(Context
-            .LOCATION_SERVICE);
+        // lấy vị trí hiện tại của thiết bị
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mIsConnect = InternetUtil.isInternetConnected(this);
         if (mIsConnect) {
             checkPermission();
@@ -562,6 +552,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 Constants.MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
             Location myLocation;
             if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                // kiểm tra bật GPS
                 Flog.toast(this, getString(R.string.enable_gps));
                 mCheckBoxNearMarket.setChecked(false);
             } else {
@@ -569,17 +560,23 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                 myLocation =
                     mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (myLocation == null) {
+                    // trong trường hợp người dùng vừa mới bật GPS
+                    // một vài thiết bị chậm sẽ bật lâu hơn
+                    // nên check lại nếu chưa lấy đc location thì yêu cầu người dùng đợi vài giây
                     Flog.toast(this, getString(R.string.wait_minute));
                     mCheckBoxNearMarket.setChecked(false);
                 } else {
                     mNearMarketList.clear();
                     for (CommerceCanter center : mMarkets) {
+                        // tính khoảng cách từ vị trí hiện tại của thiết bị đến tất cả các sieu thị
                         float distence = MapUntils.calculateDistance(
                             new Point(myLocation.getLatitude(), myLocation.getLongitude()),
                             new Point(center.getLatitude(), center.getLongitude()));
                         mNearMarketList.add(new NearMarket(center, distence));
                         center.setDistance(distence);
                     }
+
+                    // sắp xếm lại danh sách siêu thi theo khoảng cách
                     Collections.sort(mNearMarketList, new Comparator<NearMarket>() {
                         @Override
                         public int compare(NearMarket market1, NearMarket market2) {
@@ -639,6 +636,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
     @Override
     public void onFinish(int result) {
+        // hàm trả về sau khi dữ liệu trên server được tải về thành công
         switch (result) {
             case Constants.ResultFinishLoadData.LOAD_DATA_FINISH:
                 synChronizeData();
@@ -651,6 +649,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     }
 
     private void pushNotification() {
+        // thông báo khi có sự kiện mới đươc tạo
         notBuilder = new NotificationCompat.Builder(this);
         notBuilder.setAutoCancel(true);
         notBuilder.setSmallIcon(R.drawable.ic_logo_i);
@@ -667,20 +666,21 @@ public class ChooseMarketActivity extends AppCompatActivity implements
 
             // Tạo một Intent
             Intent intent = new Intent(this, HomeStoreActivity.class);
+
             // PendingIntent.getActivity(..) sẽ start mới một Activity và trả về
             // đối tượng PendingIntent.
             // Nó cũng tương đương với gọi Context.startActivity(Intent).
             PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTI_EVENT_REQUEST,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
             this.notBuilder.setContentIntent(pendingIntent);
+
             // Lấy ra dịch vụ thông báo (Một dịch vụ có sẵn của hệ thống).
             NotificationManager notificationService  =
                 (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
 
             // Xây dựng thông báo và gửi nó lên hệ thống.
-
             Notification notification =  notBuilder.build();
-            notificationService.notify(NOTI_EVENT_ID, notification);
+            notificationService.notify(NOTI_EVENT_ID+event.getId(), notification);
         }
     }
 }
