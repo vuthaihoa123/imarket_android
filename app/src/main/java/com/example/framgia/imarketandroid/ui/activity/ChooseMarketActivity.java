@@ -40,6 +40,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -127,6 +128,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private boolean mIsConnect;
     private boolean mFlag;
     private int mIdStore = 1;
+    private ImageView mImageViewNoNetwork;
 
     public void initDataAutoCompleteTextView() {
         // tạo dữ liệu cho auto search
@@ -189,7 +191,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         // kiểm tra cache
         if (!mFlagCacheCommerce) {
             // Không có dũ liệu thì không request lên server nữa
-            mDataUtils.loadCommerce(ChooseMarketActivity.this, mMarkets);
+            mDataUtils.loadCommerce(ChooseMarketActivity.this, mMarkets,
+                mRecyclerMarket, mImageViewNoNetwork);
         } else {
             //Có dũ liệu thì sử dụng dữ liệu đã cache từ trước
             getCommerceFromCache();
@@ -308,7 +311,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                     mTextViewSearchInput.setText("");
                     break;
                 case R.id.fab_synchronize:
-                    mDataUtils.loadCommerce(ChooseMarketActivity.this, mMarkets);
+                    mDataUtils.loadCommerce(ChooseMarketActivity.this, mMarkets,
+                        mRecyclerMarket, mImageViewNoNetwork);
                     synChronizeData();
                     break;
                 default:
@@ -353,6 +357,9 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mCheckBoxNearMarket = (CheckBox) findViewById(R.id.checkbox_near_market);
         mButtonClearInput = (Button) findViewById(R.id.button_clear_input);
         mFABSynchronizeMarket = (FloatingActionButton) findViewById(R.id.fab_synchronize);
+        mImageViewNoNetwork = (ImageView) findViewById(R.id.image_no_network);
+
+        //  setListerner load finish
         mDataUtils = new LoadDataUtils();
         mDataUtils.setLoadDataListener(ChooseMarketActivity.this);
     }

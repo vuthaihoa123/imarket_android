@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.framgia.imarketandroid.R;
@@ -93,7 +94,8 @@ public class LoadDataUtils {
     }
 
 
-    public void loadCommerce(final Context context, final List<CommerceCanter> list) {
+    public void loadCommerce(final Context context, final List<CommerceCanter> list,
+                             final View viewRecycle, final View viewImage) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance(context).loadListCommerce();
@@ -109,6 +111,8 @@ public class LoadDataUtils {
                         CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
                         list.add(commerceCanter);
                     }
+                    viewRecycle.setVisibility(View.VISIBLE);
+                    viewImage.setVisibility(View.GONE);
                     mFinishLoadDataListener.onFinish(Constants.ResultFinishLoadData.LOAD_DATA_FINISH);
                 } else {
                     Flog.toast(mContext, R.string.not_data_in_object);
@@ -120,7 +124,9 @@ public class LoadDataUtils {
                 mProgressDialog.dismiss();
                 if (!InternetUtil.isInternetConnected(context)) {
                     Flog.toast(context, R.string.no_internet);
-                    processBroadcastCommerce(context, list);
+                    viewImage.setVisibility(View.VISIBLE);
+                    viewRecycle.setVisibility(View.GONE);
+                    processBroadcastCommerce(context, list, viewRecycle, viewImage);
                 }
             }
         });
@@ -232,14 +238,15 @@ public class LoadDataUtils {
         mContext.registerReceiver(mReceiver, filter);
     }
 
-    private void processBroadcastCommerce(final Context conText,final List<CommerceCanter> list) {
+    private void processBroadcastCommerce(final Context conText, final List<CommerceCanter> list,
+                                          final View viewCycle, final View viewImage) {
         IntentFilter filter = new IntentFilter(Constants.INTERNET_FILTER);
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Toast.makeText(context, R.string.connect_change, Toast.LENGTH_SHORT).show();
                 if (InternetUtil.isInternetConnected(conText)) {
-                    loadCommerce(conText, list);
+                    loadCommerce(conText, list, viewCycle, viewImage);
                 }
             }
         };

@@ -78,22 +78,20 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private void configureViewHolder1(HolderOneBannerImage vh1, int position) {
         ImageEvent1 imageEvent1 = (ImageEvent1) mItems.get(position);
-        if (imageEvent1 != null) {
-            vh1.imageBanner1.setImageResource(imageEvent1.getBanner1());
-        }
+        if (imageEvent1 == null) return;
+        vh1.imageBanner1.setImageResource(imageEvent1.getBanner1());
     }
 
     private void configureViewHolder2(HolderTwoBanner vh2, int position) {
         ImageEvent2 imageEvent2 = (ImageEvent2) mItems.get(position);
-        if (imageEvent2 != null) {
-            vh2.imageBanner2.setImageResource(imageEvent2.getBanner2());
-            vh2.imageBanner3.setImageResource(imageEvent2.getBanner3());
-        }
+        if (imageEvent2 == null) return;
+        vh2.imageBanner2.setImageResource(imageEvent2.getBanner2());
+        vh2.imageBanner3.setImageResource(imageEvent2.getBanner3());
     }
 
     private void configureViewHolder3(HolderCategorySaleOff vh3, int position) {
         CategorySaleOff categorySaleOff = (CategorySaleOff) mItems.get(position);
-        if (categorySaleOff != null) {
+        if (categorySaleOff == null) return;
             List<ItemProduct> itemProductList = ((CategorySaleOff) mItems.get(position))
                 .getProductList();
             vh3.mTextTitleCategory.setText(categorySaleOff.getNameSaleOff());
@@ -103,12 +101,11 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             vh3.mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,
                 LinearLayoutManager.HORIZONTAL, false));
             vh3.mRecyclerView.setAdapter(saleOffListProductsAdapter);
-        }
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mItems == null ? 0 : mItems.size();
     }
 
     // tra ve cho minh mot loai dựa vào loại ta sẽ xét được viewholder (cái này chạy đầu tiên)

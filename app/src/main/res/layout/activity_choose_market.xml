@@ -86,15 +86,28 @@
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:text="@string/ten_cua_hang"
                     android:textColor="@color/white"
-                    android:theme="@style/MyCheckBox"
-                    android:textSize="@dimen/text_small_size"/>
+                    android:textSize="@dimen/text_small_size"
+                    android:theme="@style/MyCheckBox"/>
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_market"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_container_search"/>
+                android:layout_below="@+id/rl_container_search"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_market"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/image_no_network"
+                    android:visibility="gone"
+                    android:background="@mipmap/ic_no_connect_network"
+                    android:layout_width="match_parent"
+                    android:scaleType="centerCrop"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_synchronize"

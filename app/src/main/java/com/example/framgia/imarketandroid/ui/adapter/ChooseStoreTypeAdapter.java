@@ -58,7 +58,7 @@ public class ChooseStoreTypeAdapter
 
     @Override
     public int getItemCount() {
-        return mListStore.size();
+        return mListStore == null ? 0 : mListStore.size();
     }
 
     public class ItemHolderStore extends RecyclerView.ViewHolder {
