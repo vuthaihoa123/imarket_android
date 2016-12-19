@@ -103,8 +103,6 @@ public class Constants {
     public static final java.lang.String FORMAT_MONEY = "###,###,###,###,###.##";
     public static final java.lang.String FORMAT_DATE = "dd/MM/yyyy hh:mm:ss";
     public static final String NULL_DATA = "Null data";
-    public static final String CATEGORY_INTENT = "category";
-    public static final String COMMERCE_INTENT = "commerce";
     public static final int NUMBER_OF_STARS = 5;
     public static final int LIMIT_STAR = 5;
     public static final String INTERNET_FILTER = "android.net.conn.CONNECTIVITY_CHANGE";
@@ -123,6 +121,13 @@ public class Constants {
     public static final long TIME_UPDATE_AGO = MINUTE * SECOND;
     public static final int MESSAGE_LIST_SIZE = 5;
     public static final int COMMENT_LIST_SIZE = 3;
+
+    public class KeyIntent {
+        public static final String CATEGORY_INTENT = "category";
+        public static final String COMMERCE_INTENT = "commerce";
+        public static final String EVENTS_INTENT = "events intent";
+        public static final String EVENT_ID_INTENT = "event id";
+    }
 
     public class ResultFinishLoadData {
         public static final int LOAD_DATA_FINISH = 1;
@@ -183,4 +188,10 @@ public class Constants {
         public static final String GOT_IT = "SKIP";
     }
 
+    public static final String KEY_T = "T";
+    public static final String TITLE_TIME = "Thời gian : ";
+
+    public class DateTime {
+        public static final String FORMAT_DATE = "yyyy-MM-dd";
+    }
 }

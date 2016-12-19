@@ -1,5 +1,6 @@
 package com.example.framgia.imarketandroid.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,9 @@ import com.example.framgia.imarketandroid.data.model.CategorySaleOff;
 import com.example.framgia.imarketandroid.data.model.ImageEvent1;
 import com.example.framgia.imarketandroid.data.model.ImageEvent2;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
+import com.example.framgia.imarketandroid.data.model.NewEvent;
+import com.example.framgia.imarketandroid.util.DialogShareUtil;
+import com.facebook.CallbackManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +29,14 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int TYPE_BANNER = 1;
     private final int TYPE_BANNERTWO = 2;
     private final int TYPE_CATEGORY = 5;
+    private final int TYPE_NEW_EVENT = 6;
     private List<Object> mItems;
-    private Context mContext;
-
-    public SaleOffEventAdapter(List<Object> items, Context context) {
+    private Activity mContext;
+    private CallbackManager mCallback;
+    public SaleOffEventAdapter(List<Object> items, Activity context, CallbackManager cb) {
         mItems = items;
         mContext = context;
+        mCallback = cb;
     }
 
     //sau khi da xet duoc loai ta khoai tao viewholder theo loai ( ham nay chay thu 2)
@@ -52,6 +58,10 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 view = inflater.inflate(R.layout.item_saleoff_event, parent, false);
                 viewHolder = new HolderCategorySaleOff(view);
                 break;
+            case TYPE_NEW_EVENT:
+                view = inflater.inflate(R.layout.item_event_other, parent, false);
+                viewHolder = new HolderNewSaleOff(view);
+                break;
         }
         return viewHolder;
     }
@@ -72,10 +82,16 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 HolderCategorySaleOff holdeTwoBanner = (HolderCategorySaleOff) holder;
                 configureViewHolder3(holdeTwoBanner, position);
                 break;
+            case TYPE_NEW_EVENT:
+                HolderNewSaleOff newSaleOff = (HolderNewSaleOff) holder;
+                configureViewHolder4(newSaleOff, position);
+                break;
         }
         holder.getItemViewType();
     }
 
+
+    // thao tác cho từng item
     private void configureViewHolder1(HolderOneBannerImage vh1, int position) {
         ImageEvent1 imageEvent1 = (ImageEvent1) mItems.get(position);
         if (imageEvent1 != null) {
@@ -106,6 +122,20 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    private void configureViewHolder4(HolderNewSaleOff vh4, int position) {
+        NewEvent newEvent = (NewEvent) mItems.get(position);
+        if (newEvent == null) return;
+        vh4.mTextNameEvent.setText(newEvent.getNameEvent());
+        vh4.mTextContentEvent.setText(newEvent.getContentEvent());
+        vh4.mTextTimeEvent.setText(newEvent.getTimeEvent());
+        vh4.mTextShareEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogShareUtil.dialogShare(mContext, R.drawable.ic_events, mCallback);
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
         return mItems.size();
@@ -118,6 +148,8 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return TYPE_BANNER;
         } else if (mItems.get(position) instanceof ImageEvent2) {
             return TYPE_BANNERTWO;
+        } else if (mItems.get(position) instanceof NewEvent) {
+            return TYPE_NEW_EVENT;
         }
         return TYPE_CATEGORY;
     }
@@ -149,6 +181,21 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(v);
             mRecyclerView = (RecyclerView) v.findViewById(R.id.recycle_saleoff_item);
             mTextTitleCategory = (TextView) v.findViewById(R.id.text_title_category);
+        }
+    }
+
+    public class HolderNewSaleOff extends RecyclerView.ViewHolder {
+        private TextView mTextNameEvent;
+        private TextView mTextContentEvent;
+        private TextView mTextTimeEvent;
+        private TextView mTextShareEvent;
+
+        public HolderNewSaleOff(View v) {
+            super(v);
+            mTextNameEvent = (TextView) v.findViewById(R.id.text_name_event);
+            mTextContentEvent = (TextView) v.findViewById(R.id.text_content_event);
+            mTextTimeEvent = (TextView) v.findViewById(R.id.text_time_event);
+            mTextShareEvent = (TextView) v.findViewById(R.id.text_share_event);
         }
     }
 }

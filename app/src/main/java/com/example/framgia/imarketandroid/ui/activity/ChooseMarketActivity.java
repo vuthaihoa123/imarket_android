@@ -9,21 +9,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.MatrixCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
@@ -91,6 +87,8 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     static Realm mMyRealm;
     private static final int NOTI_EVENT_ID = 12345;
     private static final int NOTI_EVENT_REQUEST = 100;
+    public static boolean sFlagIntentEvent;
+    public static List<Event> sEventList = new ArrayList<>();
     private RecyclerMarketAdapter mMarketAdapter;
     private List<CommerceCanter> mListChooseCenter = new ArrayList<>();
     private List<CommerceCanter> mTraceMarkets = new ArrayList<>();
@@ -101,7 +99,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
     private List<String> mListAutoSearch = new ArrayList<>();
     private List<CartItem> mCartItems = new ArrayList<>();
     private List<String> mHeaderNames = new ArrayList<>();
-    private List<Event> mEventList = new ArrayList<>();
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private LoadDataUtils mDataUtils;
@@ -454,7 +451,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
             case R.id.item_recycler_market:
                 mLinearMenu.setVisibility(View.GONE);
                 Intent intent = new Intent(this, FloorActivity.class);
-                intent.putExtra(Constants.COMMERCE_INTENT, mListComAdap.get(position));
+                intent.putExtra(Constants.KeyIntent.COMMERCE_INTENT, mListComAdap.get(position));
                 startActivity(intent);
                 break;
         }
@@ -575,7 +572,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
                         mNearMarketList.add(new NearMarket(center, distence));
                         center.setDistance(distence);
                     }
-
                     // sắp xếm lại danh sách siêu thi theo khoảng cách
                     Collections.sort(mNearMarketList, new Comparator<NearMarket>() {
                         @Override
@@ -640,7 +636,7 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         switch (result) {
             case Constants.ResultFinishLoadData.LOAD_DATA_FINISH:
                 synChronizeData();
-                mDataUtils.getEvents(this, mIdStore, mEventList);
+                mDataUtils.getEvents(this, mIdStore, sEventList);
                 break;
             case Constants.ResultFinishLoadData.LOAD_EVENT_FINISH:
                 pushNotification();
@@ -656,31 +652,27 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo_i);
         notBuilder.setLargeIcon(largeIcon);
         notBuilder.setTicker(getString(R.string.ticker));
-
-        for (Event event : mEventList) {
+        for (Event event : sEventList) {
             // Sét đặt thời điểm sự kiện xẩy ra.
             // Các thông báo trên Panel được sắp xếp bởi thời gian này.
             notBuilder.setWhen(System.currentTimeMillis());
             notBuilder.setContentTitle(event.getName());
             notBuilder.setContentText(event.getContent());
-
             // Tạo một Intent
             Intent intent = new Intent(this, HomeStoreActivity.class);
-
+            sFlagIntentEvent = true;
             // PendingIntent.getActivity(..) sẽ start mới một Activity và trả về
             // đối tượng PendingIntent.
             // Nó cũng tương đương với gọi Context.startActivity(Intent).
             PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTI_EVENT_REQUEST,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
             this.notBuilder.setContentIntent(pendingIntent);
-
             // Lấy ra dịch vụ thông báo (Một dịch vụ có sẵn của hệ thống).
-            NotificationManager notificationService  =
-                (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
-
+            NotificationManager notificationService =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
             // Xây dựng thông báo và gửi nó lên hệ thống.
-            Notification notification =  notBuilder.build();
-            notificationService.notify(NOTI_EVENT_ID+event.getId(), notification);
+            Notification notification = notBuilder.build();
+            notificationService.notify(NOTI_EVENT_ID + event.getId(), notification);
         }
     }
 }

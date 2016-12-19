@@ -104,7 +104,7 @@ public class CategoryStallFragment extends Fragment implements
             int id=Integer.parseInt(category.getId());
             if (category != null) {
                 Bundle bundle=new Bundle();
-                bundle.putInt(Constants.CATEGORY_INTENT, id);
+                bundle.putInt(Constants.KeyIntent.CATEGORY_INTENT, id);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
