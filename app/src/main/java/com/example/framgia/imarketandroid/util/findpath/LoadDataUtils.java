@@ -18,7 +18,6 @@ import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Stores;
-import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.Flog;
@@ -70,10 +69,10 @@ public class LoadDataUtils {
                 ListFloor floors = (ListFloor) object;
                 mProgressDialog.dismiss();
                 if (floors != null) {
-                    FloorActivity.mFloorList.clear();
+                    FloorActivity.sFloorList.clear();
                     for (int i = 0; i < floors.getFloorList().size(); i++) {
                         Floor floor = floors.getFloorList().get(i);
-                        FloorActivity.mFloorList.add(floor.getNameFloor().toString());
+                        FloorActivity.sFloorList.add(floor.getNameFloor().toString());
                     }
                     mFinishLoadDataListener.onFinish(Constants.ResultFinishLoadData.LOAD_DATA_FINISH);
                 } else {

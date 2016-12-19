@@ -96,7 +96,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         SensorEventListener, OnFinishLoadDataListener {
     public final static int FLAG_CHECK_LIST_SAVE = 7;
     public static int sResumeValue = 0;
-    public static List<String> mFloorList = new ArrayList<>();
+    public static List<String> sFloorList = new ArrayList<>();
     public static boolean sCheckSlideStore = false;
     public static boolean sCheckSlideFloor = false;
     public static Point sCurrentLocation;
@@ -189,7 +189,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         initViews();
         Intent intent = getIntent();
         mCommerce = (CommerceCanter) intent
-                .getSerializableExtra(Constants.COMMERCE_INTENT);
+                .getSerializableExtra(Constants.KeyIntent.COMMERCE_INTENT);
         mDataUtils = new LoadDataUtils();
         mDataUtils.init(this);
         mDataUtils.loadFloor(this, mCommerce.getId());
@@ -274,7 +274,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
         mLayoutFloor = (LinearLayout) findViewById(R.id.layout_list_floor);
         mListFloor = (ListView) findViewById(R.id.list_floor);
         ArrayAdapter adapter =
-                new ArrayAdapter<String>(this, R.layout.item_floor, R.id.floor_content, mFloorList);
+                new ArrayAdapter<String>(this, R.layout.item_floor, R.id.floor_content, sFloorList);
         mListFloor.setAdapter(adapter);
         mListFloor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -801,7 +801,7 @@ public class FloorActivity extends AppCompatActivity implements AdapterView
                 scanQrCode();
                 break;
             case Constants.FLOOR:
-                if (mFloorList.size() == 0) mFloorList.add(getString(R.string.only_one));
+                if (sFloorList.size() == 0) sFloorList.add(getString(R.string.only_one));
                 if (!sCheckSlideFloor) {
                     if (sCheckSlideStore) {
                         StoreAppear(false);

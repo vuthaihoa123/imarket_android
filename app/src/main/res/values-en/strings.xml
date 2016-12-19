@@ -200,7 +200,7 @@
     <string name="list_point_saved">List of Locations saved</string>
     <string name="done">Complete</string>
     <string name="success">Share done !</string>
-    <string name="text_share_fake">Cửa hàng này rất tuyệt \nĐịa chỉ: Hà Đông -Hà Nội</string>
+    <string name="text_share_fake">...</string>
     <string name="share_with_facebook">Share with Facebook</string>
     <string name="noti">Notification</string>
     <string name="ok_dialog_success">OK</string>

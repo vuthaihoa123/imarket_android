@@ -46,7 +46,7 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
     private void handleIntent() {
         if (getIntent() != null) {
             Bundle bundle = getIntent().getExtras();
-            int id = bundle.getInt(Constants.CATEGORY_INTENT);
+            int id = bundle.getInt(Constants.KeyIntent.CATEGORY_INTENT);
             loadDatafromServer(id);
         }
     }

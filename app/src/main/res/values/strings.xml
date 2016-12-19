@@ -206,7 +206,7 @@
     <string name="done">Hoàn thành</string>
     <string name="note">Ghi chú :</string>
     <string name="success">Share done !</string>
-    <string name="text_share_fake">Cửa hàng này rất tuyệt \nĐịa chỉ: Hà Đông -Hà Nội</string>
+    <string name="text_share_fake">...</string>
     <string name="share_with_facebook">Chia sẻ với Facebook</string>
     <string name="noti">Notification</string>
     <string name="ok_dialog_success">OK</string>
@@ -319,4 +319,5 @@
     <string name="cacel">HỦY</string>
     <string name="new_event_noti">Bạn có thông báo mới ....</string>
     <string name="ticker">This is a ticker</string>
+    <string name="share_on_facebook">Facebook</string>
 </resources>
