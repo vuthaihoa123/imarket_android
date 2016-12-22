@@ -11,7 +11,6 @@ import com.example.framgia.imarketandroid.R;
  * Created by VULAN on 7/22/2016.
  */
 public class GridItemDecoration extends RecyclerView.ItemDecoration {
-
     private Context mContext;
 
     public GridItemDecoration(Context mContext) {
@@ -19,7 +18,8 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                               RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         outRect.top = mContext.getResources().getDimensionPixelOffset(R.dimen.common_size_7);
         if (parent.getChildLayoutPosition(view) % 2 == 0) {

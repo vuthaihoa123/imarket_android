@@ -38,7 +38,7 @@ public class SkewTextView extends TextView {
         super.onDraw(canvas);
         canvas.skew(mSkewX, mSkewY);  //you need to change values over here
         Rotate3dAnimation skew = new Rotate3dAnimation(
-                mFromDegree, mToDegree, mCenterX, mCenterY, mDepthZ, false);   //here too
+            mFromDegree, mToDegree, mCenterX, mCenterY, mDepthZ, false);   //here too
         startAnimation(skew);
     }
 }

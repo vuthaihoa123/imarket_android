@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryStallFragment extends Fragment implements
-        HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
+    HttpRequest.OnLoadDataListener, OnRecyclerItemInteractListener {
     public static CategoryStallAdapter sCategoryStallAdapter;
     public static List<Category> sCategoryProducts;
     private RecyclerView mRecyclerView;
@@ -67,7 +67,8 @@ public class CategoryStallFragment extends Fragment implements
         Bundle bundle = getArguments();
         if (bundle == null) {
             HttpRequest.getInstance(getActivity().getBaseContext()).init();
-            HttpRequest.getInstance(getActivity().getBaseContext()).initProgressDialog(getActivity());
+            HttpRequest.getInstance(getActivity().getBaseContext())
+                .initProgressDialog(getActivity());
             HttpRequest.getInstance(getActivity().getBaseContext()).loadCategories(mStoreId);
             HttpRequest.getInstance(getActivity().getBaseContext()).setOnLoadDataListener(this);
         }
@@ -101,9 +102,9 @@ public class CategoryStallFragment extends Fragment implements
         Intent intent = new Intent(getContext(), ListProductsActivity.class);
         if (sCategoryProducts.size() != 0) {
             Category category = sCategoryProducts.get(position);
-            int id=Integer.parseInt(category.getId());
+            int id = Integer.parseInt(category.getId());
             if (category != null) {
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt(Constants.KeyIntent.CATEGORY_INTENT, id);
                 intent.putExtras(bundle);
                 startActivity(intent);

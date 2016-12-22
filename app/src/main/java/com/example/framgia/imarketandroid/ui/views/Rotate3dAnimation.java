@@ -15,7 +15,6 @@ package com.example.framgia.imarketandroid.ui.views;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.view.animation.Animation;
@@ -69,13 +68,10 @@ public class Rotate3dAnimation extends Animation {
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         final float fromDegrees = mFromDegrees;
         float degrees = fromDegrees + ((mToDegrees - fromDegrees) * interpolatedTime);
-
         final float centerX = mCenterX;
         final float centerY = mCenterY;
         final Camera camera = mCamera;
-
         final Matrix matrix = t.getMatrix();
-
         camera.save();
         if (mReverse) {
             camera.translate(0.0f, 0.0f, mDepthZ * interpolatedTime);
@@ -85,7 +81,6 @@ public class Rotate3dAnimation extends Animation {
         camera.rotateY(degrees);
         camera.getMatrix(matrix);
         camera.restore();
-
         matrix.preTranslate(-centerX, -centerY);
         matrix.postTranslate(centerX, centerY);
     }

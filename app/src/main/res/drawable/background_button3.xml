@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+<shape android:shape="rectangle"
+       xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/colorPrimary">
     </solid>
-    <stroke android:color="@color/color_bg_bt2" android:width="@dimen/common_size_3">
+    <stroke
+        android:color="@color/color_bg_bt2"
+        android:width="@dimen/common_size_3">
     </stroke>
-    <padding android:bottom="@dimen/margin_pading_10"
-             android:left="@dimen/common_size_10"
-             android:right="@dimen/common_size_10" android:top="@dimen/common_size_10">
+    <padding
+        android:bottom="@dimen/margin_pading_10"
+        android:left="@dimen/common_size_10"
+        android:right="@dimen/common_size_10"
+        android:top="@dimen/common_size_10">
     </padding>
     <corners android:radius="@dimen/radius">
     </corners>

@@ -124,11 +124,11 @@ public class SignUpFragment extends android.support.v4.app.Fragment {
                         }
                     }
 
-                @Override
-                public void onLoadDataFailure(String message) {
-                    mProgressDialog.dismiss();
-                }
-            });
+                    @Override
+                    public void onLoadDataFailure(String message) {
+                        mProgressDialog.dismiss();
+                    }
+                });
         }
     }
 

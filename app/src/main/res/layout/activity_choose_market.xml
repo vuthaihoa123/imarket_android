@@ -95,11 +95,13 @@
                 android:layout_below="@+id/rl_container_search"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_market"
                     android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
                 <ImageView
                     android:id="@+id/image_no_network"
                     android:visibility="gone"

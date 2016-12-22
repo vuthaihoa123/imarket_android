@@ -152,10 +152,10 @@ public class MapUntils {
             (), distance);
         return distance[0];
     }
-    private void setDialogSavePoint(Context context, Dialog dialog){
-        dialog= new Dialog(context);
+
+    private void setDialogSavePoint(Context context, Dialog dialog) {
+        dialog = new Dialog(context);
         dialog.setContentView(R.layout.activity_save_point);
         dialog.setTitle("");
-
     }
 }

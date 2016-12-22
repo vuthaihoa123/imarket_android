@@ -21,7 +21,6 @@ import java.util.List;
  * Created by VULAN on 8/29/2016.
  */
 public class HistoryOrderAdapter extends RecyclerView.Adapter<HistoryOrderAdapter.ItemHolder> {
-
     private List<CartItem> mCartItems;
     private Context mContext;
     private onRemoveItemListener mOnRemoveItemListener;
@@ -33,7 +32,8 @@ public class HistoryOrderAdapter extends RecyclerView.Adapter<HistoryOrderAdapte
 
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_history_order, parent, false);
+        View view =
+            LayoutInflater.from(mContext).inflate(R.layout.item_history_order, parent, false);
         return new ItemHolder(view);
     }
 
@@ -44,9 +44,11 @@ public class HistoryOrderAdapter extends RecyclerView.Adapter<HistoryOrderAdapte
     @Override
     public void onBindViewHolder(ItemHolder holder, final int position) {
         final CartItem cartItem = mCartItems.get(position);
-        holder.textPrice.setText(cartItem.getPriceProduct() + " " + mContext.getResources().getString(R.string.vnd_uppercase));
+        holder.textPrice.setText(cartItem.getPriceProduct() + " " +
+            mContext.getResources().getString(R.string.vnd_uppercase));
         holder.textName.setText(cartItem.getNameProduct());
-        holder.textQuantity.setText(mContext.getResources().getString(R.string.quantity_second) + cartItem.getQuantity());
+        holder.textQuantity.setText(
+            mContext.getResources().getString(R.string.quantity_second) + cartItem.getQuantity());
         holder.layoutRemoving.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

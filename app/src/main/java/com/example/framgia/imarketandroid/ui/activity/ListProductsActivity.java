@@ -26,7 +26,7 @@ import java.util.List;
  * Created by hoavt on 19/07/2016.
  */
 public class ListProductsActivity extends AppCompatActivity implements SearchView
-        .OnQueryTextListener, LoadDataUtils.OnListProductListener {
+    .OnQueryTextListener, LoadDataUtils.OnListProductListener {
     private RecyclerView mRvListProducts;
     private static String NAMECATEGORY = "Apple";
     public ListProductsAdapter sAdapter;
@@ -83,11 +83,11 @@ public class ListProductsActivity extends AppCompatActivity implements SearchVie
         // Associate searchable configuration with the SearchView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             SearchManager searchManager =
-                    (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
             SearchView searchView =
-                    (SearchView) menu.findItem(R.id.search).getActionView();
+                (SearchView) menu.findItem(R.id.search).getActionView();
             searchView.setSearchableInfo(
-                    searchManager.getSearchableInfo(getComponentName()));
+                searchManager.getSearchableInfo(getComponentName()));
             searchView.setOnQueryTextListener(this);
         }
         return true;

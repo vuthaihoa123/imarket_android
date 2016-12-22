@@ -28,7 +28,8 @@ import com.example.framgia.imarketandroid.util.SharedPreferencesUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChooseStoreTypeActivity extends AppCompatActivity implements OnRecyclerItemInteractListener {
+public class ChooseStoreTypeActivity extends AppCompatActivity
+    implements OnRecyclerItemInteractListener {
     public static int sAvatar;
     private ChooseStoreTypeAdapter mAdapter;
     private List<StoreType> mListStore = new ArrayList<>();
@@ -49,9 +50,8 @@ public class ChooseStoreTypeActivity extends AppCompatActivity implements OnRecy
     }
 
     @Override
-    public void onItemClick(View view,int position) {
+    public void onItemClick(View view, int position) {
         sAvatar = position;
         finish();
     }
-
 }

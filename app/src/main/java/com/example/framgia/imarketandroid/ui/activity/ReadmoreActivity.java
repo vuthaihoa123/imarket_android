@@ -15,7 +15,6 @@ import com.example.framgia.imarketandroid.util.Constants;
  * Created by vutha on 9/27/2016.
  */
 public class ReadmoreActivity extends AppCompatActivity {
-
     private ImageView mIvExit;
     private TextView mTvName, mTvPrice, mTvInfor;
 

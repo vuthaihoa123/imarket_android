@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_preview_product_order"
@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/margin_5dp"
         android:layout_weight="3"
-        android:scrollbars="horizontal" />
+        android:scrollbars="horizontal"/>
 
     <ScrollView
         android:id="@+id/sv_order"
@@ -36,7 +36,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/text_large_size" />
+                android:textSize="@dimen/text_large_size"/>
 
             <TextView
                 android:id="@+id/tv_price_product_order"
@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_small_size" />
+                android:textSize="@dimen/text_small_size"/>
 
             <com.example.framgia.imarketandroid.ui.views.CustomSpinner
                 android:id="@+id/spinner_receive_product"
@@ -59,7 +59,7 @@
                 android:dropDownWidth="match_parent"
                 android:popupBackground="@android:color/white"
                 android:popupElevation="@dimen/elevation_popup"
-                android:stateListAnimator="@drawable/spinner_sla" />
+                android:stateListAnimator="@drawable/spinner_sla"/>
 
             <TextView
                 android:id="@+id/tv_redundance_product_order"
@@ -68,7 +68,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/text_small_size" />
+                android:textSize="@dimen/text_small_size"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                     android:text="@string/soluong"
                     android:textColor="@color/black"
                     android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_xsmall_size" />
+                    android:textSize="@dimen/text_xsmall_size"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/margin_10dp"
-                        android:src="@drawable/ic_remove_circle_24px" />
+                        android:src="@drawable/ic_remove_circle_24px"/>
 
                     <TextView
                         android:id="@+id/tv_quantity_product_order"
@@ -103,13 +103,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/margin_10dp"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/text_large_size" />
+                        android:textSize="@dimen/text_large_size"/>
 
                     <ImageView
                         android:id="@+id/iv_ascend_quantity_order"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_add_circle_24px" />
+                        android:src="@drawable/ic_add_circle_24px"/>
                 </LinearLayout>
             </FrameLayout>
 
@@ -120,7 +120,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/text_small_size" />
+                android:textSize="@dimen/text_small_size"/>
         </LinearLayout>
     </ScrollView>
 
@@ -130,7 +130,7 @@
         android:layout_height="0dp"
         android:layout_weight="6"
         android:scaleType="centerCrop"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -144,6 +144,6 @@
             android:background="@color/white"
             android:text="@string/muangay"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_medium_size" />
+            android:textSize="@dimen/text_medium_size"/>
     </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -44,7 +44,7 @@ public class SaleOffEventFragment extends Fragment {
             for (Event event : mEvents) {
                 String time = DateTimeUtil.getTimeEvent(event.getStartTime(), event.getEndTime());
                 NewEvent newEvent = new NewEvent(event.getName(), event.getContent(), time);
-                mList.add(0,newEvent);
+                mList.add(0, newEvent);
             }
         }
     }
@@ -68,6 +68,4 @@ public class SaleOffEventFragment extends Fragment {
         mSaleOffEventAdapter = new SaleOffEventAdapter(mList, getActivity(), mCallback);
         mRecyclerView.setAdapter(mSaleOffEventAdapter);
     }
-
-
 }

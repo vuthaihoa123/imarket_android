@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/bg_bb_color"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:background="@color/bg_bb_color"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:background="@drawable/background_profile"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                         android:textStyle="bold"
                         android:gravity="center"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin_40" />
+                        android:layout_height="@dimen/margin_40"/>
 
                     <TextView
                         android:id="@+id/text_phone_number"
@@ -46,7 +46,7 @@
                         android:layout_marginBottom="@dimen/margin_35"
                         android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/text_call_center"
@@ -57,7 +57,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/margin_20dp"
                         android:layout_marginBottom="@dimen/margin_pading_10"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
 
                     <Button
                         android:id="@+id/button_call_center"
@@ -70,7 +70,7 @@
                         android:layout_marginRight="@dimen/margin_20dp"
                         android:textColor="@android:color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 </RelativeLayout>
             </FrameLayout>
 
@@ -92,21 +92,21 @@
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color4"
                         android:text="@string/count_people"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:layout_width="@dimen/width_height_1"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:layout_marginBottom="@dimen/margin_5dp"
                         android:background="@color/bg_bb_color"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_left_back"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_left_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:id="@+id/text_count_people"
@@ -117,14 +117,14 @@
                         android:textColor="@color/text_color5"
                         android:textSize="@dimen/common_text_size_20"
                         android:text="2"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_right_back"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_right_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -140,21 +140,21 @@
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color4"
                         android:text="@string/kid"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:layout_width="@dimen/width_height_1"
                         android:layout_marginTop="@dimen/margin_5"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:background="@color/bg_bb_color"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_left_back_kid"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_left_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:id="@+id/text_count_kid"
@@ -165,14 +165,14 @@
                         android:textColor="@color/text_color5"
                         android:textSize="@dimen/common_text_size_20"
                         android:text="2"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_right_back_kid"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_right_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -194,21 +194,21 @@
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color4"
                         android:text="@string/day_in"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:layout_width="@dimen/width_height_1"
                         android:layout_marginTop="@dimen/margin_5"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:background="@color/bg_bb_color"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_left_back_dayin"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_left_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:id="@+id/text_dayin"
@@ -219,14 +219,14 @@
                         android:textColor="@color/text_color5"
                         android:textSize="@dimen/common_text_size_20"
                         android:text="@string/date_date"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_right_back_dayin"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_right_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -242,21 +242,21 @@
                         android:paddingLeft="@dimen/margin_pading_10"
                         android:textColor="@color/text_color4"
                         android:text="@string/time_gotoshop"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:layout_width="@dimen/width_height_1"
                         android:layout_marginTop="@dimen/margin_5"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:background="@color/bg_bb_color"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_left_back_timein"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_left_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:id="@+id/text_time_in"
@@ -267,14 +267,14 @@
                         android:textColor="@color/text_color5"
                         android:textSize="@dimen/common_text_size_20"
                         android:text="@string/time_time"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
 
                     <Button
                         android:id="@+id/button_right_back_timein"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_right_black"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -293,7 +293,7 @@
                     android:layout_width="match_parent"
                     android:hint="@string/fill_note"
                     android:padding="@dimen/margin_pading_10"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
             </LinearLayout>
 
             <TextView
@@ -319,6 +319,6 @@
         android:layout_width="match_parent"
         android:text="@string/continuee"
         android:textColor="@android:color/white"
-        android:layout_height="@dimen/width_height_50" />
+        android:layout_height="@dimen/width_height_50"/>
 
 </RelativeLayout>

@@ -1,7 +1,11 @@
 package com.example.framgia.imarketandroid.data.model;
+
 import android.os.Parcel;
+
 import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+
 import io.realm.RealmObject;
 
 /**

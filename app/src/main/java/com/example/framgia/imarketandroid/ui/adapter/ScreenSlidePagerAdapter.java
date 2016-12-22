@@ -1,9 +1,7 @@
 package com.example.framgia.imarketandroid.ui.adapter;
-
 /**
  * Created by vutha on 10/4/2016.
  */
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

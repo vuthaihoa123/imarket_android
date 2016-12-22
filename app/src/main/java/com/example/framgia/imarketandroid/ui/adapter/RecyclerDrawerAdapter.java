@@ -23,6 +23,7 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private List<DrawerItem> mNavigationDrawerItems;
     private Context mContext;
     private OnRecyclerItemInteractListener mOnRecyclerItemInteractListener;
+
     public RecyclerDrawerAdapter(Context context, List<DrawerItem> items
     ) {
         mContext = context;
@@ -94,7 +95,6 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
                 }
             });
-
         }
     }
 
@@ -103,5 +103,4 @@ public class RecyclerDrawerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
         }
     }
-
 }

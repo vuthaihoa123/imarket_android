@@ -4,7 +4,6 @@ package com.example.framgia.imarketandroid.data.model;
  * Created by yue on 31/07/2016.
  */
 public class DrawerItem {
-
     private String mTitle;
     private String mImage;
     private boolean mIsTail;

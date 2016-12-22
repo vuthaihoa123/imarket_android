@@ -23,7 +23,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by phongtran on 26/08/2016.
  */
-public class CommentStoreAdapter extends RecyclerView.Adapter<CommentStoreAdapter.SuggestStoreViewHolder> {
+public class CommentStoreAdapter
+    extends RecyclerView.Adapter<CommentStoreAdapter.SuggestStoreViewHolder> {
     public Context mContext;
     private List<Comment> mListOldMessage;
     private OnPreviewCommentListener mListener;
@@ -35,19 +36,21 @@ public class CommentStoreAdapter extends RecyclerView.Adapter<CommentStoreAdapte
 
     @Override
     public SuggestStoreViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_message_rate, parent, false);
+        View view =
+            LayoutInflater.from(mContext).inflate(R.layout.item_message_rate, parent, false);
         return new SuggestStoreViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SuggestStoreViewHolder holder, int position) {
         Comment messageSuggestStore = mListOldMessage.get(position);
-        holder.mImageViewAvatarItemMessageRate.setImageResource(messageSuggestStore.getImageViewAvatar());
+        holder.mImageViewAvatarItemMessageRate
+            .setImageResource(messageSuggestStore.getImageViewAvatar());
         holder.mTextViewContentMessage.setText(messageSuggestStore.getTextViewContent());
         holder.mTextViewTitleMessage.setText(messageSuggestStore.getTextViewTitle());
         holder.mTextViewNameUser.setText(messageSuggestStore.getNameUser());
         holder.mTextViewCurDate.setText(SystemUtil.formatTimeNow(mContext,
-                (System.currentTimeMillis() - messageSuggestStore.getTimeNow()) / Constants.SECOND));
+            (System.currentTimeMillis() - messageSuggestStore.getTimeNow()) / Constants.SECOND));
         int totalFullStar = messageSuggestStore.getTotalStar();
         for (int i = 0; i < totalFullStar; i++) {
             holder.mStarList.get(i).setChecked(true);
@@ -95,9 +98,9 @@ public class CommentStoreAdapter extends RecyclerView.Adapter<CommentStoreAdapte
             super(itemView);
             mView = itemView;
             mImageViewAvatarItemMessageRate = (CircleImageView) mView
-                    .findViewById(R.id.image_avatar_item_message_rate);
+                .findViewById(R.id.image_avatar_item_message_rate);
             mTextViewContentMessage = (TextView) mView
-                    .findViewById(R.id.text_content_item_message_rate);
+                .findViewById(R.id.text_content_item_message_rate);
             mTextViewTitleMessage = (TextView) mView.findViewById(R.id.tv_title_item_message_rate);
             mTextViewNameUser = (TextView) mView.findViewById(R.id.text_name_user);
             mTextViewCurDate = (TextView) mView.findViewById(R.id.tv_rated_date);

@@ -9,7 +9,6 @@ import com.example.framgia.imarketandroid.R;
 /**
  * Created by VULAN on 10/8/2016.
  */
-
 public class CustomStarView implements View.OnClickListener {
     private int mPosition;
     private ImageView mImageStar;

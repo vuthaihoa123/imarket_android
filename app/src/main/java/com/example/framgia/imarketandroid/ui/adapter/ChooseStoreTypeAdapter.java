@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.listener.OnRecyclerItemInteractListener;
 import com.example.framgia.imarketandroid.data.model.StoreType;
+import com.example.framgia.imarketandroid.util.Constants;
 
 import java.util.List;
 
@@ -45,13 +48,26 @@ public class ChooseStoreTypeAdapter
     @Override
     public void onBindViewHolder(ItemHolderStore holder, final int position) {
         StoreType store = mListStore.get(position);
-        holder.avatar.setImageResource(store.getAvatar());
+        holder.avatar.setImageResource(R.drawable.store);
+        String url = Constants.HEAD_URL + store.getAvatar();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Glide.get(mContext).clearDiskCache();
+            }
+        }).start();
+        Glide.get(mContext).clearMemory();
+        Glide.with(mContext).load(url)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(false)
+            .centerCrop()
+            .into(holder.avatar);
         holder.textName.setText(store.getName());
         holder.itemRecyclerMarket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null)
-                    mListener.onItemClick(view,position);
+                    mListener.onItemClick(view, position);
             }
         });
     }

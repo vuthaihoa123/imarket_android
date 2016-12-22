@@ -34,7 +34,7 @@ import retrofit2.http.Query;
 public interface IMarketApiEndPoint {
     @GET(Constants.PathAPI.LOAD_CATEGORIES_PATH)
     Call<CategoryList> loadCategories(@Path(value = Constants.ParamAPI.STORE_ID, encoded = true)
-                                          int storeId);
+                                      int storeId);
     // TODO: 19/08/2016 change notification if have api
     @GET("users/32")
     Call<Session> eventNotification();
@@ -53,7 +53,7 @@ public interface IMarketApiEndPoint {
     Call<CommerceList> getListCommerceCenter();
     @GET(Constants.PathAPI.GET_STORES_PATH)
     Call<Stores> getStoreByStoreType(@Path(value = Constants.ParamAPI.FLOOR_ID, encoded = true)
-                                         int idFloor,
+                                     int idFloor,
                                      @Query(Constants.ParamAPI.STORE_TYPE_ID) int storeTypeId);
     @GET(Constants.PathAPI.GET_PRODUCTS_PATH)
     Call<ProductList> getProductInCategory(
@@ -61,5 +61,8 @@ public interface IMarketApiEndPoint {
     );
     @GET(Constants.PathAPI.GET_EVENTS_PATH)
     Call<EventList> getEventInStore(@Path(value = Constants.ParamAPI.STORE_ID, encoded = true)
-                                        int storeId);
+                                    int storeId);
+    @GET(Constants.PathAPI.GET_STORE_TYPE_PATH)
+    Call<StoreTypeList> getListStoreTypeByCommerceId(
+        @Path(value = Constants.ParamAPI.COMMERCE_CENTER_ID, encoded = true) int commerceCenterId);
 }

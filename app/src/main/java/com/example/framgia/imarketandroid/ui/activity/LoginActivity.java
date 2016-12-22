@@ -65,5 +65,4 @@ public class LoginActivity extends AppCompatActivity {
         adapter.addFragment(new SignUpFragment(), Constants.SIGNUP);
         viewPager.setAdapter(adapter);
     }
-
 }

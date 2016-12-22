@@ -10,13 +10,14 @@ import android.net.NetworkInfo;
  */
 public class ConnectionDetector {
     Context context;
-    public ConnectionDetector(Context context){
+
+    public ConnectionDetector(Context context) {
         this.context = context;
     }
-    public boolean isConnectToInternet(){
+
+    public boolean isConnectToInternet() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context
             .CONNECTIVITY_SERVICE);
-
         return cm.getActiveNetworkInfo() != null;
     }
 }

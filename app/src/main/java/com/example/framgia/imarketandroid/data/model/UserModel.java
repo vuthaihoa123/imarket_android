@@ -9,7 +9,8 @@ public class UserModel {
     @SerializedName("user")
     private Session mSession;
     @SerializedName("errors")
-    private Error  mErrors;
+    private Error mErrors;
+
     public UserModel(Session session) {
         mSession = session;
     }

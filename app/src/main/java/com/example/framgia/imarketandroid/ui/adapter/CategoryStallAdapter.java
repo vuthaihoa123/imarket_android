@@ -21,7 +21,7 @@ import java.util.List;
  * Created by VULAN on 7/20/2016.
  */
 public class CategoryStallAdapter
-        extends RecyclerView.Adapter<CategoryStallAdapter.CategoryHolder> {
+    extends RecyclerView.Adapter<CategoryStallAdapter.CategoryHolder> {
     private List<Category> mCategoryProducts;
     private OnRecyclerItemInteractListener mListener;
     Context mContext;
@@ -39,12 +39,12 @@ public class CategoryStallAdapter
     @Override
     public CategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view =
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
+            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
         return new CategoryHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CategoryHolder holder,int position) {
+    public void onBindViewHolder(final CategoryHolder holder, int position) {
         Category categoryProduct = mCategoryProducts.get(position);
         holder.textView.setText(categoryProduct.getName());
         if (!mIsCached) {

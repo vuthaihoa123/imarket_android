@@ -24,12 +24,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
+
             <LinearLayout
                 android:gravity="bottom"
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
+
                 <TextView
                     android:layout_marginBottom="@dimen/common_size_5"
                     android:id="@+id/tv_name_product"
@@ -41,6 +43,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_small_size"/>
+
                 <TextView
                     android:layout_marginBottom="@dimen/common_size_5"
                     android:id="@+id/tv_price_product_saleoff"
@@ -49,6 +52,7 @@
                     android:layout_gravity="center"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="@dimen/text_small_size"/>
+
                 <TextView
                     android:layout_marginBottom="@dimen/common_size_5"
                     android:id="@+id/tv_price_product"

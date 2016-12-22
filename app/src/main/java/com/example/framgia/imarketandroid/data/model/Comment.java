@@ -3,7 +3,6 @@ package com.example.framgia.imarketandroid.data.model;
 /**
  * Created by VULAN on 10/12/2016.
  */
-
 public class Comment {
     private int mImageViewAva;
     private String mTextViewContent;
@@ -50,9 +49,10 @@ public class Comment {
         mTotalStar = totalFullStar;
     }
 
-    public int getTotalStar(){
+    public int getTotalStar() {
         return mTotalStar;
     }
+
     public int getImageViewAvatar() {
         return mImageViewAva;
     }

@@ -8,5 +8,5 @@
     <com.example.framgia.imarketandroid.ui.views.CustomMarkerView
         android:id="@+id/current_custom_marker_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 </FrameLayout>

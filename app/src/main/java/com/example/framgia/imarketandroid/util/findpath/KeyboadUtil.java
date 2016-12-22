@@ -10,7 +10,6 @@ import android.widget.AutoCompleteTextView;
  * Created by phongtran on 25/11/2016.
  */
 public class KeyboadUtil {
-
     public static void showKeyboard(Activity activity, AutoCompleteTextView view) {
         view.setFocusable(true);
         InputMethodManager imm =

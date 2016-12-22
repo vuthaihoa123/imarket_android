@@ -1,5 +1,7 @@
 package com.example.framgia.imarketandroid.data;
 
+import android.util.Log;
+
 import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.AlbumShop;
 import com.example.framgia.imarketandroid.data.model.CartItem;
@@ -12,6 +14,7 @@ import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.Market;
 import com.example.framgia.imarketandroid.data.model.Shop;
 import com.example.framgia.imarketandroid.data.model.StoreType;
+import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.Flog;
 import com.google.android.gms.maps.model.LatLng;
@@ -133,15 +136,42 @@ public class FakeContainer {
 
     public static List<StoreType> initStore() {
         List<StoreType> storeList = new ArrayList<>();
-        storeList.add(new StoreType(0, "Chọn cửa hàng", R.drawable.store, 1));
-        storeList.add(new StoreType(1, "cửa hàng ăn uống", R.drawable.food_avatar, 1));
-        storeList.add(new StoreType(2, "cửa hàng quần áo", R.drawable.fashion, 1));
-        storeList.add(new StoreType(3, "cửa hàng sách", R.drawable.book_shop, 1));
-        storeList.add(new StoreType(4, "cửa hàng mỹ phẩm", R.drawable.cosmetic, 1));
-        storeList.add(new StoreType(5, "Rạp chiếu phim", R.drawable.stage, 1));
-        storeList.add(new StoreType(6, "Trung tâm giải trí", R.drawable.game_icon, 1));
-        storeList.add(new StoreType(7, "Cửa hàng điện tử", R.drawable.smartphone, 1));
+        storeList.add(new StoreType(0, "Chọn cửa hàng",
+            "http://res-4.cloudinary.com/dnvmk5bvc/image/upload/v1481083494/gwcccnde10xhdtlraffl.jpg",
+            1));
+        storeList.add(new StoreType(1, "cửa hàng ăn uống",
+            "http://res-2.cloudinary.com/dnvmk5bvc/image/upload/v1481083515/ixvhtulxuiwwrt6jtyn4.jpg",
+            1));
+        storeList.add(new StoreType(2, "cửa hàng quần áo",
+            "http://res-4.cloudinary.com/dnvmk5bvc/image/upload/v1481083494/gwcccnde10xhdtlraffl.jpg",
+            1));
+        storeList.add(new StoreType(3, "cửa hàng sách",
+            "http://res-2.cloudinary.com/dnvmk5bvc/image/upload/v1481083515/ixvhtulxuiwwrt6jtyn4.jpg",
+            1));
+        storeList.add(new StoreType(4, "cửa hàng mỹ phẩm",
+            "http://res-4.cloudinary.com/dnvmk5bvc/image/upload/v1481083494/gwcccnde10xhdtlraffl.jpg",
+            1));
+        storeList.add(new StoreType(5, "Rạp chiếu phim",
+            "http://res-4.cloudinary.com/dnvmk5bvc/image/upload/v1481083494/gwcccnde10xhdtlraffl.jpg",
+            1));
+        storeList.add(new StoreType(6, "Trung tâm giải trí",
+            "http://res-2.cloudinary.com/dnvmk5bvc/image/upload/v1481083515/ixvhtulxuiwwrt6jtyn4.jpg",
+            1));
+        storeList.add(new StoreType(7, "Cửa hàng điện tử",
+            "http://res-4.cloudinary.com/dnvmk5bvc/image/upload/v1481083494/gwcccnde10xhdtlraffl.jpg",
+            1));
         return storeList;
+    }
+
+    public static List<String> createListImage() {
+        List<String> listImage = new ArrayList<>();
+        if (FloorActivity.sStoreTypes.size() > 0) {
+            for (int i = 0; i < FloorActivity.sStoreTypes.size(); i++) {
+                StoreType storeType = FloorActivity.sStoreTypes.get(i);
+                listImage.add(storeType.getAvatar());
+            }
+        }
+        return listImage;
     }
 
     public static String getNameProduct() {

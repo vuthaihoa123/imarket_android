@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:textColor="@color/grey_darker"
             android:textSize="@dimen/text_xsmall_size"
-            android:paddingLeft="@dimen/padding_10dp" />
+            android:paddingLeft="@dimen/padding_10dp"/>
 
         <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/layout_header"
@@ -31,12 +31,12 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_down"
                 android:scaleType="fitCenter"
-                android:tint="@color/blue" />
+                android:tint="@color/blue"/>
         </android.support.v7.widget.LinearLayoutCompat>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_history_time"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 </LinearLayout>

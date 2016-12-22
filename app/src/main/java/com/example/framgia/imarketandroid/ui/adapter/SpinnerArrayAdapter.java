@@ -9,10 +9,11 @@ import android.widget.TextView;
 /**
  * Created by hoavt on 25/08/2016.
  */
-public class SpinnerArrayAdapter extends ArrayAdapter<String>  {
+public class SpinnerArrayAdapter extends ArrayAdapter<String> {
     private int mHidingItemIndex;
 
-    public SpinnerArrayAdapter(Context context, int textViewResourceId, String[] objects, int hidingItemIndex) {
+    public SpinnerArrayAdapter(Context context, int textViewResourceId, String[] objects,
+                               int hidingItemIndex) {
         super(context, textViewResourceId, objects);
         this.mHidingItemIndex = hidingItemIndex;
     }

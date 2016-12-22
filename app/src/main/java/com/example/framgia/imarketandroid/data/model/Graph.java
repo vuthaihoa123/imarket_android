@@ -24,5 +24,4 @@ public class Graph {
     public RealmList<Edge> getEdges() {
         return mEdges;
     }
-
 }

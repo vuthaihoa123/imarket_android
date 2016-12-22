@@ -26,7 +26,7 @@ public class SystemUtil {
 
     public static long getTimeNowSecond() {
         Calendar c = Calendar.getInstance();
-        return c.getTimeInMillis()/Constants.MINUTE;
+        return c.getTimeInMillis() / Constants.MINUTE;
     }
 
     public static String formatTimeNow(Context context, long timeNowSecond) {

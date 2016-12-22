@@ -130,46 +130,46 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
             case R.id.button_left_back:
                 mCountPeople--;
                 if (mCountPeople > 0) {
-                    mTextViewCount.setText(mCountPeople+"");
+                    mTextViewCount.setText(mCountPeople + "");
                 } else {
                     mCountPeople = Constants.MIN_COUNT_PEOPLE;
                 }
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCount);
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewCount);
                 break;
             case R.id.button_right_back:
                 mCountPeople++;
-                mTextViewCount.setText(mCountPeople+"");
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCount);
+                mTextViewCount.setText(mCountPeople + "");
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewCount);
                 break;
             case R.id.button_left_back_kid:
                 mCountKid--;
                 if (mCountKid >= 0) {
-                    mTextViewCountKid.setText(mCountKid+"");
+                    mTextViewCountKid.setText(mCountKid + "");
                 } else {
                     mCountKid = Constants.MIN_COUNT_KID;
                 }
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCountKid);
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewCountKid);
                 break;
             case R.id.button_right_back_kid:
                 mCountKid++;
-                mTextViewCountKid.setText(mCountKid+"");
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewCountKid);
+                mTextViewCountKid.setText(mCountKid + "");
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewCountKid);
                 break;
             case R.id.button_left_back_dayin:
                 changeDay(Constants.CHANGE_TIME_DOWN);
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewDateIn);
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewDateIn);
                 break;
             case R.id.button_right_back_dayin:
                 changeDay(Constants.CHANGE_TIME_UP);
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewDateIn);
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewDateIn);
                 break;
             case R.id.button_left_back_timein:
                 changeTime(Constants.CHANGE_TIME_DOWN);
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewTimeIn);
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewTimeIn);
                 break;
             case R.id.button_right_back_timein:
                 changeTime(Constants.CHANGE_TIME_UP);
-                DialogShareUtil.getSmallBang(BookTableActivity.this,mTextViewTimeIn);
+                DialogShareUtil.getSmallBang(BookTableActivity.this, mTextViewTimeIn);
                 break;
             case R.id.button_continuee:
                 DialogShareUtil.initAlertContinueBooking(this);
@@ -184,7 +184,7 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
                 Session session = (Session) SharedPreferencesUtil.getInstance().getValue
                     (Constants.SESSION,
                         Session.class);
-                if (session.getId() ==0) {
+                if (session.getId() == 0) {
                     Intent intentLogin = new Intent(this, LoginActivity.class);
                     startActivity(intentLogin);
                 } else {
@@ -347,7 +347,8 @@ public class BookTableActivity extends Activity implements View.OnClickListener 
     private void initGuide() {
         List<Showcase> showList = new ArrayList<>();
         showList.add(new Showcase(mButtonCallCenter, getString(R.string.sequence_call_canter)));
-        showList.add(new Showcase(mButtonLeftContinue, getString(R.string.click_continue_book_table)));
+        showList
+            .add(new Showcase(mButtonLeftContinue, getString(R.string.click_continue_book_table)));
         ShowcaseGuideUtil.mutilShowcase(
             BookTableActivity.this,
             Constants.Instruction.SHOWCASE_ID_BOOK_TABLE,

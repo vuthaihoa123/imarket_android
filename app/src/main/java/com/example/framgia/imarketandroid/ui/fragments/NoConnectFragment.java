@@ -21,7 +21,7 @@ public class NoConnectFragment extends Fragment {
     public NoConnectFragment(Context context) {
         mContext = context;
         if (mContext instanceof OnClickToLoadConnect) {
-            mLoadConnect = (OnClickToLoadConnect)mContext;
+            mLoadConnect = (OnClickToLoadConnect) mContext;
         }
     }
 
@@ -39,15 +39,14 @@ public class NoConnectFragment extends Fragment {
 
     private void initView() {
         mView.findViewById(R.id.button_retry).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mLoadConnect != null) {
-                            mLoadConnect.onClickLoadConnect();
-                        }
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mLoadConnect != null) {
+                        mLoadConnect.onClickLoadConnect();
                     }
-                });
-
+                }
+            });
     }
 
     public interface OnClickToLoadConnect {

@@ -37,6 +37,7 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
         outRect.right = mSpace;
         outRect.left = mSpace;
     }
+
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);

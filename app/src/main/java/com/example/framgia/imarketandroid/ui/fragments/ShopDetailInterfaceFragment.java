@@ -110,7 +110,6 @@ public class ShopDetailInterfaceFragment extends Fragment implements View.OnClic
             (android.R.layout.simple_list_item_single_choice);
         mSpinnerBranchShop.setAdapter(adapter);
         mButtonShare = (Button) mRootView.findViewById(R.id.button_share_info_shop_on_fb);
-
     }
 
     @Override
