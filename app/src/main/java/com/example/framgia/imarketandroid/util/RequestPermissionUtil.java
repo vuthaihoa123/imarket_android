@@ -20,8 +20,8 @@ public class RequestPermissionUtil {
     }
 
     public static void requestForSpecificPermision(final Activity activity,
-                                                   final String[] permisson, View view,String p1) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, p1) ){
+                                                   final String[] permisson, View view, String p1) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, p1)) {
             Snackbar.make(view, R.string.toastPermisson,
                 Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {

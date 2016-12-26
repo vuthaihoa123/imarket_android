@@ -14,6 +14,7 @@ public class EventList {
     public EventList(List<Event> eventList) {
         mEventList = eventList;
     }
+
     public EventList() {
     }
 

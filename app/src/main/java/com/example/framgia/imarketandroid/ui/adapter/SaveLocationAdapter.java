@@ -21,19 +21,21 @@ import java.util.ArrayList;
  * Created by framgia on 07/11/2016.
  */
 public class SaveLocationAdapter extends RecyclerView.Adapter<SaveLocationAdapter.ViewHolder> {
-
     private ArrayList<SavedPointItem> mItems = new ArrayList<>();
     private Context mContext;
     private OnRecyclerItemInteractListener mListener;
     private int mPosition;
+
     // Provide a suitable constructor (depends on the kind of dataset)
     public SaveLocationAdapter(Context context, ArrayList<SavedPointItem> myItems) {
         mContext = context;
         mItems = myItems;
     }
+
     public void setOnRecyclerItemInteractListener(OnRecyclerItemInteractListener listener) {
         mListener = listener;
     }
+
     public void setItems(ArrayList<SavedPointItem> items) {
         mItems = items;
     }
@@ -65,7 +67,7 @@ public class SaveLocationAdapter extends RecyclerView.Adapter<SaveLocationAdapte
                 notifyDataSetChanged();
             }
         });
-        holder.mPosition= position;
+        holder.mPosition = position;
     }
 
     @Override
@@ -73,18 +75,19 @@ public class SaveLocationAdapter extends RecyclerView.Adapter<SaveLocationAdapte
         return mItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView mIvPointSaved;
         public TextView mTvNamePoint;
         public TextView mTvNotepoint;
         public ImageView mIvDelPoint;
         private OnRecyclerItemInteractListener mListener;
         private int mPosition;
+
         public ViewHolder(View itemView, OnRecyclerItemInteractListener listener) {
             super(itemView);
-            this.mListener= listener;
+            this.mListener = listener;
             mIvPointSaved = (ImageView) itemView.findViewById(R.id.iv_save_point);
-            mTvNamePoint= (TextView) itemView.findViewById(R.id.tv_name_point);
+            mTvNamePoint = (TextView) itemView.findViewById(R.id.tv_name_point);
             mTvNotepoint = (TextView) itemView.findViewById(R.id.tv_note_point);
             mIvDelPoint = (ImageView) itemView.findViewById(R.id.iv_del_save_point);
             itemView.setOnClickListener(this);
@@ -92,7 +95,7 @@ public class SaveLocationAdapter extends RecyclerView.Adapter<SaveLocationAdapte
 
         @Override
         public void onClick(View v) {
-            if(mListener!= null){
+            if (mListener != null) {
                 mListener.onItemClick(v, mPosition);
             }
         }

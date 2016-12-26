@@ -144,8 +144,8 @@ public class RealmRemote {
             @Override
             public void execute(Realm realm) {
                 RealmResults<Edge> results =
-                        mRealm.where(Edge.class).equalTo(Constants.NAME_START, name_start).equalTo
-                                (Constants.NAME_END, name_end).findAll();
+                    mRealm.where(Edge.class).equalTo(Constants.NAME_START, name_start).equalTo
+                        (Constants.NAME_END, name_end).findAll();
                 results.deleteAllFromRealm();
             }
         });
@@ -183,7 +183,7 @@ public class RealmRemote {
 
     public static CustomMarker createCustomMarkerFromPoint(Point point) {
         CustomMarker result = new CustomMarker(0, point.getLat(), point.getLng(),
-                Constants.DEMO_NUMBER, point.getType(), point.getId() + "");
+            Constants.DEMO_NUMBER, point.getType(), point.getId() + "");
         return result;
     }
 

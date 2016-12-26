@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/view_group_details"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:id="@+id/view_group_details"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll" />
+            app:layout_scrollFlags="scroll"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_medium_size"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_product_price"
@@ -46,7 +46,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/text_medium_size" />
+                android:textSize="@dimen/text_medium_size"/>
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:id="@+id/tv_product_info"
@@ -62,25 +62,25 @@
                     android:layout_height="wrap_content"
                     android:text="@string/readmore"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="@dimen/text_small_size" />
+                    android:textSize="@dimen/text_small_size"/>
             </android.support.v7.widget.LinearLayoutCompat>
 
             <FrameLayout
                 android:id="@+id/fl_readmore"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_product_preview"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_image_preview" />
+                android:layout_height="@dimen/height_image_preview"/>
 
             <include
                 layout="@layout/rate_product_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/margin_5dp"
-                android:layout_weight="2.4" />
+                android:layout_weight="2.4"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -94,7 +94,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_preview_comments"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/read_all_reviews"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="@dimen/text_small_size" />
+                    android:textSize="@dimen/text_small_size"/>
             </android.support.v7.widget.LinearLayoutCompat>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
@@ -129,7 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/iv_show_preview"
@@ -137,12 +137,12 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:scaleType="fitCenter"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </android.support.design.widget.CoordinatorLayout>

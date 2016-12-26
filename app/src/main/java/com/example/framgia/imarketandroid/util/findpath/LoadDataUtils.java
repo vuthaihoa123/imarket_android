@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,7 +19,10 @@ import com.example.framgia.imarketandroid.data.model.Floor;
 import com.example.framgia.imarketandroid.data.model.ItemProduct;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.ProductList;
+import com.example.framgia.imarketandroid.data.model.StoreType;
+import com.example.framgia.imarketandroid.data.model.StoreTypeList;
 import com.example.framgia.imarketandroid.data.model.Stores;
+import com.example.framgia.imarketandroid.ui.activity.ChooseMarketActivity;
 import com.example.framgia.imarketandroid.ui.activity.FloorActivity;
 import com.example.framgia.imarketandroid.util.Constants;
 import com.example.framgia.imarketandroid.util.Flog;
@@ -30,9 +34,10 @@ import java.util.List;
  * Created by phongtran on 07/10/2016.
  */
 public class LoadDataUtils {
-    private  Context mContext;
-    private  ProgressDialog mProgressDialog;
-    public  BroadcastReceiver mReceiver;
+    private Context mContext;
+    private ProgressDialog mProgressDialog;
+    public BroadcastReceiver mReceiver;
+    public static boolean sIsLoadData;
     private OnFinishLoadDataListener mFinishLoadDataListener;
 
     public void init(Context context) {
@@ -60,144 +65,181 @@ public class LoadDataUtils {
         this.mOnListProductListener = mOnListProductListener;
     }
 
-    public  void loadFloor(final Context context, final int idCommerce) {
+    public void loadFloor(final Context context, final int idCommerce) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance(context).loadListFloor(idCommerce);
-        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-            @Override
-            public void onLoadDataSuccess(Object object) {
-                ListFloor floors = (ListFloor) object;
-                mProgressDialog.dismiss();
-                if (floors != null) {
-                    FloorActivity.sFloorList.clear();
-                    for (int i = 0; i < floors.getFloorList().size(); i++) {
-                        Floor floor = floors.getFloorList().get(i);
-                        FloorActivity.sFloorList.add(floor.getNameFloor().toString());
+        HttpRequest.getInstance(context)
+            .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    if (!(object instanceof ListFloor)) return;
+                    ListFloor floors = (ListFloor) object;
+                    mProgressDialog.dismiss();
+                    if (floors != null) {
+                        FloorActivity.mFloorList.clear();
+                        for (int i = 0; i < floors.getFloorList().size(); i++) {
+                            Floor floor = floors.getFloorList().get(i);
+                            FloorActivity.mFloorList.add(floor.getNameFloor().toString());
+                        }
+                        mFinishLoadDataListener
+                            .onFinish(Constants.ResultFinishLoadData.LOAD_FLOOR_FINISH);
+                    } else {
+                        Flog.toast(mContext, R.string.not_data_in_object);
                     }
-                    mFinishLoadDataListener.onFinish(Constants.ResultFinishLoadData.LOAD_DATA_FINISH);
-                } else {
-                    Flog.toast(mContext, R.string.not_data_in_object);
+                    sIsLoadData = true;
                 }
-            }
 
-            @Override
-            public void onLoadDataFailure(String message) {
-                mProgressDialog.dismiss();
-                if (!InternetUtil.isInternetConnected(context)) {
-                    Flog.toast(context, R.string.no_internet);
-                    processBroadcastFloor(idCommerce);
+                @Override
+                public void onLoadDataFailure(String message) {
+                    mProgressDialog.dismiss();
+                    if (!InternetUtil.isInternetConnected(context)) {
+                        Flog.toast(context, R.string.no_internet);
+                        processBroadcastFloor(idCommerce);
+                    }
                 }
-            }
-        });
+            });
     }
 
+    public void loadStoreType(final Context context, final int idCommerce) {
+        init(context);
+        HttpRequest.getInstance(context).loadListStoreType(idCommerce);
+        HttpRequest.getInstance(context)
+            .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    if (!(object instanceof StoreTypeList)) return;
+                    StoreTypeList types = (StoreTypeList) object;
+                    if (types == null) Flog.toast(mContext, R.string.not_data_in_object);
+                    else {
+                        for (int i = 0; i < types.getListStoreType().size(); i++) {
+                            StoreType type = types.getListStoreType().get(i);
+                            FloorActivity.sStoreTypes.add(type);
+                        }
+                        mFinishLoadDataListener
+                            .onFinish(Constants.ResultFinishLoadData.LOAD_STORETYPE_FINISH);
+                    }
+                }
+
+                @Override
+                public void onLoadDataFailure(String message) {
+                    mProgressDialog.dismiss();
+                    if (!InternetUtil.isInternetConnected(context)) {
+                        Flog.toast(context, R.string.no_internet);
+                        processBroadcastFloor(idCommerce);
+                    }
+                }
+            });
+    }
 
     public void loadCommerce(final Context context, final List<CommerceCanter> list,
                              final View viewRecycle, final View viewImage) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance(context).loadListCommerce();
-        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-            @Override
-            public void onLoadDataSuccess(Object object) {
-                mProgressDialog.dismiss();
-                CommerceList commerceList = (CommerceList) object;
-                if (commerceList != null) {
-                    list.clear();
-                    int size = commerceList.getCenterList().size();
-                    for (int i = 0; i < size; i++) {
-                        CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
-                        list.add(commerceCanter);
+        HttpRequest.getInstance(context)
+            .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    mProgressDialog.dismiss();
+                    CommerceList commerceList = (CommerceList) object;
+                    if (commerceList != null) {
+                        list.clear();
+                        int size = commerceList.getCenterList().size();
+                        for (int i = 0; i < size; i++) {
+                            CommerceCanter commerceCanter = commerceList.getCenterList().get(i);
+                            list.add(commerceCanter);
+                        }
+                        viewRecycle.setVisibility(View.VISIBLE);
+                        viewImage.setVisibility(View.GONE);
+                        mFinishLoadDataListener
+                            .onFinish(Constants.ResultFinishLoadData.LOAD_DATA_FINISH);
+                    } else {
+                        Flog.toast(mContext, R.string.not_data_in_object);
                     }
-                    viewRecycle.setVisibility(View.VISIBLE);
-                    viewImage.setVisibility(View.GONE);
-                    mFinishLoadDataListener.onFinish(Constants.ResultFinishLoadData.LOAD_DATA_FINISH);
-                } else {
-                    Flog.toast(mContext, R.string.not_data_in_object);
                 }
-            }
 
-            @Override
-            public void onLoadDataFailure(String message) {
-                mProgressDialog.dismiss();
-                if (!InternetUtil.isInternetConnected(context)) {
-                    Flog.toast(context, R.string.no_internet);
-                    viewImage.setVisibility(View.VISIBLE);
-                    viewRecycle.setVisibility(View.GONE);
-                    processBroadcastCommerce(context, list, viewRecycle, viewImage);
+                @Override
+                public void onLoadDataFailure(String message) {
+                    mProgressDialog.dismiss();
+                    if (!InternetUtil.isInternetConnected(context)) {
+                        Flog.toast(context, R.string.no_internet);
+                        viewImage.setVisibility(View.VISIBLE);
+                        viewRecycle.setVisibility(View.GONE);
+                        processBroadcastCommerce(context, list, viewRecycle, viewImage);
+                    }
                 }
-            }
-        });
+            });
     }
 
     public void setLoadDataListener(OnFinishLoadDataListener listener) {
         mFinishLoadDataListener = listener;
     }
 
-    public void getStoreByStoreType(final Context context, final int id_floor, final int storeType) {
+    public void getStoreByStoreType(final Context context, final int id_floor,
+                                    final int storeType) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance(context).getStore(id_floor, storeType);
-        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-            @Override
-            public void onLoadDataSuccess(Object object) {
-                Stores listStore = (Stores) object;
-                mProgressDialog.dismiss();
-                if (listStore != null) {
-                    Flog.toast(mContext, R.string.store_success);
-                } else {
-                    Flog.toast(mContext, R.string.store_null);
+        HttpRequest.getInstance(context)
+            .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    Stores listStore = (Stores) object;
+                    mProgressDialog.dismiss();
+                    if (listStore != null) {
+                        Flog.toast(mContext, R.string.store_success);
+                    } else {
+                        Flog.toast(mContext, R.string.store_null);
+                    }
                 }
-            }
 
-            @Override
-            public void onLoadDataFailure(String message) {
-                mProgressDialog.dismiss();
-                if (!InternetUtil.isInternetConnected(context)) {
-                    Flog.toast(context, R.string.no_internet);
-                    processBroadcastStore(id_floor, storeType);
+                @Override
+                public void onLoadDataFailure(String message) {
+                    mProgressDialog.dismiss();
+                    if (!InternetUtil.isInternetConnected(context)) {
+                        Flog.toast(context, R.string.no_internet);
+                        processBroadcastStore(id_floor, storeType);
+                    }
                 }
-            }
-        });
+            });
     }
 
     public void getProductInCategory(final Context context, final int id_cate) {
         init(context);
         mProgressDialog.show();
         HttpRequest.getInstance(context).getProduct(id_cate);
-        HttpRequest.getInstance(context).setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
-            @Override
-            public void onLoadDataSuccess(Object object) {
-                if (!(object instanceof ProductList)) {
-                    return;
-                }
-                ProductList productList = (ProductList) object;
-                if (mOnListProductListener != null) {
-                    if (productList != null) {
-                        mOnListProductListener.onListReceiver(productList.getItemProductList());
-                        if(productList.getItemProductList().size()==0){
+        HttpRequest.getInstance(context)
+            .setOnLoadDataListener(new HttpRequest.OnLoadDataListener() {
+                @Override
+                public void onLoadDataSuccess(Object object) {
+                    if (!(object instanceof ProductList)) return;
+                    ProductList productList = (ProductList) object;
+                    if (mOnListProductListener != null) {
+                        if (productList != null) {
+                            mOnListProductListener.onListReceiver(productList.getItemProductList());
+                            if (productList.getItemProductList().size() == 0) {
+                                Flog.toast(mContext, R.string.product_null);
+                            }
+                        } else {
                             Flog.toast(mContext, R.string.product_null);
                         }
-                    } else {
-                        Flog.toast(mContext, R.string.product_null);
+                    }
+                    mProgressDialog.dismiss();
+                }
+
+                @Override
+                public void onLoadDataFailure(String message) {
+                    mProgressDialog.dismiss();
+                    if (!InternetUtil.isInternetConnected(context)) {
+                        Flog.toast(context, R.string.no_internet);
+                        processBroadcastProduct(id_cate);
                     }
                 }
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onLoadDataFailure(String message) {
-                mProgressDialog.dismiss();
-                if (!InternetUtil.isInternetConnected(context)) {
-                    Flog.toast(context, R.string.no_internet);
-                    processBroadcastProduct(id_cate);
-                }
-            }
-        });
+            });
     }
 
-    public void getEvents (final Context context, final int id_store, final List<Event> lists) {
+    public void getEvents(final Context context, final int id_store, final List<Event> lists) {
         init(context);
         HttpRequest.getInstance(context).getEvents(id_store);
         HttpRequest.getInstance(context).setOnLoadDataListener(

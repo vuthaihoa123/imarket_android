@@ -19,20 +19,18 @@ public class Migration implements RealmMigration {
     private final int MIGRATION_VERSION_2 = 2;
     private final int MIGRATION_VERSION_3 = 3;
     private final int MIGRATION_VERSION_4 = 4;
-
     private final String CATEGORY_TABLE_NAME = "Category";
     private final String COMMERCE_TABLE_NAME = "CommerceCanter";
     private final String FIELD_ID = "mId";
     private final String FIELD_NAME = "mName";
     private final String FIELD_IMAGE_LINK = "mImageLink";
     private final String FIELD_STORE_ID = "mStoreId";
-
     private final String FIELD_ADDRESS = "mAddress";
     private final String FIELD_IMG = "mImage";
-
     private final String FIELD_LAT = "mLat";
     private final String FIELD_LNG = "mLng";
     private final String FIELD_DISTANCE = "mDistance";
+
     @Override
     public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {
         // During a migration, a DynamicRealm is exposed. A DynamicRealm is an untyped variant of a normal Realm, but
@@ -103,7 +101,6 @@ public class Migration implements RealmMigration {
             CommerceSchema.addPrimaryKey(FIELD_ID);
             oldVersion++;
         }
-
         // Migrate from version 3 to version 4
         if (oldVersion == MIGRATION_VERSION_3) {
             RealmObjectSchema CommerceSchema = schema.get(COMMERCE_TABLE_NAME);
@@ -113,7 +110,6 @@ public class Migration implements RealmMigration {
 //            CommerceSchema.setNullable(FIELD_LNG, true);
             oldVersion++;
         }
-
         // Migrate from version 4 to version 5
         if (oldVersion == MIGRATION_VERSION_4) {
             RealmObjectSchema CommerceSchema = schema.get(COMMERCE_TABLE_NAME);

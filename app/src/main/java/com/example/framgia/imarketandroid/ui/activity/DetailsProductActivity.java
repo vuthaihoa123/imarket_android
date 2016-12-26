@@ -53,10 +53,10 @@ import java.util.List;
  * Created by hoavt on 22/07/2016.
  */
 public class DetailsProductActivity extends AppCompatActivity
-        implements BookProductAdapter.OnClickItemBarListenner,
-        PreviewDetailsAdapter.OnClickShowPreviewDetail,
-        CommentStoreAdapter.OnPreviewCommentListener,
-        CustomStarView.onItemClickListener {
+    implements BookProductAdapter.OnClickItemBarListenner,
+    PreviewDetailsAdapter.OnClickShowPreviewDetail,
+    CommentStoreAdapter.OnPreviewCommentListener,
+    CustomStarView.onItemClickListener {
     private RecyclerView mRvPreviewProducts;
     private RecyclerView mRvBookingProducts;
     private RecyclerView.Adapter mPreviewAdapter;
@@ -69,7 +69,6 @@ public class DetailsProductActivity extends AppCompatActivity
     private List<Comment> mListRate = new ArrayList<>();
     private List<Comment> mListComment = new ArrayList<>();
     private List<CustomStarView> mListStar;
-
     private RecyclerView mRecyclerRateMessage;
     private RecyclerView mRvPreviewComment;
     private EditText mEdContentMess, mEdTitleMess;
@@ -86,7 +85,6 @@ public class DetailsProductActivity extends AppCompatActivity
     private LinearLayoutCompat mTvPost;
     private CommentStoreAdapter mStoreAdapter;
     private CommentStoreAdapter mSuggestStoreAdapter;
-
     private LinearLayout mLayoutStar;
     private View.OnClickListener mOnClickListenner = new View.OnClickListener() {
         @Override
@@ -94,10 +92,14 @@ public class DetailsProductActivity extends AppCompatActivity
             int id = v.getId();
             switch (id) {
                 case R.id.tv_product_info:
-                    Intent readmoreIntent = new Intent(DetailsProductActivity.this, ReadmoreActivity.class);
-                    readmoreIntent.putExtra(Constants.EXTRA_NAME_PRODUCT, mTvNameProduct.getText().toString());
-                    readmoreIntent.putExtra(Constants.EXTRA_PRICE_PRODUCT, mTvPriceProduct.getText().toString());
-                    readmoreIntent.putExtra(Constants.EXTRA_INFOR_PRODUCT, FakeContainer.getInfoProduct());
+                    Intent readmoreIntent =
+                        new Intent(DetailsProductActivity.this, ReadmoreActivity.class);
+                    readmoreIntent.putExtra(Constants.EXTRA_NAME_PRODUCT,
+                        mTvNameProduct.getText().toString());
+                    readmoreIntent.putExtra(Constants.EXTRA_PRICE_PRODUCT,
+                        mTvPriceProduct.getText().toString());
+                    readmoreIntent
+                        .putExtra(Constants.EXTRA_INFOR_PRODUCT, FakeContainer.getInfoProduct());
                     startActivity(readmoreIntent);
                     break;
                 case R.id.button_post_product:
@@ -110,11 +112,11 @@ public class DetailsProductActivity extends AppCompatActivity
                     String title = mEdTitleMess.getText().toString();
                     String content = mEdContentMess.getText().toString();
                     Comment newMessage = new Comment(
-                            R.drawable.avatar,
-                            title,
-                            content,
-                            getString(R.string.name_user),
-                            System.currentTimeMillis()
+                        R.drawable.avatar,
+                        title,
+                        content,
+                        getString(R.string.name_user),
+                        System.currentTimeMillis()
                     );
                     newMessage.setImageStars(getTotalStar());
                     mListComment.set(0, newMessage);
@@ -152,15 +154,14 @@ public class DetailsProductActivity extends AppCompatActivity
         initRecycle();
         initViewPager();
         ShowcaseGuideUtil.singleShowcase(DetailsProductActivity.this,
-                Constants.Instruction.SHOWCASE_ID_DETAILS_PRODUCT,
-                new Showcase(mButtonPostProductMess, getString(R.string.sequence_write_vote)));
+            Constants.Instruction.SHOWCASE_ID_DETAILS_PRODUCT,
+            new Showcase(mButtonPostProductMess, getString(R.string.sequence_write_vote)));
         upTime();
     }
 
     private void upTime() {
         final Handler handler = new Handler();
-        handler.post( new Runnable() {
-
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 if (mSuggestStoreAdapter != null) {
@@ -174,7 +175,8 @@ public class DetailsProductActivity extends AppCompatActivity
     private void initViewPager() {
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), FakeContainer.initIdResList());
+        mPagerAdapter =
+            new ScreenSlidePagerAdapter(getSupportFragmentManager(), FakeContainer.initIdResList());
         mPager.setAdapter(mPagerAdapter);
         mPager.setVisibility(View.GONE);
     }
@@ -198,13 +200,13 @@ public class DetailsProductActivity extends AppCompatActivity
 //        mRvBookingProducts.setHasFixedSize(true);
         // use a linear layout manager
         mPreviewLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRvPreviewProducts.setLayoutManager(mPreviewLayoutManager);
         mBookingLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 //        mRvBookingProducts.setLayoutManager(mBookingLayoutManager);
         mPreviewAdapter = new PreviewDetailsAdapter(this, FakeContainer.initIdResList())
-                .setOnClickShowPreviewDetail(this);
+            .setOnClickShowPreviewDetail(this);
         mBookingAdapter = new BookProductAdapter(this, initBookingProducts());
         mRvPreviewProducts.setAdapter(mPreviewAdapter);
 //        mRvBookingProducts.setAdapter(mBookingAdapter);
@@ -264,18 +266,19 @@ public class DetailsProductActivity extends AppCompatActivity
         mTextViewStar4.setOnClickListener(mOnClickListenner);
         mTextViewStar5.setOnClickListener(mOnClickListenner);
         mAlertDialogPostMessage = alertDialogBuilder.create();
-        mAlertDialogPostMessage.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        mAlertDialogPostMessage.getWindow()
+            .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mAlertDialogPostMessage.show();
         addStarList();
     }
 
     private void fakeMessage() {
         Comment newMessage = new Comment(
-                R.drawable.avatar,
-                getString(R.string.name),
-                getString(R.string.rate_product_message),
-                getString(R.string.name_user),
-                System.currentTimeMillis()
+            R.drawable.avatar,
+            getString(R.string.name),
+            getString(R.string.rate_product_message),
+            getString(R.string.name_user),
+            System.currentTimeMillis()
         );
         for (int i = 0; i < Constants.MESSAGE_LIST_SIZE; i++) {
             mListRate.add(newMessage);
@@ -287,7 +290,7 @@ public class DetailsProductActivity extends AppCompatActivity
 
     private void initRecycle() {
         mSuggestStoreAdapter = new CommentStoreAdapter(this, mListComment)
-                .setListener(this);
+            .setListener(this);
         mRvPreviewComment = (RecyclerView) findViewById(R.id.rv_preview_comments);
         mRvPreviewComment.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRvPreviewComment.setAdapter(mSuggestStoreAdapter);
@@ -307,9 +310,9 @@ public class DetailsProductActivity extends AppCompatActivity
     private void shareFacebook(String content) {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                    .setContentUrl(Uri.parse(FakeContainer.URL_TEST))
-                    .setContentTitle(content)
-                    .build();
+                .setContentUrl(Uri.parse(FakeContainer.URL_TEST))
+                .setContentTitle(content)
+                .build();
             mShareDialog.show(linkContent);
         }
     }
@@ -321,12 +324,12 @@ public class DetailsProductActivity extends AppCompatActivity
         } else {
             if (textNameItem.equalsIgnoreCase(getString(R.string.call))) {
                 StringBuffer buffer = new StringBuffer()
-                        .append(getString(R.string.tel))
-                        .append(getString(R.string.hint_number));
+                    .append(getString(R.string.tel))
+                    .append(getString(R.string.hint_number));
                 Uri call = Uri.parse(buffer.toString());
                 Intent surf = new Intent(Intent.ACTION_CALL, call);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=
-                        PackageManager.PERMISSION_GRANTED) {
+                    PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -343,7 +346,7 @@ public class DetailsProductActivity extends AppCompatActivity
                 //TODO favorite
             } else if (textNameItem.equalsIgnoreCase(getString(R.string.schedule))) {
                 DialogShareUtil.dialogShareProduct(this, FakeContainer.initIdResList().get(0),
-                        mCallbackManager, mTvNameProduct.getText().toString());
+                    mCallbackManager, mTvNameProduct.getText().toString());
             }
         }
     }

@@ -53,7 +53,7 @@
     <string name="thanhtien">Money:</string>
     <string name="phuongthucnhanhang">Method consignee</string>
     <string name="tructiep">Online</string>
-        <string name="chuyenhang">Shipping</string>
+    <string name="chuyenhang">Shipping</string>
     <string name="remove">Remove </string>
 
     <string name="phone_number">Phone Number</string>

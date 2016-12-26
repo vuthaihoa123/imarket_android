@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="@dimen/width_preview_cart"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_layout"
-            android:src="@drawable/ic_htc_one" />
+            android:src="@drawable/ic_htc_one"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -30,14 +30,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_medium_size" />
+                android:textSize="@dimen/text_medium_size"/>
 
             <TextView
                 android:id="@+id/tv_price_product_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_large_size" />
+                android:textSize="@dimen/text_large_size"/>
         </LinearLayout>
 
         <LinearLayout
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_10dp"
-                android:src="@drawable/ic_add_circle_24px" />
+                android:src="@drawable/ic_add_circle_24px"/>
 
             <TextView
                 android:id="@+id/tv_product_quantity_cart"
@@ -61,19 +61,19 @@
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/text_large_size"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/iv_descend_quantity_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_remove_circle_24px" />
+                android:src="@drawable/ic_remove_circle_24px"/>
         </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_del_product_cart"
             android:layout_width="@dimen/delete_button_size"
             android:layout_height="@dimen/delete_button_size"
-            android:src="@drawable/ic_delete_24px" />
+            android:src="@drawable/ic_delete_24px"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

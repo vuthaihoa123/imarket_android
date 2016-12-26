@@ -8,7 +8,6 @@ import android.widget.Spinner;
  * Created by hoavt on 19/08/2016.
  */
 public class CustomSpinner extends Spinner {
-
     private OnSpinnerEventsListener mListener;
     private boolean mOpenInitiated = false;
 
@@ -23,7 +22,6 @@ public class CustomSpinner extends Spinner {
     public CustomSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     // the Spinner constructors
 
     @Override
@@ -39,7 +37,7 @@ public class CustomSpinner extends Spinner {
     }
 
     public void setSpinnerEventsListener(
-            OnSpinnerEventsListener onSpinnerEventsListener) {
+        OnSpinnerEventsListener onSpinnerEventsListener) {
         mListener = onSpinnerEventsListener;
     }
 
@@ -64,7 +62,6 @@ public class CustomSpinner extends Spinner {
 
     public interface OnSpinnerEventsListener {
         void onSpinnerOpened();
-
         void onSpinnerClosed();
     }
 }

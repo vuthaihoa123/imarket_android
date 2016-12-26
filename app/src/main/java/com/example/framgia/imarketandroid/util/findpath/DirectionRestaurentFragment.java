@@ -45,11 +45,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * Created by Do Van Khanh on 11/25/2015.
  */
-public class DirectionRestaurentFragment extends Fragment implements GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback {
+public class DirectionRestaurentFragment extends Fragment
+    implements GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback {
     private AlertDialog alertDialog;
     private ConnectionDetector cd;
     private boolean isConnect = false;
@@ -62,32 +62,36 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_activity_direction_restaurent, container, false);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView =
+            inflater.inflate(R.layout.activity_activity_direction_restaurent, container, false);
         cd = new ConnectionDetector(getActivity());
         isConnect = cd.isConnectToInternet();
         progressDialog = new ProgressDialog(getActivity());
         alertDialog = new AlertDialog.Builder(getActivity()).create();
-        SupportMapFragment fm = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(
+        SupportMapFragment fm =
+            (SupportMapFragment) this.getChildFragmentManager().findFragmentById(
                 R.id.map);
-
         // Getting Map for the SupportMapFragment
         fm.getMapAsync(this);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat
+            .checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat
+                .checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
             return null;
         }
         map.setMyLocationEnabled(true);
         map.setOnMyLocationChangeListener(this);
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager =
+            (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         //if(locationManager.isProviderEnabled(locationManager.GPS_PROVIDER))Ơ
         Criteria criteria = new Criteria();
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
         //  location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-        if(isConnect==true){
+        if (isConnect == true) {
             try {
                 Bundle bundle = this.getArguments();
                 latRes = Double.parseDouble(bundle.getString("latitude"));
@@ -98,21 +102,22 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
                 Toast.makeText(getContext(), "Lỗi Intent", Toast.LENGTH_SHORT).show();
             }
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-
                 progressDialog.setTitle("Đang tải dữ liệu");
                 progressDialog.setMessage("Xin bạn chờ 1 chút");
                 progressDialog.show();
-
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(21.002489,105.846728), 14));
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(21.002489,105.846728)).bearing(90).zoom(15).tilt(30).build();
+                map.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(new LatLng(21.002489, 105.846728), 14));
+                CameraPosition cameraPosition =
+                    new CameraPosition.Builder().target(new LatLng(21.002489, 105.846728))
+                        .bearing(90).zoom(15).tilt(30).build();
                 map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                LatLng origin = new LatLng(21.002489,105.846728);
+                LatLng origin = new LatLng(21.002489, 105.846728);
                 LatLng dest = new LatLng(latRes, longRes);
                 //crete option for origin
                 MarkerOptions options = new MarkerOptions();
                 options.title("điểm xuất phát");
                 options.snippet("vị trí của bạn");
-                options.position(new LatLng(21.002489,105.846728));
+                options.position(new LatLng(21.002489, 105.846728));
                 // create option for target
                 MarkerOptions optionstarget = new MarkerOptions();
                 optionstarget.title(name);
@@ -123,14 +128,10 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
                 marker2 = map.addMarker(options);
                 marker.showInfoWindow();
                 marker2.showInfoWindow();
-
                 String url = getDirectionsUrl(origin, dest);
                 // Sensor enabled
-
                 DownloadTask downloadTask = new DownloadTask();
                 downloadTask.execute(url);
-
-
                 markerPoints = new ArrayList<LatLng>();
                 map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                     @Override
@@ -139,10 +140,8 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
                         Toast.makeText(getActivity(), "ok", Toast.LENGTH_LONG).show();
                     }
                 });
-
                 // Getting reference to SupportMapFragment of the activity_main
             } else {
-
                 alertDialog.setTitle("Bạn chưa bật GPS");
                 alertDialog.setMessage("Hãy bật và làm lại từ đầu");
                 alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
@@ -153,8 +152,7 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
                 });
                 alertDialog.show();
             }
-        }
-        else{
+        } else {
             alertDialog.setTitle("Kết nối có vấn đề");
             alertDialog.setMessage("Hãy kiểm tra lại wifi hoặc dữ liệu mạng của bạn");
             alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
@@ -168,19 +166,19 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
         return rootView;
     }
 
-    private String getDirectionsUrl(LatLng origin,LatLng dest){
+    private String getDirectionsUrl(LatLng origin, LatLng dest) {
         // Origin of route
         String str_origin = "origin=21.002489,105.846728";
         // Destination of route
-        String str_dest = "destination="+latRes+","+longRes;
+        String str_dest = "destination=" + latRes + "," + longRes;
         // Sensor enabled
         String sensor = "sensor=false";
         // Building the parameters to the web service
         // Building thdrawe parameters to the web service
-        String parameters = str_origin+"&"+str_dest+"&"+sensor;
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
         // Output format
         String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
         return url;
     }
 
@@ -188,7 +186,7 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
         String data = "";
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
-        try{
+        try {
             URL url = new URL(strUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
             // Connecting to url
@@ -196,16 +194,16 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
             // Reading data from url
             iStream = urlConnection.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-            StringBuffer sb  = new StringBuffer();
+            StringBuffer sb = new StringBuffer();
             String line = "";
-            while( ( line = br.readLine())  != null){
+            while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
             data = sb.toString();
             br.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Log.d("Exception while downloading url", e.toString());
-        }finally{
+        } finally {
             iStream.close();
             urlConnection.disconnect();
         }
@@ -214,14 +212,12 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
 
     @Override
     public void onMyLocationChange(Location location) {
-
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map= googleMap;
+        map = googleMap;
     }
-
 
     // Fetches data from url passed
     private class DownloadTask extends AsyncTask<String, Void, String> {
@@ -230,10 +226,10 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
         protected String doInBackground(String... url) {
             // For storing data from web service
             String data = "";
-            try{
+            try {
                 // Fetching the data from web service
                 data = downloadUrl(url[0]);
-            }catch(Exception e){
+            } catch (Exception e) {
                 Log.d("Background Task", e.toString());
             }
             return data;
@@ -245,28 +241,23 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             ParserTask parserTask = new ParserTask();
-
             // Invokes the thread for parsing the JSON data
             parserTask.execute(result);
         }
     }
 
-
-    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String,String>>>>{
-
+    private class ParserTask
+        extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-
             JSONObject jObject;
             List<List<HashMap<String, String>>> routes = null;
-
-            try{
+            try {
                 jObject = new JSONObject(jsonData[0]);
                 DirectionsJSONParser parser = new DirectionsJSONParser();
-
                 // Starts parsing data
                 routes = parser.parse(jObject);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return routes;
@@ -277,32 +268,25 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
             ArrayList<LatLng> points = null;
             PolylineOptions lineOptions = null;
             MarkerOptions markerOptions = new MarkerOptions();
-
             // Traversing through all the routes
-            for(int i=0;i<result.size();i++){
+            for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList<LatLng>();
                 lineOptions = new PolylineOptions();
-
                 // Fetching i-th route
                 List<HashMap<String, String>> path = result.get(i);
-
                 // Fetching all the points in i-th route
-                for(int j=0;j<path.size();j++){
-                    HashMap<String,String> point = path.get(j);
-
+                for (int j = 0; j < path.size(); j++) {
+                    HashMap<String, String> point = path.get(j);
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
-
                     points.add(position);
                 }
-
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
                 lineOptions.width(4);
                 lineOptions.color(Color.RED);
             }
-
             // Drawing polyline in the Google Map for the i-th route
             map.addPolyline(lineOptions);
         }
@@ -311,6 +295,6 @@ public class DirectionRestaurentFragment extends Fragment implements GoogleMap.O
     @Override
     public void onResume() {
         super.onResume();
-        progressDialog= new ProgressDialog(getActivity());
+        progressDialog = new ProgressDialog(getActivity());
     }
 }

@@ -355,7 +355,6 @@ public class ChooseMarketActivity extends AppCompatActivity implements
         mButtonClearInput = (Button) findViewById(R.id.button_clear_input);
         mFABSynchronizeMarket = (FloatingActionButton) findViewById(R.id.fab_synchronize);
         mImageViewNoNetwork = (ImageView) findViewById(R.id.image_no_network);
-
         //  setListerner load finish
         mDataUtils = new LoadDataUtils();
         mDataUtils.setLoadDataListener(ChooseMarketActivity.this);

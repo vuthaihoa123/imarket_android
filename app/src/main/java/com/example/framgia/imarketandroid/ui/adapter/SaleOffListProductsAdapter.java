@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Created by hoavt on 20/07/2016.
  */
 public class SaleOffListProductsAdapter
-        extends RecyclerView.Adapter<SaleOffListProductsAdapter.ViewHolder> {
+    extends RecyclerView.Adapter<SaleOffListProductsAdapter.ViewHolder> {
     private ArrayList<ItemProduct> mItems = new ArrayList<>();
     private Context mContext;
 
@@ -42,7 +42,7 @@ public class SaleOffListProductsAdapter
                                                                     int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list_product_saleoff, parent, false);
+            .inflate(R.layout.item_list_product_saleoff, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -57,7 +57,7 @@ public class SaleOffListProductsAdapter
         nameProduct.setText(itemProduct.getNameProduct());
         holder.mTvPrince.setText(itemProduct.getPrice());
         holder.mTvPrince
-                .setPaintFlags(holder.mTvPrince.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            .setPaintFlags(holder.mTvPrince.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.mTvPrincePromotion.setText(itemProduct.getPricePromotion());
         FrameLayout promotionView = holder.mPromotionView;
         TextView percentSale = holder.mTvPercentSale;

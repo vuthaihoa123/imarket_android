@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/transparent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="@dimen/avatar_small_size"
             android:layout_height="@dimen/avatar_size"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/avatar" />
+            android:src="@drawable/avatar"/>
 
         <TextView
             android:id="@+id/text_name_user"
@@ -25,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/review_by"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_xsmall_size" />
+            android:textSize="@dimen/text_xsmall_size"/>
 
         <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/button_post_message_rate"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/post"
                 android:textColor="@android:color/holo_green_dark"
-                android:textSize="@dimen/text_large_size" />
+                android:textSize="@dimen/text_large_size"/>
         </android.support.v7.widget.LinearLayoutCompat>
     </RelativeLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
                     android:src="@drawable/logo_big_c"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/text_question"
@@ -74,14 +74,14 @@
                     android:gravity="center"
                     android:text="@string/ques"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/common_text_size_18" />
+                    android:textSize="@dimen/common_text_size_18"/>
 
                 <LinearLayout
                     android:id="@+id/layout_stars"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/width_height_34"
                     android:gravity="center"
-                    android:orientation="horizontal" />
+                    android:orientation="horizontal"/>
 
 
                 <LinearLayout
@@ -96,7 +96,7 @@
                         android:layout_marginBottom="@dimen/margin_3dp"
                         android:text="@string/mot_sao"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_xsmall_size" />
+                        android:textSize="@dimen/text_xsmall_size"/>
 
                     <TextView
                         android:id="@+id/text_start_2"
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/hai_sao"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_xsmall_size" />
+                        android:textSize="@dimen/text_xsmall_size"/>
 
                     <TextView
                         android:id="@+id/text_start_3"
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/ba_sao"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_xsmall_size" />
+                        android:textSize="@dimen/text_xsmall_size"/>
 
                     <TextView
                         android:id="@+id/text_start_4"
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/bon_sao"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_xsmall_size" />
+                        android:textSize="@dimen/text_xsmall_size"/>
 
                     <TextView
                         android:id="@+id/text_start_5"
@@ -128,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nam_sao"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_xsmall_size" />
+                        android:textSize="@dimen/text_xsmall_size"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,7 +145,7 @@
                         android:hint="@string/enter_title"
                         android:textColor="@color/text_color2"
                         android:textColorHint="@color/text_color"
-                        android:textSize="@dimen/text_small_size" />
+                        android:textSize="@dimen/text_small_size"/>
 
                     <EditText
                         android:id="@+id/edit_text_message_rate_comment"
@@ -155,7 +155,7 @@
                         android:hint="@string/comment_here"
                         android:textColor="@color/text_color2"
                         android:textColorHint="@color/text_color"
-                        android:textSize="@dimen/text_small_size" />
+                        android:textSize="@dimen/text_small_size"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

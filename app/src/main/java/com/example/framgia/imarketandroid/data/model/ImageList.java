@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by VULAN on 10/24/2016.
  */
-
 public class ImageList {
-
     @SerializedName("id")
     private int mId;
     @SerializedName("name")

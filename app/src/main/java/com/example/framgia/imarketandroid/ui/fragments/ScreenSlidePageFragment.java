@@ -14,7 +14,6 @@ import com.example.framgia.imarketandroid.util.Constants;
  * Created by vutha on 10/4/2016.
  */
 public class ScreenSlidePageFragment extends Fragment {
-
     private ImageView mIvShowPreview;
 
     @Override

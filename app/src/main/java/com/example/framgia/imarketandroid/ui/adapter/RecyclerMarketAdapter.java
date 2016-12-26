@@ -50,7 +50,7 @@ public class RecyclerMarketAdapter extends RecyclerView.Adapter<RecyclerMarketAd
         holder.mTextName.setText(market.getName());
         holder.mTextAddress.setText(market.getAddress());
         if (market.getDistance() != 0.0) {
-            holder.mTextDistance.setText((int)market.getDistance()+Constants.METTERS);
+            holder.mTextDistance.setText((int) market.getDistance() + Constants.METTERS);
         } else {
             holder.mTextDistance.setText(R.string.distance);
         }

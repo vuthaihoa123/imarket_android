@@ -43,7 +43,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
     public ListProductsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list_products_layout, parent, false);
+            .inflate(R.layout.item_list_products_layout, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -56,7 +56,7 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
         if (imageLink == null) {
             holder.mIvPresentIcon.setImageResource(R.drawable.ic_iphone5s);
         } else {
-           Glide.with(mContext).load(imageLink).into(holder.mIvPresentIcon);
+            Glide.with(mContext).load(imageLink).into(holder.mIvPresentIcon);
         }
         TextView nameProduct = holder.mTvNameProduct;
         nameProduct.setText(itemProduct.getNameProduct());
@@ -165,5 +165,4 @@ public class ListProductsAdapter extends RecyclerView.Adapter<ListProductsAdapte
             mPercentSale = (TextView) parentView.findViewById(R.id.tv_percent_sale);
         }
     }
-
 }

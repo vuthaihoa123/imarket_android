@@ -10,10 +10,10 @@ public class CartItem {
     private int mQuantity = 1;
     private boolean mIsDeleted = false;
     private String mDate;
-
     private String mTime;
 
-    public CartItem(int idRes, String nameProduct, long priceProduct, int quantity, boolean isDeleted) {
+    public CartItem(int idRes, String nameProduct, long priceProduct, int quantity,
+                    boolean isDeleted) {
         mIdRes = idRes;
         mNameProduct = nameProduct;
         mQuantity = quantity;
@@ -21,7 +21,8 @@ public class CartItem {
         mPriceProduct = priceProduct;
     }
 
-    public CartItem(int idRes, String nameProduct, long priceProduct, int quantity, boolean isDeleted, String date, String time) {
+    public CartItem(int idRes, String nameProduct, long priceProduct, int quantity,
+                    boolean isDeleted, String date, String time) {
         mIdRes = idRes;
         mNameProduct = nameProduct;
         mQuantity = quantity;

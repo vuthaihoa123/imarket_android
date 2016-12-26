@@ -7,11 +7,12 @@
         android:orderInCategory="101"
         android:title="@string/item_save"
         app:showAsAction="always"/>
-    <item android:id="@+id/action_save"
-          android:icon="@drawable/ic_done"
-          android:orderInCategory="101"
-          android:title="@string/item_save"
-          app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_done"
+        android:orderInCategory="101"
+        android:title="@string/item_save"
+        app:showAsAction="always"/>
     <group
         android:id="@+id/main_menu"
         android:checkableBehavior="single"

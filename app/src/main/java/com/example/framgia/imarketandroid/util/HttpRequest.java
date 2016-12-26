@@ -12,6 +12,7 @@ import com.example.framgia.imarketandroid.data.model.EventList;
 import com.example.framgia.imarketandroid.data.model.ListFloor;
 import com.example.framgia.imarketandroid.data.model.ProductList;
 import com.example.framgia.imarketandroid.data.model.Session;
+import com.example.framgia.imarketandroid.data.model.StoreTypeList;
 import com.example.framgia.imarketandroid.data.model.Stores;
 import com.example.framgia.imarketandroid.data.model.UserModel;
 import com.google.gson.Gson;
@@ -156,7 +157,7 @@ public class HttpRequest {
                         mListener.onLoadDataSuccess(signupModel);
                     } catch (JsonSyntaxException exception) {
                         mListener.onLoadDataFailure(mActivity.getString(R.string.duplicate_email));
-                        Flog.toastLong(mActivity,R.string.duplicate_email);
+                        Flog.toastLong(mActivity, R.string.duplicate_email);
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -241,6 +242,26 @@ public class HttpRequest {
 
             @Override
             public void onFailure(Call<ListFloor> call, Throwable t) {
+                if (mListener != null) {
+                    mListener.onLoadDataFailure(t.getMessage());
+                }
+            }
+        });
+    }
+
+    public void loadListStoreType(int commerceId) {
+        mApi = mRetrofit.create(IMarketApiEndPoint.class);
+        Call<StoreTypeList> request = mApi.getListStoreTypeByCommerceId(commerceId);
+        request.enqueue(new Callback<StoreTypeList>() {
+            @Override
+            public void onResponse(Call<StoreTypeList> call, Response<StoreTypeList> response) {
+                if (mListener != null) {
+                    mListener.onLoadDataSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreTypeList> call, Throwable t) {
                 if (mListener != null) {
                     mListener.onLoadDataFailure(t.getMessage());
                 }

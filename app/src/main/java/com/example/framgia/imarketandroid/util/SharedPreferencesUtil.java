@@ -56,15 +56,18 @@ public class SharedPreferencesUtil {
     public boolean isFirstTimeLaunch() {
         return mSettings.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
+
     public void setFirstTimeLaunch(boolean isFirstTime) {
         mEditor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
         mEditor.commit();
     }
+
     public void saveString(String key, String value) {
-        mEditor.putString(key,value);
+        mEditor.putString(key, value);
         mEditor.apply();
     }
+
     public String getString(String key) {
-        return mSettings.getString(key,Constants.NULL_DATA);
+        return mSettings.getString(key, Constants.NULL_DATA);
     }
 }

@@ -43,17 +43,18 @@ public class OrderActivity extends AppCompatActivity {
             switch (id) {
                 case R.id.iv_ascend_quantity_order:
                     mQuantity++;
-                    mTvQuantity.setText(""+mQuantity);
+                    mTvQuantity.setText("" + mQuantity);
                     break;
                 case R.id.iv_descend_quantity_order:
                     mQuantity--;
                     if (mQuantity >= 0)
-                        mTvQuantity.setText(""+mQuantity);
+                        mTvQuantity.setText("" + mQuantity);
                     else
                         mQuantity++;
                     break;
                 case R.id.bt_buy_product_order:
-                    Toast.makeText(OrderActivity.this, getResources().getString(R.string.muangay), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderActivity.this, getResources().getString(R.string.muangay),
+                        Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -73,11 +74,15 @@ public class OrderActivity extends AppCompatActivity {
     private void handleEvents() {
         long giaSp = FakeContainer.GIA_SP;
         long chiphiPhatsinh = FakeContainer.CHI_PHI_PHAT_SINH;
-        mTvName.setText(getResources().getString(R.string.sanpham) + FakeContainer.getNameProduct());
-        mTvPrice.setText(getResources().getString(R.string.giasanpham) + SystemUtil.formatMoneyStr(giaSp));
-        mTvRedundance.setText(getResources().getString(R.string.chiphiphatsinh) + SystemUtil.formatMoneyStr(chiphiPhatsinh));
-        mTvTotPrice.setText(getResources().getString(R.string.thanhtien) + SystemUtil.formatMoneyStr(giaSp+chiphiPhatsinh));
-        mTvQuantity.setText(""+mQuantity);
+        mTvName
+            .setText(getResources().getString(R.string.sanpham) + FakeContainer.getNameProduct());
+        mTvPrice.setText(
+            getResources().getString(R.string.giasanpham) + SystemUtil.formatMoneyStr(giaSp));
+        mTvRedundance.setText(getResources().getString(R.string.chiphiphatsinh) +
+            SystemUtil.formatMoneyStr(chiphiPhatsinh));
+        mTvTotPrice.setText(getResources().getString(R.string.thanhtien) +
+            SystemUtil.formatMoneyStr(giaSp + chiphiPhatsinh));
+        mTvQuantity.setText("" + mQuantity);
         mIvAscendQuan.setOnClickListener(mClickListener);
         mIvDescendQuan.setOnClickListener(mClickListener);
         mBtBuy.setOnClickListener(mClickListener);
@@ -96,12 +101,11 @@ public class OrderActivity extends AppCompatActivity {
 
     private void initSpinner() {
         String[] data = {getResources().getString(R.string.phuongthucnhanhang),
-                getResources().getString(R.string.tructiep),
-                getResources().getString(R.string.chuyenhang)};
-
-        ArrayAdapter adapter = new SpinnerArrayAdapter(this, R.layout.spinner_item_selected, data, 0);
+            getResources().getString(R.string.tructiep),
+            getResources().getString(R.string.chuyenhang)};
+        ArrayAdapter adapter =
+            new SpinnerArrayAdapter(this, R.layout.spinner_item_selected, data, 0);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-
         mSpinner = (CustomSpinner) findViewById(R.id.spinner_receive_product);
         mSpinner.setAdapter(adapter);
         mSpinner.setSpinnerEventsListener(new CustomSpinner.OnSpinnerEventsListener() {
@@ -127,12 +131,12 @@ public class OrderActivity extends AppCompatActivity {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRvProductOrder.setHasFixedSize(true);
-
         // use a linear layout manager
-        mProductOrderLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mProductOrderLayoutManager =
+            new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRvProductOrder.setLayoutManager(mProductOrderLayoutManager);
         mProductOrderAdapter = new PreviewProductAdapter(this, FakeContainer.initIdResList(),
-                (ScrollView) findViewById(R.id.sv_order));
+            (ScrollView) findViewById(R.id.sv_order));
         mRvProductOrder.setAdapter(mProductOrderAdapter);
     }
 

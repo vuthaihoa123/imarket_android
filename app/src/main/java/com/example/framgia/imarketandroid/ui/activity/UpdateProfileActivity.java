@@ -193,7 +193,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                     UserModel userModel1 = (UserModel) object;
                     mProgressDialog.dismiss();
                     if (userModel1.getSession() != null) {
-                        Flog.toast(getBaseContext(),R.string.toast_save_successfully);
+                        Flog.toast(getBaseContext(), R.string.toast_save_successfully);
                         SharedPreferencesUtil.getInstance().clearSharedPreference();
                         SharedPreferencesUtil.getInstance().save(Constants.SESSION, userModel1);
                         String url = Constants.HEAD_URL + userModel1.getSession().getUrlImage();

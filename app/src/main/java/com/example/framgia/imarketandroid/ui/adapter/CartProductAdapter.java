@@ -37,7 +37,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     public CartProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_cart_layout, parent, false);
+            .inflate(R.layout.item_cart_layout, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -70,7 +70,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, mContext.getResources().getString(R.string.remove) + " "
-                        + cartItem.getNameProduct(), Toast.LENGTH_SHORT).show();
+                    + cartItem.getNameProduct(), Toast.LENGTH_SHORT).show();
                 cartItem.setIsDeleted(true);
                 mItems.remove(cartItem);
                 notifyDataSetChanged();
@@ -98,7 +98,8 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             mTvNameCart = (TextView) itemView.findViewById(R.id.tv_name_product_cart);
             mTvPriceCart = (TextView) itemView.findViewById(R.id.tv_price_product_cart);
             mIvAscendQuantity = (ImageView) itemView.findViewById(R.id.iv_ascend_quantity_product);
-            mIvDescendQuantity = (ImageView) itemView.findViewById(R.id.iv_descend_quantity_product);
+            mIvDescendQuantity =
+                (ImageView) itemView.findViewById(R.id.iv_descend_quantity_product);
             mTvQuantityCart = (TextView) itemView.findViewById(R.id.tv_product_quantity_cart);
             mIvDelProductCart = (ImageView) itemView.findViewById(R.id.iv_del_product_cart);
         }

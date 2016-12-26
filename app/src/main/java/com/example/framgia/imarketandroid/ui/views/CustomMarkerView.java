@@ -1,7 +1,9 @@
 package com.example.framgia.imarketandroid.ui.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -9,6 +11,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.framgia.imarketandroid.R;
 
 /**
@@ -22,10 +27,23 @@ public class CustomMarkerView extends FrameLayout {
     private RelativeLayout mMarkerBackground;
     private boolean mCheck;
 
-    public void setBackground(Drawable drawable) {
+    public void setBackgroundInt(Drawable drawable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mMarkerBackground.setBackground(drawable);
         }
+    }
+
+    public void setBackground(String url, Context context) {
+        Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource,
+                                        GlideAnimation<? super Bitmap> glideAnimation) {
+                Drawable drawable = new BitmapDrawable(resource);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    mMarkerBackground.setBackground(drawable);
+                }
+            }
+        });
     }
 
     public void setInvisibleBackground() {
@@ -82,9 +100,9 @@ public class CustomMarkerView extends FrameLayout {
 
     public void setTextforMarker() {
         if (compareNumber()) {
-            mTextPromotion.setText("" );//+ getConvertedNumber() + "%"
+            mTextPromotion.setText("");//+ getConvertedNumber() + "%"
         } else {
-            mTextPromotion.setText("" );//+ getPercentValue() + "%"
+            mTextPromotion.setText("");//+ getPercentValue() + "%"
         }
     }
 

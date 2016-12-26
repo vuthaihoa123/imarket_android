@@ -33,6 +33,7 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<Object> mItems;
     private Activity mContext;
     private CallbackManager mCallback;
+
     public SaleOffEventAdapter(List<Object> items, Activity context, CallbackManager cb) {
         mItems = items;
         mContext = context;
@@ -90,7 +91,6 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.getItemViewType();
     }
 
-
     // thao tác cho từng item
     private void configureViewHolder1(HolderOneBannerImage vh1, int position) {
         ImageEvent1 imageEvent1 = (ImageEvent1) mItems.get(position);
@@ -108,15 +108,16 @@ public class SaleOffEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void configureViewHolder3(HolderCategorySaleOff vh3, int position) {
         CategorySaleOff categorySaleOff = (CategorySaleOff) mItems.get(position);
         if (categorySaleOff == null) return;
-            List<ItemProduct> itemProductList = ((CategorySaleOff) mItems.get(position))
-                .getProductList();
-            vh3.mTextTitleCategory.setText(categorySaleOff.getNameSaleOff());
-            vh3.mRecyclerView.setHasFixedSize(true);
-            SaleOffListProductsAdapter saleOffListProductsAdapter = new SaleOffListProductsAdapter(mContext,
+        List<ItemProduct> itemProductList = ((CategorySaleOff) mItems.get(position))
+            .getProductList();
+        vh3.mTextTitleCategory.setText(categorySaleOff.getNameSaleOff());
+        vh3.mRecyclerView.setHasFixedSize(true);
+        SaleOffListProductsAdapter saleOffListProductsAdapter =
+            new SaleOffListProductsAdapter(mContext,
                 (ArrayList<ItemProduct>) itemProductList);
-            vh3.mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,
-                LinearLayoutManager.HORIZONTAL, false));
-            vh3.mRecyclerView.setAdapter(saleOffListProductsAdapter);
+        vh3.mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,
+            LinearLayoutManager.HORIZONTAL, false));
+        vh3.mRecyclerView.setAdapter(saleOffListProductsAdapter);
     }
 
     private void configureViewHolder4(HolderNewSaleOff vh4, int position) {

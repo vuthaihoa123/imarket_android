@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DrawPathActivity extends FragmentActivity implements OnMapReadyCallback,
-        GoogleMap.OnMyLocationChangeListener {
+    GoogleMap.OnMyLocationChangeListener {
     LatLng origin;
     private AlertDialog mAlertDialog;
     private ConnectionDetector mConnectionDetector;
@@ -98,10 +98,10 @@ public class DrawPathActivity extends FragmentActivity implements OnMapReadyCall
                 map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                     @Override
                     public void onMapLongClick(LatLng latLng) {
-                        MarkerOptions markerOptions= new MarkerOptions();
+                        MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.title("your destination");
                         markerOptions.position(latLng);
-                        Marker marker3 =map.addMarker(markerOptions);
+                        Marker marker3 = map.addMarker(markerOptions);
                         String url = getDirectionsUrl(origin, latLng);
                         // Sensor enabled
                         DownloadTask downloadTask = new DownloadTask();
@@ -152,7 +152,7 @@ public class DrawPathActivity extends FragmentActivity implements OnMapReadyCall
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map= googleMap;
+        map = googleMap;
     }
 
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
