@@ -1,8 +1,8 @@
 <ImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/image_star"
-    android:layout_width="@dimen/icon_size_standard"
-    android:layout_height="@dimen/icon_size_standard"
+    android:layout_width="@dimen/width_height_70"
+    android:layout_height="@dimen/width_height_70"
     android:src="@drawable/ic_star_empty"
     android:scaleType="fitCenter"
     android:tint="@android:color/holo_green_dark"/>
