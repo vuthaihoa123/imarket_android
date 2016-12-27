@@ -12,7 +12,6 @@ import com.example.framgia.imarketandroid.R;
 import com.example.framgia.imarketandroid.data.model.Comment;
 import com.example.framgia.imarketandroid.ui.views.CustomStarView;
 import com.example.framgia.imarketandroid.util.Constants;
-import com.example.framgia.imarketandroid.util.Flog;
 import com.example.framgia.imarketandroid.util.SystemUtil;
 
 import java.util.ArrayList;
@@ -23,9 +22,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by phongtran on 26/08/2016.
  */
-public class CommentStoreAdapter
-    extends RecyclerView.Adapter<CommentStoreAdapter.SuggestStoreViewHolder> {
-    public Context mContext;
+public class CommentStoreAdapter extends RecyclerView.Adapter<CommentStoreAdapter.SuggestStoreViewHolder> {
+    private Context mContext;
+    private boolean mIsSuggestFrag;
     private List<Comment> mListOldMessage;
     private OnPreviewCommentListener mListener;
 
@@ -34,10 +33,16 @@ public class CommentStoreAdapter
         this.mListOldMessage = listOldMessage;
     }
 
+    public CommentStoreAdapter(Context context, List<Comment> listOldMessage, boolean isSuggestStoreFrag) {
+        this.mContext = context;
+        this.mListOldMessage = listOldMessage;
+        this.mIsSuggestFrag = isSuggestStoreFrag;
+    }
+
     @Override
     public SuggestStoreViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view =
-            LayoutInflater.from(mContext).inflate(R.layout.item_message_rate, parent, false);
+                LayoutInflater.from(mContext).inflate(R.layout.item_message_rate, parent, false);
         return new SuggestStoreViewHolder(view);
     }
 
@@ -45,12 +50,14 @@ public class CommentStoreAdapter
     public void onBindViewHolder(SuggestStoreViewHolder holder, int position) {
         Comment messageSuggestStore = mListOldMessage.get(position);
         holder.mImageViewAvatarItemMessageRate
-            .setImageResource(messageSuggestStore.getImageViewAvatar());
+                .setImageResource(messageSuggestStore.getImageViewAvatar());
         holder.mTextViewContentMessage.setText(messageSuggestStore.getTextViewContent());
+        SystemUtil.makeTextViewResizable(mContext, holder.mTextViewContentMessage,
+                Constants.MAX_LINE_SPAN_TEXT, mContext.getString(R.string.view_more), true);
         holder.mTextViewTitleMessage.setText(messageSuggestStore.getTextViewTitle());
         holder.mTextViewNameUser.setText(messageSuggestStore.getNameUser());
         holder.mTextViewCurDate.setText(SystemUtil.formatTimeNow(mContext,
-            (System.currentTimeMillis() - messageSuggestStore.getTimeNow()) / Constants.SECOND));
+                (System.currentTimeMillis() - messageSuggestStore.getTimeNow()) / Constants.SECOND));
         int totalFullStar = messageSuggestStore.getTotalStar();
         for (int i = 0; i < totalFullStar; i++) {
             holder.mStarList.get(i).setChecked(true);
@@ -98,9 +105,9 @@ public class CommentStoreAdapter
             super(itemView);
             mView = itemView;
             mImageViewAvatarItemMessageRate = (CircleImageView) mView
-                .findViewById(R.id.image_avatar_item_message_rate);
+                    .findViewById(R.id.image_avatar_item_message_rate);
             mTextViewContentMessage = (TextView) mView
-                .findViewById(R.id.text_content_item_message_rate);
+                    .findViewById(R.id.text_content_item_message_rate);
             mTextViewTitleMessage = (TextView) mView.findViewById(R.id.tv_title_item_message_rate);
             mTextViewNameUser = (TextView) mView.findViewById(R.id.text_name_user);
             mTextViewCurDate = (TextView) mView.findViewById(R.id.tv_rated_date);

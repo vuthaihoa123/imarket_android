@@ -274,4 +274,6 @@
     <string name="min_ago">min ago</string>
     <string name="hour_ago">hour ago</string>
     <string name="day_ago">day ago</string>
+    <string name="view_less">View Less</string>
+    <string name="view_more">View More</string>
 </resources>

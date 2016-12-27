@@ -11,8 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,12 +35,12 @@ import static com.example.framgia.imarketandroid.util.Constants.LIMIT_STAR;
  * Created by phongtran on 26/08/2016.
  */
 public class SuggestStoreFragment extends Fragment
-    implements View.OnClickListener, CustomStarView.onItemClickListener {
+        implements View.OnClickListener, CustomStarView.onItemClickListener {
     private ImageView mImageViewAvaStore;
     private TextView mTextViewNameStore, mTextViewHastagStore;
     private TextView mTextViewProportionVote, mTextViewCountVote;
     private ImageView mImageViewStar1, mImageViewStar2, mImageViewStar3, mImageViewStar4,
-        mImageViewStar5;
+            mImageViewStar5;
     private LinearLayoutCompat mButtonPostSuggestStore;
     private LinearLayoutCompat mButtonPostComment;
     private RecyclerView mRecyclerViewOldMessage;
@@ -73,7 +71,7 @@ public class SuggestStoreFragment extends Fragment
     }
 
     private void initRecycle() {
-        mSuggestStoreAdapter = new CommentStoreAdapter(getActivity(), mMessageSuggestStoreList);
+        mSuggestStoreAdapter = new CommentStoreAdapter(getActivity(), mMessageSuggestStoreList, true);
         mRecyclerViewOldMessage.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewOldMessage.setAdapter(mSuggestStoreAdapter);
     }
@@ -81,11 +79,11 @@ public class SuggestStoreFragment extends Fragment
     private void fakeDataMessage() {
         setTexts();
         Comment msm = new Comment(
-            R.drawable.avatar,
-            getString(R.string.name),
-            getString(R.string.message_rate),
-            getString(R.string.name_user),
-            SystemUtil.getCurDate()
+                R.drawable.avatar,
+                getString(R.string.name),
+                getString(R.string.message_rate),
+                getString(R.string.name_user),
+                System.currentTimeMillis()
         );
         for (int i = 0; i < Constants.COMMENT_LIST_SIZE; i++) {
             mMessageSuggestStoreList.add(msm);
@@ -127,11 +125,11 @@ public class SuggestStoreFragment extends Fragment
                 String title = mTextTitle.getText().toString();
                 String content = mTextContent.getText().toString();
                 Comment newMessage = new Comment(
-                    R.drawable.avatar,
-                    title,
-                    content,
-                    getString(R.string.name_user),
-                    SystemUtil.getCurDate()
+                        R.drawable.avatar,
+                        title,
+                        content,
+                        getString(R.string.name_user),
+                        SystemUtil.getCurDate()
                 );
                 newMessage.setImageStars(getTotalStar());
                 mMessageSuggestStoreList.set(0, newMessage);
@@ -146,7 +144,7 @@ public class SuggestStoreFragment extends Fragment
     private void initAlertDiaLogPostMessage() {
         LayoutInflater li = LayoutInflater.from(getContext());
         View promptsView = li.inflate(R.layout.dialog_post_message_rate,
-            (ViewGroup) getActivity().findViewById(R.id.view_group_details));
+                (ViewGroup) getActivity().findViewById(R.id.view_group_details));
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setView(promptsView);
         mTextViewStar1 = (TextView) promptsView.findViewById(R.id.text_start_1);
@@ -155,7 +153,7 @@ public class SuggestStoreFragment extends Fragment
         mTextViewStar4 = (TextView) promptsView.findViewById(R.id.text_start_4);
         mTextViewStar5 = (TextView) promptsView.findViewById(R.id.text_start_5);
         mButtonPostComment =
-            (LinearLayoutCompat) promptsView.findViewById(R.id.button_post_message_rate);
+                (LinearLayoutCompat) promptsView.findViewById(R.id.button_post_message_rate);
         mTextTitle = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_title);
         mTextContent = (EditText) promptsView.findViewById(R.id.edit_text_message_rate_comment);
         mLayoutStar = (LinearLayout) promptsView.findViewById(R.id.layout_stars);
@@ -164,16 +162,16 @@ public class SuggestStoreFragment extends Fragment
         mTextContent.setOnClickListener(this);
         mAlertDialogPostMessage = alertDialogBuilder.create();
         mAlertDialogPostMessage.getWindow()
-            .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mAlertDialogPostMessage.show();
         addStarList();
     }
 
     public void initGuideSuggestStore() {
         ShowcaseGuideUtil.singleShowcase(
-            getActivity(),
-            Constants.Instruction.SHOWCASE_ID_SUGGEST_STORE,
-            new Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote))
+                getActivity(),
+                Constants.Instruction.SHOWCASE_ID_SUGGEST_STORE,
+                new Showcase(mButtonPostSuggestStore, getString(R.string.sequence_write_vote))
         );
     }
 

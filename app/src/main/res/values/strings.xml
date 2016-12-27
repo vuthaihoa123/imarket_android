@@ -320,4 +320,5 @@
     <string name="new_event_noti">Bạn có thông báo mới ....</string>
     <string name="ticker">This is a ticker</string>
     <string name="share_on_facebook">Facebook</string>
+    <string name="three_dots">...</string>
 </resources>

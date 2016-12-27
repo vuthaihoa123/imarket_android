@@ -123,6 +123,8 @@ public class Constants {
     public static final long TIME_UPDATE_AGO = MINUTE * SECOND;
     public static final int MESSAGE_LIST_SIZE = 5;
     public static final int COMMENT_LIST_SIZE = 3;
+    public static final int MAX_LINE_SPAN_TEXT = 2;
+    public static final String LINE_BREAK_HTML = "<br />";
 
     public class KeyIntent {
         public static final String CATEGORY_INTENT = "category";
